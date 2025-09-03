@@ -1,0 +1,237 @@
+@startuml flujo-procesos-pruebas-ciclo-vida
+title **FLUJO DE PROCESOS DE CALIDAD - CICLO DE VIDA IBM**
+
+skinparam activity {
+    FontSize 16
+    FontName Arial Bold
+    BackgroundColor lightblue
+    BorderColor navy
+    BorderThickness 2
+}
+
+skinparam note {
+    FontSize 14
+    FontName Arial
+    BackgroundColor lightyellow
+    BorderColor orange
+}
+
+skinparam title {
+    FontSize 22
+    FontName Arial Bold
+}
+
+skinparam swimlane {
+    TitleFontSize 18
+    FontSize 16
+    FontName Arial Bold
+}
+
+skinparam decision {
+    FontSize 16
+    BackgroundColor lightgreen
+    BorderColor green
+}
+
+|#E8F4FD|📋 ANÁLISIS Y PLANEACIÓN|
+start
+#4A90E2:**PROCESOS DE CALIDAD EN ANÁLISIS**;
+:📊 **PLANIFICACIÓN DE PRUEBAS**
+• Definir estrategia de testing
+• Establecer criterios de entrada/salida
+• Planificar recursos y cronograma;
+
+:⚠️ **ANÁLISIS DE RIESGOS**
+• Identificar riesgos técnicos
+• Evaluar impacto y probabilidad  
+• Definir estrategias de mitigación;
+
+:🎯 **CRITERIOS DE ACEPTACIÓN**
+• Definir métricas de calidad
+• Establecer umbrales de defectos
+• Validar requisitos de performance;
+
+|#E8F5E8|🎨 DISEÑO DE PRUEBAS|
+#5CB85C:**PROCESOS DE CALIDAD EN DISEÑO**;
+:📝 **DISEÑO DE CASOS DE PRUEBA**
+• Casos funcionales detallados
+• Escenarios de borde y negativos
+• Matriz de trazabilidad;
+
+:🤖 **ARQUITECTURA DE AUTOMATIZACIÓN**
+• Framework de automatización
+• Patrones de diseño reutilizables
+• Estructura de datos de prueba;
+
+:🔍 **REVISIÓN POR PARES**
+• Validación de casos de prueba
+• Optimización de cobertura
+• Estándares de documentación;
+
+|#FFF3E0|⚙️ DESARROLLO Y TESTING|
+#FF9800:**PROCESOS DE CALIDAD EN DESARROLLO**;
+:🧪 **PRUEBAS UNITARIAS**
+• TDD (Test Driven Development)
+• Cobertura mínima 80%
+• Mocking de dependencias;
+
+:📈 **ANÁLISIS ESTÁTICO DE CÓDIGO**
+• Detección de vulnerabilidades
+• Cumplimiento de estándares
+• Métricas de complejidad;
+
+:👥 **CODE REVIEW**
+• Revisión de lógica de negocio
+• Validación de mejores prácticas
+• Detección temprana de defectos;
+
+if (**¿Calidad de código aceptable?**) is (❌ NO) then
+  #F44336:**CORRECCIÓN OBLIGATORIA**;
+  :🔧 Refactoring de código;
+  :📋 Re-testing unitario;
+else (✅ SÍ)
+endif
+
+|#FFF9C4|🔗 INTEGRACIÓN Y APIs|
+#FFC107:**PROCESOS DE CALIDAD EN INTEGRACIÓN**;
+:🔌 **PRUEBAS DE INTEGRACIÓN**
+• Testing de interfaces
+• Validación de contratos API
+• Pruebas de conectividad;
+
+:⚡ **PRUEBAS DE PERFORMANCE**
+• Load testing con JMeter
+• Stress testing de APIs
+• Monitoreo de recursos;
+
+:🔄 **REGRESIÓN AUTOMATIZADA**
+• Suites de regresión completas
+• Ejecución en pipelines CI/CD
+• Alertas automáticas de fallos;
+
+if (**¿Integración estable?**) is (❌ NO) then
+  #E91E63:**ANÁLISIS DE FALLOS**;
+  :🔍 Root cause analysis;
+  :🛠️ Fixes de integración;
+  :🔄 Re-testing completo;
+else (✅ SÍ)
+endif
+
+|#F3E5F5|🖥️ TESTING DEL SISTEMA|
+#9C27B0:**PROCESOS DE CALIDAD EN SISTEMA**;
+:🎭 **PRUEBAS FUNCIONALES END-TO-END**
+• Flujos completos de usuario
+• Validación de business rules
+• Testing multi-browser;
+
+:🛡️ **PRUEBAS DE SEGURIDAD**
+• Penetration testing
+• Validación de autenticación
+• Testing de vulnerabilidades;
+
+:👤 **PRUEBAS DE USABILIDAD**
+• Experiencia de usuario
+• Accesibilidad (WCAG)
+• Performance percibida;
+
+|#FCE4EC|👥 PRUEBAS DE ACEPTACIÓN|
+#E91E63:**PROCESOS DE CALIDAD EN UAT**;
+:🏢 **VALIDACIÓN DE NEGOCIO**
+• Escenarios reales de usuario
+• Validación de procesos de negocio
+• Conformidad con requisitos;
+
+:🧪 **PRUEBAS PILOTO**
+• Grupo controlado de usuarios
+• Ambiente de pre-producción
+• Métricas de satisfacción;
+
+if (**¿UAT aprobado por negocio?**) is (❌ NO) then
+  #D32F2F:**AJUSTES CRÍTICOS**;
+  :📝 Análisis de feedback;
+  :🔧 Implementar cambios;
+  :🔄 Re-UAT completo;
+else (✅ SÍ)
+endif
+
+|#E0F2F1|🚀 DESPLIEGUE A PRODUCCIÓN|
+#00BCD4:**PROCESOS DE CALIDAD EN DEPLOYMENT**;
+:💨 **SMOKE TESTING**
+• Verificación funcionalidad crítica
+• Validación de configuraciones
+• Testing de conectividad;
+
+:📊 **MONITOREO EN TIEMPO REAL**
+• Métricas de aplicación
+• Logs de errores
+• Alertas proactivas;
+
+:✅ **VALIDACIÓN POST-DESPLIEGUE**
+• Verificación de funcionalidades
+• Testing de rollback
+• Documentación de deployment;
+
+if (**¿Despliegue exitoso?**) is (❌ NO) then
+  #B71C1C:**ROLLBACK INMEDIATO**;
+  :⏪ Activar plan de contingencia;
+  :🔄 Restaurar versión anterior;
+  :📋 Post-mortem analysis;
+  stop
+else (✅ SÍ)
+endif
+
+|#E8F5E8|🔄 MANTENIMIENTO CONTINUO|
+#4CAF50:**PROCESOS DE CALIDAD EN MANTENIMIENTO**;
+:🔁 **REGRESIÓN CONTINUA**
+• Ejecución automática nocturna
+• Validación de patches
+• Monitoreo de degradación;
+
+:📈 **ANÁLISIS DE CALIDAD CONTINUA**
+• Trending de defectos
+• Métricas de performance
+• Optimización de procesos;
+
+:🎯 **MEJORA CONTINUA**
+• Lecciones aprendidas
+• Refinamiento de procesos
+• Actualización de herramientas;
+
+stop
+
+note left
+**🏦 EJEMPLO: APLICACIÓN BANCA EN LÍNEA**
+
+**📋 Análisis:** Requisitos de transferencias seguras,
+   consulta de saldos, gestión de cuentas
+
+**🎨 Diseño:** Casos de login seguro, validación de usuarios,
+   flujos de transacciones
+
+**⚙️ Desarrollo:** Pruebas unitarias de cálculo de intereses,
+   80% cobertura de código crítico
+
+**🔗 Integración:** APIs de consulta de saldos probadas
+   con 1000 usuarios concurrentes
+
+**🖥️ Sistema:** Flujos end-to-end completos,
+   pruebas de penetración, testing multi-dispositivo
+
+**👥 UAT:** Usuarios piloto con transacciones reales
+   en ambiente controlado
+
+**🚀 Despliegue:** Smoke testing de login y funciones básicas,
+   monitoreo en tiempo real
+
+**🔄 Mantenimiento:** Regresión continua,
+   análisis de tendencias de defectos
+
+**🎯 CRITERIOS DE CALIDAD:**
+• Tiempo de respuesta < 3 segundos
+• Disponibilidad 99.9%
+• Seguridad nivel bancario
+• 95% satisfacción del usuario
+• Zero defectos críticos en producción
+end note
+
+@enduml

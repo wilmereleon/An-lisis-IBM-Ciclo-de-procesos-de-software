@@ -1,0 +1,104 @@
+@startuml metricas-dashboard-ibm
+title Dashboard de Métricas de Calidad - IBM
+
+skinparam backgroundColor white
+skinparam rectangle {
+    BackgroundColor lightblue
+    BorderColor navy
+    FontColor black
+}
+
+' Dashboard principal
+rectangle "IBM Quality Dashboard" as MAIN {
+}
+
+rectangle "Process Maturity" as MATURITY {
+    MATURITY : CMMI Level: 3.2/5.0
+    MATURITY : Progress: 64%
+    MATURITY : TMMi Level: 3.1/5.0
+    MATURITY : Progress: 62%
+    MATURITY : Predictability: 85%
+    MATURITY : Target: 90%
+    MATURITY : Process Compliance: 92%
+    MATURITY : Status: Above target
+}
+
+rectangle "Product Quality" as QUALITY {
+    QUALITY : Defect Density: 0.8/KLOC
+    QUALITY : Status: Good (Target <1.0)
+    QUALITY : Availability: 99.94%
+    QUALITY : Status: Excellent (Target 99.9%)
+    QUALITY : Performance: 2.1s avg
+    QUALITY : Status: Near target (<2.0s)
+    QUALITY : Security Score: 95%
+    QUALITY : Status: Excellent (Target >90%)
+}
+
+rectangle "Testing Metrics" as TESTING {
+    TESTING : Test Coverage: 92%
+    TESTING : Status: Good (Target >85%)
+    TESTING : Automation Rate: 78%
+    TESTING : Status: Approaching (Target 85%)
+    TESTING : Defect Removal: 94%
+    TESTING : Status: Excellent (Target >90%)
+    TESTING : Test Execution: 96%
+    TESTING : Status: Excellent (Target >95%)
+}
+
+rectangle "Customer Satisfaction" as CUSTOMER {
+    CUSTOMER : NPS Score: +45
+    CUSTOMER : Industry avg: +30
+    CUSTOMER : CSAT Score: 4.2/5.0
+    CUSTOMER : Status: Above target
+    CUSTOMER : Escalations: 3 this month
+    CUSTOMER : Status: Good (Target <5)
+    CUSTOMER : Resolution Time: 2.3 days
+    CUSTOMER : Status: Near target (<2.0)
+}
+
+rectangle "DevOps Metrics" as DEVOPS {
+    DEVOPS : Lead Time: 5.2 days
+    DEVOPS : Target: <7 days - GOOD
+    DEVOPS : Deployment Frequency: 2.3/week
+    DEVOPS : Target: >2/week - GOOD
+    DEVOPS : MTTR: 1.8 hours
+    DEVOPS : Target: <2 hours - GOOD
+    DEVOPS : Change Failure Rate: 2.1%
+    DEVOPS : Target: <5% - EXCELLENT
+}
+
+rectangle "Alerts and Trends" as ALERTS {
+    ALERTS : Current Alerts:
+    ALERTS : • Performance threshold approaching
+    ALERTS : • Manual test backlog increasing
+    ALERTS : Trending Up:
+    ALERTS : • Test Automation (+12% quarter)
+    ALERTS : • Customer Satisfaction (+8%)
+    ALERTS : Focus Areas:
+    ALERTS : • Advance to CMMI Level 4
+    ALERTS : • Increase automation to 85%
+    ALERTS : • Reduce response time to <2s
+}
+
+' Relaciones entre componentes
+MAIN -down-> MATURITY
+MAIN -down-> QUALITY
+MAIN -down-> TESTING
+MAIN -down-> CUSTOMER
+MAIN -down-> DEVOPS
+MAIN -down-> ALERTS
+
+note bottom of MAIN
+**Legend:**
+Good: Meeting/Exceeding Target
+Approaching: Near Target
+Attention: Below Target
+
+**Update Frequency:**
+Real-time: Availability, Performance
+Daily: Testing, DevOps Metrics
+Weekly: Customer Satisfaction
+Monthly: Maturity Assessments
+end note
+
+@enduml

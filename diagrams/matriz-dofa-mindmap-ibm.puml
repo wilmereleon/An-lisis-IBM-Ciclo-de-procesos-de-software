@@ -1,0 +1,76 @@
+@startmindmap matriz-dofa-mindmap-ibm
+!theme plain
+title Matriz DOFA IBM - Vista Mind Map
+
+skinparam mindmapDiagram {
+    BackgroundColor white
+    .fortalezas {
+        BackgroundColor #4CAF50
+        FontColor white
+    }
+    .oportunidades {
+        BackgroundColor #2196F3
+        FontColor white
+    }
+    .debilidades {
+        BackgroundColor #FF9800
+        FontColor white
+    }
+    .amenazas {
+        BackgroundColor #F44336
+        FontColor white
+    }
+}
+
+* **IBM\nANÁLISIS\nDOFA**
+left side
+** <&flag> **FORTALEZAS** <<fortalezas>>
+*** <&star> Experiencia 100+ años
+*** <&cog> Procesos estandarizados
+*** <&loop-circular> Metodologías ágiles
+*** <&wrench> Portafolio herramientas
+*** <&people> Talento especializado
+*** <&cloud> Infraestructura global
+*** <&trophy> Reputación sólida
+*** <&briefcase> Clientes enterprise
+*** <&lightbulb> Cultura innovación
+*** <&check> Equipos QA maduros
+
+** <&warning> **DEBILIDADES** <<debilidades>>
+*** <&clock> Procesos lentos
+*** <&link-intact> Dependencias múltiples
+*** <&dollar> Costos elevados
+*** <&bureaucracy> Burocracia
+*** <&timer> Respuesta lenta
+*** <&puzzle-piece> Decisiones complejas
+*** <&layers> Overhead alto
+*** <&resize> Adaptación limitada
+*** <&sync> Coordinación compleja
+*** <&credit-card> Inversión continua
+
+right side
+** <&eye> **OPORTUNIDADES** <<oportunidades>>
+*** <&robot> Automatización IA
+*** <&cloud-upload> Servicios nube
+*** <&shield> Ciberseguridad
+*** <&target> Modelos modernos
+*** <&graph> Transformación digital
+*** <&bar-chart> Analítica avanzada
+*** <&beaker> Tecnologías emergentes
+*** <&brain> Machine Learning
+*** <&lock> DevSecOps
+*** <&book> Consultoría especializada
+
+** <&fire> **AMENAZAS** <<amenazas>>
+*** <&tag> Competencia precios
+*** <&bolt> Modelos disruptivos
+*** <&people> Expectativas altas
+*** <&flash> Cambios rápidos
+*** <&arrow-circle-down> Presión precios
+*** <&cog> Personalización
+*** <&ban> Obsolescencia
+*** <&timer> Resultados inmediatos
+*** <&zap> Startups ágiles
+*** <&file-text> Regulaciones
+
+@endmindmap

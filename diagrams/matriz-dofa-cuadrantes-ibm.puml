@@ -1,0 +1,60 @@
+@startuml matriz-dofa-cuadrantes-ibm
+!theme plain
+title Matriz DOFA IBM - Vista de Cuadrantes
+skinparam backgroundColor white
+skinparam defaultTextAlignment center
+
+' Configuración de colores
+skinparam rectangle {
+    BackgroundColor<<fortalezas>> #4CAF50
+    BackgroundColor<<oportunidades>> #2196F3
+    BackgroundColor<<debilidades>> #FF9800
+    BackgroundColor<<amenazas>> #F44336
+    BackgroundColor<<centro>> #9C27B0
+    BorderColor black
+    FontColor white
+    FontSize 10
+}
+
+' Diseño en cuadrantes
+package "ANÁLISIS DOFA - IBM" {
+    
+    ' Cuadrante Superior Izquierdo - FORTALEZAS
+    rectangle "FORTALEZAS\n(Strengths)" as F <<fortalezas>> {
+        rectangle "🏆 **EXPERIENCIA Y REPUTACIÓN**\n• Más de 100 años en tecnología\n• Reconocimiento mundial en innovación\n• Portafolio robusto soluciones enterprise\n\n⚙️ **PROCESOS Y METODOLOGÍAS**\n• Procesos desarrollo estandarizados\n• Metodologías ágiles y DevOps implementadas\n• Equipos especializados en QA\n\n🛠️ **INFRAESTRUCTURA TECNOLÓGICA**\n• Herramientas automatización maduras\n• Infraestructura CI/CD robusta\n• Ambientes diferenciados (DEV→PROD)\n\n👥 **RECURSOS HUMANOS**\n• Talento altamente especializado\n• Programas certificación continua\n• Cultura innovación establecida" as F_content
+    }
+    
+    ' Cuadrante Superior Derecho - OPORTUNIDADES
+    rectangle "OPORTUNIDADES\n(Opportunities)" as O <<oportunidades>> {
+        rectangle "🤖 **INNOVACIÓN TECNOLÓGICA**\n• Automatización pruebas con IA\n• Machine Learning en procesos calidad\n• Tecnologías emergentes (IoT, Blockchain)\n\n☁️ **DEMANDA DEL MERCADO**\n• Creciente demanda servicios nube\n• Aumento necesidades ciberseguridad\n• Transformación digital acelerada\n\n📈 **MEJORA DE PROCESOS**\n• Modelos calidad modernos (TMMi)\n• Optimización mediante analítica avanzada\n• Implementación prácticas DevSecOps\n\n🎯 **OPORTUNIDADES ESPECÍFICAS**\n• Consultoría especializada en calidad\n• Mercado servicios nube híbrida\n• Liderazgo en IA aplicada a testing" as O_content
+    }
+    
+    ' Centro - DOFA
+    rectangle "D.O.F.A\n\nANÁLISIS\nESTRATÉGICO\n\nIBM\n\n**NIVEL ACTUAL:**\nCMMI 3.2\nTMMi 3.1" as CENTER <<centro>>
+    
+    ' Cuadrante Inferior Izquierdo - DEBILIDADES
+    rectangle "DEBILIDADES\n(Weaknesses)" as D <<debilidades>> {
+        rectangle "🐌 **COMPLEJIDAD ORGANIZACIONAL**\n• Procesos robustos pero lentos\n• Alta dependencia múltiples equipos\n• Burocracia inherente org. grandes\n\n💰 **COSTOS OPERACIONALES**\n• Costos servicios elevados vs competidores\n• Overhead administrativo significativo\n• Inversión continua actualización tecnológica\n\n⏱️ **AGILIDAD DE RESPUESTA**\n• Tiempo respuesta lento por procesos formales\n• Dificultad adaptación rápida cambios\n• Toma decisiones compleja\n\n🔗 **COORDINACIÓN INTERNA**\n• Coordinación compleja entre equipos\n• Dependencias múltiples para entregas\n• Procesos aprobación complejos" as D_content
+    }
+    
+    ' Cuadrante Inferior Derecho - AMENAZAS
+    rectangle "AMENAZAS\n(Threats)" as A <<amenazas>> {
+        rectangle "🥊 **COMPETENCIA**\n• Competidores globales precios bajos\n• Empresas emergentes modelos disruptivos\n• Presión precios en mercado\n\n👥 **EXPECTATIVAS CLIENTE**\n• Altas expectativas presionan tiempos\n• Demanda personalización creciente\n• Exigencia resultados inmediatos\n\n⚡ **CAMBIOS TECNOLÓGICOS**\n• Evolución tecnológica acelerada\n• Obsolescencia tecnologías actuales\n• Necesidad actualización competencias\n\n🚀 **DISRUPCIÓN MERCADO**\n• Startups con mayor agilidad\n• Modelos negocio innovadores\n• Regulaciones cambiantes\n• Democratización herramientas desarrollo" as A_content
+    }
+}
+
+' Posicionamiento usando layout
+F -[hidden]right-> O
+F -[hidden]down-> CENTER
+O -[hidden]down-> CENTER
+CENTER -[hidden]down-> D
+CENTER -[hidden]down-> A
+D -[hidden]right-> A
+
+' Líneas de conexión sutiles
+F_content .[dotted].> CENTER : "Aprovechar"
+O_content .[dotted].> CENTER : "Explotar"
+CENTER <.[dotted]. D_content : "Superar"
+CENTER <.[dotted]. A_content : "Mitigar"
+
+@enduml

@@ -1,0 +1,132 @@
+@startuml niveles-madurez-cmmi-tmmi
+title Niveles de Madurez CMMI y TMMi para IBM
+
+skinparam backgroundColor white
+skinparam rectangle {
+    BackgroundColor lightblue
+    BorderColor navy
+}
+
+' CMMI Levels
+rectangle "CMMI - Capability Maturity Model Integration" as CMMI_TITLE {
+}
+
+rectangle "Nivel 5: Optimizado" as CMMI5 {
+    CMMI5 : Innovación Organizacional
+    CMMI5 : • Mejora continua proactiva
+    CMMI5 : • Innovación tecnológica
+    CMMI5 : • Análisis causal y resolución
+    CMMI5 : Estado IBM: En Planificación (2027)
+}
+
+rectangle "Nivel 4: Cuantitativamente Gestionado" as CMMI4 {
+    CMMI4 : Gestión Cuantitativa
+    CMMI4 : • Control estadístico de procesos
+    CMMI4 : • Gestión cuantitativa de proyectos
+    CMMI4 : • Rendimiento organizacional
+    CMMI4 : Estado IBM: Parcial 70%
+}
+
+rectangle "Nivel 3: Definido" as CMMI3 {
+    CMMI3 : Procesos Organizacionales
+    CMMI3 : • Procesos estándar definidos
+    CMMI3 : • Entrenamiento organizacional
+    CMMI3 : • Gestión integrada de proyectos
+    CMMI3 : Estado IBM: Cumplido 95%
+}
+
+rectangle "Nivel 2: Gestionado" as CMMI2 {
+    CMMI2 : Gestión de Proyectos
+    CMMI2 : • Gestión de requisitos
+    CMMI2 : • Planificación de proyectos
+    CMMI2 : • Aseguramiento de calidad
+    CMMI2 : Estado IBM: Cumplido 100%
+}
+
+rectangle "Nivel 1: Inicial" as CMMI1 {
+    CMMI1 : Procesos Ad-hoc
+    CMMI1 : • Procesos impredecibles
+    CMMI1 : • Resultados inconsistentes
+    CMMI1 : Estado IBM: Superado
+}
+
+' TMMi Levels
+rectangle "TMMi - Test Maturity Model Integration" as TMMI_TITLE {
+}
+
+rectangle "Nivel 5: Optimizado" as TMMI5 {
+    TMMI5 : Optimización de Pruebas
+    TMMI5 : • Prevención de defectos
+    TMMI5 : • Control de calidad
+    TMMI5 : • Optimización test process
+    TMMI5 : Estado IBM: En Planificación (2027)
+}
+
+rectangle "Nivel 4: Medido" as TMMI4 {
+    TMMI4 : Medición de Pruebas
+    TMMI4 : • Medición de test process
+    TMMI4 : • Evaluación calidad producto
+    TMMI4 : • Revisiones pruebas avanzadas
+    TMMI4 : Estado IBM: Parcial 65%
+}
+
+rectangle "Nivel 3: Definido" as TMMI3 {
+    TMMI3 : Proceso de Pruebas Definido
+    TMMI3 : • Organización de pruebas
+    TMMI3 : • Programa entrenamiento
+    TMMI3 : • Ciclo vida e integración
+    TMMI3 : Estado IBM: Cumplido 90%
+}
+
+rectangle "Nivel 2: Gestionado" as TMMI2 {
+    TMMI2 : Gestión de Pruebas
+    TMMI2 : • Política y estrategia
+    TMMI2 : • Planificación de pruebas
+    TMMI2 : • Monitoreo y control
+    TMMI2 : Estado IBM: Cumplido 100%
+}
+
+rectangle "Nivel 1: Inicial" as TMMI1 {
+    TMMI1 : Pruebas Ad-hoc
+    TMMI1 : • Testing no planificado
+    TMMI1 : • Debugging orientado
+    TMMI1 : Estado IBM: Superado
+}
+
+' Organización vertical - CMMI
+CMMI_TITLE -down-> CMMI5
+CMMI5 -down-> CMMI4
+CMMI4 -down-> CMMI3
+CMMI3 -down-> CMMI2
+CMMI2 -down-> CMMI1
+
+' Organización vertical - TMMi
+TMMI_TITLE -down-> TMMI5
+TMMI5 -down-> TMMI4
+TMMI4 -down-> TMMI3
+TMMI3 -down-> TMMI2
+TMMI2 -down-> TMMI1
+
+' Posicionamiento lado a lado
+CMMI_TITLE -[hidden]right-> TMMI_TITLE
+CMMI5 -[hidden]right-> TMMI5
+CMMI4 -[hidden]right-> TMMI4
+CMMI3 -[hidden]right-> TMMI3
+CMMI2 -[hidden]right-> TMMI2
+CMMI1 -[hidden]right-> TMMI1
+
+note bottom
+**Estado Actual IBM:**
+• CMMI Nivel 3.2 - Avanzando hacia Nivel 4
+• TMMi Nivel 3.1 - Iniciando transición a Nivel 4
+
+**Objetivo 2026:**
+• CMMI Nivel 4 completamente implementado
+• TMMi Nivel 4 en operación
+
+**Meta 2027:**
+• Alcanzar niveles de optimización (Nivel 5)
+• Liderazgo en industria de calidad
+end note
+
+@enduml

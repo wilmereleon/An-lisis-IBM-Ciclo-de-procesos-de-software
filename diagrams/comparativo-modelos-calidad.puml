@@ -1,0 +1,119 @@
+@startuml comparativo-modelos-calidad
+title Comparativo de Modelos de Calidad de Software para IBM
+
+skinparam backgroundColor white
+skinparam rectangle {
+    BackgroundColor lightblue
+    BorderColor navy
+    FontColor black
+}
+
+' Modelos de calidad principales
+rectangle "CMMI\nCapability Maturity Model" as CMMI {
+    CMMI : **Niveles:** 1-5 (Inicial a Optimizado)
+    CMMI : **Enfoque:** Madurez organizacional
+    CMMI : **Esfuerzo:** Alto
+    CMMI : **Tiempo:** Largo (2-3 años)
+    CMMI : **Costo:** Alto ($2-3M)
+    CMMI : **Beneficio:** Muy Alto
+    CMMI : **Aplicabilidad IBM:** Muy Alta
+    CMMI : **ROI:** 280% en 3 años
+}
+
+rectangle "TMMi\nTest Maturity Model" as TMMI {
+    TMMI : **Niveles:** 1-5 (Testing específico)
+    TMMI : **Enfoque:** Madurez en pruebas
+    TMMI : **Esfuerzo:** Medio-Alto
+    TMMI : **Tiempo:** Medio (1-2 años)
+    TMMI : **Costo:** Medio-Alto ($1.5-2M)
+    TMMI : **Beneficio:** Alto
+    TMMI : **Aplicabilidad IBM:** Alta
+    TMMI : **Sinergia:** Perfecta con CMMI
+}
+
+rectangle "ISO/IEC 25010\nSQuaRE" as ISO {
+    ISO : **Características:** 8 dimensiones
+    ISO : **Enfoque:** Calidad del producto
+    ISO : **Esfuerzo:** Medio
+    ISO : **Tiempo:** Corto (6-12 meses)
+    ISO : **Costo:** Bajo-Medio ($500K-1M)
+    ISO : **Beneficio:** Alto
+    ISO : **Aplicabilidad IBM:** Alta
+    ISO : **Uso:** Métricas y evaluación
+}
+
+rectangle "Six Sigma\nDMAIC" as SIGMA {
+    SIGMA : **Metodología:** Define-Measure-Analyze-Improve-Control
+    SIGMA : **Enfoque:** Reducción de defectos
+    SIGMA : **Esfuerzo:** Alto
+    SIGMA : **Tiempo:** Largo (2+ años)
+    SIGMA : **Costo:** Alto ($2M+)
+    SIGMA : **Beneficio:** Alto
+    SIGMA : **Aplicabilidad IBM:** Media
+    SIGMA : **Uso:** Procesos críticos selectivos
+}
+
+rectangle "ITIL\nService Management" as ITIL {
+    ITIL : **Fases:** 5 etapas del ciclo de vida
+    ITIL : **Enfoque:** Gestión de servicios TI
+    ITIL : **Esfuerzo:** Medio
+    ITIL : **Tiempo:** Medio (1-2 años)
+    ITIL : **Costo:** Medio ($1-1.5M)
+    ITIL : **Beneficio:** Medio-Alto
+    ITIL : **Aplicabilidad IBM:** Media
+    ITIL : **Uso:** Complementario
+}
+
+' Estrategia de implementación recomendada
+rectangle "ESTRATEGIA IBM\nImplementación Integrada" as STRATEGY #lightgreen {
+    STRATEGY : **1. CMMI (Primario)**
+    STRATEGY : • Base organizacional sólida
+    STRATEGY : • Procesos estandarizados globalmente
+    STRATEGY : • Reconocimiento internacional
+    STRATEGY : **2. TMMi (Complementario)**
+    STRATEGY : • Especialización en testing
+    STRATEGY : • Alineación perfecta con CMMI
+    STRATEGY : • Mejora específica en calidad
+    STRATEGY : **3. ISO 25010 (Soporte)**
+    STRATEGY : • Métricas de calidad del producto
+    STRATEGY : • Evaluación objetiva
+    STRATEGY : • Complemento a procesos
+}
+
+' Matriz de evaluación
+rectangle "MATRIZ DE EVALUACIÓN" as EVAL #lightyellow {
+    EVAL : |= Modelo =|= Aplicabilidad =|= ROI =|= Prioridad =|
+    EVAL : | CMMI | Muy Alta | Muy Alto | 1 - Primario |
+    EVAL : | TMMi | Alta | Alto | 2 - Complementario |
+    EVAL : | ISO 25010 | Alta | Medio-Alto | 3 - Soporte |
+    EVAL : | Six Sigma | Media | Alto | 4 - Selectivo |
+    EVAL : | ITIL | Media | Medio | 5 - Opcional |
+}
+
+' Posicionamiento de elementos
+CMMI -[hidden]right-> TMMI
+TMMI -[hidden]right-> ISO
+SIGMA -[hidden]right-> ITIL
+CMMI -[hidden]down-> SIGMA
+TMMI -[hidden]down-> ITIL
+
+' Relaciones hacia la estrategia
+CMMI -down-> STRATEGY : "Modelo Primario"
+TMMI -down-> STRATEGY : "Complemento"
+ISO -down-> STRATEGY : "Soporte"
+
+STRATEGY -down-> EVAL
+
+note bottom of EVAL
+**Justificación de Selección:**
+
+**CMMI:** Empresa multinacional requiere madurez organizacional
+**TMMi:** Especialización crítica en procesos de testing  
+**ISO 25010:** Métricas objetivas de calidad del producto
+
+**Inversión Total:** $4.5-6M en 36 meses
+**ROI Esperado:** 280% al tercer año
+**Beneficios:** 25% mejora predictibilidad, 40% reducción defectos
+end note
+
+@enduml

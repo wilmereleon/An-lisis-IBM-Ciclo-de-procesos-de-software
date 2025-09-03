@@ -1,0 +1,100 @@
+@startuml matriz-dofa-ibm
+title Matriz DOFA - IBM Análisis de Calidad de Software
+
+skinparam backgroundColor white
+
+' FORTALEZAS - Superior izquierdo
+rectangle "Fortalezas:" as F #FF9933 {
+    F : • Experiencia de más de 100 años
+    F : • Procesos estandarizados maduros
+    F : • Metodologías ágiles y DevOps
+    F : • Portafolio robusto de herramientas
+    F : • Talento altamente especializado
+    F : • Infraestructura tecnológica sólida
+    F : • Presencia global reconocida
+    F : • Clientes corporativos grandes
+    F : • Cultura de innovación establecida
+    F : • Equipos especializados en QA
+}
+
+' OPORTUNIDADES - Superior derecho
+rectangle "Oportunidades:" as O #FF9933 {
+    O : • Automatización con IA en pruebas
+    O : • Demanda creciente servicios nube
+    O : • Necesidades de ciberseguridad
+    O : • Modelos de calidad modernos (TMMi)
+    O : • Transformación digital acelerada
+    O : • Analítica avanzada en procesos
+    O : • Tecnologías emergentes (IoT, Blockchain)
+    O : • Machine Learning en calidad
+    O : • Prácticas DevSecOps
+    O : • Mercado de consultoría en calidad
+}
+
+' DOFA - Centro
+rectangle "DOFA" as CENTER #FF9933 {
+}
+
+' DEBILIDADES - Inferior izquierdo
+rectangle "Debilidades:" as D #E0E0E0 {
+    D : • Procesos robustos pero lentos
+    D : • Dependencia múltiples equipos
+    D : • Costos elevados vs competidores
+    D : • Burocracia organizacional
+    D : • Tiempo respuesta por formalidad
+    D : • Toma decisiones compleja
+    D : • Overhead administrativo alto
+    D : • Adaptación al cambio limitada
+    D : • Coordinación compleja equipos
+    D : • Inversión continua requerida
+}
+
+' AMENAZAS - Inferior derecho
+rectangle "Amenazas:" as A #E0E0E0 {
+    A : • Competencia con precios bajos
+    A : • Modelos de negocio disruptivos
+    A : • Expectativas altas de clientes
+    A : • Cambios tecnológicos acelerados
+    A : • Presión de precios mercado
+    A : • Demanda personalización creciente
+    A : • Obsolescencia tecnológica
+    A : • Resultados inmediatos exigidos
+    A : • Startups con agilidad mayor
+    A : • Regulaciones cambiantes
+}
+
+' Posicionamiento: DOFA en el centro rodeado por los cuadrantes
+F -[hidden]down-> CENTER
+O -[hidden]down-> CENTER
+CENTER -[hidden]down-> D
+CENTER -[hidden]down-> A
+
+F -[hidden]right-> O
+D -[hidden]right-> A
+
+' Estrategias derivadas
+note bottom of CENTER
+**Estrategias Clave:**
+
+**FO (Fortalezas-Oportunidades):**
+• Liderar en IA aplicada a calidad de software
+• Expandir servicios de nube híbrida especializados
+• Fortalecer portafolio de ciberseguridad
+
+**FA (Fortalezas-Amenazas):**
+• Diferenciación por calidad vs competidores
+• Acelerar procesos manteniendo estándares
+• Crear alianzas estratégicas
+
+**DO (Debilidades-Oportunidades):**
+• Simplificar procesos con automatización
+• Implementar modelos ágiles escalables
+• Desarrollar ofertas especializadas
+
+**DA (Debilidades-Amenazas):**
+• Optimizar estructura de costos
+• Mejorar agilidad organizacional
+• Establecer innovación continua
+end note
+
+@enduml

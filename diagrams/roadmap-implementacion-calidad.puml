@@ -1,0 +1,85 @@
+@startuml roadmap-implementacion-calidad
+title Roadmap de Implementación - Modelos de Calidad IBM (2025-2027)
+
+skinparam backgroundColor white
+skinparam gantt {
+    BackgroundColor white
+    FontColor black
+    HeaderFontColor black
+    BarColor lightblue
+    BorderColor black
+}
+
+' Roadmap usando rectangulos y timeline
+rectangle "ROADMAP IMPLEMENTACIÓN CALIDAD IBM" as ROADMAP #F0F8FF {
+
+    ' Fase 1: Preparación
+    rectangle "FASE 1: PREPARACIÓN\n(Meses 1-3)" as FASE1 #E6F3FF {
+        rectangle "📊 Evaluación Estado Actual\n• Assessment CMMI/TMMi\n• Baseline métricas\n• Gap analysis\n• Plan detallado" as F1A #CCEBFF
+        rectangle "👥 Formación Equipos\n• Team de implementación\n• Champions por área\n• Roles y responsabilidades\n• Governance structure" as F1B #CCEBFF
+        rectangle "📚 Capacitación Inicial\n• Training CMMI/TMMi\n• Herramientas automatización\n• Metodologías ágiles\n• Best practices" as F1C #CCEBFF
+    }
+
+    ' Fase 2: Consolidación
+    rectangle "FASE 2: CONSOLIDACIÓN\n(Meses 3-9)" as FASE2 #E6FFE6 {
+        rectangle "📈 Dashboard Métricas\n• KPIs integrados\n• Reportes automáticos\n• Alertas tiempo real\n• Análisis tendencias" as F2A #CCFFCC
+        rectangle "🤖 Automatización 85%\n• Scripts automatización\n• CI/CD optimizado\n• Testing frameworks\n• Deployment pipelines" as F2B #CCFFCC
+        rectangle "⚙️ Optimización CI/CD\n• Pipeline efficiency\n• Quality gates\n• Feedback loops\n• Performance tuning" as F2C #CCFFCC
+    }
+
+    ' Fase 3: CMMI Nivel 4
+    rectangle "FASE 3: CMMI NIVEL 4\n(Meses 6-18)" as FASE3 #FFF0E6 {
+        rectangle "📏 Gestión Cuantitativa\n• Métricas procesos\n• Control estadístico\n• Predictibilidad\n• Variabilidad control" as F3A #FFCC99
+        rectangle "🔮 Modelos Predictivos\n• Analytics avanzado\n• Machine learning\n• Forecasting calidad\n• Risk prediction" as F3B #FFCC99
+        rectangle "📊 Benchmarking\n• Industry standards\n• Best in class\n• Competitive analysis\n• Continuous improvement" as F3C #FFCC99
+    }
+
+    ' Fase 4: TMMi Nivel 4
+    rectangle "FASE 4: TMMi NIVEL 4\n(Meses 9-24)" as FASE4 #FFFACD {
+        rectangle "📋 Métricas Avanzadas\n• Test effectiveness\n• Coverage metrics\n• Defect prediction\n• Quality assessment" as F4A #FFF8DC
+        rectangle "🔄 Evaluación Automática\n• Auto test generation\n• Smart test selection\n• Quality scoring\n• Feedback automation" as F4B #FFF8DC
+        rectangle "📊 Optimización Datos\n• Test data management\n• Performance analytics\n• Resource optimization\n• ROI measurement" as F4C #FFF8DC
+    }
+
+    ' Fase 5: Integración IA
+    rectangle "FASE 5: INTEGRACIÓN IA\n(Meses 12-30)" as FASE5 #FFE6FF {
+        rectangle "🧠 IA en Calidad\n• AI-powered testing\n• Intelligent automation\n• Predictive analytics\n• Smart recommendations" as F5A #FFCCFF
+        rectangle "🔍 Análisis Predictivo\n• Defect prediction\n• Quality forecasting\n• Risk assessment\n• Performance prediction" as F5B #FFCCFF
+        rectangle "🛠️ Herramientas IA\n• Test case generation\n• Bug detection\n• Code analysis\n• Quality assistants" as F5C #FFCCFF
+    }
+
+    ' Fase 6: Excelencia
+    rectangle "FASE 6: EXCELENCIA\n(Meses 24-36)" as FASE6 #FFE6E6 {
+        rectangle "🏆 CMMI Nivel 5\n• Optimización continua\n• Innovation culture\n• Process improvement\n• Organizational learning" as F6A #FFCCCC
+        rectangle "🎯 TMMi Nivel 5\n• Defect prevention\n• Quality optimization\n• Test innovation\n• Excellence culture" as F6B #FFCCCC
+        rectangle "🌟 Liderazgo Industria\n• Industry recognition\n• Best practices sharing\n• Thought leadership\n• Market positioning" as F6C #FFCCCC
+    }
+}
+
+' Timeline inferior
+note bottom of ROADMAP
+**TIMELINE Y MILESTONES PRINCIPALES**
+
+**Q1-2025:** Assessment Completo | Baseline, Roadmap, Teams
+**Q2-2025:** Dashboard Operativo | Métricas, Automatización 60% | ROI: 15%
+**Q3-2025:** Automatización 85% | CI/CD, Quality Gates | ROI: 25%
+**Q4-2025:** CMMI 4 Progreso | Métricas Cuantitativas | ROI: 35%
+**Q1-2026:** TMMi 4 Avance | Testing Avanzado | ROI: 45%
+**Q2-2026:** IA Integrada | Predictive Analytics | ROI: 60%
+**Q3-2026:** CMMI 5 Inicio | Optimización Continua | ROI: 75%
+**Q4-2026:** TMMi 5 Logro | Excelencia Testing | ROI: 90%
+**Q1-2027:** Liderazgo Industria | Reconocimiento Mercado | ROI: 100%+
+
+**INVERSIÓN TOTAL ESTIMADA:** $4.5-6M
+**PAYBACK PERIOD:** 18-24 meses
+**ROI ACUMULADO 3 AÑOS:** 280%
+end note
+
+' Conexiones de flujo
+FASE1 -down-> FASE2 : "Fundamentos\nEstablecidos"
+FASE2 -down-> FASE3 : "Procesos\nMaduros"
+FASE3 -right-> FASE4 : "Sinergia\nCMMI-TMMi"
+FASE4 -down-> FASE5 : "Datos\nDisponibles"
+FASE5 -down-> FASE6 : "IA\nImplementada"
+
+@enduml

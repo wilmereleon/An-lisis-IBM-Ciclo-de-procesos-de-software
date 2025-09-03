@@ -1,0 +1,96 @@
+@startuml flowchart-calidad-ciclo-vida
+title Flowchart: Procesos de Calidad en Ciclo de Vida del Software - IBM
+
+skinparam backgroundColor white
+skinparam rectangle {
+    BackgroundColor lightblue
+    BorderColor navy
+    FontColor black
+    roundCorner 15
+}
+
+skinparam diamond {
+    BackgroundColor lightyellow
+    BorderColor orange
+}
+
+' Proceso principal de flujo
+rectangle "INICIO\nProyecto Software" as START #lightgreen
+rectangle "ANÁLISIS Y PLANEACIÓN\n\n• Planificación de Pruebas\n• Análisis de Riesgos\n• Criterios de Aceptación\n\nTools: JIRA, TestRail\nOutput: Plan Maestro" as ANALYSIS #E6F3FF
+rectangle "DISEÑO\n\n• Diseño Casos de Prueba\n• Arquitectura Automatización\n• Diseño Datos de Prueba\n\nTools: Selenium, Postman\nOutput: Scripts Automatización" as DESIGN #E6F3FF
+rectangle "DESARROLLO\n\n• Pruebas Unitarias\n• Análisis Estático Código\n• Code Review\n\nTools: JUnit, SonarQube\nOutput: Reportes Cobertura" as DEVELOPMENT #E6F3FF
+rectangle "INTEGRACIÓN\n\n• Pruebas de Integración\n• Pruebas de APIs\n• Pruebas Performance\n\nTools: LoadRunner, JMeter\nOutput: Métricas Performance" as INTEGRATION #E6F3FF
+rectangle "TESTING SISTEMA\n\n• Pruebas Funcionales\n• Pruebas de Seguridad\n• Pruebas de Usabilidad\n\nTools: IBM AppScan\nOutput: Reportes Funcionales" as SYSTEM_TEST #E6F3FF
+rectangle "UAT\n\n• Validación Requisitos\n• Pruebas de Aceptación\n• Pruebas Piloto\n\nTools: IBM Cloud\nOutput: Acta Aceptación" as UAT #E6F3FF
+
+diamond "Criterios\nAceptación\nCumplidos?" as DECISION
+
+rectangle "CORRECCIONES\n\n• Análisis de Fallas\n• Corrección Defectos\n• Re-testing\n\nAnálisis Causa Raíz" as CORRECTIONS #FFE6E6
+
+rectangle "DESPLIEGUE\n\n• Smoke Testing\n• Monitoreo Producción\n• Validación Post-Deploy\n\nTools: Splunk, New Relic\nOutput: Dashboard Monitoreo" as DEPLOYMENT #E6FFE6
+
+rectangle "MANTENIMIENTO\n\n• Regresión Continua\n• Monitoreo Calidad\n• Pruebas de Parches\n\nTools: Jenkins, Grafana\nOutput: Reportes Calidad" as MAINTENANCE #E6FFE6
+
+rectangle "FIN\nCiclo Completo" as END #lightgreen
+
+' Flujo principal
+START -down-> ANALYSIS
+ANALYSIS -down-> DESIGN
+DESIGN -down-> DEVELOPMENT
+DEVELOPMENT -down-> INTEGRATION
+INTEGRATION -down-> SYSTEM_TEST
+SYSTEM_TEST -down-> UAT
+UAT -down-> DECISION
+
+DECISION -right-> CORRECTIONS : "No"
+CORRECTIONS -up-> SYSTEM_TEST : "Re-test"
+
+DECISION -down-> DEPLOYMENT : "Sí"
+DEPLOYMENT -down-> MAINTENANCE
+MAINTENANCE -down-> END
+
+' Retroalimentación continua
+MAINTENANCE -left-> ANALYSIS : "Mejora Continua"
+
+' Información lateral - Ejemplo Banca
+package "📱 EJEMPLO: APLICACIÓN BANCA EN LÍNEA" {
+    rectangle "**ANÁLISIS:** Transferencias seguras, consulta saldos\n**Criterios:** Tiempo respuesta < 3s, disponibilidad 99.9%" as EX_ANALYSIS #FFF8DC
+    rectangle "**DISEÑO:** Casos login seguro, validación usuarios\n**Automatización:** Scripts flujos críticos usuario" as EX_DESIGN #FFF8DC
+    rectangle "**DESARROLLO:** Función cálculo intereses\n**Cobertura:** Mínimo 80% funciones críticas" as EX_DEVELOPMENT #FFF8DC
+    rectangle "**INTEGRACIÓN:** APIs consulta saldos/transferencias\n**Performance:** 1000 usuarios concurrentes" as EX_INTEGRATION #FFF8DC
+    rectangle "**SISTEMA:** Flujos end-to-end completos\n**Seguridad:** Pruebas penetración, cifrado" as EX_SYSTEM #FFF8DC
+    rectangle "**UAT:** Grupo selecto clientes piloto\n**Criterios:** 95% satisfacción usuario" as EX_UAT #FFF8DC
+    rectangle "**DESPLIEGUE:** Verificación login/funciones básicas\n**Monitoreo:** Alertas tiempo real transacciones" as EX_DEPLOY #FFF8DC
+    rectangle "**MANTENIMIENTO:** Regresión continua\n**Análisis:** Tendencias defectos, optimización" as EX_MAINT #FFF8DC
+}
+
+' Métricas y KPIs
+package "📊 MÉTRICAS Y KPIS POR FASE" {
+    rectangle "**MÉTRICAS PROCESO:**\n• Test Coverage: >90%\n• Automation Rate: >85%\n• Defect Removal Efficiency: >94%\n• Customer Satisfaction: >95%" as METRICS #F0F8FF
+    rectangle "**MÉTRICAS PRODUCTO:**\n• Defect Density: <0.8/KLOC\n• Performance: <3s response\n• Availability: >99.9%\n• Security: Zero critical vulnerabilities" as PRODUCT_METRICS #F0F8FF
+    rectangle "**MÉTRICAS OPERACIONALES:**\n• Lead Time: <12 weeks\n• Deployment Frequency: Weekly\n• MTTR: <4 hours\n• Change Failure Rate: <5%" as OPS_METRICS #F0F8FF
+}
+
+' Conexiones conceptuales (dotted para no interferir con flujo principal)
+ANALYSIS .[hidden]. EX_ANALYSIS
+DESIGN .[hidden]. EX_DESIGN
+DEVELOPMENT .[hidden]. EX_DEVELOPMENT
+INTEGRATION .[hidden]. EX_INTEGRATION
+SYSTEM_TEST .[hidden]. EX_SYSTEM
+UAT .[hidden]. EX_UAT
+DEPLOYMENT .[hidden]. EX_DEPLOY
+MAINTENANCE .[hidden]. EX_MAINT
+
+note top of START
+**ENTRADA:** Requisitos de negocio y técnicos
+**MODELO:** CMMI Nivel 3+ / TMMi Nivel 3+
+**OBJETIVO:** Calidad predecible y medible
+end note
+
+note bottom of END
+**SALIDA:** Producto con calidad certificada
+**BENEFICIOS:** -40% defectos, +25% predictibilidad
+**ROI:** 280% en 36 meses
+end note
+
+@enduml

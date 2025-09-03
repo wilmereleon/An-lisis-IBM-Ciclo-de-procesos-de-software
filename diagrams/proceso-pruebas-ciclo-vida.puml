@@ -1,0 +1,162 @@
+@startuml proceso-pruebas-ciclo-vida
+title Procesos de Calidad en el Ciclo de Vida del Software - IBM (Archimate)
+
+skinparam rectangle<<behavior>> {
+    roundCorner 25
+}
+
+sprite $bProcess jar:archimate/business-process
+sprite $aService jar:archimate/application-service
+sprite $aComponent jar:archimate/application-component
+sprite $tArtifact jar:archimate/technology-artifact
+
+' Procesos principales del ciclo de vida
+rectangle "Ciclo de Vida\nDesarrollo Software" as SDLC <<$bProcess>><<behavior>> #Business
+rectangle "Análisis y\nPlaneación" as AP <<$bProcess>><<behavior>> #Business
+rectangle "Diseño" as DIS <<$bProcess>><<behavior>> #Business
+rectangle "Desarrollo" as DEV <<$bProcess>><<behavior>> #Business
+rectangle "Integración" as INT <<$bProcess>><<behavior>> #Business
+rectangle "Testing del\nSistema" as SYS <<$bProcess>><<behavior>> #Business
+rectangle "UAT" as UAT <<$bProcess>><<behavior>> #Business
+rectangle "Despliegue" as DEP <<$bProcess>><<behavior>> #Business
+rectangle "Mantenimiento" as MAINT <<$bProcess>><<behavior>> #Business
+
+' Composición del proceso principal
+SDLC *-down- AP
+SDLC *-down- DIS
+SDLC *-down- DEV
+SDLC *-down- INT
+SDLC *-down- SYS
+SDLC *-down- UAT
+SDLC *-down- DEP
+SDLC *-down- MAINT
+
+' Flujo secuencial
+AP -right->> DIS
+DIS -right->> DEV
+DEV -right->> INT
+INT -right->> SYS
+SYS -right->> UAT
+UAT -right->> DEP
+DEP -right->> MAINT
+
+' Servicios de calidad por fase
+rectangle "Planificación\nde Pruebas" as TestPlan <<$aService>><<behavior>> #Application
+rectangle "Análisis de\nRiesgos" as RiskAnalysis <<$aService>><<behavior>> #Application
+rectangle "Diseño de\nCasos de Prueba" as TestDesign <<$aService>><<behavior>> #Application
+rectangle "Automatización\nde Pruebas" as TestAuto <<$aService>><<behavior>> #Application
+rectangle "Pruebas\nUnitarias" as UnitTest <<$aService>><<behavior>> #Application
+rectangle "Análisis Estático\nde Código" as StaticAnalysis <<$aService>><<behavior>> #Application
+rectangle "Pruebas de\nIntegración" as IntegrationTest <<$aService>><<behavior>> #Application
+rectangle "Pruebas de\nPerformance" as PerfTest <<$aService>><<behavior>> #Application
+rectangle "Pruebas\nFuncionales" as FuncTest <<$aService>><<behavior>> #Application
+rectangle "Pruebas de\nSeguridad" as SecTest <<$aService>><<behavior>> #Application
+rectangle "Validación de\nUsuario" as UserValidation <<$aService>><<behavior>> #Application
+rectangle "Pruebas de\nAceptación" as AcceptanceTest <<$aService>><<behavior>> #Application
+rectangle "Smoke\nTesting" as SmokeTest <<$aService>><<behavior>> #Application
+rectangle "Monitoreo de\nProducción" as ProdMonitoring <<$aService>><<behavior>> #Application
+rectangle "Pruebas de\nRegresión" as RegressionTest <<$aService>><<behavior>> #Application
+rectangle "Análisis de\nCalidad Continua" as QualityAnalysis <<$aService>><<behavior>> #Application
+
+' Relaciones servicios-procesos
+TestPlan -up-> AP
+RiskAnalysis -up-> AP
+
+TestDesign -up-> DIS
+TestAuto -up-> DIS
+
+UnitTest -up-> DEV
+StaticAnalysis -up-> DEV
+
+IntegrationTest -up-> INT
+PerfTest -up-> INT
+
+FuncTest -up-> SYS
+SecTest -up-> SYS
+
+UserValidation -up-> UAT
+AcceptanceTest -up-> UAT
+
+SmokeTest -up-> DEP
+ProdMonitoring -up-> DEP
+
+RegressionTest -up-> MAINT
+QualityAnalysis -up-> MAINT
+
+' Componentes y herramientas tecnológicas
+rectangle "JIRA/Confluence\nPlanning Tools" as PlanTools <<$aComponent>> #Application
+rectangle "TestRail\nTest Management" as TestMgmt <<$aComponent>> #Application
+rectangle "Selenium/Postman\nAutomation Framework" as AutoFramework <<$aComponent>> #Application
+rectangle "JUnit/SonarQube\nCode Quality Tools" as CodeQuality <<$aComponent>> #Application
+rectangle "LoadRunner/JMeter\nPerformance Tools" as PerfTools <<$aComponent>> #Application
+rectangle "IBM AppScan\nSecurity Tools" as SecTools <<$aComponent>> #Application
+rectangle "IBM Cloud\nDeployment Platform" as CloudPlatform <<$aComponent>> #Application
+rectangle "Splunk/Grafana\nMonitoring Tools" as MonitoringTools <<$aComponent>> #Application
+
+' Artefactos y entregables
+rectangle "Plan Maestro\nde Pruebas" as TestMasterPlan <<$tArtifact>> #Technology
+rectangle "Casos de Prueba\nAutomatizados" as AutoTestCases <<$tArtifact>> #Technology
+rectangle "Reportes de\nCobertura" as CoverageReports <<$tArtifact>> #Technology
+rectangle "Métricas de\nPerformance" as PerfMetrics <<$tArtifact>> #Technology
+rectangle "Reportes de\nSeguridad" as SecReports <<$tArtifact>> #Technology
+rectangle "Actas de\nAceptación" as AcceptanceDocs <<$tArtifact>> #Technology
+rectangle "Dashboard de\nMonitoreo" as MonitoringDash <<$tArtifact>> #Technology
+rectangle "Reportes de\nCalidad Continua" as QualityReports <<$tArtifact>> #Technology
+
+' Relaciones componentes-servicios
+PlanTools .up.|> TestPlan
+PlanTools .up.|> RiskAnalysis
+
+TestMgmt .up.|> TestDesign
+AutoFramework .up.|> TestAuto
+
+CodeQuality .up.|> UnitTest
+CodeQuality .up.|> StaticAnalysis
+
+AutoFramework .up.|> IntegrationTest
+PerfTools .up.|> PerfTest
+
+TestMgmt .up.|> FuncTest
+SecTools .up.|> SecTest
+
+CloudPlatform .up.|> UserValidation
+TestMgmt .up.|> AcceptanceTest
+
+CloudPlatform .up.|> SmokeTest
+MonitoringTools .up.|> ProdMonitoring
+
+AutoFramework .up.|> RegressionTest
+MonitoringTools .up.|> QualityAnalysis
+
+' Relaciones artefactos-servicios
+TestPlan ..> TestMasterPlan : produces
+TestDesign ..> AutoTestCases : produces
+UnitTest ..> CoverageReports : produces
+PerfTest ..> PerfMetrics : produces
+SecTest ..> SecReports : produces
+AcceptanceTest ..> AcceptanceDocs : produces
+ProdMonitoring ..> MonitoringDash : produces
+QualityAnalysis ..> QualityReports : produces
+
+legend right
+**Ejemplo: Aplicación Banca en Línea**
+====
+**Análisis:** Requisitos transferencias seguras
+**Diseño:** Casos login seguro, validación usuarios  
+**Desarrollo:** Función cálculo intereses (80% cobertura)
+**Integración:** APIs consulta saldos (1000 usuarios)
+**Sistema:** Flujos end-to-end, pruebas penetración
+**UAT:** Usuarios piloto, 95% satisfacción
+**Despliegue:** Smoke testing, alertas tiempo real
+**Mantenimiento:** Regresión continua, análisis tendencias
+====
+<$bProcess> : Proceso de negocio
+====
+<$aService> : Servicio de aplicación  
+====
+<$aComponent> : Componente de aplicación
+====
+<$tArtifact> : Artefacto tecnológico
+endlegend
+
+@enduml

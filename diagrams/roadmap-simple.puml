@@ -1,0 +1,99 @@
+@startuml roadmap-simple
+title Roadmap de Implementación - Modelos de Calidad IBM
+
+skinparam backgroundColor white
+
+' Diagrama de fases temporales
+rectangle "2025 Q3-Q4" as Q1 {
+    Q1 : FASE 1: PREPARACIÓN
+    Q1 : • Evaluación Estado Actual
+    Q1 : • Formación Equipos
+    Q1 : • Capacitación Inicial
+    Q1 : Duración: 6 meses
+    Q1 : Inversión: $1.5M
+}
+
+rectangle "2026 Q1-Q2" as Q2 {
+    Q2 : FASE 2: CONSOLIDACIÓN
+    Q2 : • Dashboard Métricas
+    Q2 : • Automatización 85%
+    Q2 : • Optimización CI/CD
+    Q2 : Duración: 6 meses
+    Q2 : Inversión: $2.0M
+}
+
+rectangle "2026 Q3-Q4" as Q3 {
+    Q3 : FASE 3: AVANCE CMMI
+    Q3 : • CMMI Nivel 4 Inicio
+    Q3 : • Gestión Cuantitativa
+    Q3 : • Modelos Predictivos
+    Q3 : Duración: 6 meses
+    Q3 : Inversión: $1.8M
+}
+
+rectangle "2027 Q1-Q2" as Q4 {
+    Q4 : FASE 4: AVANCE TMMi
+    Q4 : • TMMi Nivel 4 Inicio
+    Q4 : • Métricas Avanzadas
+    Q4 : • Evaluación Automática
+    Q4 : Duración: 6 meses
+    Q4 : Inversión: $1.6M
+}
+
+rectangle "2027 Q3-Q4" as Q5 {
+    Q5 : FASE 5: INTEGRACIÓN IA
+    Q5 : • IA en Calidad
+    Q5 : • Análisis Predictivo
+    Q5 : • Automatización Casos
+    Q5 : Duración: 6 meses
+    Q5 : Inversión: $1.4M
+}
+
+rectangle "2028 Q1-Q2" as Q6 {
+    Q6 : FASE 6: EXCELENCIA
+    Q6 : • CMMI Nivel 5
+    Q6 : • TMMi Nivel 5
+    Q6 : • Liderazgo Industria
+    Q6 : Duración: 6 meses
+    Q6 : Inversión: $1.2M
+}
+
+' Flujo temporal
+Q1 -right-> Q2 : "6 meses"
+Q2 -right-> Q3 : "6 meses"
+Q3 -down-> Q4 : "6 meses"
+Q4 -left-> Q5 : "6 meses"
+Q5 -left-> Q6 : "6 meses"
+
+' Hitos clave
+rectangle "HITOS CLAVE" as HITOS {
+    HITOS : • Q4 2025: Equipos formados y capacitados
+    HITOS : • Q2 2026: Dashboard operativo, 85% automatización
+    HITOS : • Q4 2026: CMMI Nivel 4 implementado
+    HITOS : • Q2 2027: TMMi Nivel 4 operativo
+    HITOS : • Q4 2027: IA integrada en procesos
+    HITOS : • Q2 2028: Excelencia operacional alcanzada
+}
+
+' ROI y beneficios
+rectangle "ROI Y BENEFICIOS" as ROI {
+    ROI : **Inversión Total:** $9.5M en 36 meses
+    ROI : **ROI Año 1:** 72% ($1.8M ahorro)
+    ROI : **ROI Año 2:** 168% ($4.2M ahorro)
+    ROI : **ROI Año 3:** 280% ($7.5M ahorro)
+    ROI : **Beneficios:**
+    ROI : • 25% mejora predictibilidad
+    ROI : • 40% reducción defectos
+    ROI : • 30% mejora eficiencia testing
+    ROI : • +20% satisfacción cliente
+}
+
+Q6 -down-> HITOS
+HITOS -down-> ROI
+
+note top of Q1
+**Inicio:** Septiembre 2025
+**Meta:** Liderazgo mundial en calidad de software
+end note
+
+@enduml
