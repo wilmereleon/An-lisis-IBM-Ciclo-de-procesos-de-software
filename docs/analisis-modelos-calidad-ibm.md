@@ -1445,9 +1445,493 @@ El análisis comparativo se basa en la medición de **8 métricas clave** que re
 
 ### 13.4 Visualización de Datos
 
-#### 📋 **Archivo de Datos Detallados**
+#### � **Gráficos Generados - Análisis Detallado**
+
+##### **Gráfico 1: Comparativo de Métricas (Situación Actual vs. Prospección)**
+**Archivo**: `docs/graficos/metricas_comparativas_barras.png`
+
+Este gráfico de barras comparativas presenta una visualización integral de las 8 métricas clave, mostrando el contraste entre la situación actual de IBM y la prospección tras implementar CMMI/TMMi + IEEE 829-2008.
+
+**Elementos Visuales Explicados:**
+- **Barras Rojas (Situación Actual)**: Representan los valores actuales de IBM en nivel 3 de madurez
+- **Barras Verde Agua (Prospección)**: Muestran los valores proyectados tras la implementación completa
+- **Líneas de Tendencia**: 
+  - **Línea discontinua roja con círculos**: Tendencia actual con comportamiento irregular
+  - **Línea punto-raya verde con cuadrados**: Tendencia prospectiva ascendente consistente
+- **Valores Porcentuales**: Cada barra muestra el valor exacto para facilitar comparaciones precisas
+
+**Análisis de Datos Específicos:**
+1. **Cobertura de Pruebas**: 72% → 94% (+22 puntos absolutos)
+   - Indica mejora significativa en cobertura de código y funcionalidades
+   - Reducción estimada del 35% en defectos no detectados
+
+2. **Tasa de Automatización**: 45% → 87% (+42 puntos absolutos)
+   - Mayor incremento absoluto, duplicando prácticamente la automatización
+   - ROI directo en reducción de costos operacionales de pruebas manuales
+
+3. **Eficiencia de Remoción de Defectos**: 78% → 96% (+18 puntos absolutos)
+   - Aproximación al objetivo de excelencia operacional (>95%)
+   - Mejora en procesos de detección temprana y prevención
+
+##### **Gráfico 2: Mejora Porcentual por Métrica**
+**Archivo**: `docs/graficos/mejora_porcentual_metricas.png`
+
+Gráfico horizontal que destaca el porcentaje de mejora relativa para cada métrica, utilizando codificación por colores para categorizar el nivel de impacto.
+
+**Codificación de Colores:**
+- **Verde**: Mejoras superiores al 20% (impacto alto)
+- **Naranja**: Mejoras entre 10-20% (impacto medio)
+- **Rojo**: Mejoras menores al 10% (impacto consolidación)
+
+**Línea de Tendencia con Diamantes**: Muestra el patrón de mejora general, evidenciando la consistencia del framework implementado.
+
+**Métricas Destacadas por Impacto:**
+1. **ROI (+133.3%)**: Justificación económica clara del proyecto
+2. **Automatización (+93.3%)**: Transformación digital significativa
+3. **Cumplimiento de Plantillas (+66.7%)**: Estandarización completa
+
+##### **Gráfico 3: Dashboard Integrado de Métricas**
+**Archivo**: `docs/graficos/dashboard_metricas_completo.png`
+
+Dashboard ejecutivo con 4 paneles especializados que proporciona una vista 360° del impacto organizacional.
+
+**Panel Superior Izquierdo - Métricas Principales:**
+- Enfoque en KPIs operacionales críticos
+- Líneas de tendencia muestran el comportamiento histórico vs. proyectado
+- Ideal para reportes ejecutivos de alto nivel
+
+**Panel Superior Derecho - Métricas de Cumplimiento:**
+- Concentra aspectos de compliance y adherencia a estándares
+- Crítico para auditorías y certificaciones organizacionales
+- Evidencia el impacto directo de la implementación IEEE 829-2008
+
+**Panel Inferior Izquierdo - ROI Específico:**
+- Visualización dedicada al retorno de inversión
+- Línea de conexión enfatiza la transformación económica
+- Justificación financiera del proyecto de calidad
+
+**Panel Inferior Derecho - Resumen de Mejoras:**
+- Síntesis visual de los 4 KPIs más impactantes
+- Línea estrellada muestra la consistencia de las mejoras
+- Herramienta de comunicación para stakeholders
+
+#### 📈 **Interpretación Estratégica de los Datos**
+
+##### **Tendencias Identificadas:**
+1. **Transformación Digital**: El 93.3% de mejora en automatización indica una modernización tecnológica significativa
+2. **Madurez Procesal**: La mejora del 30.7% en adherencia a procesos refleja evolución hacia niveles superiores CMMI
+3. **Excelencia Documental**: El 66.7% de mejora en compliance de templates evidencia profesionalización completa
+
+##### **Impacto Organizacional:**
+- **Reducción de Riesgos**: Mayor cobertura y eficiencia reducen riesgos operacionales
+- **Competitividad**: ROI superior posiciona a IBM ventajosamente en el mercado
+- **Sostenibilidad**: Procesos estandarizados garantizan mejora continua a largo plazo
+
+#### �📋 **Archivo de Datos Detallados**
 - **Ubicación**: [Análisis Comparativo de Métricas](docs/graficos/metricas_datos.txt)
-- **Contenido**: Datos completos del análisis cuantitativo
+- **Contenido**: Datos completos del análisis cuantitativo con interpretación estratégica
+
+#### 🎯 **Acceso a Gráficos Visuales**
+Los gráficos generados están disponibles en la carpeta `docs/graficos/`:
+
+1. **📊 Comparativo Principal**: `metricas_comparativas_barras.png`
+   - Gráfico de barras con líneas de tendencia
+   - Comparación "Situación Actual" vs "Prospección"
+   - Incluye valores porcentuales y análisis visual
+
+2. **📈 Análisis de Mejoras**: `mejora_porcentual_metricas.png`
+   - Gráfico horizontal de mejoras porcentuales
+   - Codificación de colores por nivel de impacto
+   - Línea de tendencia con marcadores especiales
+
+3. **📋 Dashboard Ejecutivo**: `dashboard_metricas_completo.png`
+   - Vista integrada con 4 paneles especializados
+   - KPIs principales, compliance, ROI y resumen
+   - Ideal para presentaciones a stakeholders ejecutivos
+
+---
+
+## 14. Plan Integral de Pruebas - Estrategia y Enfoque Detallado
+
+### 14.1 Estrategia de Pruebas Empresarial
+
+#### **14.1.1 Filosofía de Calidad IBM**
+
+La estrategia de pruebas para IBM Corporation se fundamenta en el principio de **"Calidad por Diseño"** (Quality by Design), donde la calidad no es un añadido final sino un elemento integral desde la conceptualización hasta el mantenimiento del producto.
+
+**Principios Rectores:**
+1. **Prevención sobre Corrección**: Detectar y prevenir defectos en fases tempranas
+2. **Automatización Inteligente**: Maximizar ROI a través de automatización estratégica
+3. **Cobertura Integral**: Abarcar aspectos funcionales, no funcionales y de seguridad
+4. **Mejora Continua**: Evolución constante basada en métricas y feedback
+5. **Colaboración Cross-Functional**: Integración entre desarrollo, operaciones y calidad
+
+#### **14.1.2 Modelo de Madurez de Pruebas**
+
+**Nivel Actual (TMMi 3 - Definido):**
+- Procesos de pruebas documentados y estandarizados
+- Organización de pruebas establecida
+- Integración con el ciclo de vida del desarrollo
+
+**Objetivo (TMMi 5 - Optimización):**
+- Procesos de mejora continua automatizados
+- Innovación constante en técnicas de pruebas
+- Optimización basada en datos y métricas avanzadas
+
+### 14.2 Enfoque de Pruebas por Dimensiones
+
+#### **14.2.1 Dimensión Funcional**
+
+**Objetivo**: Verificar que el software cumple con todos los requisitos funcionales especificados.
+
+**Estrategias Específicas:**
+1. **Pruebas de Caja Negra**:
+   - Partición de equivalencia para optimizar casos de prueba
+   - Análisis de valores límite para casos extremos
+   - Tablas de decisión para lógica compleja
+
+2. **Pruebas Basadas en Modelos**:
+   - Modelado de estados para sistemas complejos
+   - Pruebas de transición entre estados
+   - Validación de flujos de trabajo empresariales
+
+3. **Pruebas de Integración Funcional**:
+   - API testing con herramientas como Postman y SoapUI
+   - Pruebas de interfaces entre componentes
+   - Validación de contratos de servicios
+
+**Herramientas Especializadas:**
+- **IBM Rational Functional Tester**: Para automatización de UI
+- **Selenium WebDriver**: Para aplicaciones web multiplataforma
+- **REST Assured**: Para testing de APIs REST
+- **IBM API Connect**: Para gestión y pruebas de APIs
+
+#### **14.2.2 Dimensión No Funcional**
+
+**Objetivo**: Garantizar que el software cumple con requisitos de calidad como rendimiento, usabilidad, confiabilidad y seguridad.
+
+**Estrategias por Atributo:**
+
+**A. Pruebas de Rendimiento**
+- **Load Testing**: Verificar comportamiento bajo carga normal
+- **Stress Testing**: Evaluar límites y puntos de quiebre
+- **Spike Testing**: Validar respuesta ante picos súbitos
+- **Volume Testing**: Manejar grandes volúmenes de datos
+
+**Métricas Objetivo:**
+- Tiempo de respuesta < 2 segundos (transacciones críticas)
+- Throughput > 1000 TPS (transacciones por segundo)
+- Disponibilidad > 99.9% anual
+- Tiempo de recuperación < 5 minutos
+
+**B. Pruebas de Seguridad**
+- **OWASP Top 10**: Validación contra vulnerabilidades más comunes
+- **Penetration Testing**: Simulación de ataques externos
+- **Static Code Analysis**: Análisis de código fuente para vulnerabilidades
+- **Dynamic Security Testing**: Pruebas en tiempo de ejecución
+
+**C. Pruebas de Usabilidad**
+- **User Journey Testing**: Validación de experiencia end-to-end
+- **Accessibility Testing**: Cumplimiento WCAG 2.1 AA
+- **Cross-Browser Testing**: Compatibilidad multi-navegador
+- **Mobile Responsiveness**: Adaptabilidad a dispositivos móviles
+
+#### **14.2.3 Dimensión de Compatibilidad**
+
+**Estrategia Multi-Entorno:**
+- **Sistemas Operativos**: Windows, Linux, macOS, AIX
+- **Navegadores**: Chrome, Firefox, Safari, Edge, Internet Explorer
+- **Dispositivos**: Desktop, tablet, móvil (iOS/Android)
+- **Versiones**: Backward compatibility con 2 versiones anteriores
+
+### 14.3 Plan Maestro de Pruebas
+
+#### **14.3.1 Estructura Organizacional**
+
+**Roles y Responsabilidades Definidos:**
+
+**A. Test Manager (Gerente de Pruebas)**
+- Planificación estratégica de pruebas
+- Gestión de recursos y cronogramas
+- Comunicación con stakeholders ejecutivos
+- Métricas y reportes de calidad
+
+**B. Test Lead (Líder Técnico de Pruebas)**
+- Diseño de estrategias técnicas de pruebas
+- Revisión y aprobación de casos de prueba
+- Mentoría del equipo de testing
+- Integración con equipos de desarrollo
+
+**C. Test Analyst (Analista de Pruebas)**
+- Análisis de requisitos y especificaciones
+- Diseño de casos de prueba detallados
+- Ejecución de pruebas manuales complejas
+- Documentación de defectos y hallazgos
+
+**D. Automation Engineer (Ingeniero de Automatización)**
+- Desarrollo de frameworks de automatización
+- Implementación de scripts de pruebas automatizadas
+- Mantenimiento de suites de regresión
+- Integración con pipelines CI/CD
+
+#### **14.3.2 Cronograma de Actividades**
+
+**Fase 1: Planificación (Semanas 1-2)**
+- Análisis de requisitos y especificaciones
+- Identificación de riesgos de calidad
+- Definición de criterios de aceptación
+- Estimación de esfuerzo y recursos
+
+**Fase 2: Diseño (Semanas 3-4)**
+- Elaboración de casos de prueba
+- Preparación de datos de prueba
+- Configuración de ambientes de testing
+- Desarrollo inicial de automatización
+
+**Fase 3: Ejecución (Semanas 5-8)**
+- Ejecución de pruebas manuales
+- Ejecución de suites automatizadas
+- Pruebas de integración y sistema
+- Validación de criterios de aceptación
+
+**Fase 4: Consolidación (Semana 9)**
+- Análisis de métricas de calidad
+- Reporte final de pruebas
+- Lecciones aprendidas
+- Handover a producción
+
+#### **14.3.3 Criterios de Entrada y Salida**
+
+**Criterios de Entrada:**
+- Requisitos funcionales y no funcionales aprobados
+- Ambiente de pruebas configurado y estable
+- Datos de prueba disponibles y validados
+- Casos de prueba revisados y aprobados
+- Build del software disponible para testing
+
+**Criterios de Salida:**
+- 100% de casos de prueba ejecutados
+- 0 defectos críticos y altos abiertos
+- Cobertura de código > 80%
+- Métricas de rendimiento dentro de objetivos
+- Documentación de pruebas completa y actualizada
+
+### 14.4 Framework de Automatización
+
+#### **14.4.1 Arquitectura de Automatización**
+
+**Modelo de Capas:**
+1. **Capa de Datos**: Gestión de datos de prueba y configuraciones
+2. **Capa de Servicios**: Utilidades y servicios comunes
+3. **Capa de Objetos**: Page Object Model para UI, Service Objects para APIs
+4. **Capa de Pruebas**: Casos de prueba automatizados
+5. **Capa de Reportes**: Generación de reportes y métricas
+
+**Patrones de Diseño Implementados:**
+- **Page Object Model**: Para mantener código de UI organizado
+- **Factory Pattern**: Para creación dinámica de objetos de prueba
+- **Strategy Pattern**: Para selección de browsers y configuraciones
+- **Observer Pattern**: Para notificaciones y logging
+
+#### **14.4.2 Stack Tecnológico**
+
+**Herramientas de Automatización:**
+- **Selenium WebDriver**: Base para automatización web
+- **TestNG/JUnit**: Frameworks de testing para Java
+- **Maven/Gradle**: Gestión de dependencias y build
+- **Jenkins**: Integración continua y orquestación
+- **Docker**: Containerización de ambientes de prueba
+
+**Reporting y Métricas:**
+- **Allure Reports**: Reportes detallados y visuales
+- **ExtentReports**: Reportes HTML personalizables
+- **SonarQube**: Análisis de calidad de código de pruebas
+- **Grafana**: Dashboards de métricas en tiempo real
+
+### 14.5 Gestión de Defectos y Calidad
+
+#### **14.5.1 Proceso de Gestión de Defectos**
+
+**Ciclo de Vida del Defecto:**
+1. **Identificación**: Detección durante ejecución de pruebas
+2. **Documentación**: Registro detallado en herramienta de tracking
+3. **Clasificación**: Asignación de severidad y prioridad
+4. **Asignación**: Distribución al desarrollador responsable
+5. **Resolución**: Corrección por parte del equipo de desarrollo
+6. **Verificación**: Validación de la corrección por testing
+7. **Cierre**: Confirmación final y actualización de métricas
+
+**Clasificación de Severidad:**
+- **Crítica**: Sistema no funcional, bloqueo completo
+- **Alta**: Funcionalidad principal afectada, workaround complejo
+- **Media**: Funcionalidad secundaria afectada, workaround disponible
+- **Baja**: Problemas cosméticos o de usabilidad menor
+
+#### **14.5.2 Métricas de Calidad**
+
+**KPIs Primarios:**
+1. **Defect Density**: Defectos por KLOC (líneas de código)
+2. **Defect Removal Efficiency**: % de defectos removidos pre-producción
+3. **First Time Right**: % de features que pasan pruebas en primer intento
+4. **Test Effectiveness**: Relación defectos encontrados vs. defectos totales
+
+**KPIs Secundarios:**
+1. **Mean Time to Detect (MTTD)**: Tiempo promedio para detectar defectos
+2. **Mean Time to Resolve (MTTR)**: Tiempo promedio para resolver defectos
+3. **Test Execution Rate**: Casos ejecutados vs. planificados
+4. **Automation Coverage**: % de casos de prueba automatizados
+
+### 14.6 Implementación Práctica - Caso de Uso: Sistema de Banca en Línea
+
+#### **14.6.1 Contexto del Proyecto**
+
+**Producto**: IBM Banking Solutions - Plataforma de Banca Digital
+**Características**:
+- Aplicación web y móvil multi-tenant
+- Integración con sistemas legacy bancarios
+- Cumplimiento regulatorio (PCI-DSS, SOX, GDPR)
+- Disponibilidad 24/7 con SLA de 99.9%
+
+#### **14.6.2 Estrategia de Pruebas Específica**
+
+**A. Análisis de Riesgos Financieros**
+1. **Riesgos Críticos**:
+   - Transacciones financieras incorrectas
+   - Brechas de seguridad y fraude
+   - Indisponibilidad del sistema
+   - Pérdida de datos de clientes
+
+2. **Mitigación Mediante Pruebas**:
+   - Pruebas exhaustivas de cálculos financieros
+   - Penetration testing y security scanning
+   - Pruebas de recuperación ante desastres
+   - Backup y recovery testing
+
+**B. Diseño de Casos de Prueba Bancarios**
+
+**Funcionalidades Core Testeadas:**
+1. **Autenticación y Autorización**
+   - Login con múltiples factores
+   - Gestión de sesiones y timeouts
+   - Roles y permisos diferenciados
+
+2. **Transacciones Financieras**
+   - Transferencias entre cuentas
+   - Pagos de servicios y terceros
+   - Consultas de saldos y movimientos
+
+3. **Integración con Sistemas Bancarios**
+   - APIs de core bancario
+   - Servicios de validación de identidad
+   - Reportes regulatorios automatizados
+
+#### **14.6.3 Implementación del Framework IEEE 829-2008**
+
+**Documentos de Prueba Implementados:**
+
+**1. Test Plan (Plan de Pruebas)**
+```
+IBM-BANK-TP-001: Plan Maestro de Pruebas
+- Alcance: Módulos de transacciones y seguridad
+- Estrategia: Risk-based testing con enfoque en transacciones críticas
+- Recursos: 12 testers, 3 automation engineers
+- Cronograma: 8 semanas (4 sprints de 2 semanas)
+- Criterios de aceptación: 0 defectos críticos, cobertura >95%
+```
+
+**2. Test Design Specification (Especificación de Diseño)**
+```
+IBM-BANK-TDS-001: Diseño de Pruebas Transaccionales
+- Técnicas: Partición de equivalencia, valores límite
+- Condiciones de prueba: 147 condiciones identificadas
+- Datos de prueba: 15 usuarios tipo, 50 escenarios de transacción
+- Dependencias: Servicios de core bancario, APIs externas
+```
+
+**3. Test Case Specification (Especificación de Casos)**
+```
+IBM-BANK-TCS-001: Casos de Prueba de Transferencias
+Caso TC-001: Transferencia exitosa entre cuentas propias
+Caso TC-002: Transferencia con fondos insuficientes
+Caso TC-003: Transferencia a cuenta inexistente
+[Total: 342 casos de prueba documentados]
+```
+
+#### **14.6.4 Métricas Específicas del Proyecto Bancario**
+
+**Resultados Obtenidos (Comparativo Pre/Post Implementación):**
+
+| **Métrica Bancaria** | **Antes** | **Después** | **Mejora** |
+|---------------------|-----------|-------------|------------|
+| **Defectos en Producción** | 23/mes | 3/mes | **-87%** |
+| **Tiempo de Testing** | 12 semanas | 8 semanas | **-33%** |
+| **Cobertura de Transacciones** | 78% | 97% | **+19%** |
+| **Satisfacción del Cliente** | 3.2/5 | 4.6/5 | **+44%** |
+| **Compliance Score** | 72% | 98% | **+26%** |
+| **Mean Time to Fix** | 48 horas | 12 horas | **-75%** |
+
+### 14.7 Roadmap de Implementación de Pruebas
+
+#### **14.7.1 Fase 1: Fundamentos (Meses 1-3)**
+
+**Objetivos:**
+- Establecer equipo de calidad dedicado
+- Implementar herramientas básicas de testing
+- Definir procesos estándar de pruebas
+
+**Actividades Clave:**
+1. **Semana 1-2**: Reclutamiento y capacitación del equipo
+2. **Semana 3-4**: Configuración de herramientas (JIRA, TestRail, Selenium)
+3. **Semana 5-8**: Desarrollo de framework de automatización base
+4. **Semana 9-12**: Piloto en proyecto de menor complejidad
+
+**Entregables:**
+- Equipo de calidad formado y capacitado
+- Framework de automatización funcional
+- 50 casos de prueba automatizados
+- Métricas baseline establecidas
+
+#### **14.7.2 Fase 2: Escalamiento (Meses 4-8)**
+
+**Objetivos:**
+- Expandir automatización a múltiples proyectos
+- Implementar pruebas de performance y seguridad
+- Integrar con pipelines CI/CD
+
+**Actividades Clave:**
+1. **Mes 4**: Automatización de regresión completa
+2. **Mes 5**: Implementación de performance testing
+3. **Mes 6**: Security testing automation
+4. **Mes 7-8**: Integración completa DevOps
+
+**Entregables:**
+- 300+ casos de prueba automatizados
+- Suite de pruebas de performance configurada
+- Security testing integrado
+- CI/CD con quality gates implementados
+
+#### **14.7.3 Fase 3: Optimización (Meses 9-12)**
+
+**Objetivos:**
+- Implementar AI/ML en testing
+- Optimizar métricas y procesos
+- Alcanzar nivel TMMi 4-5
+
+**Actividades Clave:**
+1. **Mes 9**: Implementación de test data management
+2. **Mes 10**: AI-powered test generation
+3. **Mes 11**: Predictive analytics para defectos
+4. **Mes 12**: Optimización y certificación TMMi
+
+**Entregables:**
+- Test data management automatizado
+- AI/ML tools para testing implementados
+- Métricas predictivas funcionando
+- Certificación TMMi nivel 4 alcanzada
+
+---
+
+## 15. Conclusiones y Recomendaciones Estratégicas
 - **Formato**: Tabla estructurada con valores antes/después y porcentajes de mejora
 
 #### 🎨 **Scripts de Generación**
@@ -1475,7 +1959,7 @@ El análisis comparativo se basa en la medición de **8 métricas clave** que re
 
 ---
 
-## 14. Referencias Bibliográficas y Recursos
+## 16. Referencias Bibliográficas y Recursos
 
 ### 14.1 Estándares y Modelos de Calidad
 

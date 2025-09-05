@@ -1,20 +1,60 @@
-ANÁLISIS COMPARATIVO DE MÉTRICAS DE CALIDAD - IBM
-==================================================
-
-ANTES vs. DESPUÉS DE IMPLEMENTAR CMMI/TMMi + IEEE 829-2008
-
-Test Coverage (%)              |     72 →     94 | + 30.6%
-Automation Rate (%)            |     45 →     87 | + 93.3%
-Defect Removal Efficiency (%)  |     78 →     96 | + 23.1%
-Customer Satisfaction (%)      |     82 →     96 | + 17.1%
-Process Adherence (%)          |     75 →     98 | + 30.7%
-Template Compliance (%)        |     60 →    100 | + 66.7%
-Documentation Completeness (%) |     70 →     99 | + 41.4%
-ROI (%)                        |    180 →    420 | +133.3%
-
+=== ANÁLISIS COMPARATIVO DE MÉTRICAS DE CALIDAD - IBM CORPORATION ===
+Situación Actual vs. Prospección con CMMI/TMMi + IEEE 829-2008
 ======================================================================
-IMPACTO PRINCIPAL:
-• ROI incrementó 133.3% (de 180% a 420%)
-• Automation Rate incrementó 93.3% (de 45% a 87%)
-• Template Compliance incrementó 66.7% (de 60% a 100%)
-• Process Adherence incrementó 30.7% (de 75% a 98%)
+
+DATOS COMPARATIVOS:
+--------------------------------------------------
+Cobertura de Pruebas:
+  • Situación Actual: 72%
+  • Prospección: 94%
+  • Mejora: +30.6%
+  • Impacto: 30.6% de incremento
+
+Tasa de Automatización:
+  • Situación Actual: 45%
+  • Prospección: 87%
+  • Mejora: +93.3%
+  • Impacto: 93.3% de incremento
+
+Eficiencia de Remoción de Defectos:
+  • Situación Actual: 78%
+  • Prospección: 96%
+  • Mejora: +23.1%
+  • Impacto: 23.1% de incremento
+
+Satisfacción del Cliente:
+  • Situación Actual: 82%
+  • Prospección: 96%
+  • Mejora: +17.1%
+  • Impacto: 17.1% de incremento
+
+Adherencia a Procesos:
+  • Situación Actual: 75%
+  • Prospección: 98%
+  • Mejora: +30.7%
+  • Impacto: 30.7% de incremento
+
+Cumplimiento de Plantillas:
+  • Situación Actual: 60%
+  • Prospección: 100%
+  • Mejora: +66.7%
+  • Impacto: 66.7% de incremento
+
+Completitud de Documentación:
+  • Situación Actual: 70%
+  • Prospección: 99%
+  • Mejora: +41.4%
+  • Impacto: 41.4% de incremento
+
+ROI - Retorno de Inversión:
+  • Situación Actual: 180%
+  • Prospección: 420%
+  • Mejora: +133.3%
+  • Impacto: 133.3% de incremento
+
+RESUMEN EJECUTIVO:
+--------------------------------------------------
+• Mayor mejora: ROI - Retorno de Inversión (+133.3%)
+• Mejora promedio: 54.5%
+• Total de métricas evaluadas: 8
+• Todas las métricas muestran mejora positiva
