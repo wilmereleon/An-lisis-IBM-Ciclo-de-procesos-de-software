@@ -1304,6 +1304,14 @@ El estándar **IEEE Std 829-2008** proporciona un marco estructurado para la doc
 - **Tiempo de Documentación**: Eficiencia en creación de documentos
 - **Satisfacción del Equipo**: Feedback sobre utilidad de plantillas
 
+#### 11.5.4 Recursos Adicionales
+
+**📚 Documentación de Referencia:**
+- **Glosario de Términos de Testing**: [BS 7925-1 Glossary of Software Testing Terms](docs/BS%207925_1/Gloss%206_3.htm)
+  - Definiciones estándar de términos de pruebas de software
+  - Referencia completa según BS 7925-1
+  - Alineación con terminología internacional
+
 ---
 
 ## 12. Conclusiones
@@ -1366,8 +1374,55 @@ La calidad no es un destino, sino un viaje de mejora continua que requiere dedic
 
 ---
 
-**Fecha de Elaboración**: Septiembre 2, 2025  
-**Versión**: 1.0  
+## 13. Referencias Bibliográficas y Recursos
+
+### 13.1 Estándares y Modelos de Calidad
+
+**CMMI (Capability Maturity Model Integration)**
+- CMMI Institute. (2018). *CMMI for Development, Version 2.0*. Carnegie Mellon University Software Engineering Institute.
+
+**TMMi (Test Maturity Model Integration)**
+- TMMi Foundation. (2019). *Test Maturity Model Integration (TMMi), Release 1.0*. TMMi Foundation.
+
+**IEEE Standards**
+- IEEE Computer Society. (2008). *IEEE Standard for Software and System Test Documentation (IEEE Std 829-2008)*. IEEE.
+
+**ISO/IEC Standards**
+- ISO/IEC. (2011). *Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — System and software quality models (ISO/IEC 25010)*. International Organization for Standardization.
+
+### 13.2 Metodologías y Frameworks
+
+**Six Sigma**
+- Motorola Inc. (1986). *Six Sigma Quality Program*. Motorola University.
+
+**ITIL (Information Technology Infrastructure Library)**
+- AXELOS. (2019). *ITIL Foundation, ITIL 4 edition*. The Stationery Office.
+
+### 13.3 Recursos Especializados
+
+**Glosario de Términos de Testing**
+- **BS 7925-1**: [Glossary of Software Testing Terms](docs/BS%207925_1/Gloss%206_3.htm)
+  - British Standard BS 7925-1:1998
+  - Definiciones estándar de términos de pruebas de software
+  - Referencia completa según estándar británico
+  - Alineación con terminología internacional
+
+### 13.4 Documentación IBM
+
+**IBM Quality Standards**
+- IBM Corporation. (2024). *IBM Software Development Quality Assurance Framework*. Internal Documentation.
+- IBM Engineering. (2024). *Rational Team Concert - Quality Management Guidelines*. IBM Documentation.
+
+### 13.5 Investigación Académica
+
+**Estudios de Caso en Calidad de Software**
+- Pressman, R. S., & Maxim, B. R. (2020). *Software Engineering: A Practitioner's Approach*. 9th Edition. McGraw-Hill Education.
+- Sommerville, I. (2020). *Software Engineering*. 10th Edition. Pearson Education.
+
+---
+
+**Fecha de Elaboración**: Septiembre 4, 2025  
+**Versión**: 2.0  
 **Elaborado por**: Equipo de Análisis de Calidad de Software  
 **Revisado por**: [Nombre del Revisor]  
 **Aprobado por**: [Nombre del Aprobador]
