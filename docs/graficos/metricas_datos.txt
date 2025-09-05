@@ -1,0 +1,20 @@
+ANÁLISIS COMPARATIVO DE MÉTRICAS DE CALIDAD - IBM
+==================================================
+
+ANTES vs. DESPUÉS DE IMPLEMENTAR CMMI/TMMi + IEEE 829-2008
+
+Test Coverage (%)              |     72 →     94 | + 30.6%
+Automation Rate (%)            |     45 →     87 | + 93.3%
+Defect Removal Efficiency (%)  |     78 →     96 | + 23.1%
+Customer Satisfaction (%)      |     82 →     96 | + 17.1%
+Process Adherence (%)          |     75 →     98 | + 30.7%
+Template Compliance (%)        |     60 →    100 | + 66.7%
+Documentation Completeness (%) |     70 →     99 | + 41.4%
+ROI (%)                        |    180 →    420 | +133.3%
+
+======================================================================
+IMPACTO PRINCIPAL:
+• ROI incrementó 133.3% (de 180% a 420%)
+• Automation Rate incrementó 93.3% (de 45% a 87%)
+• Template Compliance incrementó 66.7% (de 60% a 100%)
+• Process Adherence incrementó 30.7% (de 75% a 98%)

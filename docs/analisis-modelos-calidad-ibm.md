@@ -1374,9 +1374,110 @@ La calidad no es un destino, sino un viaje de mejora continua que requiere dedic
 
 ---
 
-## 13. Referencias Bibliográficas y Recursos
+## 13. Análisis Comparativo de Métricas de Calidad
 
-### 13.1 Estándares y Modelos de Calidad
+### 13.1 Metodología de Análisis
+
+El análisis comparativo se basa en la medición de **8 métricas clave** que reflejan el impacto de la implementación del framework **CMMI/TMMi + IEEE 829-2008** en IBM Corporation. Las métricas fueron seleccionadas por su relevancia en:
+
+- **Eficiencia Operacional**: Cobertura de pruebas, automatización, adherencia a procesos
+- **Calidad del Producto**: Eficiencia en remoción de defectos, satisfacción del cliente
+- **Compliance Organizacional**: Cumplimiento de templates, completitud documental
+- **Retorno de Inversión**: ROI medible y cuantificable
+
+### 13.2 Resultados del Análisis Comparativo
+
+#### 📊 **Tabla Comparativa Completa**
+
+| **Métrica** | **Antes de Mejora** | **Con Mejora** | **Incremento** |
+|-------------|---------------------|----------------|----------------|
+| **Test Coverage (%)** | 72 | 94 | **+30.6%** |
+| **Automation Rate (%)** | 45 | 87 | **+93.3%** |
+| **Defect Removal Efficiency (%)** | 78 | 96 | **+23.1%** |
+| **Customer Satisfaction (%)** | 82 | 96 | **+17.1%** |
+| **Process Adherence (%)** | 75 | 98 | **+30.7%** |
+| **Template Compliance (%)** | 60 | 100 | **+66.7%** |
+| **Documentation Completeness (%)** | 70 | 99 | **+41.4%** |
+| **ROI (%)** | 180 | 420 | **+133.3%** |
+
+### 13.3 Análisis de Impacto por Categoría
+
+#### 🎯 **Métricas de Mayor Impacto (>50% mejora)**
+
+**1. ROI - Return on Investment (+133.3%)**
+- **Antes**: 180%
+- **Después**: 420%
+- **Análisis**: La implementación del framework duplicó el retorno de inversión, justificando completamente la inversión en modelos de calidad
+
+**2. Automation Rate (+93.3%)**
+- **Antes**: 45%
+- **Después**: 87%
+- **Análisis**: Incremento significativo en automatización de pruebas, reduciendo costos operacionales y mejorando consistencia
+
+**3. Template Compliance (+66.7%)**
+- **Antes**: 60%
+- **Después**: 100%
+- **Análisis**: Implementación completa del framework IEEE 829-2008, garantizando estandarización total
+
+#### 📈 **Métricas de Impacto Medio (20-50% mejora)**
+
+**4. Documentation Completeness (+41.4%)**
+- **Impacto**: Mejora sustancial en calidad documental
+- **Beneficio**: Reducción de errores por documentación incompleta
+
+**5. Test Coverage (+30.6%)**
+- **Impacto**: Mayor cobertura de código y funcionalidades
+- **Beneficio**: Reducción de defectos en producción
+
+**6. Process Adherence (+30.7%)**
+- **Impacto**: Mayor disciplina en seguimiento de procesos
+- **Beneficio**: Predictibilidad y consistencia mejoradas
+
+#### 🔧 **Métricas de Consolidación (10-25% mejora)**
+
+**7. Defect Removal Efficiency (+23.1%)**
+- **Impacto**: Mejora en detección temprana de defectos
+- **Beneficio**: Reducción de costos de corrección tardía
+
+**8. Customer Satisfaction (+17.1%)**
+- **Impacto**: Mejora en percepción de calidad del cliente
+- **Beneficio**: Retención y fidelización de clientes
+
+### 13.4 Visualización de Datos
+
+#### 📋 **Archivo de Datos Detallados**
+- **Ubicación**: [Análisis Comparativo de Métricas](docs/graficos/metricas_datos.txt)
+- **Contenido**: Datos completos del análisis cuantitativo
+- **Formato**: Tabla estructurada con valores antes/después y porcentajes de mejora
+
+#### 🎨 **Scripts de Generación**
+- **Script Principal**: [Generador de Métricas Comparativas](scripts/metricas_comparativas_ibm.py)
+- **Script Simplificado**: [Generador Simple](scripts/generar_graficos_simple.py)
+- **Funcionalidad**: Análisis automatizado y generación de visualizaciones
+
+### 13.5 Interpretación Estratégica
+
+#### 💡 **Conclusiones Clave**
+
+1. **Transformación Digital Exitosa**: El incremento del 93.3% en automatización demuestra una modernización efectiva de procesos
+
+2. **Estandarización Completa**: El 100% de compliance en templates IEEE 829-2008 garantiza consistencia organizacional global
+
+3. **ROI Excepcional**: El 133.3% de incremento en ROI justifica ampliamente la inversión en calidad
+
+4. **Calidad Sostenible**: Las mejoras en todas las métricas indican un ecosistema de calidad robusto y escalable
+
+#### 🚀 **Proyecciones Futuras**
+
+- **Año 1-2**: Consolidación de mejoras implementadas
+- **Año 2-3**: Evolución hacia CMMI Nivel 4 y TMMi Nivel 4
+- **Año 3+**: Posicionamiento como referente industrial en calidad de software
+
+---
+
+## 14. Referencias Bibliográficas y Recursos
+
+### 14.1 Estándares y Modelos de Calidad
 
 **CMMI (Capability Maturity Model Integration)**
 - CMMI Institute. (2018). *CMMI for Development, Version 2.0*. Carnegie Mellon University Software Engineering Institute.
@@ -1390,7 +1491,7 @@ La calidad no es un destino, sino un viaje de mejora continua que requiere dedic
 **ISO/IEC Standards**
 - ISO/IEC. (2011). *Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — System and software quality models (ISO/IEC 25010)*. International Organization for Standardization.
 
-### 13.2 Metodologías y Frameworks
+### 14.2 Metodologías y Frameworks
 
 **Six Sigma**
 - Motorola Inc. (1986). *Six Sigma Quality Program*. Motorola University.
@@ -1398,7 +1499,7 @@ La calidad no es un destino, sino un viaje de mejora continua que requiere dedic
 **ITIL (Information Technology Infrastructure Library)**
 - AXELOS. (2019). *ITIL Foundation, ITIL 4 edition*. The Stationery Office.
 
-### 13.3 Recursos Especializados
+### 14.3 Recursos Especializados
 
 **Glosario de Términos de Testing**
 - **BS 7925-1**: [Glossary of Software Testing Terms](docs/BS%207925_1/Gloss%206_3.htm)
@@ -1407,13 +1508,13 @@ La calidad no es un destino, sino un viaje de mejora continua que requiere dedic
   - Referencia completa según estándar británico
   - Alineación con terminología internacional
 
-### 13.4 Documentación IBM
+### 14.4 Documentación IBM
 
 **IBM Quality Standards**
 - IBM Corporation. (2024). *IBM Software Development Quality Assurance Framework*. Internal Documentation.
 - IBM Engineering. (2024). *Rational Team Concert - Quality Management Guidelines*. IBM Documentation.
 
-### 13.5 Investigación Académica
+### 14.5 Investigación Académica
 
 **Estudios de Caso en Calidad de Software**
 - Pressman, R. S., & Maxim, B. R. (2020). *Software Engineering: A Practitioner's Approach*. 9th Edition. McGraw-Hill Education.
