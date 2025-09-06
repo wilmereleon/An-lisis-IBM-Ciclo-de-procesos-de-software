@@ -1,0 +1,119 @@
+@startuml Proceso_Actual_IBM_Fragmentado_Vertical
+!theme plain
+title Proceso Actual de Calidad del Software IBM\nDesarrollo de Software - Estado Fragmentado
+skinparam backgroundColor #FFFFFF
+skinparam defaultTextAlignment center
+skinparam linetype ortho
+
+' Configuración de estilos para orientación vertical
+skinparam rectangle {
+    BackgroundColor #E8F4FD
+    BorderColor #2E86AB
+    FontSize 11
+}
+
+skinparam note {
+    BackgroundColor #FFF9E6
+    BorderColor #FF8C00
+    FontSize 10
+}
+
+' === FASE 1: ANÁLISIS Y PLANIFICACIÓN ===
+rectangle "**FASE 1: ANÁLISIS Y PLANIFICACIÓN**\n📋 Levantamiento de Requisitos" as fase1 #E8F4FD {
+    rectangle "Actividades Principales:\n• Análisis requisitos funcionales\n• Definición de casos de uso\n• Estimación de esfuerzo" as act1
+    
+    rectangle "Pruebas Asociadas:\n• Validación de requisitos\n• Criterios de aceptación\n• Trazabilidad de historias" as test1
+    
+    rectangle "**Estándares Fragmentados:**" as std1 {
+        rectangle "IEEE 829/ISO 29119\n📄 Documentación" as ieee1 #LightBlue
+        rectangle "CMMI Level 3\n🏗️ Gestión Procesos" as cmmi1 #LightGreen  
+        rectangle "Metodologías Ágiles\n⚡ Scrum/Kanban" as agile1 #LightYellow
+    }
+}
+
+' === FASE 2: DISEÑO Y ARQUITECTURA ===
+rectangle "**FASE 2: DISEÑO Y ARQUITECTURA**\n🎨 Elaboración del Diseño" as fase2 #F0E6FF {
+    rectangle "Actividades Principales:\n• Diseño de arquitectura\n• Prototipos de interfaz\n• Especificación técnica" as act2
+    
+    rectangle "Pruebas Asociadas:\n• Revisión de diseño\n• Validación de arquitectura\n• Pruebas de concepto" as test2
+    
+    rectangle "**Estándares Fragmentados:**" as std2 {
+        rectangle "ISO/IEC 25010\n🏗️ Atributos Calidad" as iso2 #LightCyan
+        rectangle "DevOps/CI-CD\n🚀 Integración Continua" as devops2 #LightPink
+    }
+}
+
+' === FASE 3: DESARROLLO Y CONSTRUCCIÓN ===
+rectangle "**FASE 3: DESARROLLO Y CONSTRUCCIÓN**\n💻 Implementación del Software" as fase3 #E6FFF0 {
+    rectangle "Actividades Principales:\n• Codificación de módulos\n• Integración de componentes\n• Revisión de código" as act3
+    
+    rectangle "Pruebas Asociadas:\n• Pruebas unitarias\n• Pruebas de integración\n• Análisis de cobertura" as test3
+    
+    rectangle "**Estándares Fragmentados:**" as std3 {
+        rectangle "TMMi Level 3\n🧪 Madurez Testing" as tmmi3 #LightSalmon
+        rectangle "Automatización\n🤖 Herramientas" as auto3 #LightSteelBlue
+        rectangle "Six Sigma\n📊 Análisis Estadístico" as sigma3 #LightGoldenRodYellow
+    }
+}
+
+' === FASE 4: INTEGRACIÓN Y VERIFICACIÓN ===
+rectangle "**FASE 4: INTEGRACIÓN Y VERIFICACIÓN**\n🔗 Integración del Sistema" as fase4 #FFE6F0 {
+    rectangle "Actividades Principales:\n• Integración de sistemas\n• Configuración de ambientes\n• Gestión de servicios" as act4
+    
+    rectangle "Pruebas Asociadas:\n• Pruebas de sistema\n• Pruebas de rendimiento\n• Validación de servicios" as test4
+    
+    rectangle "**Estándares Fragmentados:**" as std4 {
+        rectangle "ITIL v4\n⚙️ Gestión Servicios TI" as itil4 #LightGray
+    }
+}
+
+' === FASE 5: DESPLIEGUE Y OPERACIÓN ===
+rectangle "**FASE 5: DESPLIEGUE Y OPERACIÓN**\n🚀 Puesta en Producción" as fase5 #F0FFE6 {
+    rectangle "Actividades Principales:\n• Despliegue en producción\n• Monitoreo operativo\n• Mantenimiento del sistema" as act5
+    
+    rectangle "Pruebas Asociadas:\n• Pruebas de aceptación\n• Pruebas de regresión\n• Monitoreo continuo" as test5
+    
+    rectangle "**Estándares Fragmentados:**" as std5 {
+        rectangle "ITIL v4\n📦 Gestión Operativa" as itil5 #LightGray
+        rectangle "SPICE ISO/IEC 15504\n🔍 Evaluación Procesos" as spice5 #LightSteelBlue
+    }
+}
+
+' === RELACIONES VERTICALES ===
+fase1 -down-> fase2 : "Salida alimenta"
+fase2 -down-> fase3 : "Salida alimenta"
+fase3 -down-> fase4 : "Salida alimenta"
+fase4 -down-> fase5 : "Salida alimenta"
+
+' === MÉTRICAS TRANSVERSALES ===
+note right of fase1 : **Métricas Fase 1:**\n• % Completitud requisitos: 78%\n• Tiempo promedio análisis: 4.2 semanas
+note right of fase2 : **Métricas Fase 2:**\n• % Cobertura atributos: 65%\n• Defectos diseño: 12/proyecto
+note right of fase3 : **Métricas Fase 3:**\n• Cobertura pruebas: 70%\n• Densidad defectos: 8.5/KLOC
+note right of fase4 : **Métricas Fase 4:**\n• Disponibilidad servicios: 94%\n• Tiempo integración: 3.1 semanas
+note right of fase5 : **Métricas Fase 5:**\n• Success rate deploy: 87%\n• MTTR: 4.2 horas
+
+' === PROBLEMÁTICAS IDENTIFICADAS ===
+note left of fase1 : **⚠️ PROBLEMÁTICA 1:**\nDesconexión entre\ndocumentación formal\ny agilidad operativa
+note left of fase2 : **⚠️ PROBLEMÁTICA 2:**\nAtributos de calidad\naislados del pipeline\nde integración continua
+note left of fase3 : **⚠️ PROBLEMÁTICA 3:**\nTesting automatizado\nsin métricas estadísticas\nintegradas (Six Sigma)
+note left of fase4 : **⚠️ PROBLEMÁTICA 4:**\nITIL aplicado\nprincipalmente reactivo,\nno preventivo
+note left of fase5 : **⚠️ PROBLEMÁTICA 5:**\nSPICE utilizado solo\npara auditorías,\nno mejora continua
+
+' === LEYENDA DE FRAGMENTACIÓN ===
+legend bottom
+**ANÁLISIS DE FRAGMENTACIÓN:**
+|<color:#LightBlue>IEEE 829/ISO 29119</color>| Documentación estándar |
+|<color:#LightGreen>CMMI</color>| Gestión de procesos |
+|<color:#LightYellow>Metodologías Ágiles</color>| Flexibilidad operativa |
+|<color:#LightCyan>ISO/IEC 25010</color>| Atributos de calidad |
+|<color:#LightPink>DevOps/CI-CD</color>| Integración continua |
+|<color:#LightSalmon>TMMi</color>| Madurez en testing |
+|<color:#LightSteelBlue>Automatización</color>| Herramientas automáticas |
+|<color:#LightGoldenRodYellow>Six Sigma</color>| Análisis estadístico |
+|<color:#LightGray>ITIL</color>| Gestión de servicios TI |
+
+**RESULTADO:** 8+ estándares aplicados de forma descoordinada
+**IMPACTO:** 35% tiempo perdido, 40% sobrecostos por fragmentación
+endlegend
+
+@enduml

@@ -1,0 +1,106 @@
+@startuml Solucion_Integrada_IBM_Vertical_Sintetizada
+!theme plain
+title Propuesta de Framework Integrado de Calidad - IBM\nSolución Unificada (Sintetizada)
+
+skinparam rectangle<<behavior>> {
+    roundCorner 25
+}
+
+sprite $bProcess jar:archimate/business-process
+sprite $aService jar:archimate/application-service
+sprite $aComponent jar:archimate/application-component
+sprite $tArtifact jar:archimate/technology-artifact
+
+skinparam backgroundColor #FFFFFF
+skinparam defaultTextAlignment center
+
+' === GOVERNANCE UNIFICADO ===
+rectangle "🎯 Centro de Excelencia\nde Calidad de Software" as governance <<$bProcess>><<behavior>> #4A90E2
+
+' === FRAMEWORK INTEGRADO ===
+rectangle "📊 Framework Integrado\nde Calidad" as framework <<$bProcess>><<behavior>> #E8F4FD
+
+' === FASES INTEGRADAS ===
+rectangle "Análisis y\nPlanificación\nIntegrados" as fase1 <<$aService>><<behavior>> #E6F3FF {
+    rectangle "IEEE 829 + CMMI + Ágiles\n→ Plan Maestro Unificado" as int1
+}
+
+rectangle "Diseño y\nArquitectura\nIntegrados" as fase2 <<$aService>><<behavior>> #F0E6FF {
+    rectangle "ISO 25010 + DevOps\n→ Pipeline Automatizado" as int2
+}
+
+rectangle "Desarrollo y\nPruebas\nIntegrados" as fase3 <<$aService>><<behavior>> #E6FFF0 {
+    rectangle "TMMi + Six Sigma + Auto\n→ Testing Inteligente" as int3
+}
+
+rectangle "Integración y\nServicios\nUnificados" as fase4 <<$aService>><<behavior>> #FFE6F0 {
+    rectangle "ITIL Proactivo\n→ Servicios Optimizados" as int4
+}
+
+rectangle "Despliegue y\nOperación\nContinua" as fase5 <<$aService>><<behavior>> #F0FFE6 {
+    rectangle "SPICE + ITIL Preventivo\n→ Mejora Continua" as int5
+}
+
+' === PLATAFORMA TECNOLÓGICA UNIFICADA ===
+rectangle "🔧 Plataforma Tecnológica\nUnificada" as plataforma <<$aComponent>> #F5F5F5 {
+    rectangle "Testing + CI/CD + Analytics\n→ Ecosystem Integrado" as tools_unified
+}
+
+' === SISTEMA DE MÉTRICAS INTEGRADO ===
+rectangle "📈 Dashboard de\nMétricas Integrado" as metricas <<$tArtifact>> #FFFACD {
+    rectangle "KPIs Negocio + Técnicos + Madurez\n→ Visibilidad 360°" as kpis_unified
+}
+
+' === BENEFICIOS CUANTIFICADOS ===
+rectangle "💰 Beneficios\nCuantificados" as beneficios <<$tArtifact>> #E8F5E8 {
+    rectangle "ROI >200%\nReducción 40% costos\nMejora 50% productividad" as roi_unified
+}
+
+' === COMPOSICIÓN Y FLUJO VERTICAL ===
+governance *-down- framework
+framework *-down- fase1
+framework *-down- fase2
+framework *-down- fase3
+framework *-down- fase4
+framework *-down- fase5
+
+' === FLUJO SECUENCIAL ===
+fase1 -down->> fase2
+fase2 -down->> fase3
+fase3 -down->> fase4
+fase4 -down->> fase5
+
+' === SOPORTE TECNOLÓGICO ===
+framework -down-> plataforma : "utiliza"
+plataforma -down-> metricas : "genera"
+metricas -down-> beneficios : "produce"
+
+' === ROADMAP DE IMPLEMENTACIÓN ===
+rectangle "📅 Roadmap de\nImplementación" as roadmap <<$aComponent>> #FFE6E6 {
+    rectangle "Q1: Fundación\nQ2: Piloto\nQ3: Expansión\nQ4: Madurez" as timeline
+}
+
+governance -down-> roadmap : "ejecuta"
+
+' === TRANSFORMACIÓN CLAVE ===
+note right of governance : **GOVERNANCE:**\nPolíticas unificadas\nEstándares integrados\nDecisiones centralizadas
+
+note right of framework : **INTEGRACIÓN:**\nDe 8+ estándares fragmentados\n→ Framework único coherente\n→ Procesos estandarizados
+
+note right of plataforma : **TECNOLOGÍA:**\nEcosystem unificado\nAutomatización inteligente\nVisibilidad integral
+
+note right of beneficios : **RESULTADOS:**\n40% ↓ costos testing\n35% ↓ tiempo desarrollo\n70% ↓ defectos producción\n50% ↑ productividad
+
+legend bottom
+**TRANSFORMACIÓN INTEGRAL:**
+====
+**ANTES:** 8+ estándares fragmentados, silos operativos, métricas dispersas
+**DESPUÉS:** Framework integrado único, governance centralizado, dashboard unificado
+====
+**IMPACTO:** ROI >200% en 18 meses, excelencia operacional sostenible
+====
+<$bProcess> : Proceso de negocio | <$aService> : Servicio de aplicación
+<$aComponent> : Componente aplicación | <$tArtifact> : Artefacto tecnológico
+endlegend
+
+@enduml

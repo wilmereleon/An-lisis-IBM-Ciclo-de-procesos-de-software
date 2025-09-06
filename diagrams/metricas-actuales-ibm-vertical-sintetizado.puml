@@ -1,0 +1,102 @@
+@startuml Metricas_Actuales_IBM_Vertical_Sintetizado
+!theme plain
+title Métricas Actuales de Calidad del Software - IBM\nSistema de Medición Fragmentado (Sintetizado)
+
+skinparam rectangle<<behavior>> {
+    roundCorner 25
+}
+
+sprite $bProcess jar:archimate/business-process
+sprite $aService jar:archimate/application-service
+sprite $aComponent jar:archimate/application-component
+sprite $tArtifact jar:archimate/technology-artifact
+
+skinparam backgroundColor #FFFFFF
+skinparam defaultTextAlignment center
+
+' === SISTEMA DE MÉTRICAS ACTUAL ===
+rectangle "📊 Sistema de Métricas\nActual IBM" as sistema_metricas <<$bProcess>><<behavior>> #Business
+
+' === MÉTRICAS POR FASE DEL CICLO DE VIDA ===
+rectangle "📋 Fase: Análisis y\nPlanificación" as fase_analisis <<$aService>><<behavior>> #E6F3FF {
+    rectangle "**Métricas IEEE/CMMI:**\n• % Completitud requisitos: 78%\n• Tiempo promedio análisis: 4.2 sem\n• Trazabilidad historias: 65%" as metricas_analisis
+}
+
+rectangle "🎨 Fase: Diseño y\nArquitectura" as fase_diseno <<$aService>><<behavior>> #F0E6FF {
+    rectangle "**Métricas ISO 25010:**\n• % Cobertura atributos: 65%\n• Defectos de diseño: 12/proyecto\n• Tiempo validación: 2.8 sem" as metricas_diseno
+}
+
+rectangle "💻 Fase: Desarrollo y\nConstrucción" as fase_desarrollo <<$aService>><<behavior>> #E6FFF0 {
+    rectangle "**Métricas TMMi/Six Sigma:**\n• Cobertura de pruebas: 70%\n• Densidad defectos: 8.5/KLOC\n• Eficiencia testing: 85%" as metricas_desarrollo
+}
+
+rectangle "🔗 Fase: Integración y\nVerificación" as fase_integracion <<$aService>><<behavior>> #FFE6F0 {
+    rectangle "**Métricas ITIL:**\n• Disponibilidad servicios: 94%\n• Tiempo integración: 3.1 sem\n• Incidents resueltos: 87%" as metricas_integracion
+}
+
+rectangle "🚀 Fase: Despliegue y\nOperación" as fase_despliegue <<$aService>><<behavior>> #F0FFE6 {
+    rectangle "**Métricas ITIL/SPICE:**\n• Success rate deploy: 87%\n• MTTR: 4.2 horas\n• Madurez procesos: Level 3" as metricas_despliegue
+}
+
+' === COMPOSICIÓN VERTICAL ===
+sistema_metricas *-down- fase_analisis
+sistema_metricas *-down- fase_diseno
+sistema_metricas *-down- fase_desarrollo
+sistema_metricas *-down- fase_integracion
+sistema_metricas *-down- fase_despliegue
+
+' === FLUJO SECUENCIAL ===
+fase_analisis -down->> fase_diseno
+fase_diseno -down->> fase_desarrollo
+fase_desarrollo -down->> fase_integracion
+fase_integracion -down->> fase_despliegue
+
+' === HERRAMIENTAS DE MEDICIÓN FRAGMENTADAS ===
+rectangle "🔧 Herramientas de\nMedición Fragmentadas" as herramientas <<$aComponent>> #F5F5F5 {
+    rectangle "**Por Fase:**\n• JIRA (Análisis)\n• SonarQube (Desarrollo)\n• LoadRunner (Performance)\n• Splunk (Monitoreo)\n• Excel (Reportes)" as tools_fragmentadas
+}
+
+herramientas -up-> sistema_metricas : "alimenta"
+
+' === DASHBOARDS DISPERSOS ===
+rectangle "📈 Dashboards\nDispersos" as dashboards <<$tArtifact>> #FFFACD {
+    rectangle "**Múltiples Vistas:**\n• Dashboard CMMI (Gestión)\n• Dashboard DevOps (CI/CD)\n• Dashboard ITIL (Servicios)\n• Reportes manuales (Excel)\n• KPIs desalineados" as dash_fragmentados
+}
+
+sistema_metricas -down-> dashboards : "produce"
+
+' === PROBLEMÁTICAS DE LAS MÉTRICAS ===
+rectangle "⚠️ Problemáticas\nIdentificadas" as problemas <<$tArtifact>> #FFE6E6 {
+    rectangle "**Fragmentación:**\n• Métricas desalineadas\n• Silos de información\n• Falta de visibilidad integral\n• Decisiones lentas\n• ROI no medible" as problemas_metricas
+}
+
+dashboards -down-> problemas : "genera"
+
+' === MÉTRICAS CLAVE ACTUALES ===
+note right of fase_analisis : **KPI Crítico:**\n78% completitud\n(Objetivo: >90%)
+
+note right of fase_diseno : **KPI Crítico:**\n65% cobertura atributos\n(Objetivo: >85%)
+
+note right of fase_desarrollo : **KPI Crítico:**\n70% cobertura pruebas\n(Objetivo: >90%)
+
+note right of fase_integracion : **KPI Crítico:**\n94% disponibilidad\n(Objetivo: >99%)
+
+note right of fase_despliegue : **KPI Crítico:**\n87% success rate\n(Objetivo: >95%)
+
+' === IMPACTO EN EL NEGOCIO ===
+note left of sistema_metricas : **IMPACTO ACTUAL:**\n• 35% tiempo perdido\n• 40% sobrecostos\n• Decisiones tardías\n• Calidad inconsistente
+
+legend bottom
+**ANÁLISIS DEL SISTEMA ACTUAL DE MÉTRICAS:**
+====
+**FORTALEZAS:** Métricas especializadas por fase, herramientas robustas
+**DEBILIDADES:** Fragmentación, falta de integración, visibilidad limitada
+**OPORTUNIDADES:** Integración en dashboard único, automatización
+**AMENAZAS:** Decisiones tardías, pérdida competitividad
+====
+**CONCLUSIÓN:** Sistema fragmentado requiere integración urgente
+====
+Métricas por estándar: IEEE 829 | CMMI | ISO 25010 | TMMi | ITIL | SPICE
+endlegend
+
+@enduml

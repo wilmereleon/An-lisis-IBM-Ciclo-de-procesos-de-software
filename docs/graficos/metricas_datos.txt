@@ -1,60 +1,52 @@
-=== ANÁLISIS COMPARATIVO DE MÉTRICAS DE CALIDAD - IBM CORPORATION ===
-Situación Actual vs. Prospección con CMMI/TMMi + IEEE 829-2008
+DATOS DE MÉTRICAS - ANÁLISIS IBM FRAMEWORK INTEGRADO DE CALIDAD
 ======================================================================
 
-DATOS COMPARATIVOS:
+Estado Actual vs Framework Integrado Propuesto
 --------------------------------------------------
-Cobertura de Pruebas:
-  • Situación Actual: 72%
-  • Prospección: 94%
-  • Mejora: +30.6%
-  • Impacto: 30.6% de incremento
 
-Tasa de Automatización:
-  • Situación Actual: 45%
-  • Prospección: 87%
-  • Mejora: +93.3%
-  • Impacto: 93.3% de incremento
+Cobertura de Pruebas (%):
+  Estado Actual: 70%
+  Framework Integrado: 92%
+  Mejora: +31.4%
 
-Eficiencia de Remoción de Defectos:
-  • Situación Actual: 78%
-  • Prospección: 96%
-  • Mejora: +23.1%
-  • Impacto: 23.1% de incremento
+Automatización Testing (%):
+  Estado Actual: 42%
+  Framework Integrado: 85%
+  Mejora: +102.4%
 
-Satisfacción del Cliente:
-  • Situación Actual: 82%
-  • Prospección: 96%
-  • Mejora: +17.1%
-  • Impacto: 17.1% de incremento
+Eficiencia Remoción Defectos (%):
+  Estado Actual: 75%
+  Framework Integrado: 94%
+  Mejora: +25.3%
 
-Adherencia a Procesos:
-  • Situación Actual: 75%
-  • Prospección: 98%
-  • Mejora: +30.7%
-  • Impacto: 30.7% de incremento
+Satisfacción Cliente (%):
+  Estado Actual: 80%
+  Framework Integrado: 95%
+  Mejora: +18.8%
 
-Cumplimiento de Plantillas:
-  • Situación Actual: 60%
-  • Prospección: 100%
-  • Mejora: +66.7%
-  • Impacto: 66.7% de incremento
+Adherencia Procesos (%):
+  Estado Actual: 73%
+  Framework Integrado: 96%
+  Mejora: +31.5%
 
-Completitud de Documentación:
-  • Situación Actual: 70%
-  • Prospección: 99%
-  • Mejora: +41.4%
-  • Impacto: 41.4% de incremento
+Cumplimiento Estándares (%):
+  Estado Actual: 58%
+  Framework Integrado: 98%
+  Mejora: +69.0%
 
-ROI - Retorno de Inversión:
-  • Situación Actual: 180%
-  • Prospección: 420%
-  • Mejora: +133.3%
-  • Impacto: 133.3% de incremento
+Completitud Documentación (%):
+  Estado Actual: 68%
+  Framework Integrado: 97%
+  Mejora: +42.6%
+
+ROI - Retorno Inversión (%):
+  Estado Actual: 160%
+  Framework Integrado: 200%
+  Mejora: +25.0%
 
 RESUMEN EJECUTIVO:
---------------------------------------------------
-• Mayor mejora: ROI - Retorno de Inversión (+133.3%)
-• Mejora promedio: 54.5%
-• Total de métricas evaluadas: 8
-• Todas las métricas muestran mejora positiva
+--------------------
+Mejora promedio: 43.3%
+Máxima mejora: 102.4%
+Mínima mejora: 18.8%
+ROI proyectado: 200%

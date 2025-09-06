@@ -1,0 +1,119 @@
+@startuml Solucion_Integrada_IBM_Vertical
+!theme plain
+title Propuesta de Integración de Procesos de Calidad del Software\nIBM - Framework Integrado para Desarrollo de Software
+skinparam backgroundColor #FFFFFF
+skinparam defaultTextAlignment center
+skinparam roundcorner 10
+
+' === GOVERNANCE UNIFICADO ===
+rectangle "**🎯 GOVERNANCE DE CALIDAD UNIFICADO**" as governance #4A90E2 {
+    rectangle "Centro de Excelencia\nde Calidad de Software" as coe #ffffff
+    rectangle "Políticas y\nEstándares Unificados" as politicas #ffffff
+    rectangle "Dashboard\nIntegrado de Métricas" as dashboard_unified #ffffff
+}
+
+' === FRAMEWORK INTEGRADO POR FASES ===
+package "📊 FRAMEWORK INTEGRADO DE CALIDAD" as framework #E8F4FD {
+    
+    ' FASE 1: ANÁLISIS Y PLANIFICACIÓN
+    rectangle "**FASE 1: ANÁLISIS Y PLANIFICACIÓN**" as fase1 #E6F3FF {
+        rectangle "🔍 **Entrada Integrada:**\n• Requisitos del cliente\n• Análisis de riesgo (CMMI KPA)\n• Backlog priorizado (Agile)\n• Criterios de calidad (ISO 29119)" as entrada1
+        
+        rectangle "⚙️ **Proceso Unificado:**\n• Documentación estándar (IEEE 829)\n• Evaluación madurez (CMMI Level 3)\n• Sprint planning ágil\n• Test strategy (ISO/IEC 29119-2)" as proceso1
+        
+        rectangle "📤 **Salida Controlada:**\n• Plan maestro de pruebas\n• Casos de uso validados\n• Sprints definidos\n• Criterios de aceptación" as salida1
+    }
+    
+    ' FASE 2: DISEÑO Y ARQUITECTURA
+    rectangle "**FASE 2: DISEÑO Y ARQUITECTURA**" as fase2 #F0E6FF {
+        rectangle "🔍 **Entrada Integrada:**\n• Arquitectura de calidad (ISO/IEC 25010)\n• Pipeline CI/CD (DevOps)\n• Casos de prueba base (ISO 29119)\n• Métricas objetivo (Six Sigma)" as entrada2
+        
+        rectangle "⚙️ **Proceso Unificado:**\n• Diseño con atributos de calidad\n• Integración continua automatizada\n• Test design specification\n• Control estadístico de procesos" as proceso2
+        
+        rectangle "📤 **Salida Controlada:**\n• Arquitectura validada\n• Pipeline configurado\n• Casos de prueba diseñados\n• Baseline de métricas" as salida2
+    }
+    
+    ' FASE 3: DESARROLLO Y PRUEBAS
+    rectangle "**FASE 3: DESARROLLO Y PRUEBAS**" as fase3 #E6FFF0 {
+        rectangle "🔍 **Entrada Integrada:**\n• Código con calidad (TMMi)\n• Automatización (DevOps)\n• Análisis estadístico (Six Sigma)\n• Casos ejecutables (ISO 29119)" as entrada3
+        
+        rectangle "⚙️ **Proceso Unificado:**\n• Testing multi-nivel (TMMi Level 4)\n• Integración/deployment automático\n• Control estadístico de defectos\n• Execution management" as proceso3
+        
+        rectangle "📤 **Salida Controlada:**\n• Código probado y validado\n• Build automatizado\n• Métricas de calidad\n• Reportes de testing" as salida3
+    }
+    
+    ' FASE 4: INTEGRACIÓN Y SERVICIOS
+    rectangle "**FASE 4: INTEGRACIÓN Y SERVICIOS**" as fase4 #FFE6F0 {
+        rectangle "🔍 **Entrada Integrada:**\n• Servicios integrados (ITIL)\n• Sistema completo (ISO 29119)\n• Métricas consolidadas\n• Ambiente productivo" as entrada4
+        
+        rectangle "⚙️ **Proceso Unificado:**\n• Gestión de servicios de TI\n• System/acceptance testing\n• Monitoreo consolidado\n• Service level management" as proceso4
+        
+        rectangle "📤 **Salida Controlada:**\n• Sistema integrado\n• Servicios operativos\n• Métricas de servicio\n• SLA establecidos" as salida4
+    }
+    
+    ' FASE 5: DESPLIEGUE Y OPERACIÓN
+    rectangle "**FASE 5: DESPLIEGUE Y OPERACIÓN**" as fase5 #F0FFE6 {
+        rectangle "🔍 **Entrada Integrada:**\n• Release management (ITIL)\n• Evaluación continua (SPICE)\n• Métricas operativas\n• Feedback del cliente" as entrada5
+        
+        rectangle "⚙️ **Proceso Unificado:**\n• Deployment controlado\n• Process assessment proactivo\n• Monitoreo 24/7\n• Mejora continua" as proceso5
+        
+        rectangle "📤 **Salida Controlada:**\n• Sistema en producción\n• Procesos optimizados\n• Métricas operativas\n• Lecciones aprendidas" as salida5
+    }
+}
+
+' === HERRAMIENTAS Y PLATAFORMAS INTEGRADAS ===
+rectangle "**🔧 PLATAFORMA TECNOLÓGICA UNIFICADA**" as plataforma #F5F5F5 {
+    rectangle "🔧 **Herramientas Testing:**\n• IBM Rational Test (Enterprise)\n• Selenium Grid (Web)\n• Performance Center (Load)\n• Mobile Testing Suite" as tools_testing
+    
+    rectangle "🚀 **Pipeline CI/CD:**\n• IBM UrbanCode (Deploy)\n• Jenkins (Build)\n• Nexus (Artifacts)\n• SonarQube (Quality Gates)" as tools_cicd
+    
+    rectangle "📊 **Analytics Integrado:**\n• IBM Cognos (Reporting)\n• Grafana (Real-time)\n• Tableau (Business Intelligence)\n• Custom Dashboards" as tools_analytics
+    
+    rectangle "🔍 **Monitoreo 360:**\n• APM (Application Performance)\n• Log Analysis (ELK Stack)\n• Infrastructure (Zabbix)\n• Business Metrics" as tools_monitoring
+}
+
+' === MÉTRICAS INTEGRADAS ===
+rectangle "**📈 SISTEMA DE MÉTRICAS INTEGRADO**" as metricas #FFFACD {
+    rectangle "📈 **KPIs de Negocio:**\n• Time-to-market: -30%\n• Customer satisfaction: >95%\n• Defects in production: <0.1%\n• ROI mejora calidad: >200%" as kpis_negocio
+    
+    rectangle "🔬 **Métricas Técnicas:**\n• Test coverage: >90%\n• Automated tests: >80%\n• Build success rate: >98%\n• Mean time to recovery: <2h" as kpis_tecnicas
+    
+    rectangle "🏆 **Madurez de Procesos:**\n• CMMI Level: 4-5\n• TMMi Level: 4-5\n• DevOps maturity: Advanced\n• ISO 29119 compliance: 100%" as kpis_madurez
+}
+
+' === BENEFICIOS ESPERADOS ===
+rectangle "**💰 BENEFICIOS DE LA INTEGRACIÓN**" as beneficios #E8F5E8 {
+    rectangle "💰 **Beneficios Económicos:**\n• Reducción costos testing: 40%\n• Reducción tiempo desarrollo: 35%\n• Reducción defectos producción: 70%\n• Aumento productividad: 50%" as ben_economicos
+    
+    rectangle "⚡ **Beneficios Operativos:**\n• Procesos estandarizados\n• Visibilidad integral\n• Decisiones basadas en datos\n• Mejora continua automatizada" as ben_operativos
+    
+    rectangle "🎯 **Beneficios Estratégicos:**\n• Ventaja competitiva sostenible\n• Capacidad de escalamiento\n• Reducción riesgos operativos\n• Excelencia operacional" as ben_estrategicos
+}
+
+' === ROADMAP DE IMPLEMENTACIÓN ===
+rectangle "**📅 ROADMAP DE IMPLEMENTACIÓN**" as roadmap #FFE6E6 {
+    rectangle "📅 **Q1 2024:** Fundación\n• Centro de Excelencia\n• Governance framework\n• Tooling básico\n• Equipo núcleo" as q1
+    
+    rectangle "📅 **Q2 2024:** Piloto\n• Proyecto piloto\n• Procesos integrados básicos\n• Métricas iniciales\n• Lecciones aprendidas" as q2
+    
+    rectangle "📅 **Q3 2024:** Expansión\n• Rollout departamental\n• Automatización avanzada\n• Dashboard completo\n• Training extensivo" as q3
+    
+    rectangle "📅 **Q4 2024:** Madurez\n• Organización completa\n• Optimización continua\n• Certificaciones\n• Benchmark industry" as q4
+}
+
+' === CONEXIONES DEL FLUJO VERTICAL ===
+governance -down-> fase1 : "Gobierna"
+fase1 -down-> fase2 : "Alimenta"
+fase2 -down-> fase3 : "Alimenta"
+fase3 -down-> fase4 : "Alimenta"
+fase4 -down-> fase5 : "Alimenta"
+
+framework -down-> plataforma : "Utiliza"
+plataforma -down-> metricas : "Genera"
+metricas -down-> beneficios : "Produce"
+beneficios -down-> roadmap : "Justifica"
+
+' === NOTA DE TRANSFORMACIÓN ===
+note bottom : **TRANSFORMACIÓN CLAVE:**\nDe 8+ estándares fragmentados → Framework integrado único\nDe silos operativos → Governance centralizado\nDe métricas dispersas → Dashboard unificado\nDe procesos manuales → Automatización inteligente\n\n**RESULTADO:** ROI >200%, reducción 40% costos, mejora 50% productividad
+
+@enduml

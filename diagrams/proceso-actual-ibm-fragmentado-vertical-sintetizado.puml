@@ -1,0 +1,100 @@
+@startuml Proceso_Actual_IBM_Fragmentado_Vertical_Sintetizado
+!theme plain
+title Proceso Actual de Calidad del Software - IBM\nEstado Fragmentado (Sintetizado)
+
+skinparam rectangle<<behavior>> {
+    roundCorner 25
+}
+
+sprite $bProcess jar:archimate/business-process
+sprite $aService jar:archimate/application-service
+sprite $aComponent jar:archimate/application-component
+sprite $tArtifact jar:archimate/technology-artifact
+
+skinparam backgroundColor #FFFFFF
+skinparam defaultTextAlignment center
+
+' === PROCESO PRINCIPAL ===
+rectangle "Desarrollo de\nSoftware IBM" as SDLC <<$bProcess>><<behavior>> #Business
+
+' === FASES DEL CICLO DE VIDA ===
+rectangle "Análisis y\nPlanificación" as AP <<$bProcess>><<behavior>> #E6F3FF
+rectangle "Diseño y\nArquitectura" as DIS <<$bProcess>><<behavior>> #F0E6FF
+rectangle "Desarrollo y\nConstrucción" as DEV <<$bProcess>><<behavior>> #E6FFF0
+rectangle "Integración y\nVerificación" as INT <<$bProcess>><<behavior>> #FFE6F0
+rectangle "Despliegue y\nOperación" as DEP <<$bProcess>><<behavior>> #F0FFE6
+
+' === COMPOSICIÓN VERTICAL ===
+SDLC *-down- AP
+SDLC *-down- DIS
+SDLC *-down- DEV
+SDLC *-down- INT
+SDLC *-down- DEP
+
+' === FLUJO SECUENCIAL ===
+AP -down->> DIS
+DIS -down->> DEV
+DEV -down->> INT
+INT -down->> DEP
+
+' === ESTÁNDARES FRAGMENTADOS POR FASE ===
+rectangle "IEEE 829/ISO 29119\nDocumentación" as IEEE1 <<$aService>><<behavior>> #LightBlue
+rectangle "CMMI Level 3\nGestión Procesos" as CMMI1 <<$aService>><<behavior>> #LightGreen
+rectangle "Metodologías Ágiles\nScrum/Kanban" as AGILE1 <<$aService>><<behavior>> #LightYellow
+
+rectangle "ISO/IEC 25010\nAtributos Calidad" as ISO2 <<$aService>><<behavior>> #LightCyan
+rectangle "DevOps/CI-CD\nIntegración Continua" as DEVOPS2 <<$aService>><<behavior>> #LightPink
+
+rectangle "TMMi Level 3\nMadurez Testing" as TMMI3 <<$aService>><<behavior>> #LightSalmon
+rectangle "Automatización\nHerramientas" as AUTO3 <<$aService>><<behavior>> #LightSteelBlue
+rectangle "Six Sigma\nAnálisis Estadístico" as SIGMA3 <<$aService>><<behavior>> #LightGoldenRodYellow
+
+rectangle "ITIL v4\nGestión Servicios TI" as ITIL4 <<$aService>><<behavior>> #LightGray
+
+rectangle "SPICE ISO/IEC 15504\nEvaluación Procesos" as SPICE5 <<$aService>><<behavior>> #LightSteelBlue
+
+' === RELACIONES SERVICIOS-PROCESOS ===
+IEEE1 -up-> AP
+CMMI1 -up-> AP
+AGILE1 -up-> AP
+
+ISO2 -up-> DIS
+DEVOPS2 -up-> DIS
+
+TMMI3 -up-> DEV
+AUTO3 -up-> DEV
+SIGMA3 -up-> DEV
+
+ITIL4 -up-> INT
+
+ITIL4 -up-> DEP
+SPICE5 -up-> DEP
+
+' === MÉTRICAS CRÍTICAS ===
+rectangle "Métricas Fragmentadas:\n• Completitud requisitos: 78%\n• Cobertura atributos: 65%\n• Cobertura pruebas: 70%\n• Disponibilidad servicios: 94%\n• Success rate deploy: 87%" as METRICS <<$tArtifact>> #Technology
+
+METRICS -up-> SDLC : "Métricas dispersas"
+
+' === PROBLEMÁTICAS IDENTIFICADAS ===
+note right of AP : **PROBLEMÁTICA 1:**\nDesconexión entre\ndocumentación y agilidad
+note right of DIS : **PROBLEMÁTICA 2:**\nAtributos de calidad\naislados del pipeline CI/CD
+note right of DEV : **PROBLEMÁTICA 3:**\nTesting sin métricas\nestadísticas integradas
+note right of INT : **PROBLEMÁTICA 4:**\nITIL aplicado\nreactivamente
+note right of DEP : **PROBLEMÁTICA 5:**\nSPICE solo para\nauditorías
+
+legend bottom
+**ANÁLISIS DE FRAGMENTACIÓN:**
+|<color:#LightBlue>IEEE 829/ISO 29119</color>| Documentación estándar |
+|<color:#LightGreen>CMMI</color>| Gestión de procesos |
+|<color:#LightYellow>Metodologías Ágiles</color>| Flexibilidad operativa |
+|<color:#LightCyan>ISO/IEC 25010</color>| Atributos de calidad |
+|<color:#LightPink>DevOps/CI-CD</color>| Integración continua |
+|<color:#LightSalmon>TMMi</color>| Madurez en testing |
+|<color:#LightSteelBlue>Automatización</color>| Herramientas automáticas |
+|<color:#LightGoldenRodYellow>Six Sigma</color>| Análisis estadístico |
+|<color:#LightGray>ITIL</color>| Gestión de servicios TI |
+
+**IMPACTO:** 8+ estándares descoordinados → 35% tiempo perdido, 40% sobrecostos
+endlegend
+
+@enduml

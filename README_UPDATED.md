@@ -16,16 +16,10 @@ Análisis integral de modelos de calidad de software aplicados a IBM, con enfoqu
 
 #### **🎨 Diagramas PlantUML (Orientación Vertical para Word)**
 
-**Diagramas Principales (Versiones Sintetizadas):**
-- `diagrams/proceso-actual-ibm-fragmentado-vertical-sintetizado.puml` → `Proceso_Actual_IBM_Fragmentado_Vertical_Sintetizado.png`
-- `diagrams/archimate-calidad-ibm-vertical-sintetizado.puml` → `Arquitectura_Empresarial_Calidad_Vertical_Sintetizada.png`
-- `diagrams/solucion-integrada-ibm-vertical-sintetizado.puml` → `Solucion_Integrada_IBM_Vertical_Sintetizada.png`
-- `diagrams/metricas-actuales-ibm-vertical-sintetizado.puml` → `Metricas_Actuales_IBM_Vertical_Sintetizado.png`
-
-**Diagramas Detallados (Versiones Completas):**
+**Diagramas Principales:**
 - `diagrams/proceso-actual-ibm-fragmentado-vertical.puml` → `Proceso_Actual_IBM_Fragmentado_Vertical.png`
-- `diagrams/archimate-calidad-ibm-vertical.puml` → `Arquitectura_Empresarial_Calidad_Vertical.png`
-- `diagrams/solucion-integrada-ibm-vertical.puml` → `Solucion_Integrada_IBM_Vertical.png`
+- `diagrams/archimate-calidad-ibm-simple.puml` → `Arquitectura_Empresarial_Calidad_Simple.png`
+- `diagrams/solucion-integrada-simple.puml` → `Solucion_Integrada_Simple.png`
 
 **Diagramas Adicionales:**
 - `diagrams/comparativo-modelos-calidad.puml` → `comparativo-modelos-calidad.png`
@@ -98,16 +92,10 @@ Análisis integral de modelos de calidad de software aplicados a IBM, con enfoqu
 ### 🛠️ **Cómo Usar los Recursos**
 
 #### **Para Documentos Word:**
-1. **Diagramas Verticales Sintetizados** (Recomendados para documentos):
-   - `Proceso_Actual_IBM_Fragmentado_Vertical_Sintetizado.png` - Estado actual (limpio)
-   - `Arquitectura_Empresarial_Calidad_Vertical_Sintetizada.png` - Vista ArchiMate (sintetizada)
-   - `Solucion_Integrada_IBM_Vertical_Sintetizada.png` - Framework integrado (sintetizado)
-   - `Metricas_Actuales_IBM_Vertical_Sintetizado.png` - Sistema de métricas actual
-
-2. **Diagramas Verticales Detallados** (Para análisis profundo):
-   - `Proceso_Actual_IBM_Fragmentado_Vertical.png` - Estado actual (completo)
-   - `Arquitectura_Empresarial_Calidad_Vertical.png` - Arquitectura empresarial (detallada)
-   - `Solucion_Integrada_IBM_Vertical.png` - Framework integrado (completo)
+1. **Diagramas Verticales**: Usar archivos PNG de la carpeta `diagrams/`
+   - `Proceso_Actual_IBM_Fragmentado_Vertical.png` - Estado actual
+   - `Arquitectura_Empresarial_Calidad_Simple.png` - Arquitectura empresarial  
+   - `Solucion_Integrada_Simple.png` - Framework integrado
 
 2. **Gráficos Analíticos**: Usar archivos PNG de la carpeta `docs/graficos/`
    - `dashboard_metricas_completo.png` - Dashboard principal

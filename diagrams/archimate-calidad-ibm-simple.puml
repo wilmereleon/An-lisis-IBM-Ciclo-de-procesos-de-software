@@ -1,0 +1,116 @@
+@startuml Arquitectura_Empresarial_Calidad_Simple
+!theme plain
+title Arquitectura Empresarial de Procesos de Calidad del Software\nIBM - Desarrollo de Software (ArchiMate)
+
+skinparam backgroundColor #FFFFFF
+skinparam defaultTextAlignment center
+
+' === CAPA DE NEGOCIO ===
+package "CAPA DE NEGOCIO" as business_layer #E8F6E8 {
+    actor "Cliente Final" as cliente #FFE6CC
+    actor "Gerente Proyecto" as gerente #FFE6CC
+    actor "Product Owner" as po #FFE6CC
+    
+    usecase "Desarrollo Software" as servicio_dev #D4E6F1
+    usecase "Gestión Calidad" as gestion_calidad #D4E6F1
+    usecase "Auditoría Procesos" as auditoria #D4E6F1
+    
+    rectangle "PROCESO DE NEGOCIO:\nDesarrollo de Software" as proceso_negocio #AED6F1
+}
+
+' === CAPA DE APLICACIÓN ===
+package "CAPA DE APLICACIÓN" as application_layer #FFF2E6 {
+    
+    rectangle "SERVICIOS DE CALIDAD" as servicios_calidad #F8E6FF {
+        rectangle "Servicio Testing" as serv_testing
+        rectangle "Servicio Documentación" as serv_doc
+        rectangle "Servicio Métricas" as serv_metricas
+        rectangle "Servicio Integración" as serv_integracion
+    }
+    
+    rectangle "COMPONENTE ANÁLISIS:\nValidación Requisitos" as comp_analisis #E6F3FF {
+        rectangle "IEEE 829/ISO 29119" as doc_analisis
+        rectangle "CMMI Gestión" as cmmi_analisis
+        rectangle "Metodologías Ágiles" as agile_analisis
+    }
+    
+    rectangle "COMPONENTE DISEÑO:\nValidación Arquitectura" as comp_diseno #F0E6FF {
+        rectangle "ISO/IEC 25010" as iso_diseno
+        rectangle "DevOps/CI-CD" as devops_diseno
+    }
+    
+    rectangle "COMPONENTE DESARROLLO:\nValidación Código" as comp_desarrollo #E6FFF0 {
+        rectangle "TMMi Testing" as tmmi_desarrollo
+        rectangle "Automatización" as auto_desarrollo
+        rectangle "Six Sigma" as sigma_desarrollo
+    }
+    
+    rectangle "COMPONENTE INTEGRACIÓN:\nValidación Sistema" as comp_integracion #FFE6F0 {
+        rectangle "ITIL Servicios" as itil_integracion
+    }
+    
+    rectangle "COMPONENTE DESPLIEGUE:\nValidación Operativa" as comp_despliegue #F0FFE6 {
+        rectangle "ITIL Operativa" as itil_despliegue
+        rectangle "SPICE ISO/IEC 15504" as spice_despliegue
+    }
+}
+
+' === CAPA DE TECNOLOGÍA ===
+package "CAPA DE TECNOLOGÍA" as technology_layer #F0F0F0 {
+    
+    rectangle "PLATAFORMA TESTING" as plat_testing #E0E0E0 {
+        rectangle "IBM Rational Test" as rational
+        rectangle "Selenium WebDriver" as selenium
+        rectangle "Performance Testing" as performance
+    }
+    
+    rectangle "PLATAFORMA CI/CD" as plat_cicd #E0E0E0 {
+        rectangle "Jenkins/UrbanCode" as jenkins
+        rectangle "Git Repository" as git
+        rectangle "Deployment Auto" as deploy_auto
+    }
+    
+    rectangle "PLATAFORMA MÉTRICAS" as plat_metricas #E0E0E0 {
+        rectangle "Dashboard Calidad" as dashboard
+        rectangle "Reporting Tools" as reporting
+        rectangle "Analytics Engine" as analytics
+    }
+    
+    rectangle "INFRAESTRUCTURA" as infraestructura #C0C0C0 {
+        rectangle "Servidores Testing" as serv_testing_tech
+        rectangle "Base Datos QA" as bd_qa
+        rectangle "Ambientes Prueba" as amb_prueba
+    }
+}
+
+' === RELACIONES VERTICALES ===
+cliente --> servicio_dev
+gerente --> gestion_calidad
+po --> auditoria
+
+servicio_dev --> servicios_calidad
+proceso_negocio --> comp_analisis
+
+comp_analisis --> comp_diseno
+comp_diseno --> comp_desarrollo
+comp_desarrollo --> comp_integracion
+comp_integracion --> comp_despliegue
+
+servicios_calidad --> plat_testing
+comp_desarrollo --> plat_cicd
+comp_despliegue --> plat_metricas
+
+plat_testing --> infraestructura
+plat_cicd --> infraestructura
+plat_metricas --> infraestructura
+
+' === PROBLEMÁTICAS IDENTIFICADAS ===
+note top of comp_analisis : GAP 1: Desconexión entre\nCMMI y metodologías ágiles
+note top of comp_diseno : GAP 2: ISO 25010 aislado\ndel resto de componentes
+note top of comp_desarrollo : GAP 3: TMMi y Six Sigma\nsin integración clara
+note top of comp_integracion : GAP 4: ITIL redundante\nen integración y despliegue
+note top of comp_despliegue : GAP 5: SPICE aplicado\nsolo reactivamente
+
+note bottom : ANÁLISIS ARCHIMATE:\nArquitectura fragmentada con múltiples estándares\nsin governance unificado ni integración sistémica
+
+@enduml

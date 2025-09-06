@@ -1,0 +1,112 @@
+@startuml Arquitectura_Empresarial_Calidad_Vertical_Sintetizada
+!theme plain
+title Arquitectura Empresarial de Calidad del Software - IBM\nVista ArchiMate Sintetizada
+
+skinparam rectangle<<behavior>> {
+    roundCorner 25
+}
+
+sprite $bProcess jar:archimate/business-process
+sprite $aService jar:archimate/application-service
+sprite $aComponent jar:archimate/application-component
+sprite $tArtifact jar:archimate/technology-artifact
+
+skinparam backgroundColor #FFFFFF
+skinparam defaultTextAlignment center
+
+' === CAPA DE NEGOCIO ===
+package "🏢 CAPA DE NEGOCIO" as business_layer #E8F6E8 {
+    actor "Stakeholders" as stakeholders #FFE6CC
+    
+    rectangle "Desarrollo de\nSoftware" as servicio_dev <<$bProcess>><<behavior>> #D4E6F1
+    rectangle "Gestión de\nCalidad" as gestion_calidad <<$bProcess>><<behavior>> #D4E6F1
+    rectangle "Auditoría de\nProcesos" as auditoria <<$bProcess>><<behavior>> #D4E6F1
+}
+
+' === CAPA DE APLICACIÓN ===
+package "💻 CAPA DE APLICACIÓN" as application_layer #FFF2E6 {
+    
+    rectangle "Servicios de Calidad\nIntegrados" as servicios_calidad <<$aService>><<behavior>> #F8E6FF
+    
+    rectangle "Análisis y\nValidación" as comp_analisis <<$aComponent>> #E6F3FF {
+        rectangle "IEEE 829\nCMMI\nÁgiles" as std_analisis
+    }
+    
+    rectangle "Diseño y\nArquitectura" as comp_diseno <<$aComponent>> #F0E6FF {
+        rectangle "ISO 25010\nDevOps/CI-CD" as std_diseno
+    }
+    
+    rectangle "Desarrollo y\nPruebas" as comp_desarrollo <<$aComponent>> #E6FFF0 {
+        rectangle "TMMi\nAutomatización\nSix Sigma" as std_desarrollo
+    }
+    
+    rectangle "Integración y\nServicios" as comp_integracion <<$aComponent>> #FFE6F0 {
+        rectangle "ITIL v4" as std_integracion
+    }
+    
+    rectangle "Despliegue y\nOperación" as comp_despliegue <<$aComponent>> #F0FFE6 {
+        rectangle "ITIL v4\nSPICE 15504" as std_despliegue
+    }
+}
+
+' === CAPA DE TECNOLOGÍA ===
+package "🔧 CAPA DE TECNOLOGÍA" as technology_layer #F0F0F0 {
+    
+    rectangle "Plataforma de\nTesting Integrada" as plat_testing <<$aComponent>> #E0E0E0 {
+        rectangle "IBM Rational\nSelenium\nPerformance Tools" as tools_testing
+    }
+    
+    rectangle "Plataforma\nCI/CD" as plat_cicd <<$aComponent>> #E0E0E0 {
+        rectangle "Jenkins/UrbanCode\nGit Repository\nAutomation" as tools_cicd
+    }
+    
+    rectangle "Plataforma de\nMétricas y Analytics" as plat_metricas <<$aComponent>> #E0E0E0 {
+        rectangle "Dashboard Calidad\nReporting Tools\nAnalytics Engine" as tools_analytics
+    }
+    
+    rectangle "Infraestructura\nBase" as infraestructura <<$tArtifact>> #C0C0C0 {
+        rectangle "Servidores\nBD QA\nAmbientes" as infra_base
+    }
+}
+
+' === RELACIONES VERTICALES ===
+stakeholders -down-> servicio_dev
+stakeholders -down-> gestion_calidad
+stakeholders -down-> auditoria
+
+servicio_dev -down-> servicios_calidad
+gestion_calidad -down-> servicios_calidad
+auditoria -down-> servicios_calidad
+
+servicios_calidad -down-> comp_analisis
+comp_analisis -down-> comp_diseno
+comp_diseno -down-> comp_desarrollo
+comp_desarrollo -down-> comp_integracion
+comp_integracion -down-> comp_despliegue
+
+comp_desarrollo -down-> plat_testing
+comp_desarrollo -down-> plat_cicd
+comp_despliegue -down-> plat_metricas
+
+plat_testing -down-> infraestructura
+plat_cicd -down-> infraestructura
+plat_metricas -down-> infraestructura
+
+' === GAPS IDENTIFICADOS ===
+note right of comp_analisis : **GAP 1:** Desconexión\nCMMI vs Ágiles
+note right of comp_diseno : **GAP 2:** ISO 25010\naislado
+note right of comp_desarrollo : **GAP 3:** TMMi y Six Sigma\nsin integración
+note right of comp_integracion : **GAP 4:** ITIL\nredundante
+note right of comp_despliegue : **GAP 5:** SPICE\nsolo reactivo
+
+legend bottom
+**VISTA ARCHIMATE - DIAGNÓSTICO:**
+====
+**Negocio:** Múltiples stakeholders con expectativas desalineadas
+**Aplicación:** Componentes aislados sin governance unificado
+**Tecnología:** Plataformas fragmentadas sin integración sistémica
+====
+**CONCLUSIÓN:** Arquitectura fragmentada requiere framework integrado
+endlegend
+
+@enduml

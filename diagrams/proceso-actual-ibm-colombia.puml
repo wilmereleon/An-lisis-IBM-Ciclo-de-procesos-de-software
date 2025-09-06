@@ -1,0 +1,121 @@
+@startuml Proceso_Actual_IBM_Fragmentado
+!theme plain
+title Proceso Actual de Calidad del Software\nIBM - Desarrollo de Software (Estado Fragmentado)
+!define DIRECTION top to bottom
+
+' Definición de colores por estándar
+skinparam backgroundColor #FFFFFF
+skinparam defaultTextAlignment center
+
+' Configuración de estilos
+skinparam rectangle {
+    BackgroundColor #E8F4FD
+    BorderColor #2E86AB
+    FontSize 11
+}
+
+skinparam note {
+    BackgroundColor #FFF9E6
+    BorderColor #FF8C00
+    FontSize 10
+}
+
+' === FASES DEL CICLO DE VIDA ===
+
+rectangle "**ANÁLISIS Y PLANEACIÓN**\n📋 Levantamiento de Requisitos" as analisis {
+    rectangle "Actividades:\n• Requisitos funcionales/no funcionales\n• Transferencias seguras\n• Consulta de saldos" as act_analisis
+    
+    rectangle "**Pruebas Asociadas:**\n• Validación criterios aceptación\n• Compatibilidad historias usuario" as pruebas_analisis
+    
+    rectangle "**Estándares Utilizados:**" as std_analisis {
+        rectangle "IEEE 829/ISO 29119\n📄 Documentación" as ieee_analisis #LightBlue
+        rectangle "CMMI\n🏗️ Madurez Procesos" as cmmi_analisis #LightGreen  
+        rectangle "Design Thinking + Agile\n🎨 Metodologías Usuario" as agile_analisis #LightYellow
+    }
+}
+
+rectangle "**DISEÑO**\n🎨 Elaboración Arquitectura" as diseno {
+    rectangle "Actividades:\n• Diagramas y prototipos\n• Definición casos prueba\n• Validación arquitectura" as act_diseno
+    
+    rectangle "**Pruebas Asociadas:**\n• Pruebas flujo sistema\n• Arquitectura/patrones diseño\n• Validación prototipos" as pruebas_diseno
+    
+    rectangle "**Estándares Utilizados:**" as std_diseno {
+        rectangle "ISO/IEC 25010\n⚡ Atributos Calidad" as iso25010_diseno #LightPink
+        rectangle "DevOps + CI/CD\n🔄 Integración Continua" as devops_diseno #LightCyan
+    }
+}
+
+rectangle "**DESARROLLO**\n💻 Codificación Módulos" as desarrollo {
+    rectangle "Actividades:\n• Codificación funcional\n• Implementación lógica negocio\n• Cálculos intereses" as act_desarrollo
+    
+    rectangle "**Pruebas Asociadas:**\n• Pruebas unitarias automatizadas\n• Validación cálculos\n• Testing funcional básico" as pruebas_desarrollo
+    
+    rectangle "**Estándares Utilizados:**" as std_desarrollo {
+        rectangle "TMMi\n🧪 Madurez Testing" as tmmi_desarrollo #LightSalmon
+        rectangle "Automatización\n🤖 IBM Rational, Selenium, JUnit" as auto_desarrollo #LightGray
+        rectangle "Six Sigma\n📊 Análisis Estadístico" as sigma_desarrollo #Lavender
+    }
+}
+
+rectangle "**INTEGRACIÓN**\n🔗 Ensamblaje Módulos" as integracion {
+    rectangle "Actividades:\n• Conexión servicios externos\n• Ensamblaje módulos\n• Configuración APIs" as act_integracion
+    
+    rectangle "**Pruebas Asociadas:**\n• Pruebas integración\n• Pruebas regresión\n• Validación APIs" as pruebas_integracion
+    
+    rectangle "**Estándares Utilizados:**" as std_integracion {
+        rectangle "ITIL\n🏢 Gestión Servicios" as itil_integracion #MistyRose
+    }
+}
+
+rectangle "**DESPLIEGUE**\n🚀 Liberación Producción" as despliegue {
+    rectangle "Actividades:\n• Liberación ambientes\n• Configuración producción\n• Monitoreo inicial" as act_despliegue
+    
+    rectangle "**Pruebas Asociadas:**\n• Validación UAT\n• Monitoreo posdespliegue\n• Detección errores críticos" as pruebas_despliegue
+    
+    rectangle "**Estándares Utilizados:**" as std_despliegue {
+        rectangle "ITIL\n🔧 Gestión Operativa" as itil_despliegue #MistyRose
+        rectangle "SPICE (ISO/IEC 15504)\n📋 Evaluación Procesos" as spice_despliegue #LightSteelBlue
+    }
+}
+
+' === FLUJO PRINCIPAL ===
+analisis --> diseno : "Requisitos Validados"
+diseno --> desarrollo : "Diseño Aprobado"
+desarrollo --> integracion : "Módulos Completados"
+integracion --> despliegue : "Sistema Integrado"
+
+' === PROBLEMÁTICAS IDENTIFICADAS ===
+note top of analisis : **PROBLEMÁTICA 1:**\nFragmentación estándares\n3 diferentes por fase
+note top of diseno : **PROBLEMÁTICA 2:**\nDesconexión entre\nISO 25010 y otros
+note top of desarrollo : **PROBLEMÁTICA 3:**\nSuperposición TMMi\ny herramientas
+note top of integracion : **PROBLEMÁTICA 4:**\nITIL aislado del\nresto de estándares
+note top of despliegue : **PROBLEMÁTICA 5:**\nSPICE solo para\nauditorías específicas
+
+' === MÉTRICAS TRANSVERSALES ===
+rectangle "**MÉTRICAS UTILIZADAS**\n📊 Evaluación Transversal" as metricas {
+    rectangle "• Cobertura de pruebas (%)\n• Defectos encontrados vs resueltos\n• Casos pasados vs fallidos\n• Tiempo corrección defectos\n• Velocidad entrega sprints" as lista_metricas
+}
+
+metricas .up.> analisis : "Aplica a"
+metricas .up.> diseno : "Aplica a"
+metricas .up.> desarrollo : "Aplica a"
+metricas .up.> integracion : "Aplica a"
+metricas .up.> despliegue : "Aplica a"
+
+' === LEYENDA DE COLORES ===
+legend bottom
+    |<color:LightBlue>IEEE 829/ISO 29119</color>| Documentación Estándar |
+    |<color:LightGreen>CMMI</color>| Madurez Organizacional |
+    |<color:LightYellow>Agile/Design Thinking</color>| Metodologías Ágiles |
+    |<color:LightPink>ISO/IEC 25010</color>| Atributos de Calidad |
+    |<color:LightCyan>DevOps/CI-CD</color>| Integración Continua |
+    |<color:LightSalmon>TMMi</color>| Madurez de Testing |
+    |<color:LightGray>Automatización</color>| Herramientas Testing |
+    |<color:Lavender>Six Sigma</color>| Mejora Estadística |
+    |<color:MistyRose>ITIL</color>| Gestión de Servicios |
+    |<color:LightSteelBlue>SPICE</color>| Evaluación Procesos |
+endlegend
+
+note bottom : **CONCLUSIÓN:** Proceso fragmentado con 8+ estándares\naplicados sin integración sistemática\n**Resultado:** Inconsistencia en calidad entre fases
+
+@enduml
