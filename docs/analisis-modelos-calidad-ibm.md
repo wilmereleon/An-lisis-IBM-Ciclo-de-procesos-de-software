@@ -36,9 +36,9 @@ El análisis de los procesos actuales en IBM Colombia reveló la siguiente **dis
 
 ### Diagrama de Proceso Actual (Estado Fragmentado)
 
-El siguiente diagrama muestra la realidad operativa actual de IBM Colombia, donde **8+ estándares diferentes** se aplican de manera **descoordinada** a lo largo de las 5 fases principales del ciclo de vida:
+El siguiente diagrama muestra la realidad operativa actual de IBM Global, donde **8+ estándares diferentes** se aplican de manera **descoordinada** a lo largo de las 5 fases principales del ciclo de vida:
 
-![Proceso Actual Fragmentado](../diagrams/proceso-actual-ibm-colombia.png)
+![Proceso Actual Fragmentado](../diagrams/Proceso_Actual_IBM_Fragmentado_Vertical_Sintetizado.png)
 
 **Características del Estado Actual:**
 - ⚠️ **Fragmentación**: Cada fase utiliza estándares diferentes sin integración
