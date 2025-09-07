@@ -1,0 +1,118 @@
+@startuml seleccion-modelos-adecuados-ibm
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
+skinparam defaultFontSize 9
+
+' Definir estilos
+skinparam rectangle {
+    BackgroundColor<<fase>> #E1F5FE
+    BorderColor<<fase>> #0277BD
+    BackgroundColor<<modelo>> #F3E5F5
+    BorderColor<<modelo>> #7B1FA2
+    BackgroundColor<<documento>> #E8F5E8
+    BorderColor<<documento>> #2E7D32
+    BackgroundColor<<metrica>> #FFF3E0
+    BorderColor<<metrica>> #EF6C00
+}
+
+skinparam ellipse {
+    BackgroundColor<<fase>> #E1F5FE
+    BorderColor<<fase>> #0277BD
+}
+
+title **Modelos de Calidad por Fase del Ciclo de Vida - IBM**
+
+' Fase 1: Requisitos
+ellipse "**Requisitos**" as req <<fase>>
+
+rectangle "**Modelos:**\nCMMI, ISO/IEC 25010" as req_models <<modelo>>
+
+rectangle "**Documentos:**\nEspecificación de requisitos,\nMatriz de trazabilidad, Plan\nmaestro de pruebas" as req_docs <<documento>>
+
+rectangle "**Métricas:**\nCobertura de requisitos,\nAmbigüedades detectadas" as req_metrics <<metrica>>
+
+' Conexiones Requisitos
+req --> req_models
+req_models --> req_docs
+req_docs --> req_metrics
+
+' Fase 2: Diseño
+ellipse "**Diseño**" as design <<fase>>
+
+rectangle "**Modelos:**\nCMMI, SPICE\n(ISO/IEC 15504)" as design_models <<modelo>>
+
+rectangle "**Documentos:**\nDiseño de casos de prueba,\nChecklist revisiones, Plan de\nintegración" as design_docs <<documento>>
+
+rectangle "**Métricas:**\nDefectos en revisiones,\nCobertura de diseño" as design_metrics <<metrica>>
+
+' Conexiones Diseño
+req_metrics --> design
+design --> design_models
+design_models --> design_docs
+design_docs --> design_metrics
+
+' Fase 3: Desarrollo
+ellipse "**Desarrollo**" as dev <<fase>>
+
+rectangle "**Modelos:**\nSix Sigma, CMMI Nivel 3" as dev_models <<modelo>>
+
+rectangle "**Documentos:**\nScripts unitarios, Reporte\ncobertura, Guía de estándares" as dev_docs <<documento>>
+
+rectangle "**Métricas:**\nDefectos/LOC, Cobertura\npruebas unitarias" as dev_metrics <<metrica>>
+
+' Conexiones Desarrollo
+design_metrics --> dev
+dev --> dev_models
+dev_models --> dev_docs
+dev_docs --> dev_metrics
+
+' Fase 4: Integración y Verificación
+ellipse "**Integración y Verificación**" as integration <<fase>>
+
+rectangle "**Modelos:**\nTMMi, IEEE 829" as int_models <<modelo>>
+
+rectangle "**Documentos:**\nPlan de pruebas de sistema,\nCasos de regresión, Reporte\ndefectos" as int_docs <<documento>>
+
+rectangle "**Métricas:**\nDefectos\nabiertos/cerrados, Tiempo\nmedio de resolución" as int_metrics <<metrica>>
+
+' Conexiones Integración
+dev_metrics --> integration
+integration --> int_models
+int_models --> int_docs
+int_docs --> int_metrics
+
+' Fase 5: Aceptación y Despliegue
+ellipse "**Aceptación y Despliegue**" as acceptance <<fase>>
+
+rectangle "**Modelos:**\nTMMi Nivel 4, ISO/IEC 25010" as acc_models <<modelo>>
+
+rectangle "**Documentos:**\nInforme aceptación, Checklist\ndespliegue, Matriz validación" as acc_docs <<documento>>
+
+rectangle "**Métricas:**\nSatisfacción cliente UAT,\nIncidencias\npostdespliegue" as acc_metrics <<metrica>>
+
+' Conexiones Aceptación
+int_metrics --> acceptance
+acceptance --> acc_models
+acc_models --> acc_docs
+acc_docs --> acc_metrics
+
+' Fase 6: Mantenimiento y Soporte
+ellipse "**Mantenimiento y Soporte**" as maintenance <<fase>>
+
+rectangle "**Modelos:**\nITIL, CMMI\nNivel 5" as maint_models <<modelo>>
+
+rectangle "**Documentos:**\nRegistro incidentes, Plan\nregresión, Reporte lecciones" as maint_docs <<documento>>
+
+rectangle "**Métricas:**\nTiempo respuesta\nincidentes, Disponibilidad\ndel sistema" as maint_metrics <<metrica>>
+
+' Conexiones Mantenimiento
+acc_metrics --> maintenance
+maintenance --> maint_models
+maint_models --> maint_docs
+maint_docs --> maint_metrics
+
+' Flecha de retorno (ciclo)
+maint_metrics -up-> req : "**Mejora\nContinua**"
+
+@enduml

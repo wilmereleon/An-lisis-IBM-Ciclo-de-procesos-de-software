@@ -119,7 +119,7 @@ Establecer la **documentación necesaria y estrategia integral** para desarrolla
 **Objetivo:** Desarrollar la fase de análisis y definición estratégica
 
 **Entregables Desarrollados:**
-- ✅ Comparativo detallado de 5 modelos de calidad (CMMI, TMMi, ISO/IEC 25010, Six Sigma, ITIL)
+- ✅ Comparativo detallado de 6 modelos de calidad (CMMI, TMMi, ISO/IEC 25010, ISO/IEC 29119, Six Sigma, ITIL)
 - ✅ Análisis DOFA completo con estrategias específicas para IBM
 - ✅ Evaluación del estado actual basada en criterios CMMI/TMMi
 - ✅ Selección justificada de modelos más adecuados (CMMI + TMMi)
@@ -533,13 +533,18 @@ ISO/IEC 29119 (Framework Base) + CMMI (Madurez Org) + TMMi (Testing Maturity)
 | **Madurez Modelo** | 20% | 9.2 | 9.8 | 9.0 | 8.5 | 8.0 | 8.2 |
 | **TOTAL PONDERADO** | 100% | **9.06** | **9.16** | **8.70** | **8.01** | **6.95** | **7.54** |
 
-**🏆 Ranking Final**:
-1. **CMMI**: 9.16 (Líder en madurez organizacional)
-2. **ISO/IEC 29119**: 9.06 (Líder en testing moderno) 
-3. **TMMi**: 8.70 (Especialista en testing)
-4. **ISO/IEC 25010**: 8.01 (Calidad de producto)
+**🏆 Ranking Final y Selección Estratégica**:
+1. **CMMI**: 9.16 (Seleccionado - Líder en madurez organizacional)
+2. **ISO/IEC 29119**: 9.06 (Framework complementario de testing) 
+3. **TMMi**: 8.70 (Seleccionado - Especialista en testing)
+4. **ISO/IEC 25010**: 8.01 (Framework de calidad de producto)
 5. **ITIL**: 7.54 (Gestión de servicios)
 6. **Six Sigma**: 6.95 (Reducción de defectos)
+
+**✅ Estrategia de Selección Final**:
+- **Modelos Primarios**: CMMI + TMMi (sinergia comprobada en organizaciones enterprise)
+- **Frameworks Complementarios**: ISO/IEC 29119 (plantillas y procesos) + ISO/IEC 25010 (atributos de calidad)
+- **Modelos de Soporte**: ITIL (post-producción) + Six Sigma (mejora de procesos específicos)
 
 ### 3.2 Pros y Contras por Modelo
 
@@ -666,9 +671,16 @@ La evaluación cuantitativa de los cinco modelos de calidad principales revela u
 - Enfoque específico en calidad del producto
 - Menor impacto en ROI comparado con líderes
 
-##### **Justificación de Selección: CMMI + TMMi**
+##### **Justificación de Selección: CMMI + TMMi + Framework Complementario**
 
-El análisis cuantitativo valida la decisión estratégica de implementar **CMMI combinado con TMMi**:
+El análisis cuantitativo valida la decisión estratégica de implementar **CMMI como modelo primario, TMMi como especialización, e ISO/IEC 29119 como framework complementario**:
+
+**🎯 Razón de la Selección CMMI + TMMi (vs. ISO/IEC 29119 standalone)**:
+1. **Madurez Organizacional**: CMMI (9.16) proporciona backbone empresarial que ISO/IEC 29119 no cubre
+2. **Sinergia Comprobada**: CMMI + TMMi tienen historial de integración exitosa en empresas Fortune 500
+3. **ROI Organizacional**: El combo CMMI+TMMi genera ROI a nivel organizacional, no solo en testing
+4. **Escalabilidad Global**: CMMI permite estandarización en 170+ países donde opera IBM
+5. **Framework Híbrido**: ISO/IEC 29119 se integra como framework de plantillas y procesos específicos
 
 #### **📊 Análisis Detallado del Gráfico Comparativo**
 

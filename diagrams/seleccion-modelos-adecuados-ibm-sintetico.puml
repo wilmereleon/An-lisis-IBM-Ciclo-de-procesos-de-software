@@ -1,0 +1,57 @@
+@startuml seleccion-modelos-adecuados-ibm-sintetico
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam dpi 300
+
+title **Selección de Modelos Más Adecuados para IBM**
+
+' Definir colores compactos
+skinparam rectangle {
+    BackgroundColor<<primary>> #E3F2FD
+    BorderColor<<primary>> #1976D2
+    BackgroundColor<<secondary>> #F3E5F5
+    BorderColor<<secondary>> #7B1FA2
+    BackgroundColor<<support>> #E8F5E8
+    BorderColor<<support>> #388E3C
+    BackgroundColor<<context>> #FFF3E0
+    BorderColor<<context>> #F57C00
+}
+
+' Contexto IBM compacto
+rectangle "**🏢 CONTEXTO IBM**\n• Multinacional con equipos distribuidos\n• Proyectos de alta complejidad\n• Necesidad de estandarización global" as context <<context>>
+
+' Análisis simplificado
+rectangle "**📊 ANÁLISIS COMPARATIVO**\n• CMMI: 94/100 ⭐\n• TMMi: 92/100 ⭐\n• ISO/IEC 25010: 78/100\n• Six Sigma: 75/100\n• ITIL: 70/100" as analysis <<context>>
+
+' Modelos seleccionados compactos
+rectangle "**🏆 CMMI (Modelo Primario)**\n• Madurez organizacional integral\n• ROI: 25% reducción costos\n• Target: Nivel 3 → Nivel 5" as cmmi <<primary>>
+
+rectangle "**🧪 TMMi (Complementario)**\n• Especialización en testing\n• 70% reducción defectos\n• Target: Nivel 3 → Nivel 5" as tmmi <<secondary>>
+
+' Implementación simplificada
+rectangle "**🚀 IMPLEMENTACIÓN FÁSICA**\n\n**Fases 1-2:** Requisitos & Diseño\n• CMMI L3 + ISO/IEC 25010 + SPICE\n\n**Fases 3-4:** Desarrollo & Integración\n• Six Sigma + CMMI L3-4 + TMMi L3-4\n\n**Fases 5-6:** Aceptación & Mantenimiento\n• TMMi L4-5 + ITIL + CMMI L5" as implementation <<support>>
+
+' Resultados compactos
+rectangle "**📈 RESULTADOS ESPERADOS**\n\n💰 **ROI: 518% ($57M beneficio)**\n⚡ **Time-to-market: -40%**\n🛡️ **Defectos: -70%**\n📊 **Productividad: +30%**\n💸 **Costos: -25%**" as results <<primary>>
+
+' Justificación lateral compacta
+rectangle "**🎯 JUSTIFICACIÓN**\n\n**✓ Sinergia Perfecta**\nCMMI + TMMi = Cobertura integral\n\n**✓ Escalabilidad Global**\nEstandarización multinacional\n\n**✓ ROI Demostrable**\nCasos éxito documentados\n\n**✓ Evolución Gradual**\nL3 actual → L5 objetivo" as justification <<support>>
+
+' Flujo vertical principal
+context --> analysis : "Evaluación"
+analysis --> cmmi : "Selección"
+cmmi --> tmmi : "Complemento"
+tmmi --> implementation : "Despliegue"
+implementation --> results : "Impacto"
+
+' Conexión lateral para justificación
+cmmi -right-> justification
+tmmi -right-> justification
+
+' Notas de tiempo
+note right of implementation : **Timeline: 36 meses**
+note right of results : **Benchmark: Industry Leader**
+
+@enduml

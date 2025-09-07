@@ -1,0 +1,65 @@
+@startuml ciclo-vida-modelos-ibm-flowchart
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
+skinparam defaultFontSize 10
+skinparam dpi 300
+
+' Configuración de estilos compactos
+skinparam rectangle {
+    BackgroundColor #F8F9FA
+    BorderColor #333333
+    FontSize 9
+}
+
+skinparam ellipse {
+    BackgroundColor #E3F2FD
+    BorderColor #1976D2
+    FontSize 10
+    FontStyle bold
+}
+
+title **Framework de Calidad IBM - Ciclo de Vida del Software**
+
+' === FASES DEL CICLO DE VIDA ===
+(1. Requisitos) as req
+(2. Diseño) as design
+(3. Desarrollo) as dev
+(4. Integración) as integration
+(5. Aceptación) as acceptance
+(6. Mantenimiento) as maintenance
+
+' === INFORMACIÓN COMPACTA POR FASE ===
+rectangle "**Modelos:** CMMI, ISO/IEC 25010\n**Docs:** SRS, RTM, Plan Pruebas\n**Métricas:** Cobertura >95%, Ambigüedades <5%" as req_info
+
+rectangle "**Modelos:** CMMI, SPICE\n**Docs:** Casos prueba, Checklists\n**Métricas:** Defectos revisión >80%" as design_info
+
+rectangle "**Modelos:** Six Sigma, CMMI L3\n**Docs:** Scripts, Cobertura, Estándares\n**Métricas:** <0.5 defectos/KLOC" as dev_info
+
+rectangle "**Modelos:** TMMi, IEEE 829\n**Docs:** Plan sistema, Regresión\n**Métricas:** MTTR <48h, Builds >98%" as int_info
+
+rectangle "**Modelos:** TMMi L4, ISO/IEC 25010\n**Docs:** UAT, Checklist despliegue\n**Métricas:** Satisfacción >4.5/5" as acc_info
+
+rectangle "**Modelos:** ITIL, CMMI L5\n**Docs:** Incidentes, Lecciones\n**Métricas:** Disponibilidad >99.9%" as maint_info
+
+' === FLUJO PRINCIPAL SIMPLIFICADO ===
+req --> design : "Baseline aprobado"
+design --> dev : "Arquitectura validada"
+dev --> integration : "Código verificado"
+integration --> acceptance : "Sistema integrado"
+acceptance --> maintenance : "Go-live exitoso"
+
+' === CONEXIONES COMPACTAS ===
+req .|> req_info
+design .|> design_info
+dev .|> dev_info
+integration .|> int_info
+acceptance .|> acc_info
+maintenance .|> maint_info
+
+' === INDICADORES DE ÉXITO ===
+note top of req : **Target: L3→L5**
+note top of integration : **ROI: 518%**
+note top of maintenance : **TCO: -25%**
+
+@enduml
