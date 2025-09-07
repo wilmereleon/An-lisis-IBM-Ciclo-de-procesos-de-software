@@ -1,0 +1,33 @@
+@startuml
+title Evaluacion Cuantitativa de Modelos de Calidad
+subtitle IBM - Analisis Multicriterio (Escala 1-10)
+
+rectangle "RESULTADOS" {
+    rectangle "CMMI: 8.56" #27AE60
+    rectangle "TMMi: 8.46" #27AE60
+    rectangle "ISO/IEC 25010: 8.56" #27AE60
+    rectangle "Six Sigma: 8.30" #F39C12
+    rectangle "ITIL v4: 8.20" #F39C12
+    rectangle "IEEE 829: 7.70" #E74C3C
+}
+
+rectangle "CRITERIOS" {
+    rectangle "Completitud"
+    rectangle "Aplicabilidad"
+    rectangle "Madurez"
+    rectangle "ROI Esperado"
+    rectangle "Facilidad Implementación"
+}
+
+note right
+**Modelos Seleccionados:**
+1. CMMI (8.56) - Primario
+2. TMMi (8.46) - Complementario
+
+**Colores:**
+Verde: Excelente (>8.4)
+Naranja: Bueno (8.0-8.4)
+Rojo: Promedio (<8.0)
+end note
+
+@enduml

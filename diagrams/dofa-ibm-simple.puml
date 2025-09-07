@@ -1,0 +1,40 @@
+@startuml
+title Análisis DOFA IBM - Matriz Estratégica
+
+rectangle "FORTALEZAS" #27AE60 {
+    rectangle "Infraestructura Robusta"
+    rectangle "850+ Desarrolladores"
+    rectangle "150+ Proyectos Enterprise"
+    rectangle "$2.3B Presupuesto I+D"
+}
+
+rectangle "DEBILIDADES" #E74C3C {
+    rectangle "68% Sin Estandarización"
+    rectangle "45% Documentación Incompleta"
+    rectangle "12 Herramientas Dispersas"
+    rectangle "8.5 días Testing Regresión"
+}
+
+rectangle "OPORTUNIDADES" #3498DB {
+    rectangle "IA/ML Testing (+25% mercado)"
+    rectangle "Certificaciones CMMI"
+    rectangle "DevSecOps Integration"
+    rectangle "Expansión LATAM"
+}
+
+rectangle "AMENAZAS" #F39C12 {
+    rectangle "Startups Ágiles"
+    rectangle "Regulaciones Crecientes"
+    rectangle "18% Rotación QA"
+    rectangle "Presión Costos"
+}
+
+note bottom
+**Estrategias Clave:**
+FO: Aprovechar infraestructura para IA
+DO: Certificaciones para estandarización
+FA: Experiencia vs. competencia ágil
+DA: Urgente estandarización procesos
+end note
+
+@enduml

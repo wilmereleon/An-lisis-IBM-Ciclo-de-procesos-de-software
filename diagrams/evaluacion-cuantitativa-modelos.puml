@@ -1,0 +1,99 @@
+@startuml
+title Evaluación Cuantitativa de Modelos de Calidad de Software
+subtitle Análisis Multicriterio para IBM (Escala 1-10)
+
+skinparam {
+    backgroundColor white
+    titleFontColor #2C3E50
+    titleFontSize 16
+    subtitleFontColor #34495E
+    subtitleFontSize 12
+}
+
+' Tabla de evaluación
+!define TABLE_COLOR #E8F4FD
+!define HEADER_COLOR #3498DB
+!define BEST_COLOR #27AE60
+!define GOOD_COLOR #F39C12
+!define AVERAGE_COLOR #E74C3C
+
+rectangle "Criterios de Evaluación" as header #HEADER_COLOR {
+    rectangle " " as spacer1
+}
+
+rectangle "Resultados por Modelo" as results {
+    rectangle "CMMI" as cmmi #BEST_COLOR {
+        rectangle "Completitud: 9.5" as cmmi1
+        rectangle "Aplicabilidad: 9.0" as cmmi2
+        rectangle "Madurez: 9.8" as cmmi3
+        rectangle "ROI Esperado: 8.5" as cmmi4
+        rectangle "Facilidad Impl.: 6.0" as cmmi5
+        rectangle "PROMEDIO: 8.56" as cmmi_avg
+    }
+    
+    rectangle "TMMi" as tmmi #BEST_COLOR {
+        rectangle "Completitud: 8.5" as tmmi1
+        rectangle "Aplicabilidad: 8.8" as tmmi2
+        rectangle "Madurez: 8.5" as tmmi3
+        rectangle "ROI Esperado: 9.0" as tmmi4
+        rectangle "Facilidad Impl.: 7.5" as tmmi5
+        rectangle "PROMEDIO: 8.46" as tmmi_avg
+    }
+    
+    rectangle "ISO/IEC 25010" as iso #BEST_COLOR {
+        rectangle "Completitud: 8.8" as iso1
+        rectangle "Aplicabilidad: 9.2" as iso2
+        rectangle "Madurez: 8.0" as iso3
+        rectangle "ROI Esperado: 8.8" as iso4
+        rectangle "Facilidad Impl.: 8.0" as iso5
+        rectangle "PROMEDIO: 8.56" as iso_avg
+    }
+    
+    rectangle "Six Sigma" as six #GOOD_COLOR {
+        rectangle "Completitud: 7.5" as six1
+        rectangle "Aplicabilidad: 8.0" as six2
+        rectangle "Madurez: 9.5" as six3
+        rectangle "ROI Esperado: 9.5" as six4
+        rectangle "Facilidad Impl.: 7.0" as six5
+        rectangle "PROMEDIO: 8.30" as six_avg
+    }
+    
+    rectangle "ITIL v4" as itil #GOOD_COLOR {
+        rectangle "Completitud: 8.0" as itil1
+        rectangle "Aplicabilidad: 8.5" as itil2
+        rectangle "Madurez: 9.0" as itil3
+        rectangle "ROI Esperado: 8.0" as itil4
+        rectangle "Facilidad Impl.: 7.5" as itil5
+        rectangle "PROMEDIO: 8.20" as itil_avg
+    }
+    
+    rectangle "IEEE 829" as ieee #AVERAGE_COLOR {
+        rectangle "Completitud: 6.5" as ieee1
+        rectangle "Aplicabilidad: 7.5" as ieee2
+        rectangle "Madurez: 8.5" as ieee3
+        rectangle "ROI Esperado: 7.0" as ieee4
+        rectangle "Facilidad Impl.: 9.0" as ieee5
+        rectangle "PROMEDIO: 7.70" as ieee_avg
+    }
+}
+
+' Leyenda
+rectangle "Leyenda" as legend {
+    rectangle "Excelente (8.5-10)" as leg1 #BEST_COLOR
+    rectangle "Bueno (7.5-8.4)" as leg2 #GOOD_COLOR
+    rectangle "Promedio (6.0-7.4)" as leg3 #AVERAGE_COLOR
+}
+
+note right of results
+  **Modelos Seleccionados:**
+  1. CMMI (8.56) - Primario
+  2. TMMi (8.46) - Complementario
+  
+  **Criterios de Decisión:**
+  • Alineación estratégica
+  • Impacto en calidad
+  • ROI proyectado
+  • Madurez del modelo
+end note
+
+@enduml

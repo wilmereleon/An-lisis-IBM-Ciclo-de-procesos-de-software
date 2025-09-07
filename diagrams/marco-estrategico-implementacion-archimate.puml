@@ -1,0 +1,197 @@
+@startuml
+!define RECTANGLE_SPACING 20
+skinparam rectangle<<behavior>> {
+    roundCorner 25
+}
+
+skinparam {
+    fontSize 10
+    backgroundColor transparent
+    defaultFontSize 10
+    classFontSize 10
+    noteFontSize 9
+}
+
+sprite $bProcess jar:archimate/business-process
+sprite $aService jar:archimate/application-service
+sprite $aComponent jar:archimate/application-component
+
+' === FASE DE REQUISITOS Y ANÁLISIS ===
+rectangle "Fase de Requisitos\ny Análisis" as FRA <<$bProcess>><<behavior>> #Business
+
+rectangle "Gestión de\nRequisitos" as GR <<$bProcess>><<behavior>> #Business
+rectangle "Análisis de\nCalidad" as AC <<$bProcess>><<behavior>> #Business
+rectangle "Documentación\nEstandarizada" as DE <<$bProcess>><<behavior>> #Business
+rectangle "Validación de\nStakeholders" as VS <<$bProcess>><<behavior>> #Business
+
+FRA *-down- GR
+FRA *-down- AC
+FRA *-down- DE
+FRA *-down- VS
+
+GR -right->> AC
+AC -right->> DE
+DE -right->> VS
+
+' === FASE DE DISEÑO Y ARQUITECTURA ===
+rectangle "Fase de Diseño\ny Arquitectura" as FDA <<$bProcess>><<behavior>> #Business
+
+rectangle "Ingeniería de\nSistemas" as IS <<$bProcess>><<behavior>> #Business
+rectangle "Evaluación de\nProcesos" as EP <<$bProcess>><<behavior>> #Business
+rectangle "Arquitectura de\nCalidad" as AQ <<$bProcess>><<behavior>> #Business
+
+FDA *-down- IS
+FDA *-down- EP
+FDA *-down- AQ
+
+IS -right->> EP
+EP -right->> AQ
+
+' === FASE DE DESARROLLO Y CODIFICACIÓN ===
+rectangle "Fase de Desarrollo\ny Codificación" as FDC <<$bProcess>><<behavior>> #Business
+
+rectangle "Reducción de\nDefectos" as RD <<$bProcess>><<behavior>> #Business
+rectangle "Desarrollo\nDefinido" as DD <<$bProcess>><<behavior>> #Business
+rectangle "Testing\nIntegrado" as TI <<$bProcess>><<behavior>> #Business
+
+FDC *-down- RD
+FDC *-down- DD
+FDC *-down- TI
+
+RD -right->> DD
+DD -right->> TI
+
+' === FASE DE INTEGRACIÓN Y VERIFICACIÓN ===
+rectangle "Fase de Integración\ny Verificación" as FIV <<$bProcess>><<behavior>> #Business
+
+rectangle "Testing de\nIntegración" as TIN <<$bProcess>><<behavior>> #Business
+rectangle "Documentación\nde Pruebas" as DP <<$bProcess>><<behavior>> #Business
+rectangle "Gestión\nCuantitativa" as GC <<$bProcess>><<behavior>> #Business
+
+FIV *-down- TIN
+FIV *-down- DP
+FIV *-down- GC
+
+TIN -right->> DP
+DP -right->> GC
+
+' === SERVICIOS DE APLICACIÓN ===
+rectangle "CMMI Nivel 3-4\nGestión Cuantitativa" as CMMI34 <<$aService>><<behavior>> #Application
+rectangle "ISO/IEC 25010\nCalidad Funcional" as ISO25010 <<$aService>><<behavior>> #Application
+rectangle "IEEE 829-2008\nDocumentación" as IEEE829 <<$aService>><<behavior>> #Application
+rectangle "Six Sigma\nDMAIC" as SIXSIGMA <<$aService>><<behavior>> #Application
+rectangle "TMMi Nivel 2-3\nTesting Integrado" as TMMI23 <<$aService>><<behavior>> #Application
+rectangle "ISO/IEC 15504\nSPICE" as SPICE <<$aService>><<behavior>> #Application
+
+' Conexiones Fase Requisitos
+CMMI34 -up-> GR
+ISO25010 -up-> AC
+IEEE829 -up-> DE
+
+' Conexiones Fase Diseño
+CMMI34 -up-> IS
+SPICE -up-> EP
+ISO25010 -up-> AQ
+
+' Conexiones Fase Desarrollo
+SIXSIGMA -up-> RD
+CMMI34 -up-> DD
+TMMI23 -up-> TI
+
+' Conexiones Fase Integración
+TMMI23 -up-> TIN
+IEEE829 -up-> DP
+CMMI34 -up-> GC
+
+' === COMPONENTES DE APLICACIÓN ===
+rectangle "Sistema de\nGestión de\nRequisitos" as SGR <<$aComponent>> #Application
+rectangle "Plataforma de\nCalidad\nISO/IEC" as PCQ <<$aComponent>> #Application
+rectangle "Framework de\nDocumentación\nIEEE" as FDI <<$aComponent>> #Application
+rectangle "Herramientas\nSix Sigma\nDMAIC" as HSS <<$aComponent>> #Application
+rectangle "Suite de\nTesting\nTMMi" as STT <<$aComponent>> #Application
+rectangle "Motor de\nEvaluación\nSPICE" as MES <<$aComponent>> #Application
+
+SGR .up.|> CMMI34
+PCQ .up.|> ISO25010
+FDI .up.|> IEEE829
+HSS .up.|> SIXSIGMA
+STT .up.|> TMMI23
+MES .up.|> SPICE
+
+' === FLUJO PRINCIPAL ===
+FRA -down-> FDA
+FDA -down-> FDC
+FDC -down-> FIV
+
+' === FASE DE ACEPTACIÓN Y DESPLIEGUE ===
+rectangle "Fase de Aceptación\ny Despliegue" as FAD <<$bProcess>><<behavior>> #Business
+
+rectangle "Pruebas\nAvanzadas" as PA <<$bProcess>><<behavior>> #Business
+rectangle "Validación de\nUsabilidad" as VU <<$bProcess>><<behavior>> #Business
+rectangle "Gestión de\nCambios" as GCA <<$bProcess>><<behavior>> #Business
+
+FAD *-down- PA
+FAD *-down- VU
+FAD *-down- GCA
+
+PA -right->> VU
+VU -right->> GCA
+
+' === FASE DE MANTENIMIENTO Y SOPORTE ===
+rectangle "Fase de Mantenimiento\ny Soporte" as FMS <<$bProcess>><<behavior>> #Business
+
+rectangle "Gestión de\nServicios" as GS <<$bProcess>><<behavior>> #Business
+rectangle "Optimización\nContinua" as OC <<$bProcess>><<behavior>> #Business
+rectangle "Prevención\nProactiva" as PP <<$bProcess>><<behavior>> #Business
+
+FMS *-down- GS
+FMS *-down- OC
+FMS *-down- PP
+
+GS -right->> OC
+OC -right->> PP
+
+' === SERVICIOS ADICIONALES ===
+rectangle "TMMi Nivel 4-5\nTesting Avanzado" as TMMI45 <<$aService>><<behavior>> #Application
+rectangle "ITIL v4\nGestión de Servicios" as ITIL <<$aService>><<behavior>> #Application
+rectangle "CMMI Nivel 5\nOptimización" as CMMI5 <<$aService>><<behavior>> #Application
+
+' Conexiones Fase Aceptación
+TMMI45 -up-> PA
+ISO25010 -up-> VU
+ITIL -up-> GCA
+
+' Conexiones Fase Mantenimiento
+ITIL -up-> GS
+CMMI5 -up-> OC
+TMMI45 -up-> PP
+
+' === COMPONENTES ADICIONALES ===
+rectangle "Plataforma\nTesting\nAvanzado" as PTA <<$aComponent>> #Application
+rectangle "Sistema\nITIL\nIntegrado" as SII <<$aComponent>> #Application
+rectangle "Motor de\nOptimización\nCMMI" as MOC <<$aComponent>> #Application
+
+PTA .up.|> TMMI45
+SII .up.|> ITIL
+MOC .up.|> CMMI5
+
+' === FLUJO COMPLETO ===
+FIV -down-> FAD
+FAD -down-> FMS
+
+legend left
+Marco Estratégico de Implementación IBM
+Modelos de Calidad por Fase del Ciclo de Vida
+====
+<$bProcess> : Proceso de Negocio
+====
+<$aService> : Servicio de Aplicación
+====
+<$aComponent> : Componente de Aplicación
+====
+Cobertura: 6 Modelos Integrados
+CMMI, TMMi, ISO/IEC 25010, 
+IEEE 829, Six Sigma, ITIL v4
+endlegend
+
+@enduml

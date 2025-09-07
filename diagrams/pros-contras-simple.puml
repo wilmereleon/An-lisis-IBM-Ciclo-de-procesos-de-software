@@ -1,0 +1,64 @@
+@startuml
+title Pros y Contras Modelos de Calidad
+
+rectangle "CMMI" {
+    rectangle "PROS ✓" #27AE60 {
+        rectangle "ROI 518%"
+        rectangle "Framework integral"
+        rectangle "-25-40% defectos"
+    }
+    rectangle "CONTRAS ⚠" #E74C3C {
+        rectangle "2-4 años implementación"
+        rectangle "$500K-2M inversión"
+        rectangle "Transformación cultural"
+    }
+}
+
+rectangle "TMMi" {
+    rectangle "PROS ✓" #27AE60 {
+        rectangle "ROI 300-500%"
+        rectangle "12-24 meses"
+        rectangle "-40-60% defectos post-prod"
+    }
+    rectangle "CONTRAS ⚠" #E74C3C {
+        rectangle "Solo testing"
+        rectangle "Personal especializado"
+        rectangle "$200K-500K herramientas"
+    }
+}
+
+rectangle "ISO/IEC 25010" {
+    rectangle "PROS ✓" #27AE60 {
+        rectangle "6-12 meses"
+        rectangle "Enfoque calidad producto"
+        rectangle "Costo-efectivo"
+    }
+    rectangle "CONTRAS ⚠" #E74C3C {
+        rectangle "No procesos"
+        rectangle "Métricas específicas"
+        rectangle "Solo evaluación"
+    }
+}
+
+rectangle "Six Sigma" {
+    rectangle "PROS ✓" #27AE60 {
+        rectangle "ROI 250-400%"
+        rectangle "99.99966% calidad"
+        rectangle "Proyectos 4-6 meses"
+    }
+    rectangle "CONTRAS ⚠" #E74C3C {
+        rectangle "Entrenamiento intensivo"
+        rectangle "No sistemático"
+        rectangle "$5K-15K por Black Belt"
+    }
+}
+
+note bottom
+**Síntesis:**
+• MEJOR ROI: CMMI (518%)
+• MÁS RÁPIDO: ISO/IEC 25010 (6-12m)
+• MAYOR IMPACTO: TMMi (40-60% reducción)
+• RECOMENDACIÓN: CMMI + TMMi
+end note
+
+@enduml

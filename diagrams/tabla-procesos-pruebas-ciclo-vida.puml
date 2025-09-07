@@ -1,0 +1,126 @@
+@startuml
+title Tabla de Procesos de Pruebas por Ciclo de Vida del Software
+subtitle Implementación Sistemática de Testing para Mejorar Calidad en IBM
+
+skinparam {
+    backgroundColor white
+    titleFontColor #2C3E50
+    titleFontSize 14
+    rectangleFontSize 9
+    defaultFontSize 9
+}
+
+' Colores por fase
+!define REQUISITOS_COLOR #E8F4FD
+!define DISENO_COLOR #D5DBDB
+!define DESARROLLO_COLOR #FADBD8
+!define INTEGRACION_COLOR #D5F4E6
+!define SISTEMA_COLOR #FCF3CF
+!define ACEPTACION_COLOR #EBDEF0
+!define DESPLIEGUE_COLOR #D6EAF8
+!define MANTENIMIENTO_COLOR #FDEAA7
+
+' Estructura principal
+rectangle "FASES DEL CICLO DE VIDA" as fases {
+    
+    rectangle "1. REQUISITOS Y ANÁLISIS" as req #REQUISITOS_COLOR {
+        rectangle "• Revisión de Requisitos de Testing" as req1
+        rectangle "• Definición de Criterios de Aceptación" as req2
+        rectangle "• Planificación Inicial de Testing" as req3
+        rectangle "• Matriz de Trazabilidad (RTM)" as req4
+        rectangle "• Estimación de Esfuerzo de Testing" as req5
+        rectangle "📊 Métrica: >95% requisitos con casos de prueba" as req_metric
+    }
+    
+    rectangle "2. DISEÑO DEL SISTEMA" as dis #DISENO_COLOR {
+        rectangle "• Diseño de Casos de Prueba Alto Nivel" as dis1
+        rectangle "• Revisión de Diseño para Testabilidad" as dis2
+        rectangle "• Plan de Testing de Integración" as dis3
+        rectangle "• Definición de Datos de Prueba" as dis4
+        rectangle "• Diseño de Ambiente de Testing" as dis5
+        rectangle "📊 Métrica: >90% componentes con casos prueba" as dis_metric
+    }
+    
+    rectangle "3. DESARROLLO/CODIFICACIÓN" as dev #DESARROLLO_COLOR {
+        rectangle "• Testing Unitario por Desarrolladores" as dev1
+        rectangle "• Revisión de Código para Calidad" as dev2
+        rectangle "• Testing de Componentes" as dev3
+        rectangle "• Automatización Pruebas Unitarias" as dev4
+        rectangle "• Análisis de Cobertura de Código" as dev5
+        rectangle "📊 Métrica: >85% cobertura código unitario" as dev_metric
+    }
+    
+    rectangle "4. INTEGRACIÓN" as int #INTEGRACION_COLOR {
+        rectangle "• Testing de Integración Incremental" as int1
+        rectangle "• Testing de Interfaces" as int2
+        rectangle "• Testing de API" as int3
+        rectangle "• Testing de Base de Datos" as int4
+        rectangle "• Testing de Integración Continua" as int5
+        rectangle "📊 Métrica: >80% APIs con testing automatizado" as int_metric
+    }
+    
+    rectangle "5. TESTING DEL SISTEMA" as sys #SISTEMA_COLOR {
+        rectangle "• Testing Funcional Completo" as sys1
+        rectangle "• Testing de Performance" as sys2
+        rectangle "• Testing de Seguridad" as sys3
+        rectangle "• Testing de Usabilidad" as sys4
+        rectangle "• Testing de Regresión" as sys5
+        rectangle "📊 Métrica: <0.5 defectos/KLOC detectados" as sys_metric
+    }
+    
+    rectangle "6. ACEPTACIÓN" as ace #ACEPTACION_COLOR {
+        rectangle "• Testing de Aceptación Usuario (UAT)" as ace1
+        rectangle "• Testing de Aceptación del Negocio" as ace2
+        rectangle "• Testing Alpha/Beta" as ace3
+        rectangle "• Testing Producción Simulada" as ace4
+        rectangle "• Certificación de Calidad" as ace5
+        rectangle "📊 Métrica: >4.5/5.0 satisfacción UAT" as ace_metric
+    }
+    
+    rectangle "7. DESPLIEGUE" as dep #DESPLIEGUE_COLOR {
+        rectangle "• Testing de Despliegue" as dep1
+        rectangle "• Testing de Migración de Datos" as dep2
+        rectangle "• Testing de Rollback" as dep3
+        rectangle "• Testing de Smoke" as dep4
+        rectangle "• Monitoreo Post-Despliegue" as dep5
+        rectangle "📊 Métrica: >98% éxito despliegue sin rollback" as dep_metric
+    }
+    
+    rectangle "8. MANTENIMIENTO" as man #MANTENIMIENTO_COLOR {
+        rectangle "• Testing de Regresión Continua" as man1
+        rectangle "• Testing de Parches" as man2
+        rectangle "• Testing de Performance Continua" as man3
+        rectangle "• Testing de Seguridad Periódica" as man4
+        rectangle "• Análisis de Defectos Recurrentes" as man5
+        rectangle "📊 Métrica: <24h MTTR para incidentes P1" as man_metric
+    }
+}
+
+rectangle "HERRAMIENTAS RECOMENDADAS" as tools {
+    rectangle "Testing: Selenium, JMeter, Postman" as tool1
+    rectangle "Gestión: Jira, TestRail, Azure DevOps" as tool2
+    rectangle "CI/CD: Jenkins, GitLab CI, Docker" as tool3
+    rectangle "Monitoreo: New Relic, Splunk" as tool4
+}
+
+rectangle "BENEFICIOS ESPERADOS" as benefits {
+    rectangle "🎯 Reducción 40-60% defectos producción" as ben1
+    rectangle "🎯 Mejora 25% time-to-market" as ben2
+    rectangle "🎯 ROI 300-500% en testing" as ben3
+    rectangle "🎯 Satisfacción >4.5/5.0 usuarios" as ben4
+}
+
+' Layout
+fases -[hidden]down- tools
+tools -[hidden]right- benefits
+
+note bottom
+**Implementación Recomendada:**
+• Fase 1-3: Fundación procesos testing
+• Fase 4-6: Automatización e integración  
+• Fase 7-8: Optimización y monitoreo continuo
+
+**Framework de Soporte:** TMMi + IEEE 829-2008
+end note
+
+@enduml

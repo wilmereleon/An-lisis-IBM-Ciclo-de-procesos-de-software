@@ -1,0 +1,93 @@
+@startuml
+title Criterios de Validación Estado Empresarial IBM
+subtitle Evaluación basada en KPA CMMI y Métricas de Calidad
+
+skinparam {
+    backgroundColor white
+    titleFontColor #2C3E50
+    titleFontSize 14
+    rectangleFontSize 10
+}
+
+' Colores para niveles de cumplimiento
+!define CUMPLIDO_COLOR #27AE60
+!define PARCIAL_COLOR #F39C12
+!define NO_CUMPLIDO_COLOR #E74C3C
+
+rectangle "NIVEL 2 - GESTIONADO" as nivel2 #CUMPLIDO_COLOR {
+    rectangle "Gestión de Requisitos: 3/5" as req
+    rectangle "Planificación de Proyectos: 4/5" as plan
+    rectangle "Seguimiento y Control: 4/5" as control
+    rectangle "Gestión de Proveedores: 3/5" as prov
+    rectangle "Gestión de Configuración: 5/5" as config
+    rectangle "Aseguramiento de Calidad: 3/5" as qa
+    rectangle "PROMEDIO NIVEL 2: 3.67/5.0 ✓" as prom2
+}
+
+rectangle "NIVEL 3 - DEFINIDO" as nivel3 #PARCIAL_COLOR {
+    rectangle "Desarrollo de Requisitos: 4/5" as devreq
+    rectangle "Solución Técnica: 4/5" as tech
+    rectangle "Integración de Productos: 3/5" as integ
+    rectangle "Verificación: 3/5" as verif
+    rectangle "Validación: 4/5" as valid
+    rectangle "Enfoque en Procesos: 3/5" as proc
+    rectangle "PROMEDIO NIVEL 3: 3.50/5.0 ⚠" as prom3
+}
+
+rectangle "NIVEL 4 - CUANTITATIVAMENTE GESTIONADO" as nivel4 #NO_CUMPLIDO_COLOR {
+    rectangle "Gestión Cuantitativa: 2/5" as quant
+    rectangle "Análisis Causal: 2/5" as causal
+    rectangle "PROMEDIO NIVEL 4: 2.00/5.0 ✗" as prom4
+}
+
+rectangle "TESTING MATURITY (TMMi)" as tmmi #PARCIAL_COLOR {
+    rectangle "Nivel 2 - Testing Gestionado: 3/5" as tmmi2
+    rectangle "Nivel 3 - Testing Integrado: 2/5" as tmmi3
+    rectangle "Nivel 4 - Testing Medido: 1/5" as tmmi4
+    rectangle "Nivel 5 - Testing Optimizado: 1/5" as tmmi5
+}
+
+rectangle "CALIDAD DE PRODUCTO (ISO/IEC 25010)" as iso25010 #PARCIAL_COLOR {
+    rectangle "Funcionalidad: 94% (Obj: >98%)" as func
+    rectangle "Confiabilidad: 580h MTBF (Obj: >720h)" as conf
+    rectangle "Usabilidad: 4.1/5.0 (Obj: >4.5)" as usab
+    rectangle "Eficiencia: 4.2s (Obj: <3s)" as efic
+    rectangle "Mantenibilidad: 32h (Obj: <24h)" as mant
+    rectangle "Portabilidad: 85% (Obj: 100%)" as port
+}
+
+rectangle "MÉTRICAS OPERACIONALES" as metricas #NO_CUMPLIDO_COLOR {
+    rectangle "Defect Density: 0.8/KLOC (Obj: <0.5)" as defect
+    rectangle "Cost of Quality: 14% (Obj: <10%)" as cost
+    rectangle "Time to Market: +15% vs benchmark" as time
+    rectangle "Customer Satisfaction: 4.1/5.0 (Obj: >4.5)" as csat
+    rectangle "ROI Proyectos: 18% (Obj: >25%)" as roi
+}
+
+' Conexiones y layout
+nivel2 -[hidden]down- nivel3
+nivel3 -[hidden]down- nivel4
+tmmi -[hidden]down- iso25010
+iso25010 -[hidden]down- metricas
+
+note right of nivel2
+**Estado Actual IBM:**
+✓ Cumplido
+⚠ En Desarrollo  
+✗ No Cumplido
+
+**Gaps Críticos:**
+• Gestión cuantitativa
+• Testing sistemático
+• Métricas de calidad
+end note
+
+note bottom
+**Recomendaciones Prioritarias:**
+1. Implementar gestión cuantitativa (CMMI L4)
+2. Madurar procesos de testing (TMMi L3)
+3. Mejorar métricas de calidad de producto
+4. Reducir defect density y cost of quality
+end note
+
+@enduml

@@ -1,0 +1,105 @@
+@startuml
+title Análisis DOFA de IBM - Matriz Estratégica
+subtitle Fortalezas, Debilidades, Oportunidades y Amenazas
+
+skinparam {
+    backgroundColor white
+    titleFontColor #2C3E50
+    titleFontSize 16
+    rectangleFontSize 10
+    defaultFontSize 10
+}
+
+' Definir colores para cada cuadrante
+!define FORTALEZA_COLOR #27AE60
+!define DEBILIDAD_COLOR #E74C3C
+!define OPORTUNIDAD_COLOR #3498DB
+!define AMENAZA_COLOR #F39C12
+
+rectangle "FORTALEZAS (Strengths)" as fortalezas #FORTALEZA_COLOR {
+    rectangle "✓ Infraestructura Tecnológica Robusta" as f1
+    rectangle "• Plataformas cloud híbridas avanzadas" as f1_detail
+    rectangle "• Red Hat OpenShift consolidado" as f1_detail2
+    
+    rectangle "✓ Talento Humano Especializado" as f2
+    rectangle "• 850+ desarrolladores enterprise" as f2_detail
+    rectangle "• Certificaciones AI/ML y Cloud" as f2_detail2
+    
+    rectangle "✓ Experiencia en Proyectos Complejos" as f3
+    rectangle "• 150+ proyectos enterprise activos" as f3_detail
+    rectangle "• Sectores críticos: banca, gobierno" as f3_detail2
+    
+    rectangle "✓ Recursos Financieros Sólidos" as f4
+    rectangle "• $2.3B presupuesto anual I+D" as f4_detail
+    rectangle "• ROI comprobado en calidad" as f4_detail2
+}
+
+rectangle "DEBILIDADES (Weaknesses)" as debilidades #DEBILIDAD_COLOR {
+    rectangle "⚠ Procesos de Calidad Fragmentados" as d1
+    rectangle "• 68% equipos sin estandarización" as d1_detail
+    rectangle "• Métricas inconsistentes" as d1_detail2
+    
+    rectangle "⚠ Documentación Inconsistente" as d2
+    rectangle "• 45% proyectos documentación incompleta" as d2_detail
+    rectangle "• Falta templates estandarizados" as d2_detail2
+    
+    rectangle "⚠ Herramientas Testing Dispersas" as d3
+    rectangle "• 12 herramientas sin integración" as d3_detail
+    rectangle "• Solo 35% automatización" as d3_detail2
+    
+    rectangle "⚠ Ciclo Testing Extendido" as d4
+    rectangle "• 8.5 días regresión completa" as d4_detail
+    rectangle "• 23% defectos en producción" as d4_detail2
+}
+
+rectangle "OPORTUNIDADES (Opportunities)" as oportunidades #OPORTUNIDAD_COLOR {
+    rectangle "↗ Adopción IA/ML en Testing" as o1
+    rectangle "• Testing predictivo automatizado" as o1_detail
+    rectangle "• Mercado creciendo 25% anual" as o1_detail2
+    
+    rectangle "↗ Certificaciones Calidad" as o2
+    rectangle "• CMMI Nivel 4-5 diferenciación" as o2_detail
+    rectangle "• Acceso contratos gubernamentales" as o2_detail2
+    
+    rectangle "↗ Integración DevSecOps" as o3
+    rectangle "• Security by design temprano" as o3_detail
+    rectangle "• 40% reducción vulnerabilidades" as o3_detail2
+    
+    rectangle "↗ Expansión Mercados Emergentes" as o4
+    rectangle "• Demanda LATAM creciente" as o4_detail
+    rectangle "• Estándares calidad regionales" as o4_detail2
+}
+
+rectangle "AMENAZAS (Threats)" as amenazas #AMENAZA_COLOR {
+    rectangle "⚡ Competencia Ágil" as a1
+    rectangle "• Startups procesos más ágiles" as a1_detail
+    rectangle "• Pressure time-to-market" as a1_detail2
+    
+    rectangle "⚡ Regulaciones Crecientes" as a2
+    rectangle "• Compliance más estricto" as a2_detail
+    rectangle "• Penalizaciones por defectos" as a2_detail2
+    
+    rectangle "⚡ Escasez Talento Especializado" as a3
+    rectangle "• 18% rotación anual QA/Testing" as a3_detail
+    rectangle "• Competencia por certificados" as a3_detail2
+    
+    rectangle "⚡ Presión de Costos" as a4
+    rectangle "• Clientes demandan mayor ROI" as a4_detail
+    rectangle "• Reducción presupuestos calidad" as a4_detail2
+}
+
+' Posicionamiento de cuadrantes
+fortalezas -[hidden]right- oportunidades
+debilidades -[hidden]right- amenazas
+fortalezas -[hidden]down- debilidades
+oportunidades -[hidden]down- amenazas
+
+note bottom
+**Estrategias Derivadas:**
+• FO: Aprovechar infraestructura para IA/ML testing
+• FA: Usar experiencia para defenderse de competencia
+• DO: Certificaciones CMMI para superar fragmentación
+• DA: Estandarización urgente ante presión competitiva
+end note
+
+@enduml

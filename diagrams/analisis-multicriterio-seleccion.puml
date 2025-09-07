@@ -1,0 +1,101 @@
+@startuml
+title Análisis Multicriterio para Selección de Modelos
+subtitle Evaluación Ponderada de 6 Modelos de Calidad para IBM
+
+skinparam {
+    backgroundColor white
+    titleFontColor #2C3E50
+    titleFontSize 14
+    rectangleFontSize 10
+}
+
+' Definir colores
+!define GANADOR_COLOR #27AE60
+!define SEGUNDO_COLOR #3498DB
+!define TERCERO_COLOR #F39C12
+!define OTROS_COLOR #95A5A6
+
+rectangle "CRITERIOS DE EVALUACIÓN" as criterios {
+    rectangle "Alineación Estratégica (25%)" as crit1
+    rectangle "Impacto en Calidad (25%)" as crit2
+    rectangle "Facilidad de Implementación (20%)" as crit3
+    rectangle "ROI Esperado (15%)" as crit4
+    rectangle "Madurez del Modelo (10%)" as crit5
+    rectangle "Disponibilidad de Recursos (5%)" as crit6
+}
+
+rectangle "RESULTADOS PONDERADOS" as resultados {
+    
+    rectangle "1° CMMI" as cmmi #GANADOR_COLOR {
+        rectangle "Alineación: 9.5 × 25% = 2.38" as cmmi_align
+        rectangle "Calidad: 9.0 × 25% = 2.25" as cmmi_qual
+        rectangle "Implementación: 6.0 × 20% = 1.20" as cmmi_impl
+        rectangle "ROI: 9.0 × 15% = 1.35" as cmmi_roi
+        rectangle "Madurez: 10.0 × 10% = 1.00" as cmmi_mad
+        rectangle "Recursos: 8.0 × 5% = 0.40" as cmmi_rec
+        rectangle "TOTAL: 8.58 puntos" as cmmi_total
+    }
+    
+    rectangle "2° TMMi" as tmmi #SEGUNDO_COLOR {
+        rectangle "Alineación: 8.0 × 25% = 2.00" as tmmi_align
+        rectangle "Calidad: 9.5 × 25% = 2.38" as tmmi_qual
+        rectangle "Implementación: 7.5 × 20% = 1.50" as tmmi_impl
+        rectangle "ROI: 8.5 × 15% = 1.28" as tmmi_roi
+        rectangle "Madurez: 8.5 × 10% = 0.85" as tmmi_mad
+        rectangle "Recursos: 7.0 × 5% = 0.35" as tmmi_rec
+        rectangle "TOTAL: 8.36 puntos" as tmmi_total
+    }
+    
+    rectangle "3° ISO/IEC 25010" as iso #TERCERO_COLOR {
+        rectangle "Alineación: 8.5 × 25% = 2.13" as iso_align
+        rectangle "Calidad: 9.0 × 25% = 2.25" as iso_qual
+        rectangle "Implementación: 8.0 × 20% = 1.60" as iso_impl
+        rectangle "ROI: 8.0 × 15% = 1.20" as iso_roi
+        rectangle "Madurez: 8.0 × 10% = 0.80" as iso_mad
+        rectangle "Recursos: 7.5 × 5% = 0.38" as iso_rec
+        rectangle "TOTAL: 8.36 puntos" as iso_total
+    }
+    
+    rectangle "4° Six Sigma" as six #OTROS_COLOR {
+        rectangle "TOTAL: 7.98 puntos" as six_total
+    }
+    
+    rectangle "5° ITIL v4" as itil #OTROS_COLOR {
+        rectangle "TOTAL: 7.63 puntos" as itil_total
+    }
+    
+    rectangle "6° IEEE 829" as ieee #OTROS_COLOR {
+        rectangle "TOTAL: 7.25 puntos" as ieee_total
+    }
+}
+
+rectangle "DECISIÓN ESTRATÉGICA" as decision #GANADOR_COLOR {
+    rectangle "MODELO PRIMARIO: CMMI" as prim
+    rectangle "• Framework integral de madurez" as prim1
+    rectangle "• ROI comprobado: 518%" as prim2
+    rectangle "• Certificación diferenciadora" as prim3
+    
+    rectangle "MODELO COMPLEMENTARIO: TMMi" as comp
+    rectangle "• Especialización en testing" as comp1
+    rectangle "• Sinergia perfecta con CMMI" as comp2
+    rectangle "• ROI específico: 300-500%" as comp3
+}
+
+' Layout
+criterios -[hidden]down- resultados
+resultados -[hidden]down- decision
+
+note right of resultados
+**Metodología:**
+• Pesos basados en prioridades IBM
+• Evaluación experta (1-10)
+• Análisis de sensibilidad realizado
+• Validación con benchmarks
+
+**Diferenciadores Clave:**
+• CMMI: Madurez organizacional
+• TMMi: Especialización testing
+• Sinergia entre ambos modelos
+end note
+
+@enduml

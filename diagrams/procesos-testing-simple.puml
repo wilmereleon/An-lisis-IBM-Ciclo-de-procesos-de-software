@@ -1,0 +1,68 @@
+@startuml
+title Tabla Procesos Testing por Ciclo de Vida
+
+rectangle "1. REQUISITOS" #E8F4FD {
+    rectangle "• Revisión Requisitos Testing"
+    rectangle "• Criterios Aceptación"
+    rectangle "• Matriz Trazabilidad"
+    rectangle "📊 >95% requisitos con casos"
+}
+
+rectangle "2. DISEÑO" #D5DBDB {
+    rectangle "• Casos Prueba Alto Nivel"
+    rectangle "• Revisión Testabilidad"
+    rectangle "• Plan Testing Integración"
+    rectangle "📊 >90% componentes casos"
+}
+
+rectangle "3. DESARROLLO" #FADBD8 {
+    rectangle "• Testing Unitario"
+    rectangle "• Code Reviews"
+    rectangle "• Automatización"
+    rectangle "📊 >85% cobertura código"
+}
+
+rectangle "4. INTEGRACIÓN" #D5F4E6 {
+    rectangle "• Testing Incremental"
+    rectangle "• Testing APIs"
+    rectangle "• Testing BD"
+    rectangle "📊 >80% APIs automatizadas"
+}
+
+rectangle "5. SISTEMA" #FCF3CF {
+    rectangle "• Testing Funcional"
+    rectangle "• Testing Performance"
+    rectangle "• Testing Seguridad"
+    rectangle "📊 <0.5 defectos/KLOC"
+}
+
+rectangle "6. ACEPTACIÓN" #EBDEF0 {
+    rectangle "• UAT Usuario"
+    rectangle "• Testing Alpha/Beta"
+    rectangle "• Certificación"
+    rectangle "📊 >4.5/5.0 satisfacción"
+}
+
+rectangle "7. DESPLIEGUE" #D6EAF8 {
+    rectangle "• Testing Despliegue"
+    rectangle "• Testing Rollback"
+    rectangle "• Smoke Testing"
+    rectangle "📊 >98% éxito sin rollback"
+}
+
+rectangle "8. MANTENIMIENTO" #FDEAA7 {
+    rectangle "• Regresión Continua"
+    rectangle "• Testing Parches"
+    rectangle "• Análisis Defectos"
+    rectangle "📊 <24h MTTR P1"
+}
+
+note bottom
+**Beneficios Esperados:**
+• 40-60% reducción defectos
+• 25% mejora time-to-market
+• ROI 300-500% en testing
+• >4.5/5.0 satisfacción usuarios
+end note
+
+@enduml

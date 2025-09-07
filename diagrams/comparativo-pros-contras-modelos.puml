@@ -1,0 +1,116 @@
+@startuml
+title Comparativo de Pros y Contras - Modelos de Calidad de Software
+subtitle Análisis de Esfuerzo, Tiempo, Costos y Beneficios para IBM
+
+skinparam {
+    backgroundColor white
+    titleFontColor #2C3E50
+    titleFontSize 14
+    rectangleFontSize 9
+}
+
+' Colores para pros y contras
+!define PRO_COLOR #D5F4E6
+!define CONTRA_COLOR #FADBD8
+!define NEUTRAL_COLOR #F8F9FA
+
+rectangle "ANÁLISIS DETALLADO POR MODELO" as analisis {
+    
+    rectangle "CMMI (Capability Maturity Model Integration)" as cmmi {
+        rectangle "PROS ✓" as cmmi_pros #PRO_COLOR {
+            rectangle "Esfuerzo: Framework integral unificado" as cmmi_p1
+            rectangle "Tiempo: Roadmap 3-5 años estructurado" as cmmi_p2
+            rectangle "Costos: ROI comprobado 518%" as cmmi_p3
+            rectangle "Beneficios: -25-40% defectos, +15-25% productividad" as cmmi_p4
+        }
+        rectangle "CONTRAS ⚠" as cmmi_contras #CONTRA_COLOR {
+            rectangle "Esfuerzo: Transformación cultural significativa" as cmmi_c1
+            rectangle "Tiempo: Implementación 2-4 años" as cmmi_c2
+            rectangle "Costos: Inversión inicial $500K-2M" as cmmi_c3
+            rectangle "Beneficios: Visibles después 18-24 meses" as cmmi_c4
+        }
+    }
+    
+    rectangle "TMMi (Test Maturity Model Integration)" as tmmi {
+        rectangle "PROS ✓" as tmmi_pros #PRO_COLOR {
+            rectangle "Esfuerzo: Enfoque específico testing" as tmmi_p1
+            rectangle "Tiempo: Implementación 12-24 meses" as tmmi_p2
+            rectangle "Costos: ROI específico 300-500%" as tmmi_p3
+            rectangle "Beneficios: -40-60% defectos post-producción" as tmmi_p4
+        }
+        rectangle "CONTRAS ⚠" as tmmi_contras #CONTRA_COLOR {
+            rectangle "Esfuerzo: Limitado solo a testing" as tmmi_c1
+            rectangle "Tiempo: Requiere personal especializado" as tmmi_c2
+            rectangle "Costos: Herramientas automatización $200K-500K" as tmmi_c3
+            rectangle "Beneficios: No aborda otros aspectos calidad" as tmmi_c4
+        }
+    }
+    
+    rectangle "ISO/IEC 25010 (SQuaRE)" as iso {
+        rectangle "PROS ✓" as iso_pros #PRO_COLOR {
+            rectangle "Esfuerzo: Enfoque directo características calidad" as iso_p1
+            rectangle "Tiempo: Implementación gradual 6-12 meses" as iso_p2
+            rectangle "Costos: Costo-efectivo para evaluación" as iso_p3
+            rectangle "Beneficios: Mejora directa satisfacción usuario" as iso_p4
+        }
+        rectangle "CONTRAS ⚠" as iso_contras #CONTRA_COLOR {
+            rectangle "Esfuerzo: No proporciona procesos implementación" as iso_c1
+            rectangle "Tiempo: Requiere desarrollo métricas específicas" as iso_c2
+            rectangle "Costos: Herramientas medición especializadas" as iso_c3
+            rectangle "Beneficios: Limitado a evaluación, no mejora procesos" as iso_c4
+        }
+    }
+    
+    rectangle "Six Sigma" as six {
+        rectangle "PROS ✓" as six_pros #PRO_COLOR {
+            rectangle "ROI promedio 250-400% por proyecto" as six_p1
+            rectangle "Reducción drástica defectos (99.99966%)" as six_p2
+        }
+        rectangle "CONTRAS ⚠" as six_contras #CONTRA_COLOR {
+            rectangle "Requiere entrenamiento intensivo estadística" as six_c1
+            rectangle "Enfoque proyecto por proyecto, no sistemático" as six_c2
+        }
+    }
+    
+    rectangle "ITIL v4" as itil {
+        rectangle "PROS ✓" as itil_pros #PRO_COLOR {
+            rectangle "Framework maduro gestión servicios TI" as itil_p1
+            rectangle "Reducción 20-30% costos operacionales" as itil_p2
+        }
+        rectangle "CONTRAS ⚠" as itil_contras #CONTRA_COLOR {
+            rectangle "Enfocado en operaciones, no desarrollo" as itil_c1
+            rectangle "Licenciamiento herramientas ITSM $100K-300K" as itil_c2
+        }
+    }
+    
+    rectangle "IEEE 829-2008" as ieee {
+        rectangle "PROS ✓" as ieee_pros #PRO_COLOR {
+            rectangle "Estándar simple documentación testing" as ieee_p1
+            rectangle "Implementación rápida 2-4 meses" as ieee_p2
+        }
+        rectangle "CONTRAS ⚠" as ieee_contras #CONTRA_COLOR {
+            rectangle "Solo cubre documentación, no procesos" as ieee_c1
+            rectangle "Overhead documentación puede ser significativo" as ieee_c2
+        }
+    }
+}
+
+rectangle "SÍNTESIS COMPARATIVA" as sintesis #NEUTRAL_COLOR {
+    rectangle "💰 MEJOR ROI: CMMI (518%) > TMMi (400%) > Six Sigma (325%)" as roi_rank
+    rectangle "⏱️ IMPLEMENTACIÓN MÁS RÁPIDA: IEEE 829 (2-4m) > ISO/IEC 25010 (6-12m) > TMMi (12-24m)" as time_rank
+    rectangle "🎯 MAYOR IMPACTO CALIDAD: TMMi (40-60% reducción defectos) > CMMI (25-40%) > Six Sigma (99.99966%)" as quality_rank
+    rectangle "💡 RECOMENDACIÓN: Combinación CMMI + TMMi para máximo beneficio" as recommendation
+}
+
+' Layout
+analisis -[hidden]down- sintesis
+
+note bottom
+**Criterios de Decisión:**
+• Considerar madurez organizacional actual IBM
+• Evaluar recursos disponibles vs. inversión requerida
+• Priorizar modelos con ROI comprobado y sinergia
+• Planificar implementación gradual para minimizar riesgo
+end note
+
+@enduml

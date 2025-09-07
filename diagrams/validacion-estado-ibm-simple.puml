@@ -1,0 +1,45 @@
+@startuml
+title Criterios de Validación IBM - Estado Actual
+
+rectangle "CMMI NIVEL 2 - GESTIONADO" #27AE60 {
+    rectangle "Gestión Requisitos: 3/5"
+    rectangle "Planificación: 4/5"
+    rectangle "Control: 4/5"
+    rectangle "Configuración: 5/5"
+    rectangle "PROMEDIO: 3.67/5.0 ✓"
+}
+
+rectangle "CMMI NIVEL 3 - DEFINIDO" #F39C12 {
+    rectangle "Desarrollo Requisitos: 4/5"
+    rectangle "Solución Técnica: 4/5"
+    rectangle "Integración: 3/5"
+    rectangle "Verificación: 3/5"
+    rectangle "PROMEDIO: 3.50/5.0 ⚠"
+}
+
+rectangle "CMMI NIVEL 4 - CUANTITATIVO" #E74C3C {
+    rectangle "Gestión Cuantitativa: 2/5"
+    rectangle "Análisis Causal: 2/5"
+    rectangle "PROMEDIO: 2.00/5.0 ✗"
+}
+
+rectangle "MÉTRICAS CALIDAD" #F39C12 {
+    rectangle "Defectos: 0.8/KLOC (Obj: <0.5)"
+    rectangle "Costo Calidad: 14% (Obj: <10%)"
+    rectangle "Time-to-Market: +15% vs benchmark"
+    rectangle "Satisfacción: 4.1/5.0 (Obj: >4.5)"
+}
+
+note right
+**Estado IBM:**
+✓ Cumplido
+⚠ En Desarrollo
+✗ No Cumplido
+
+**Gaps Críticos:**
+• Gestión cuantitativa
+• Testing sistemático
+• Métricas calidad
+end note
+
+@enduml
