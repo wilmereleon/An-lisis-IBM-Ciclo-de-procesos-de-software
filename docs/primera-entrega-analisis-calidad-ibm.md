@@ -131,8 +131,8 @@ IBM, como líder global en tecnología empresarial, requiere un enfoque sistemá
 
 Para facilitar la toma de decisiones estratégicas, se ha desarrollado una tabla comparativa que analiza los elementos clave de cada modelo de calidad evaluado:
 
-![Comparativo de Elementos de Modelos](../diagrams/diagramas_entrega_1/comparativo-elementos-python.png)
-*Figura 3.1: Comparativo detallado de elementos constitutivos de los modelos de calidad*
+![Comparativo Estratégico de Modelos](../diagrams/diagramas_entrega_1/comparativo-elementos-python.png)
+*Figura 3.1: Dashboard estratégico comparativo de modelos de calidad con ranking multicriterio, características clave y recomendación estratégica para IBM Colombia*
 
 ### 3.2 Matriz de Comparación Técnica
 
@@ -159,7 +159,7 @@ Para facilitar la toma de decisiones estratégicas, se ha desarrollado una tabla
 | **IEEE 829** | 6.5 | 7.5 | 8.5 | 7.0 | 9.0 | **7.70** |
 
 ![Evaluación Cuantitativa de Modelos](../diagrams/diagramas_entrega_1/evaluacion-modelos-python.png)
-*Figura 3.2: Evaluación cuantitativa comparativa de los 6 modelos de calidad analizados*
+*Figura 3.2: Evaluación cuantitativa comparativa con scoring multicriterio de los 6 modelos de calidad analizados*
 
 ---
 
@@ -249,8 +249,8 @@ Para facilitar la toma de decisiones estratégicas, se ha desarrollado una tabla
 - **Costos:** Overhead de documentación puede ser significativo
 - **Beneficios:** Beneficios limitados sin otros frameworks
 
-![Comparativo Pros y Contras](../diagrams/diagramas_entrega_1/pros-contras-python.png)
-*Figura 4.1: Análisis comparativo de pros y contras de los modelos de calidad evaluados*
+![Análisis Pros y Contras](../diagrams/diagramas_entrega_1/pros-contras-python.png)
+*Figura 4.1: Análisis comparativo de pros y contras con formato de tarjetas profesionales y conclusiones estratégicas*
 
 ---
 
@@ -361,8 +361,8 @@ Para facilitar la toma de decisiones estratégicas, se ha desarrollado una tabla
    - Reducción de presupuestos en iniciativas de calidad
    - Necesidad de justificar inversiones en marcos de calidad
 
-![Análisis DOFA IBM](../diagrams/diagramas_entrega_1/dofa-ibm-python.png)
-*Figura 5.1: Matriz DOFA de IBM mostrando fortalezas, debilidades, oportunidades y amenazas identificadas*
+![Análisis DOFA Estratégico IBM](../diagrams/diagramas_entrega_1/dofa-ibm-python.png)
+*Figura 5.1: Análisis DOFA completo de IBM con estrategias derivadas y matriz de cuadrantes para decisiones estratégicas*
 
 ---
 
@@ -435,8 +435,8 @@ Para facilitar la toma de decisiones estratégicas, se ha desarrollado una tabla
 | **Customer Satisfaction** | >4.5/5.0 | 4.1/5.0 | -9% |
 | **ROI de Proyectos** | >25% | 18% | -28% |
 
-![Criterios de Validación IBM](../diagrams/diagramas_entrega_1/validacion-estado-python.png)
-*Figura 6.1: Estado actual de IBM según criterios de validación CMMI y métricas de calidad*
+![Estado de Validación Empresarial IBM](../diagrams/diagramas_entrega_1/validacion-estado-python.png)
+*Figura 6.1: Gap analysis detallado del estado actual de IBM según criterios KPA de CMMI y métricas de calidad empresarial*
 
 ---
 
@@ -470,6 +470,9 @@ Se utilizó un enfoque de análisis multicriterio considerando:
 | **Six Sigma** | 7.85 | 4 |
 | **ITIL v4** | 7.55 | 5 |
 | **IEEE 829** | 7.25 | 6 |
+
+![Selección Estratégica de Modelos](../diagrams/diagramas_entrega_1/seleccion-modelos-python.png)
+*Figura 7.1: Infografía completa de selección estratégica con justificación técnica, radar de evaluación y roadmap de implementación*
 
 ### 7.2 Modelos Seleccionados
 
@@ -559,6 +562,9 @@ La tabla se desarrolló considerando:
 
 ### 8.2 Tabla Detallada de Procesos de Pruebas
 
+![Procesos de Testing Integrados](../diagrams/diagramas_entrega_1/procesos-testing-python.png)
+*Figura 8.1: Flujo visual integrado de procesos de testing por cada fase del ciclo de vida con métricas y herramientas*
+
 | **Fase del Ciclo de Vida** | **Procesos/Procedimientos/Actividades de Pruebas** |
 |----------------------------|---------------------------------------------------|
 | **1. Análisis y Definición de Requisitos** | **• Revisión de Requisitos de Testing:** Análisis de testabilidad de requisitos funcionales y no funcionales<br>**• Definición de Criterios de Aceptación:** Establecimiento de criterios medibles y verificables para cada requisito<br>**• Planificación Inicial de Testing:** Identificación de riesgos de testing y estrategia general<br>**• Matriz de Trazabilidad:** Creación de RTM (Requirements Traceability Matrix) inicial<br>**• Estimación de Esfuerzo de Testing:** Cálculo de recursos y tiempo necesarios para testing |
@@ -596,17 +602,20 @@ La tabla se desarrolló considerando:
 | **Despliegue** | Jenkins, GitLab CI, Ansible | CI/CD y automatización de despliegue |
 | **Mantenimiento** | New Relic, Splunk, ServiceNow | Monitoreo y gestión de incidentes |
 
-![Procesos de Testing por Ciclo de Vida](../diagrams/diagramas_entrega_1/procesos-testing-python.png)
-*Figura 8.1: Tabla detallada de procesos de testing por cada fase del ciclo de vida del desarrollo de software*
+![Procesos de Testing Integrados](../diagrams/diagramas_entrega_1/procesos-testing-python.png)
+*Figura 8.1: Flujo visual integrado de procesos de testing por cada fase del ciclo de vida con métricas y herramientas*
 
-![Selección de Modelos Adecuados](../diagrams/diagramas_entrega_1/seleccion-modelos-python.png)
-*Figura 8.2: Análisis multicriterio y selección de modelos más adecuados para IBM*
+![Selección Estratégica de Modelos](../diagrams/diagramas_entrega_1/seleccion-modelos-python.png)
+*Figura 8.2: Infografía completa de selección estratégica con análisis multicriterio y roadmap de implementación*
 
 ---
 
 ## 9. Conclusiones
 
 ### 9.1 Resumen Ejecutivo
+
+![Resumen Ejecutivo Estratégico](../diagrams/diagramas_entrega_1/resumen-ejecutivo-python.png)
+*Figura 9.1: Dashboard ejecutivo con síntesis de hallazgos principales, recomendaciones estratégicas y proyección ROI*
 
 El análisis realizado demuestra que IBM requiere un enfoque sistemático e integrado para mejorar sus procesos de calidad de software. La evaluación de seis modelos de calidad principales reveló que **CMMI y TMMi**, implementados de manera complementaria, representan la estrategia más efectiva para abordar las brechas identificadas.
 
@@ -663,12 +672,15 @@ El éxito de esta iniciativa posicionará a IBM como líder en calidad de softwa
 
 ## Índice de Figuras
 
-- **Figura 3.1:** Evaluación cuantitativa comparativa de los 6 modelos de calidad analizados
-- **Figura 4.1:** Análisis comparativo de pros y contras de los modelos de calidad evaluados
-- **Figura 5.1:** Matriz DOFA de IBM mostrando fortalezas, debilidades, oportunidades y amenazas identificadas
-- **Figura 6.1:** Estado actual de IBM según criterios de validación CMMI y métricas de calidad
-- **Figura 8.1:** Tabla detallada de procesos de testing por cada fase del ciclo de vida del desarrollo de software
-- **Figura 8.2:** Análisis multicriterio y selección de modelos más adecuados para IBM
+- **Figura 3.1:** Dashboard estratégico comparativo de modelos de calidad con ranking multicriterio, características clave y recomendación estratégica para IBM Colombia
+- **Figura 3.2:** Evaluación cuantitativa comparativa con scoring multicriterio de los 6 modelos de calidad analizados
+- **Figura 4.1:** Análisis comparativo de pros y contras con formato de tarjetas profesionales y conclusiones estratégicas
+- **Figura 5.1:** Análisis DOFA completo de IBM con estrategias derivadas y matriz de cuadrantes para decisiones estratégicas
+- **Figura 6.1:** Gap analysis detallado del estado actual de IBM según criterios KPA de CMMI y métricas de calidad empresarial
+- **Figura 7.1:** Infografía completa de selección estratégica con justificación técnica, radar de evaluación y roadmap de implementación
+- **Figura 8.1:** Flujo visual integrado de procesos de testing por cada fase del ciclo de vida con métricas y herramientas
+- **Figura 8.2:** Infografía completa de selección estratégica con análisis multicriterio y roadmap de implementación
+- **Figura 9.1:** Dashboard ejecutivo con síntesis de hallazgos principales, recomendaciones estratégicas y proyección ROI
 
 ---
 
@@ -676,16 +688,16 @@ El éxito de esta iniciativa posicionará a IBM como líder en calidad de softwa
 
 ### Diagramas Profesionales Python (Carpeta: diagramas_entrega_1)
 
-**Archivos PNG de Alta Calidad (300 DPI):**
-1. `comparativo-elementos-python.png` (872KB) - Tabla comparativa completa de elementos ✅ NUEVO
+**Archivos PNG de Alta Calidad (300 DPI) - ✅ ACTUALIZADOS:**
+1. `comparativo-elementos-python.png` (872KB) - Dashboard comparativo moderno con elementos separados ✅ POSICIONES AJUSTADAS
 2. `evaluacion-modelos-python.png` (310KB) - Gráfico cuantitativo multicriterio ✅ VERIFICADO
 3. `dofa-ibm-python.png` (818KB) - Matriz DOFA estratégica completa ✅ VERIFICADO
 4. `validacion-estado-python.png` (349KB) - Gap analysis KPA con mejoras ✅ OPTIMIZADO
-5. `procesos-testing-python.png` (734KB) - Tabla ciclo vida optimizada ✅ MEJORADO
-6. `pros-contras-python.png` (804KB) - Análisis comparativo corregido ✅ CORREGIDO
-7. `seleccion-modelos-python.png` (635KB) - Selección estratégica corregida ✅ CORREGIDO
-8. `resumen-ejecutivo-python.png` (1,045KB) - Dashboard ejecutivo completo ✅ NUEVO
-9. `reporte-verificacion-python.png` (Variable) - Control de calidad visual ✅ NUEVO
+5. `procesos-testing-python.png` (734KB) - Flujo visual de procesos por ciclo de vida ✅ MODERNO
+6. `pros-contras-python.png` (804KB) - Análisis en formato tarjetas con texto destacado ✅ SIN MARCOS
+7. `seleccion-modelos-python.png` (635KB) - Infografía con justificación técnica destacada ✅ SIN MARCOS
+8. `resumen-ejecutivo-python.png` (1,045KB) - Dashboard ejecutivo completo ✅ AGREGADO
+9. `reporte-verificacion-python.png` (Variable) - Control de calidad visual ✅ DISPONIBLE
 
 **Características Técnicas:**
 - ✅ Resolución: 300 DPI para calidad profesional de impresión
@@ -696,9 +708,11 @@ El éxito de esta iniciativa posicionará a IBM como líder en calidad de softwa
 - ✅ Ortografía: Completa con tildes y caracteres en español
 
 **Problemas Corregidos:**
-- ✅ `pros-contras-python.png`: Título "Evaluación para implementación" superpuesto → SOLUCIONADO
-- ✅ `seleccion-modelos-python.png`: Cuadro "JUSTIFICACIÓN" sobre óvalos → SOLUCIONADO
-- ✅ Todos los diagramas: Espaciado y márgenes optimizados → MEJORADO
+- ✅ **Recuadros eliminados**: Removidos todos los recuadros azules innecesarios que no cumplían función específica
+- ✅ **Texto destacado con color**: Implementado texto en color azul oscuro (#1B4F72) para remarcar información clave
+- ✅ **Diseño limpio y minimalista**: Eliminación de elementos visuales redundantes para mayor claridad
+- ✅ **Optimización visual**: Mejora en legibilidad y enfoque en contenido esencial
+- ✅ **Integración completa**: Todos los gráficos optimizados y agregados en secciones correspondientes del documento
 
 ### Scripts de Generación Disponibles
 
@@ -706,9 +720,13 @@ El éxito de esta iniciativa posicionará a IBM como líder en calidad de softwa
 1. `generar_diagramas_entrega1_parte1.py` - Evaluación y DOFA
 2. `generar_diagramas_entrega1_parte2.py` - Validación y procesos testing  
 3. `generar_diagramas_entrega1_parte3.py` - Pros/contras y selección
-4. `generar_comparativo_elementos.py` - Tabla comparativa de elementos
+4. `generar_comparativo_elementos.py` - Tabla comparativa de elementos (versión anterior)
 5. `generar_resumen_ejecutivo.py` - Dashboard ejecutivo completo
 6. `verificar_diagramas.py` - Control de calidad y verificación
+7. `generar_comparativo_moderno.py` - Dashboard comparativo moderno ✅ NUEVO
+8. `generar_procesos_moderno.py` - Flujo visual de procesos ✅ NUEVO  
+9. `generar_seleccion_moderno.py` - Infografía de selección ✅ NUEVO
+10. `generar_pros_contras_moderno.py` - Análisis en formato tarjetas ✅ NUEVO
 
 **Comandos de ejecución:**
 ```bash
