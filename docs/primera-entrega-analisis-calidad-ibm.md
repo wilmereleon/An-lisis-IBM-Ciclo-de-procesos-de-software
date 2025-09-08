@@ -560,7 +560,20 @@ La tabla se desarrolló considerando:
 - Actividades que aumenten la calidad del producto final
 - Integración con frameworks CMMI para coherencia organizacional
 
-### 8.2 Tabla Detallada de Procesos de Pruebas
+### 8.2 Tabla Resumida de Procesos de Pruebas por Ciclo de Vida
+
+| **ETAPA DEL CICLO** | **PROCESOS CLAVE DE PRUEBAS** | **ENTREGABLES** | **MÉTRICAS** |
+|---------------------|-------------------------------|-----------------|--------------|
+| **1. Análisis de Requisitos** | • Revisión de testabilidad<br>• Definición criterios aceptación<br>• Matriz trazabilidad inicial | Plan de Testing<br>RTM v1.0<br>Casos de prueba conceptuales | >95% requisitos con criterios<br>100% requisitos trazables |
+| **2. Diseño del Sistema** | • Diseño casos de prueba<br>• Revisión arquitectura testing<br>• Plan integración | Test Cases detallados<br>Estrategia integración<br>Ambiente testing | >90% componentes con casos<br>Arquitectura testeable |
+| **3. Implementación** | • Testing unitario<br>• Code reviews calidad<br>• Automatización pruebas | Suites automatizadas<br>Reportes cobertura<br>Defectos corregidos | >85% cobertura código<br><0.5 defectos/KLOC |
+| **4. Integración** | • Testing incremental<br>• Validación interfaces<br>• Testing APIs | Reportes integración<br>Validación interfaces<br>Testing automatizado | >80% APIs automatizadas<br>0 defectos críticos |
+| **5. Testing Sistema** | • Testing funcional completo<br>• Performance y seguridad<br>• Testing regresión | Reporte testing completo<br>Métricas performance<br>Certificación seguridad | <3 seg tiempo respuesta<br>0 vulnerabilidades críticas |
+| **6. Aceptación** | • UAT con usuarios<br>• Testing producción<br>• Certificación final | Acta aceptación<br>Sign-off usuario<br>Go-live approval | >4.5/5.0 satisfacción<br>100% casos críticos OK |
+| **7. Despliegue** | • Testing deployment<br>• Smoke testing<br>• Monitoreo inicial | Reporte despliegue<br>Validación producción<br>Métricas live | >98% éxito deployment<br>0 rollbacks |
+| **8. Mantenimiento** | • Testing regresión continua<br>• Monitoreo performance<br>• Análisis defectos | Reportes periódicos<br>Trending defectos<br>Mejoras implementadas | <24h MTTR P1<br>Reducción defectos 20% |
+
+### 8.3 Tabla Detallada de Procesos de Pruebas
 
 ![Procesos de Testing Integrados](../diagrams/diagramas_entrega_1/procesos-testing-python.png)
 *Figura 8.1: Flujo visual integrado de procesos de testing por cada fase del ciclo de vida con métricas y herramientas*
@@ -604,6 +617,19 @@ La tabla se desarrolló considerando:
 
 ![Procesos de Testing Integrados](../diagrams/diagramas_entrega_1/procesos-testing-python.png)
 *Figura 8.1: Flujo visual integrado de procesos de testing por cada fase del ciclo de vida con métricas y herramientas*
+
+### **Tabla Ejecutiva de Procesos de Testing por Ciclo de Vida**
+
+| **FASE** | **ACTIVIDADES TESTING CLAVE** | **CRITERIOS ÉXITO** |
+|----------|-------------------------------|---------------------|
+| **Requisitos** | Revisión testabilidad + Matriz trazabilidad | >95% requisitos verificables |
+| **Diseño** | Casos de prueba + Estrategia testing | >90% componentes cubiertos |
+| **Desarrollo** | Testing unitario + Code review | >85% cobertura código |
+| **Integración** | Testing incremental + APIs | >80% interfaces automatizadas |
+| **Sistema** | Testing funcional + Performance | <3 seg respuesta + 0 vulnerabilidades |
+| **Aceptación** | UAT + Certificación usuario | >4.5/5.0 satisfacción |
+| **Despliegue** | Smoke testing + Validación | >98% éxito + 0 rollbacks |
+| **Mantenimiento** | Regresión + Monitoreo | <24h resolución P1 |
 
 ![Selección Estratégica de Modelos](../diagrams/diagramas_entrega_1/seleccion-modelos-python.png)
 *Figura 8.2: Infografía completa de selección estratégica con análisis multicriterio y roadmap de implementación*
