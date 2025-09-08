@@ -89,8 +89,8 @@ def crear_procesos_testing_flujo():
         x, y = posiciones[i]
         color = colores_fases[fase]
         
-        # Caja principal de la fase
-        rect = FancyBboxPatch((x-0.12, y-0.15), 0.24, 0.25,
+        # Caja principal de la fase (más grande para acomodar texto)
+        rect = FancyBboxPatch((x-0.14, y-0.16), 0.28, 0.28,
                              boxstyle="round,pad=0.01",
                              facecolor=color, alpha=0.3,
                              edgecolor=color, linewidth=2)
@@ -98,13 +98,13 @@ def crear_procesos_testing_flujo():
         
         # Título de la fase
         ax.text(x, y+0.08, fase.upper(), ha='center', va='center',
-                fontsize=13, fontweight='bold', color=color)
+                fontsize=16, fontweight='bold', color=color)
         
-        # Procesos de la fase
+        # Procesos de la fase (mayor espaciado para texto más grande)
         for j, proceso in enumerate(procesos):
-            y_proc = y + 0.04 - j * 0.035
+            y_proc = y + 0.04 - j * 0.04
             ax.text(x, y_proc, f'• {proceso}', ha='center', va='center',
-                    fontsize=9, color='#333333')
+                    fontsize=12, color='#333333', fontweight='medium')
     
     # Crear flechas de flujo
     conexiones = [
@@ -115,16 +115,16 @@ def crear_procesos_testing_flujo():
         x1, y1 = posiciones[inicio]
         x2, y2 = posiciones[fin]
         
-        # Ajustar puntos de inicio y fin
+        # Ajustar puntos de inicio y fin (ajustado para cajas más grandes)
         if inicio < 3:  # Fila superior
-            x1 += 0.12
+            x1 += 0.14
         else:  # Fila inferior
-            x1 -= 0.12
+            x1 -= 0.14
             
         if fin < 3:  # Fila superior
-            x2 -= 0.12
+            x2 -= 0.14
         else:  # Fila inferior
-            x2 += 0.12
+            x2 += 0.14
         
         # Crear flecha curvada
         if abs(y1 - y2) > 0.1:  # Conexión entre filas
@@ -156,7 +156,7 @@ def crear_procesos_testing_flujo():
                                facecolor='#ECF0F1', edgecolor='#34495E', linewidth=1)
         ax.add_patch(rect_metrica)
         ax.text(x, 0.16, metrica, ha='center', va='center',
-                fontsize=10, fontweight='bold', transform=ax.transAxes)
+                fontsize=12, fontweight='bold', transform=ax.transAxes)
     
     # Leyenda de beneficios
     ax.text(0.5, 0.05, '🎯 Reducción 60% defectos | ⚡ Tiempo desarrollo -30% | 💰 ROI +4.2x | 🏆 Certificación TMMi Nivel 4',
