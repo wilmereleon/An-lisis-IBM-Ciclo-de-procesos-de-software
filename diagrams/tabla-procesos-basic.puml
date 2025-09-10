@@ -1,0 +1,77 @@
+@startuml tabla-procesos-basic
+!theme aws-orange
+title PROCESOS DE PRUEBAS POR FASE DEL CICLO DE VIDA\nIBM - Modelo CMMI/TMMi
+
+rectangle "REQUISITOS" as req #FFE5B4 {
+  Revisión requisitos testing
+  Criterios de aceptación
+  Planificación inicial
+  Matriz trazabilidad
+  **Métrica: >95% cobertura**
+}
+
+rectangle "DISEÑO" as dis #FFEAA7 {
+  Casos prueba alto nivel
+  Revisión diseño testeable
+  Plan testing integración
+  Datos de prueba
+  **Métrica: >90% componentes**
+}
+
+rectangle "DESARROLLO" as dev #FFD700 {
+  Testing unitario
+  Revisión código
+  Testing componentes
+  Automatización
+  **Métrica: >85% cobertura**
+}
+
+rectangle "INTEGRACIÓN" as int #D4F4DD {
+  Testing integración
+  Testing interfaces  
+  Testing API
+  Testing BD
+  **Métrica: >80% APIs auto**
+}
+
+rectangle "SISTEMA" as sys #D1ECF1 {
+  Testing funcional
+  Testing performance
+  Testing seguridad
+  Testing usabilidad
+  **Métrica: <0.5 defectos/KLOC**
+}
+
+rectangle "ACEPTACIÓN" as ace #E8DAEF {
+  UAT
+  Testing negocio
+  Alpha/Beta
+  Producción simulada
+  **Métrica: >4.5/5.0 UAT**
+}
+
+rectangle "DESPLIEGUE" as dep #FCF3CF {
+  Testing despliegue
+  Migración datos
+  Testing rollback
+  Smoke testing
+  **Métrica: >98% éxito**
+}
+
+rectangle "MANTENIMIENTO" as man #FADBD8 {
+  Regresión continua
+  Testing parches
+  Performance continua
+  Análisis defectos
+  **Métrica: <24h MTTR**
+}
+
+req --> dis
+dis --> dev
+dev --> int
+int --> sys
+sys --> ace
+ace --> dep
+dep --> man
+
+@enduml

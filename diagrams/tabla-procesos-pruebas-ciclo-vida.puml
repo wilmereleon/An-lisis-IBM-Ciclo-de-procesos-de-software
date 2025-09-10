@@ -1,6 +1,5 @@
-@startuml
+@startuml tabla-procesos-pruebas-ciclo-vida
 title Tabla de Procesos de Pruebas por Ciclo de Vida del Software
-subtitle Implementación Sistemática de Testing para Mejorar Calidad en IBM
 
 skinparam {
     backgroundColor white

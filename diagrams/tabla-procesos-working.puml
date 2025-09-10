@@ -1,0 +1,88 @@
+@startuml tabla-procesos-working
+!theme aws-orange
+title TABLA DE PROCESOS DE PRUEBAS POR FASE DEL CICLO DE VIDA - IBM
+
+skinparam backgroundColor #FEFEFE
+skinparam rectangleFontSize 10
+
+rectangle req [
+**1. REQUISITOS**
+- Revisión requisitos testing
+- Criterios de aceptación
+- Planificación inicial
+- Matriz trazabilidad
+Métrica: >95% cobertura
+]
+
+rectangle dis [
+**2. DISEÑO**
+- Casos prueba alto nivel
+- Revisión diseño testeable
+- Plan testing integración
+- Datos de prueba
+Métrica: >90% componentes
+]
+
+rectangle dev [
+**3. DESARROLLO**
+- Testing unitario
+- Revisión código
+- Testing componentes
+- Automatización
+Métrica: >85% cobertura
+]
+
+rectangle int [
+**4. INTEGRACIÓN**
+- Testing integración
+- Testing interfaces
+- Testing API
+- Testing BD
+Métrica: >80% APIs auto
+]
+
+rectangle sys [
+**5. SISTEMA**
+- Testing funcional
+- Testing performance
+- Testing seguridad
+- Testing usabilidad
+Métrica: <0.5 defectos/KLOC
+]
+
+rectangle ace [
+**6. ACEPTACIÓN**
+- UAT
+- Testing negocio
+- Alpha/Beta
+- Producción simulada
+Métrica: >4.5/5.0 UAT
+]
+
+rectangle dep [
+**7. DESPLIEGUE**
+- Testing despliegue
+- Migración datos
+- Testing rollback
+- Smoke testing
+Métrica: >98% éxito
+]
+
+rectangle man [
+**8. MANTENIMIENTO**
+- Regresión continua
+- Testing parches
+- Performance continua
+- Análisis defectos
+Métrica: <24h MTTR
+]
+
+req --> dis
+dis --> dev
+dev --> int
+int --> sys
+sys --> ace
+ace --> dep
+dep --> man
+
+@enduml

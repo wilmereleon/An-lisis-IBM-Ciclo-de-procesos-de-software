@@ -1,0 +1,115 @@
+@startuml tabla-procesos-simple
+!theme aws-orange
+title PROCESOS DE PRUEBAS POR FASE - CICLO DE VIDA SOFTWARE\nIBM - Implementación CMMI/TMMi
+
+skinparam backgroundColor #FEFEFE
+skinparam titleFontSize 14
+skinparam titleFontColor #232F3E
+
+left to right direction
+
+package "FASES DEL CICLO DE VIDA" {
+
+  rectangle "1. REQUISITOS" as req #FFE5B4 {
+    - Revisión requisitos testing
+    - Criterios de aceptación  
+    - Planificación inicial
+    - Matriz trazabilidad
+    - Estimación esfuerzo
+    --
+    **Métrica:** >95% requisitos
+    con casos de prueba
+  }
+
+  rectangle "2. DISEÑO" as dis #FFEAA7 {
+    - Casos prueba alto nivel
+    - Revisión diseño testeable
+    - Plan testing integración
+    - Definición datos prueba
+    - Diseño ambiente testing
+    --
+    **Métrica:** >90% componentes
+    con casos prueba
+  }
+
+  rectangle "3. DESARROLLO" as dev #FFD700 {
+    - Testing unitario
+    - Revisión código calidad
+    - Testing componentes
+    - Automatización unitaria
+    - Análisis cobertura
+    --
+    **Métrica:** >85% cobertura
+    código unitario
+  }
+
+  rectangle "4. INTEGRACIÓN" as int #D4F4DD {
+    - Testing integración incremental
+    - Testing interfaces
+    - Testing API
+    - Testing base datos
+    - CI/CD testing
+    --
+    **Métrica:** >80% APIs
+    testing automatizado
+  }
+
+  rectangle "5. SISTEMA" as sys #D1ECF1 {
+    - Testing funcional completo
+    - Testing performance
+    - Testing seguridad
+    - Testing usabilidad
+    - Testing regresión
+    --
+    **Métrica:** <0.5 defectos/KLOC
+  }
+
+  rectangle "6. ACEPTACIÓN" as ace #E8DAEF {
+    - UAT (User Acceptance)
+    - Testing negocio
+    - Testing Alpha/Beta
+    - Producción simulada
+    - Certificación calidad
+    --
+    **Métrica:** >4.5/5.0
+    satisfacción UAT
+  }
+
+  rectangle "7. DESPLIEGUE" as dep #FCF3CF {
+    - Testing despliegue
+    - Migración datos
+    - Testing rollback
+    - Smoke testing
+    - Monitoreo post-deploy
+    --
+    **Métrica:** >98% éxito
+    despliegue sin rollback
+  }
+
+  rectangle "8. MANTENIMIENTO" as man #FADBD8 {
+    - Regresión continua
+    - Testing parches
+    - Performance continua
+    - Seguridad periódica
+    - Análisis defectos
+    --
+    **Métrica:** <24h MTTR
+    incidentes P1
+  }
+}
+
+req -right-> dis
+dis -right-> dev  
+dev -down-> int
+int -left-> sys
+sys -left-> ace
+ace -down-> dep
+dep -right-> man
+
+note bottom
+**Framework:** TMMi + IEEE 829-2008
+**Herramientas:** Selenium, JMeter, Jira, Jenkins
+**ROI Esperado:** 300-500% en testing
+end note
+
+@enduml

@@ -95,6 +95,9 @@ Los modelos analizados incluyen:
 
 ### 2.2 Selección Estratégica Basada en Análisis Cuantitativo
 
+![Selección de Modelos Adecuados IBM](../diagrams/seleccion-modelos-adecuados-ibm.png)
+*Figura 2.1: Selección estratégica de modelos basada en criterios ponderados y análisis cuantitativo*
+
 **🏆 Estrategia de Selección Final:**
 - **Modelos Primarios:** CMMI + TMMi (sinergia comprobada en organizaciones enterprise)
 - **Frameworks Complementarios:** ISO/IEC 29119 (plantillas y procesos) + ISO/IEC 25010 (atributos de calidad)
@@ -137,6 +140,9 @@ Los modelos analizados incluyen:
 
 ![Matriz DOFA IBM](../diagrams/matriz-dofa-ibm.png)
 *Figura 3.1: Matriz DOFA con estrategias específicas para IBM*
+
+![Análisis DOFA IBM Detallado](../diagrams/analisis-dofa-ibm-detallado.png)
+*Figura 3.2: Análisis DOFA detallado con factores específicos cuantificados*
 
 ### 3.2 Fortalezas y Debilidades Identificadas
 
@@ -242,6 +248,9 @@ Los modelos analizados incluyen:
 ## 5. PROCESOS DE PRUEBAS POR FASE DEL CICLO DE VIDA
 
 ### 5.1 Tabla de Madurez de Procesos de Testing (TMMi Nivel 4)
+
+![Tabla de Procesos de Pruebas por Ciclo de Vida](../diagrams/tabla-procesos-working.png)
+*Figura 5.0: Tabla estructurada de procesos de pruebas por fase del ciclo de vida con métricas*
 
 | **FASE** | **PROCESOS GESTIONADOS** | **CONTROLES DE CALIDAD** | **MÉTRICAS CUANTITATIVAS** | **MEJORA CONTINUA** |
 |----------|--------------------------|---------------------------|---------------------------|---------------------|
