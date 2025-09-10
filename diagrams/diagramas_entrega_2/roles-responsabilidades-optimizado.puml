@@ -1,5 +1,6 @@
 @startuml roles-responsabilidades-optimizado
 !theme aws-orange
+top to bottom direction
 
 title **MATRIZ RACI - ROLES Y RESPONSABILIDADES POR FASE**\n8 Fases del Ciclo de Vida | 12 Roles Clave
 

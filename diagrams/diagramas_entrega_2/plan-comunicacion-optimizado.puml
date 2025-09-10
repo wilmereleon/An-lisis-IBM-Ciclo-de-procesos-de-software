@@ -1,5 +1,6 @@
 @startuml plan-comunicacion-optimizado
 !theme aws-orange
+!define DIRECTION top to bottom direction
 
 title **PLAN DE COMUNICACIÓN - MATRIZ DE STAKEHOLDERS**\nEngagement Strategy | Escalation Matrix | Communication Channels
 

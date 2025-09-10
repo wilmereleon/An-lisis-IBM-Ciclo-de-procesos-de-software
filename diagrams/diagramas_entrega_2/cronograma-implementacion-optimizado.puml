@@ -19,17 +19,7 @@ partition "**FASE 1: ESTABILIZACIÓN (6 meses)**" {
     :Pilot Project Banking Module\n(8 semanas, Core Banking API);
     :Documentación SOP v1.0\n(6 semanas, 150 páginas);
     
-    note right
-        **HITOS FASE 1:**
-        • Assessment Complete (Sem 8)
-        • Processes Defined (Sem 16)
-        • Phase 1 Complete (Sem 26)
-        
-        **RECURSOS:**
-        • Personal: 45 FTEs
-        • Presupuesto: $850K
-        • ROI Esperado: 2.1x
-    end note
+    note right : <color:black>**HITOS FASE 1:**\n• Assessment Complete (Sem 8)\n• Processes Defined (Sem 16)\n• Phase 1 Complete (Sem 26)\n\n**RECURSOS:**\n• Personal: 45 FTEs\n• Presupuesto: $850K\n• ROI Esperado: 2.1x</color>
 }
 
 partition "**FASE 2: ESTANDARIZACIÓN (12 meses)**" {
@@ -42,18 +32,7 @@ partition "**FASE 2: ESTANDARIZACIÓN (12 meses)**" {
     :Certification Preparation\n(12 semanas, CMMI/ISO);
     :Process Optimization v1.0\n(12 semanas, 15+ procesos);
     
-    note right
-        **HITOS FASE 2:**
-        • CMMI L3 Ready (Sem 46)
-        • TMMi L3 Ready (Sem 54)
-        • 70% Test Automation (Sem 68)
-        • Phase 2 Complete (Sem 78)
-        
-        **RECURSOS:**
-        • Personal: 78 FTEs
-        • Presupuesto: $1.2M
-        • ROI Esperado: 3.2x
-    end note
+    note right : <color:black>**HITOS FASE 2:**\n• CMMI L3 Ready (Sem 46)\n• TMMi L3 Ready (Sem 54)\n• 70% Test Automation (Sem 68)\n• Phase 2 Complete (Sem 78)\n\n**RECURSOS:**\n• Personal: 78 FTEs\n• Presupuesto: $1.2M\n• ROI Esperado: 3.2x</color>
 }
 
 partition "**FASE 3: OPTIMIZACIÓN (18 meses)**" {
@@ -66,32 +45,11 @@ partition "**FASE 3: OPTIMIZACIÓN (18 meses)**" {
     :Process Innovation Lab\n(36 semanas, 12 iniciativas);
     :Certification & Audit\n(16 semanas, CMMI L4/TMMi L4);
     
-    note right
-        **HITOS FASE 3:**
-        • CMMI L4 Achieved (Sem 110)
-        • TMMi L4 Achieved (Sem 118)
-        • AI/ML Integrated (Sem 130)
-        • Project Complete (Sem 156)
-        
-        **RECURSOS:**
-        • Personal: 95 FTEs
-        • Presupuesto: $950K
-        • ROI Esperado: 4.8x
-    end note
+    note right : <color:black>**HITOS FASE 3:**\n• CMMI L4 Achieved (Sem 110)\n• TMMi L4 Achieved (Sem 118)\n• AI/ML Integrated (Sem 130)\n• Project Complete (Sem 156)\n\n**RECURSOS:**\n• Personal: 95 FTEs\n• Presupuesto: $950K\n• ROI Esperado: 4.8x</color>
 }
 
 stop
 
-floating note left
-    **RIESGOS CRÍTICOS:**
-    • Resistencia al cambio (85% prob)
-      → Change management intensivo
-    • Integración herramientas (60% prob)
-      → POCs previos, arquitectura modular
-    • Recursos insuficientes (40% prob)
-      → Ramp-up gradual, outsourcing
-    • Complejidad técnica (55% prob)
-      → Implementación por módulos
-end note
+floating note left : <color:black>**RIESGOS CRÍTICOS:**\n• Resistencia al cambio (85% prob)\n→ Change management intensivo\n• Integración herramientas (60% prob)\n→ POCs previos, arquitectura modular\n• Recursos insuficientes (40% prob)\n→ Ramp-up gradual, outsourcing\n• Complejidad técnica (55% prob)\n→ Implementación por módulos</color>
 
 @enduml
