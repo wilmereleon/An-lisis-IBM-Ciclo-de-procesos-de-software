@@ -1,0 +1,67 @@
+@startuml roles-development-lead
+!theme aws-orange
+left to right direction
+
+title **MATRIZ RACI - DEVELOPMENT LEAD**\nProyecto: IBM Calidad de Software | Responsabilidades Específicas
+
+' Actor principal
+actor "Development Lead" as DL #4CAF50
+
+' Casos de uso por fases donde Development Lead participa
+package "**FASE 2: DISEÑO**" {
+  usecase "Diseñar Casos\nde Prueba" as UC4
+}
+
+package "**FASE 3: DESARROLLO**" {
+  usecase "Desarrollar\nFramework Testing" as UC7
+  usecase "Implementar\nPruebas Unitarias" as UC8
+  usecase "Code Review\ny Calidad" as UC9
+}
+
+package "**FASE 4: INTEGRACIÓN**" {
+  usecase "Ejecutar Pruebas\nIntegración" as UC10
+}
+
+package "**FASE 5: DESPLIEGUE**" {
+  usecase "Monitoreo\nPost-Deploy" as UC15
+}
+
+' Relaciones específicas del Development Lead
+DL --> UC4 : **C**\n(Consultado)
+DL --> UC7 : **A**\n(Autoridad)
+DL --> UC8 : **A**\n(Autoridad)
+DL --> UC9 : **A**\n(Autoridad)
+DL --> UC10 : **C**\n(Consultado)
+DL --> UC15 : **C**\n(Consultado)
+
+' Descripción del rol
+note right of DL
+**DEVELOPMENT LEAD - RESPONSABILIDADES:**
+
+**🎯 ROL PRINCIPAL:**
+• Liderazgo técnico del equipo de desarrollo
+• Autoridad en decisiones de código
+• Garante de calidad técnica
+
+**📋 ACTIVIDADES CLAVE:**
+• Arquitectura de código y componentes
+• Supervisión de desarrollo de features
+• Code reviews y technical mentoring
+• Implementación de unit testing
+• Technical debt management
+
+**⚡ INTERACCIONES PRINCIPALES:**
+• Con developers y engineers
+• Con QA para integration testing
+• Con DevOps para CI/CD
+• Con Architects para compliance
+
+**📊 MÉTRICAS DE RESPONSABILIDAD:**
+• Code quality score: >8.5/10
+• Unit test coverage: >85%
+• Technical debt ratio: <5%
+• Code review completion: 100%
+• Development velocity: +15% sprint
+end note
+
+@enduml

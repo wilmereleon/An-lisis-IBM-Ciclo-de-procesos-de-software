@@ -1,0 +1,126 @@
+@startuml roles-responsabilidades-fases-amigable
+!theme aws-orange
+left to right direction
+
+title **MATRIZ DE ROLES Y RESPONSABILIDADES POR FASES DEL CICLO DE VIDA**\nProyecto: IBM Calidad de Software | Framework RACI
+
+' Definir colores
+!define RESPONSIBLE #E3F2FD
+!define ACCOUNTABLE #FFF3E0
+!define CONSULTED #F3E5F5
+!define INFORMED #E8F5E8
+
+' Actores principales
+actor "Project Manager" as PM #FF9800
+actor "Quality Assurance Lead" as QA #2196F3
+actor "Test Manager" as TM #9C27B0
+actor "Development Lead" as DL #4CAF50
+actor "DevOps Engineer" as DO #FF5722
+actor "Business Analyst" as BA #795548
+actor "Architect" as AR #607D8B
+actor "Security Specialist" as SS #F44336
+
+' Casos de uso por fases
+package "**FASE 1: ANÁLISIS Y PLANIFICACIÓN**" {
+  usecase "Definir Requisitos\nde Calidad" as UC1
+  usecase "Crear Plan\nMaestro de Pruebas" as UC2
+  usecase "Establecer\nMétricas Base" as UC3
+}
+
+package "**FASE 2: DISEÑO**" {
+  usecase "Diseñar Casos\nde Prueba" as UC4
+  usecase "Definir\nArquitectura Pruebas" as UC5
+  usecase "Crear Estrategia\nAutomatización" as UC6
+}
+
+package "**FASE 3: DESARROLLO**" {
+  usecase "Desarrollar\nFramework Testing" as UC7
+  usecase "Implementar\nPruebas Unitarias" as UC8
+  usecase "Code Review\ny Calidad" as UC9
+}
+
+package "**FASE 4: INTEGRACIÓN**" {
+  usecase "Ejecutar Pruebas\nIntegración" as UC10
+  usecase "Pruebas\nPerformance" as UC11
+  usecase "Validación\nSeguridad" as UC12
+}
+
+package "**FASE 5: DESPLIEGUE**" {
+  usecase "Pruebas\nAceptación Usuario" as UC13
+  usecase "Deploy\nProducción" as UC14
+  usecase "Monitoreo\nPost-Deploy" as UC15
+}
+
+' Relaciones FASE 1
+PM --> UC1 : **R**
+PM --> UC2 : **A**
+PM --> UC3 : **A**
+QA --> UC1 : **A**
+QA --> UC2 : **R**
+QA --> UC3 : **R**
+BA --> UC1 : **R**
+BA --> UC2 : **C**
+AR --> UC1 : **C**
+TM --> UC2 : **C**
+TM --> UC3 : **C**
+
+' Relaciones FASE 2
+QA --> UC4 : **A**
+QA --> UC5 : **A**
+QA --> UC6 : **A**
+TM --> UC4 : **R**
+TM --> UC5 : **R**
+TM --> UC6 : **R**
+AR --> UC5 : **C**
+DL --> UC4 : **C**
+DO --> UC6 : **C**
+
+' Relaciones FASE 3
+DL --> UC7 : **A**
+DL --> UC8 : **A**
+DL --> UC9 : **A**
+QA --> UC7 : **C**
+QA --> UC8 : **C**
+QA --> UC9 : **R**
+TM --> UC7 : **R**
+PM --> UC9 : **I**
+
+' Relaciones FASE 4
+TM --> UC10 : **A**
+TM --> UC11 : **A**
+SS --> UC12 : **A**
+QA --> UC10 : **R**
+DO --> UC11 : **R**
+DL --> UC10 : **C**
+PM --> UC11 : **I**
+QA --> UC12 : **C**
+
+' Relaciones FASE 5
+PM --> UC13 : **A**
+DO --> UC14 : **A**
+DO --> UC15 : **R**
+BA --> UC13 : **R**
+QA --> UC13 : **C**
+TM --> UC14 : **C**
+DL --> UC15 : **C**
+
+' Leyenda RACI
+note right of PM
+**LEYENDA RACI:**
+**R** = Responsible (Responsable)
+**A** = Accountable (Autoridad)
+**C** = Consulted (Consultado)  
+**I** = Informed (Informado)
+
+**ROLES PRINCIPALES:**
+• Project Manager: Gestión general
+• QA Lead: Calidad y procesos
+• Test Manager: Estrategia testing
+• Dev Lead: Desarrollo y código  
+• DevOps: Infraestructura y deploy
+• Business Analyst: Requisitos
+• Architect: Diseño técnico
+• Security: Seguridad y compliance
+end note
+
+@enduml

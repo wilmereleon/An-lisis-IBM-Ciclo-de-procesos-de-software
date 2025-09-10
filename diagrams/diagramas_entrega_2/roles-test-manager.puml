@@ -1,0 +1,76 @@
+@startuml roles-test-manager
+!theme aws-orange
+left to right direction
+
+title **MATRIZ RACI - TEST MANAGER**\nProyecto: IBM Calidad de Software | Responsabilidades Específicas
+
+' Actor principal
+actor "Test Manager" as TM #9C27B0
+
+' Casos de uso por fases donde Test Manager participa
+package "**FASE 1: ANÁLISIS Y PLANIFICACIÓN**" {
+  usecase "Crear Plan\nMaestro de Pruebas" as UC2
+  usecase "Establecer\nMétricas Base" as UC3
+}
+
+package "**FASE 2: DISEÑO**" {
+  usecase "Diseñar Casos\nde Prueba" as UC4
+  usecase "Definir\nArquitectura Pruebas" as UC5
+  usecase "Crear Estrategia\nAutomatización" as UC6
+}
+
+package "**FASE 3: DESARROLLO**" {
+  usecase "Desarrollar\nFramework Testing" as UC7
+}
+
+package "**FASE 4: INTEGRACIÓN**" {
+  usecase "Ejecutar Pruebas\nIntegración" as UC10
+  usecase "Pruebas\nPerformance" as UC11
+}
+
+package "**FASE 5: DESPLIEGUE**" {
+  usecase "Pruebas\nAceptación Usuario" as UC14
+}
+
+' Relaciones específicas del Test Manager
+TM --> UC2 : **C**\n(Consultado)
+TM --> UC3 : **C**\n(Consultado)
+TM --> UC4 : **R**\n(Responsable)
+TM --> UC5 : **R**\n(Responsable)
+TM --> UC6 : **R**\n(Responsable)
+TM --> UC7 : **R**\n(Responsable)
+TM --> UC10 : **A**\n(Autoridad)
+TM --> UC11 : **A**\n(Autoridad)
+TM --> UC14 : **C**\n(Consultado)
+
+' Descripción del rol
+note right of TM
+**TEST MANAGER - RESPONSABILIDADES:**
+
+**🎯 ROL PRINCIPAL:**
+• Gestión operativa de actividades de testing
+• Coordinación de equipos de pruebas
+• Autoridad en ejecución de testing
+
+**📋 ACTIVIDADES CLAVE:**
+• Planificación detallada de testing
+• Asignación de recursos de pruebas
+• Supervisión de ejecución de test cases
+• Reporting de progreso de testing
+• Gestión de defects y issues
+
+**⚡ INTERACCIONES PRINCIPALES:**
+• Con QA teams y testers
+• Con developers para bug fixing
+• Con business para requirements
+• Con DevOps para environments
+
+**📊 MÉTRICAS DE RESPONSABILIDAD:**
+• Test execution rate: 95%
+• Defect resolution time: <48h
+• Test environment uptime: 98%
+• Team utilization: >85%
+• Testing milestone adherence: 95%
+end note
+
+@enduml

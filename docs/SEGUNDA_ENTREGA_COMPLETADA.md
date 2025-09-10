@@ -1,7 +1,14 @@
 # ✅ SEGUNDA ENTREGA COMPLETADA - DIAGRAMAS PLANTUML
 ## Análisis IBM Ciclo de Procesos de Software
 
-### 🎯 **ENTREGA EXITOSA - TODOS LOS DIAGRAMAS FUNCIONANDO**
+### 🎯 **ENTREGA EXITOSA - TODOS ### **6. 📢 PLAN COMUNICACIÓN - Versión Optimizada**
+**✅ Estado:** COMPLETADO VERTICAL
+- **Archivo:** `plan-comunicacion-optimizado.puml`
+- **Imagen:** `plan-comunicacion-optimizado.png`
+- **Mejoras:** Orientación vertical, stakeholders organizados, escalation matrix
+- **Uso:** Gestión stakeholders, estrategia comunicación
+
+![Plan Comunicación Optimizado](../diagrams/diagramas_entrega_2/plan-comunicacion-optimizado.png)AGRAMAS FUNCIONANDO**
 
 ---
 
@@ -46,12 +53,85 @@ La **Segunda Entrega** ha sido completada exitosamente con **8 diagramas PlantUM
 - **Mejoras:** Orientación vertical, matriz RACI clara, 12 roles
 - **Uso:** Gestión de responsabilidades, onboarding
 
-### **4. 👥 ROLES Y RESPONSABILIDADES - Versión Por Fases**
-**✅ Estado:** CORREGIDO Y FUNCIONAL
-- **Archivo:** `roles-responsabilidades-fases.puml`
-- **Imagen:** `roles-responsabilidades-fases.png` (993KB - versión completa)**
-- **Mejoras:** Actor-UseCase notation, 8 fases ciclo vida, relaciones RACI
-- **Uso:** Análisis detallado por fase, training específico
+### **4. 👥 ROLES Y RESPONSABILIDADES - Versión Amigable**
+**✅ Estado:** COMPLETADO Y OPTIMIZADO
+- **Archivo:** `roles-responsabilidades-fases-amigable.puml`
+- **Imagen:** `roles-responsabilidades-fases-amigable.png` (Layout horizontal)**
+- **Mejoras:** Diseño amigable, colores diferenciados, 8 roles clave, leyenda integrada
+- **Uso:** Comprensión rápida de responsabilidades, onboarding eficiente
+
+**🖼️ Visualización:**
+![Matriz RACI Amigable](../diagrams/diagramas_entrega_2/roles-responsabilidades-fases-amigable.png)
+
+*Matriz RACI simplificada - Diseño horizontal para fácil lectura y comprensión*
+
+### **4.1 👤 DIAGRAMAS INDIVIDUALES POR ROL**
+**✅ Estado:** NUEVOS DIAGRAMAS CREADOS
+**Propósito:** Evitar saturación visual y proporcionar vista detallada por rol
+
+#### **4.1.1 Business Analyst**
+- **Archivo:** `roles-business-analyst.puml`
+- **Imagen:** `roles-business-analyst.png`
+- **Responsabilidades:** Análisis de requisitos, UAT, definición de criterios
+- **Uso:** Training específico BA, definición de rol
+
+![Business Analyst RACI](../diagrams/diagramas_entrega_2/roles-business-analyst.png)
+
+#### **4.1.2 Project Manager**
+- **Archivo:** `roles-project-manager.puml`
+- **Imagen:** `roles-project-manager.png`
+- **Responsabilidades:** Gestión integral, autoridad en decisiones, coordinación
+- **Uso:** Clarificación de autoridad, escalation matrix
+
+![Project Manager RACI](../diagrams/diagramas_entrega_2/roles-project-manager.png)
+
+#### **4.1.3 Architect**
+- **Archivo:** `roles-architect.puml`
+- **Imagen:** `roles-architect.png`
+- **Responsabilidades:** Consultoría técnica, arquitectura de solución, NFRs
+- **Uso:** Definición de expertise técnico, consultoría
+
+![Architect RACI](../diagrams/diagramas_entrega_2/roles-architect.png)
+
+#### **4.1.4 Quality Assurance Lead**
+- **Archivo:** `roles-quality-assurance-lead.puml`
+- **Imagen:** `roles-quality-assurance-lead.png`
+- **Responsabilidades:** Liderazgo QA, autoridad en procesos, métricas calidad
+- **Uso:** Definición de autoridad QA, estrategia de calidad
+
+![QA Lead RACI](../diagrams/diagramas_entrega_2/roles-quality-assurance-lead.png)
+
+#### **4.1.5 Development Lead**
+- **Archivo:** `roles-development-lead.puml`
+- **Imagen:** `roles-development-lead.png`
+- **Responsabilidades:** Liderazgo técnico, code reviews, unit testing
+- **Uso:** Autoridad técnica, mentoring developers
+
+![Development Lead RACI](../diagrams/diagramas_entrega_2/roles-development-lead.png)
+
+#### **4.1.6 Test Manager**
+- **Archivo:** `roles-test-manager.puml`
+- **Imagen:** `roles-test-manager.png`
+- **Responsabilidades:** Gestión operativa testing, coordinación equipos
+- **Uso:** Planificación de testing, asignación recursos
+
+![Test Manager RACI](../diagrams/diagramas_entrega_2/roles-test-manager.png)
+
+#### **4.1.7 DevOps Engineer**
+- **Archivo:** `roles-devops-engineer.puml`
+- **Imagen:** `roles-devops-engineer.png`
+- **Responsabilidades:** CI/CD, deployment, infraestructura
+- **Uso:** Autoridad en despliegues, automatización
+
+![DevOps Engineer RACI](../diagrams/diagramas_entrega_2/roles-devops-engineer.png)
+
+#### **4.1.8 Security Specialist**
+- **Archivo:** `roles-security-specialist.puml`
+- **Imagen:** `roles-security-specialist.png`
+- **Responsabilidades:** Validación seguridad, compliance, pentesting
+- **Uso:** Autoridad en seguridad, compliance verification
+
+![Security Specialist RACI](../diagrams/diagramas_entrega_2/roles-security-specialist.png)
 
 ### **5. 📈 BENCHMARKING INDUSTRIA**
 **✅ Estado:** COMPLETADO Y OPTIMIZADO

@@ -1,0 +1,60 @@
+@startuml roles-devops-engineer
+!theme aws-orange
+left to right direction
+
+title **MATRIZ RACI - DEVOPS ENGINEER**\nProyecto: IBM Calidad de Software | Responsabilidades Específicas
+
+' Actor principal
+actor "DevOps Engineer" as DO #FF5722
+
+' Casos de uso por fases donde DevOps participa
+package "**FASE 2: DISEÑO**" {
+  usecase "Crear Estrategia\nAutomatización" as UC6
+}
+
+package "**FASE 4: INTEGRACIÓN**" {
+  usecase "Pruebas\nPerformance" as UC11
+}
+
+package "**FASE 5: DESPLIEGUE**" {
+  usecase "Deploy\nProducción" as UC14
+  usecase "Monitoreo\nPost-Deploy" as UC15
+}
+
+' Relaciones específicas del DevOps Engineer
+DO --> UC6 : **C**\n(Consultado)
+DO --> UC11 : **R**\n(Responsable)
+DO --> UC14 : **A**\n(Autoridad)
+DO --> UC15 : **R**\n(Responsable)
+
+' Descripción del rol
+note right of DO
+**DEVOPS ENGINEER - RESPONSABILIDADES:**
+
+**🎯 ROL PRINCIPAL:**
+• Automatización de CI/CD pipelines
+• Gestión de infraestructura y deployment
+• Autoridad en procesos de despliegue
+
+**📋 ACTIVIDADES CLAVE:**
+• Configuración de pipelines CI/CD
+• Gestión de environments (DEV, QA, PROD)
+• Monitoring y alerting systems
+• Infrastructure as Code (IaC)
+• Performance testing coordination
+
+**⚡ INTERACCIONES PRINCIPALES:**
+• Con development teams
+• Con QA para test environments
+• Con operations para production
+• Con security para compliance
+
+**📊 MÉTRICAS DE RESPONSABILIDAD:**
+• Deployment success rate: 98%
+• Pipeline execution time: <30min
+• Environment uptime: 99.5%
+• Rollback time: <5min
+• Infrastructure cost optimization: 15%
+end note
+
+@enduml

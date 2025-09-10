@@ -1,0 +1,53 @@
+@startuml roles-business-analyst
+!theme aws-orange
+left to right direction
+
+title **MATRIZ RACI - BUSINESS ANALYST**\nProyecto: IBM Calidad de Software | Responsabilidades Específicas
+
+' Actor principal
+actor "Business Analyst" as BA #795548
+
+' Casos de uso por fases donde BA participa
+package "**FASE 1: ANÁLISIS Y PLANIFICACIÓN**" {
+  usecase "Definir Requisitos\nde Calidad" as UC1
+  usecase "Crear Plan\nMaestro de Pruebas" as UC2
+}
+
+package "**FASE 5: DESPLIEGUE**" {
+  usecase "Pruebas\nAceptación Usuario" as UC13
+}
+
+' Relaciones específicas del Business Analyst
+BA --> UC1 : **R**\n(Responsable)
+BA --> UC2 : **C**\n(Consultado)
+BA --> UC13 : **R**\n(Responsable)
+
+' Descripción del rol
+note right of BA
+**BUSINESS ANALYST - RESPONSABILIDADES:**
+
+**🎯 ROL PRINCIPAL:**
+• Puente entre negocio y técnico
+• Traductor de requisitos empresariales
+• Validador de criterios de aceptación
+
+**📋 ACTIVIDADES CLAVE:**
+• Análisis de requisitos funcionales
+• Definición de criterios de calidad
+• Validación de casos de uso
+• Pruebas de aceptación de usuario
+• Documentación de procesos de negocio
+
+**⚡ INTERACCIONES PRINCIPALES:**
+• Con stakeholders de negocio
+• Con equipos de desarrollo
+• Con usuarios finales
+• Con QA para validación
+
+**📊 MÉTRICAS DE RESPONSABILIDAD:**
+• Completitud de requisitos: 95%
+• Satisfacción usuario final: 90%
+• Tiempo resolución consultas: <24h
+end note
+
+@enduml

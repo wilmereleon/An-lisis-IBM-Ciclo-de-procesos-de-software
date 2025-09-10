@@ -1,0 +1,82 @@
+@startuml roles-quality-assurance-lead
+!theme aws-orange
+left to right direction
+
+title **MATRIZ RACI - QUALITY ASSURANCE LEAD**\nProyecto: IBM Calidad de Software | Responsabilidades Específicas
+
+' Actor principal
+actor "Quality Assurance Lead" as QA #2196F3
+
+' Casos de uso por fases donde QA participa
+package "**FASE 1: ANÁLISIS Y PLANIFICACIÓN**" {
+  usecase "Definir Requisitos\nde Calidad" as UC1
+  usecase "Crear Plan\nMaestro de Pruebas" as UC2
+  usecase "Establecer\nMétricas Base" as UC3
+}
+
+package "**FASE 2: DISEÑO**" {
+  usecase "Diseñar Casos\nde Prueba" as UC4
+  usecase "Definir\nArquitectura Pruebas" as UC5
+  usecase "Crear Estrategia\nAutomatización" as UC6
+}
+
+package "**FASE 3: DESARROLLO**" {
+  usecase "Desarrollar\nFramework Testing" as UC7
+  usecase "Implementar\nPruebas Unitarias" as UC8
+  usecase "Code Review\ny Calidad" as UC9
+}
+
+package "**FASE 4: INTEGRACIÓN**" {
+  usecase "Ejecutar Pruebas\nIntegración" as UC10
+  usecase "Validación\nSeguridad" as UC12
+}
+
+package "**FASE 5: DESPLIEGUE**" {
+  usecase "Pruebas\nAceptación Usuario" as UC13
+}
+
+' Relaciones específicas del QA Lead
+QA --> UC1 : **A**\n(Autoridad)
+QA --> UC2 : **R**\n(Responsable)
+QA --> UC3 : **R**\n(Responsable)
+QA --> UC4 : **A**\n(Autoridad)
+QA --> UC5 : **A**\n(Autoridad)
+QA --> UC6 : **A**\n(Autoridad)
+QA --> UC7 : **C**\n(Consultado)
+QA --> UC8 : **C**\n(Consultado)
+QA --> UC9 : **R**\n(Responsable)
+QA --> UC10 : **R**\n(Responsable)
+QA --> UC12 : **C**\n(Consultado)
+QA --> UC13 : **C**\n(Consultado)
+
+' Descripción del rol
+note right of QA
+**QUALITY ASSURANCE LEAD - RESPONSABILIDADES:**
+
+**🎯 ROL PRINCIPAL:**
+• Liderazgo en calidad de software
+• Definición de estándares de QA
+• Autoridad en procesos de pruebas
+
+**📋 ACTIVIDADES CLAVE:**
+• Estrategia integral de QA
+• Diseño de planes de pruebas
+• Supervisión de ejecución de testing
+• Métricas y reporting de calidad
+• Mentoring de equipos QA
+
+**⚡ INTERACCIONES PRINCIPALES:**
+• Con todos los equipos técnicos
+• Con management y stakeholders
+• Con clientes para UAT
+• Con compliance y audit
+
+**📊 MÉTRICAS DE RESPONSABILIDAD:**
+• Defect detection rate: 95%
+• Test coverage: >90%
+• Escape defects: <2%
+• QA process compliance: 98%
+• Team productivity: +20% anual
+end note
+
+@enduml

@@ -1,0 +1,62 @@
+@startuml roles-architect
+!theme aws-orange
+left to right direction
+
+title **MATRIZ RACI - ARCHITECT**\nProyecto: IBM Calidad de Software | Responsabilidades Específicas
+
+' Actor principal
+actor "Architect" as AR #607D8B
+
+' Casos de uso por fases donde Architect participa
+package "**FASE 1: ANÁLISIS Y PLANIFICACIÓN**" {
+  usecase "Definir Requisitos\nde Calidad" as UC1
+}
+
+package "**FASE 2: DISEÑO**" {
+  usecase "Definir\nArquitectura Pruebas" as UC5
+}
+
+package "**FASE 4: INTEGRACIÓN**" {
+  usecase "Ejecutar Pruebas\nIntegración" as UC10
+}
+
+package "**FASE 5: DESPLIEGUE**" {
+  usecase "Monitoreo\nPost-Deploy" as UC15
+}
+
+' Relaciones específicas del Architect
+AR --> UC1 : **C**\n(Consultado)
+AR --> UC5 : **C**\n(Consultado)
+AR --> UC10 : **C**\n(Consultado)
+AR --> UC15 : **C**\n(Consultado)
+
+' Descripción del rol
+note right of AR
+**ARCHITECT - RESPONSABILIDADES:**
+
+**🎯 ROL PRINCIPAL:**
+• Diseño de arquitectura técnica
+• Definición de estándares y patrones
+• Consultoría técnica especializada
+
+**📋 ACTIVIDADES CLAVE:**
+• Arquitectura de solución end-to-end
+• Definición de NFRs (Non-Functional Requirements)
+• Revisión de diseños técnicos
+• Estándares de integración
+• Technology roadmap
+
+**⚡ INTERACCIONES PRINCIPALES:**
+• Con development teams
+• Con infrastructure teams
+• Con security specialists
+• Con performance engineers
+
+**📊 MÉTRICAS DE RESPONSABILIDAD:**
+• Architecture compliance: 95%
+• Performance targets met: 90%
+• Security standards adherence: 100%
+• Technical debt reduction: 15% anual
+end note
+
+@enduml

@@ -1,0 +1,66 @@
+@startuml roles-project-manager
+!theme aws-orange
+left to right direction
+
+title **MATRIZ RACI - PROJECT MANAGER**\nProyecto: IBM Calidad de Software | Responsabilidades Específicas
+
+' Actor principal
+actor "Project Manager" as PM #FF9800
+
+' Casos de uso por fases donde PM participa
+package "**FASE 1: ANÁLISIS Y PLANIFICACIÓN**" {
+  usecase "Definir Requisitos\nde Calidad" as UC1
+  usecase "Crear Plan\nMaestro de Pruebas" as UC2
+  usecase "Establecer\nMétricas Base" as UC3
+}
+
+package "**FASE 3: DESARROLLO**" {
+  usecase "Code Review\ny Calidad" as UC9
+}
+
+package "**FASE 4: INTEGRACIÓN**" {
+  usecase "Pruebas\nPerformance" as UC11
+}
+
+package "**FASE 5: DESPLIEGUE**" {
+  usecase "Pruebas\nAceptación Usuario" as UC13
+}
+
+' Relaciones específicas del Project Manager
+PM --> UC1 : **R**\n(Responsable)
+PM --> UC2 : **A**\n(Autoridad)
+PM --> UC3 : **A**\n(Autoridad)
+PM --> UC9 : **I**\n(Informado)
+PM --> UC11 : **I**\n(Informado)
+PM --> UC13 : **A**\n(Autoridad)
+
+' Descripción del rol
+note right of PM
+**PROJECT MANAGER - RESPONSABILIDADES:**
+
+**🎯 ROL PRINCIPAL:**
+• Gestión integral del proyecto
+• Coordinación de equipos multidisciplinarios
+• Autoridad final en decisiones de proyecto
+
+**📋 ACTIVIDADES CLAVE:**
+• Planificación y seguimiento de proyecto
+• Gestión de recursos y presupuesto
+• Comunicación con stakeholders
+• Gestión de riesgos y issues
+• Reporte de avance ejecutivo
+
+**⚡ INTERACCIONES PRINCIPALES:**
+• Con C-Level y executives
+• Con todos los team leads
+• Con clients y stakeholders
+• Con vendors y proveedores
+
+**📊 MÉTRICAS DE RESPONSABILIDAD:**
+• On-time delivery: 95%
+• Budget compliance: ±5%
+• Stakeholder satisfaction: 90%
+• Risk mitigation effectiveness: 85%
+end note
+
+@enduml

@@ -1,0 +1,55 @@
+@startuml roles-security-specialist
+!theme aws-orange
+left to right direction
+
+title **MATRIZ RACI - SECURITY SPECIALIST**\nProyecto: IBM Calidad de Software | Responsabilidades Específicas
+
+' Actor principal
+actor "Security Specialist" as SS #F44336
+
+' Casos de uso por fases donde Security Specialist participa
+package "**FASE 4: INTEGRACIÓN**" {
+  usecase "Validación\nSeguridad" as UC12
+}
+
+' Relaciones específicas del Security Specialist
+SS --> UC12 : **A**\n(Autoridad)
+
+' Descripción del rol extendida
+note right of SS
+**SECURITY SPECIALIST - RESPONSABILIDADES:**
+
+**🎯 ROL PRINCIPAL:**
+• Garantizar seguridad en todo el SDLC
+• Autoridad en validación de seguridad
+• Compliance con estándares de seguridad
+
+**📋 ACTIVIDADES CLAVE:**
+• Security testing y penetration testing
+• Análisis de vulnerabilidades
+• Security code review
+• Compliance verification (SOX, PCI-DSS)
+• Security architecture validation
+
+**⚡ INTERACCIONES PRINCIPALES:**
+• Con QA para security testing
+• Con developers para secure coding
+• Con architects para security design
+• Con compliance teams
+
+**🔒 ÁREAS DE ESPECIALIZACIÓN:**
+• Application Security (OWASP Top 10)
+• Infrastructure Security
+• Data Protection y Encryption
+• Identity & Access Management
+• Security Operations Center (SOC)
+
+**📊 MÉTRICAS DE RESPONSABILIDAD:**
+• Security vulnerabilities: 0 critical
+• Compliance score: 100%
+• Security test coverage: 95%
+• Incident response time: <2h
+• Security training completion: 90%
+end note
+
+@enduml
