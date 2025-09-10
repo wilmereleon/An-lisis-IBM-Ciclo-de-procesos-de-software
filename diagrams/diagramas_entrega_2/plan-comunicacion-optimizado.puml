@@ -1,152 +1,162 @@
 @startuml plan-comunicacion-optimizado
 !theme aws-orange
-!define DIRECTION top to bottom direction
+top to bottom direction
 
-title **PLAN DE COMUNICACIÓN - MATRIZ DE STAKEHOLDERS**\nEngagement Strategy | Escalation Matrix | Communication Channels
+title PLAN DE COMUNICACION - MATRIZ DE STAKEHOLDERS\nIBM Quality Implementation - Vertical Engagement Strategy
 
-' Definición de stakeholders por nivel de influencia/interés
-package "ALTO INTERÉS - ALTA INFLUENCIA" {
-    actor "CQO\nChief Quality Officer" as CQO #red
+skinparam backgroundColor #FEFEFE
+skinparam rectangleFontSize 10
+
+package "NIVEL 1: C-LEVEL EXECUTIVES" as NIVEL1 #FFE5E5 {
+    actor "CEO\nChief Executive Officer" as CEO #red
     actor "CTO\nChief Technology Officer" as CTO #red
-    actor "VP Engineering\nVice President Engineering" as VPE #red
-    
-    note right of CQO
-        **ENGAGEMENT:** Gestionar Activamente
-        **Frecuencia:** Semanal
-        **Canal:** Executive Dashboard
-        **Escalation:** Inmediata
-    end note
-}
-
-package "ALTO INTERÉS - BAJA INFLUENCIA" {
-    actor "Test Manager\nTest Management Team" as TM #orange
-    actor "QA Manager\nQuality Assurance Mgr" as QM #orange
-    actor "Dev Team Lead\nDevelopment Team Leads" as DTL #orange
-    actor "Product Owner\nProduct Owners" as PO #orange
-    
-    note right of TM
-        **ENGAGEMENT:** Mantener Informado
-        **Frecuencia:** Quincenal
-        **Canal:** Status Reports
-        **Escalation:** 48h
-    end note
-}
-
-package "BAJO INTERÉS - ALTA INFLUENCIA" {
-    actor "CEO\nChief Executive Officer" as CEO #yellow
-    actor "CFO\nChief Financial Officer" as CFO #yellow
-    actor "Board Members\nJunta Directiva" as BOARD #yellow
+    actor "CQO\nChief Quality Officer" as CQO #red
     
     note right of CEO
-        **ENGAGEMENT:** Mantener Satisfecho
-        **Frecuencia:** Mensual
-        **Canal:** Executive Summary
-        **Escalation:** C-Level Only
+        ENGAGEMENT: Gestionar Activamente
+        Frecuencia: Semanal
+        Canal: Executive Dashboard
+        Escalation: Inmediata 0-2h
     end note
 }
 
-package "BAJO INTERÉS - BAJA INFLUENCIA" {
+package "NIVEL 2: VP & DIRECTORS" as NIVEL2 #FFF0E5 {
+    actor "VP Engineering\nVice President Engineering" as VPE #orange
+    actor "VP Quality\nVice President Quality" as VPQ #orange
+    actor "Director IT\nDirector Information Technology" as DIT #orange
+    
+    note right of VPE
+        ENGAGEMENT: Consultar Frecuentemente
+        Frecuencia: Bi-semanal
+        Canal: Strategy Reviews
+        Escalation: 4-8h
+    end note
+}
+
+package "NIVEL 3: MANAGERS & LEADS" as NIVEL3 #FFFAE5 {
+    actor "Test Manager\nTest Management Team" as TM #yellow
+    actor "QA Manager\nQuality Assurance Mgr" as QM #yellow
+    actor "Dev Team Lead\nDevelopment Team Leads" as DTL #yellow
+    actor "Product Owner\nProduct Owners" as PO #yellow
+    
+    note right of TM
+        ENGAGEMENT: Mantener Informado
+        Frecuencia: Quincenal
+        Canal: Status Reports
+        Escalation: 24-48h
+    end note
+}
+
+package "NIVEL 4: OPERATIONAL TEAMS" as NIVEL4 #E5F2FF {
     actor "End Users\nUsuarios Finales" as EU #lightblue
     actor "External Vendors\nProveedores Externos" as EV #lightblue
     actor "Support Team\nEquipo de Soporte" as ST #lightblue
     
     note right of EU
-        **ENGAGEMENT:** Monitorear
-        **Frecuencia:** Bajo demanda
-        **Canal:** Newsletter/Portal
-        **Escalation:** Routing estándar
+        ENGAGEMENT: Monitorear
+        Frecuencia: Bajo demanda
+        Canal: Newsletter/Portal
+        Escalation: Standard routing
     end note
 }
 
-' Canales de comunicación como casos de uso
-usecase "Executive Dashboard\nReal-time KPIs" as ED
-usecase "Weekly Steering\nCommittee Meetings" as WSC
-usecase "Status Reports\nQuincenal Updates" as SR
-usecase "Monthly Reviews\nBusiness Metrics" as MR
-usecase "Quarterly Reviews\nStrategic Assessment" as QR
-usecase "Incident Escalation\nCrisis Communication" as IE
+package "CANALES DE COMUNICACION" as CANALES #F0F8FF {
+    usecase "Executive Dashboard\nReal-time KPIs" as ED
+    usecase "Weekly Steering\nCommittee Meetings" as WSC  
+    usecase "Status Reports\nBi-weekly Updates" as SR
+    usecase "Monthly Reviews\nBusiness Metrics" as MR
+    usecase "Escalation Channels\nCrisis Communication" as IE
+}
 
-' Relaciones de comunicación
-CQO --> ED : monitors daily
-CTO --> ED : monitors daily  
-VPE --> ED : monitors daily
+' Flujo vertical principal
+NIVEL1 --> NIVEL2
+NIVEL2 --> NIVEL3
+NIVEL3 --> NIVEL4
+NIVEL4 --> CANALES
 
-CQO --> WSC : chairs weekly
-CTO --> WSC : attends weekly
-VPE --> WSC : attends weekly
-TM --> WSC : reports weekly
-QM --> WSC : reports weekly
+' Flujo de comunicacion
+CEO --> ED : Reviews Daily
+CTO --> ED : Monitors Daily
+CQO --> ED : Manages Daily
 
-TM --> SR : sends bi-weekly
-QM --> SR : sends bi-weekly
-DTL --> SR : contributes bi-weekly
-PO --> SR : reviews bi-weekly
+VPE --> WSC : Chairs Weekly
+VPQ --> WSC : Attends Weekly
+DIT --> WSC : Reports Weekly
 
-CEO --> MR : reviews monthly
-CFO --> MR : reviews monthly
-BOARD --> MR : receives monthly
+TM --> SR : Sends Bi-weekly
+QM --> SR : Contributes Bi-weekly
+DTL --> SR : Updates Bi-weekly
+PO --> SR : Reviews Bi-weekly
 
-CEO --> QR : attends quarterly
-CFO --> QR : attends quarterly
-BOARD --> QR : reviews quarterly
+CEO --> MR : Reviews Monthly
+CTO --> MR : Approves Monthly
+VPE --> MR : Presents Monthly
 
-CQO --> IE : escalates critical
-TM --> IE : escalates major
-QM --> IE : escalates major
+CQO --> IE : Escalates Critical
+TM --> IE : Reports Major
+QM --> IE : Alerts Issues
 
-' Procedimientos de escalación
-package "ESCALATION MATRIX" {
-    note as ESC
-        **NIVEL 1 (0-4h):** Team Lead → Manager
-        **NIVEL 2 (4-24h):** Manager → Director
-        **NIVEL 3 (24-48h):** Director → VP/CTO
-        **NIVEL 4 (48h+):** VP/CTO → C-Level
-        
-        **CRITERIOS DE ESCALACIÓN:**
-        • P1: Impact >1000 users - Nivel 4
-        • P2: SLA breach >4h - Nivel 3  
-        • P3: Quality gate failure - Nivel 2
-        • P4: Process deviation - Nivel 1
-        
-        **CANALES DE CRISIS:**
-        • Slack: #quality-incidents
-        • Email: quality-alerts@ibm.com
-        • Phone: On-call rotation
-        • Dashboard: Red alerts
+package "ESCALATION MATRIX" as ESCALACION #FFE5E5 {
+    rectangle "NIVEL 1: 0-4h\nTeam Lead to Manager" as ESC1 #lightgreen
+    rectangle "NIVEL 2: 4-24h\nManager to Director" as ESC2 #yellow
+    rectangle "NIVEL 3: 24-48h\nDirector to VP" as ESC3 #orange
+    rectangle "NIVEL 4: 48h+\nVP to C-Level" as ESC4 #red
+    
+    ESC1 --> ESC2 : Escalate if unresolved
+    ESC2 --> ESC3 : Escalate if critical
+    ESC3 --> ESC4 : Escalate if business impact
+    
+    note right of ESC1
+        CRITERIOS DE ESCALACION:
+        P1: Impact >1000 users -> ESC4
+        P2: SLA breach >4h -> ESC3
+        P3: Quality gate failure -> ESC2
+        P4: Process deviation -> ESC1
     end note
 }
 
-' Métricas de comunicación
-package "COMMUNICATION METRICS" {
-    note as CM
-        **EFECTIVIDAD DE COMUNICACIÓN:**
-        • Response Time SLA: <2h (L1-L2), <4h (L3-L4)
-        • Stakeholder Satisfaction: >4.0/5.0
-        • Message Clarity Score: >85%
-        • Escalation Accuracy: >90%
-        
-        **FRECUENCIAS ÓPTIMAS:**
-        • C-Level: Mensual (ROI, Strategic KPIs)
-        • VP Level: Semanal (Operational KPIs)
-        • Manager Level: Diario (Tactical metrics)
-        • Team Level: Real-time (Technical alerts)
-        
-        **CANALES PREFERIDOS:**
-        • Executives: Dashboard + Brief reports
-        • Managers: Email + Meetings
-        • Teams: Slack + Dashboards
-        • External: Portal + Formal reports
-    end note
+CANALES --> ESCALACION
+
+package "COMMUNICATION METRICS" as METRICAS #F0FFF0 {
+    rectangle "Response Time SLA" as RT #lightgreen
+    rectangle "Effectiveness KPIs" as EK #lightblue  
+    rectangle "Communication Channels" as CC #lightyellow
 }
+
+ESCALACION --> METRICAS
+
+note right of RT
+  C-Level: <2h
+  VP Level: <4h
+  Manager Level: <8h
+  Team Level: <24h
+end note
+
+note right of EK
+  Stakeholder Satisfaction: >4.0/5.0
+  Message Clarity: >85%
+  Escalation Accuracy: >90%
+  Response Coverage: 100%
+end note
+
+note right of CC
+  C-Level: Dashboard + Executive Brief
+  VP Level: Reports + Strategy Reviews
+  Manager Level: Email + Team Meetings
+  Operational: Slack + Notifications
+end note
 
 note bottom
-    **PLAN DE COMUNICACIÓN - RESUMEN EJECUTIVO:**
-    • Stakeholders identificados: 12 grupos clave
-    • Canales establecidos: 6 tipos principales
-    • Matriz de escalación: 4 niveles definidos
-    • SLA de respuesta: <4h promedio
-    • Frecuencia comunicación: Desde real-time hasta mensual
-    • Métricas de seguimiento: 8 KPIs de efectividad
+    PLAN DE COMUNICACION - ESTRUCTURA VERTICAL OPTIMIZADA
+    • 4 Niveles Jerarquicos: C-Level -> VP -> Managers -> Operational
+    • 5 Canales Principales: Dashboard, Meetings, Reports, Reviews, Escalation
+    • 4 Niveles de Escalacion: 0-4h -> 4-24h -> 24-48h -> 48h+
+    • SLA de Respuesta: <2h C-Level, <4h VP Level, <8h Manager Level
+    • 12 Stakeholders Clave distribuidos por influencia e interes
+    • Metricas de Efectividad: Satisfaction >4.0, Clarity >85%, Accuracy >90%
+    
+    BENEFICIO CLAVE: Estructura vertical garantiza flujo de informacion
+    eficiente desde nivel operacional hasta C-Level con escalacion automatica
 end note
 
 @enduml

@@ -1,0 +1,122 @@
+@startuml plan-comunicacion-vertical
+!theme aws-orange
+top to bottom direction
+
+title PLAN DE COMUNICACION - ESTRUCTURA VERTICAL\nIBM Quality Implementation Strategy
+
+skinparam backgroundColor #FEFEFE
+skinparam rectangleFontSize 10
+
+rectangle "NIVEL 1: C-LEVEL EXECUTIVES" as NIVEL1 #FFE5E5 {
+  actor CEO #red
+  actor CTO #red  
+  actor CQO #red
+  
+  note right of CEO
+    Engagement: Gestionar Activamente
+    Frecuencia: Semanal
+    Canal: Executive Dashboard
+    Escalation: 0-2h
+  end note
+}
+
+rectangle "NIVEL 2: VP & DIRECTORS" as NIVEL2 #FFF0E5 {
+  actor "VP Engineering" as VPE #orange
+  actor "VP Quality" as VPQ #orange
+  actor "Director IT" as DIT #orange
+  
+  note right of VPE
+    Engagement: Consultar Frecuentemente
+    Frecuencia: Bi-semanal
+    Canal: Strategy Reviews
+    Escalation: 4-8h
+  end note
+}
+
+rectangle "NIVEL 3: MANAGERS & LEADS" as NIVEL3 #FFFAE5 {
+  actor "Test Manager" as TM #yellow
+  actor "QA Manager" as QM #yellow
+  actor "Dev Team Lead" as DTL #yellow
+  actor "Product Owner" as PO #yellow
+  
+  note right of TM
+    Engagement: Mantener Informado
+    Frecuencia: Quincenal
+    Canal: Status Reports
+    Escalation: 24-48h
+  end note
+}
+
+rectangle "NIVEL 4: OPERATIONAL TEAMS" as NIVEL4 #E5F2FF {
+  actor "End Users" as EU #lightblue
+  actor "External Vendors" as EV #lightblue
+  actor "Support Team" as ST #lightblue
+  
+  note right of EU
+    Engagement: Monitorear
+    Frecuencia: Bajo demanda
+    Canal: Newsletter/Portal
+    Escalation: Standard routing
+  end note
+}
+
+rectangle "CANALES DE COMUNICACION" as CANALES #F0F8FF {
+  usecase "Executive Dashboard" as ED
+  usecase "Weekly Steering" as WSC
+  usecase "Status Reports" as SR  
+  usecase "Monthly Reviews" as MR
+  usecase "Escalation Channels" as IE
+}
+
+rectangle "ESCALATION MATRIX" as ESCALACION #FFE5E5 {
+  rectangle "ESC1: 0-4h\nTeam → Manager" as ESC1 #lightgreen
+  rectangle "ESC2: 4-24h\nManager → Director" as ESC2 #yellow
+  rectangle "ESC3: 24-48h\nDirector → VP" as ESC3 #orange  
+  rectangle "ESC4: 48h+\nVP → C-Level" as ESC4 #red
+}
+
+' Flujo vertical
+NIVEL1 --> NIVEL2
+NIVEL2 --> NIVEL3
+NIVEL3 --> NIVEL4
+NIVEL4 --> CANALES
+CANALES --> ESCALACION
+
+' Conexiones de comunicación
+CEO --> ED
+CTO --> ED
+CQO --> ED
+
+VPE --> WSC
+VPQ --> WSC
+DIT --> WSC
+
+TM --> SR
+QM --> SR
+DTL --> SR
+PO --> SR
+
+CEO --> MR
+CTO --> MR
+VPE --> MR
+
+CQO --> IE
+TM --> IE
+QM --> IE
+
+' Flujo de escalación
+ESC1 --> ESC2
+ESC2 --> ESC3
+ESC3 --> ESC4
+
+note bottom
+  PLAN DE COMUNICACION - ESTRUCTURA VERTICAL OPTIMIZADA
+  • 4 Niveles Jerarquicos: C-Level → VP → Managers → Operational
+  • 5 Canales Principales: Dashboard, Meetings, Reports, Reviews, Escalation
+  • 4 Niveles de Escalacion: 0-4h → 4-24h → 24-48h → 48h+
+  • SLA de Respuesta: <2h C-Level, <4h VP Level, <8h Manager Level
+  • 12 Stakeholders Clave distribuidos por influencia e interes
+  • Metricas de Efectividad: Satisfaction >4.0, Clarity >85%, Accuracy >90%
+end note
+
+@enduml
