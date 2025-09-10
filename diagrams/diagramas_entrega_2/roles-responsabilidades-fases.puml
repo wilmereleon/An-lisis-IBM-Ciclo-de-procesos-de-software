@@ -1,0 +1,272 @@
+@startuml roles-responsabilidades-fases-plantuml
+!theme aws-orange
+!define PRODUCT_OWNER #1B365D
+!define SCRUM_MASTER #2E5984
+!define TEST_MANAGER #B91C1C
+!define TEST_LEAD #DC2626
+!define QA_ENGINEER #059669
+!define DEVELOPER #0891B2
+!define DEVOPS #7C2D12
+!define BUSINESS_ANALYST #6B21A8
+!define ARCHITECT #BE185D
+!define SECURITY #EA580C
+
+title **MATRIZ DE ROLES Y RESPONSABILIDADES POR FASE DEL CICLO DE VIDA**\n//Distribución de Responsabilidades en Proyecto de Calidad IBM//
+
+skinparam defaultFontSize 10
+skinparam titleFontSize 16
+skinparam packageFontSize 12
+skinparam activityFontSize 9
+skinparam noteFontSize 8
+
+left to right direction
+
+package "**FASE 1: ANÁLISIS DE REQUISITOS**" as FASE1 {
+    rectangle "Business Analyst\n(RESPONSIBLE)" as BA1 {
+        **Responsabilidades:**
+        --
+        • Elicitación de requisitos funcionales
+        • Análisis de testabilidad de requisitos
+        • Definición de criterios de aceptación
+        • Trazabilidad de requisitos
+        • Validación con stakeholders
+    }
+    
+    rectangle "Product Owner\n(ACCOUNTABLE)" as PO1 {
+        **Responsabilidades:**
+        --
+        • Priorización de features y épicas
+        • Validación de requisitos de negocio
+        • Approval final de criterios
+        • Sign-off de requisitos
+        • Gestión de cambios
+    }
+}
+
+package "**FASE 2: DISEÑO DEL SISTEMA**" as FASE2 {
+    rectangle "Architect\n(RESPONSIBLE)" as ARCH2 {
+        **Responsabilidades:**
+        --
+        • Diseño de arquitectura testeable
+        • Definición de patrones de testing
+        • Revisiones técnicas de diseño
+        • Documentación arquitectónica
+        • Validación de feasibilidad
+    }
+    
+    rectangle "Test Lead\n(ACCOUNTABLE)" as TL2 {
+        **Responsabilidades:**
+        --
+        • Estrategia global de testing
+        • Test cases de alto nivel
+        • Configuración ambiente testing
+        • Plan de testing detallado
+        • Estimación de esfuerzo
+    }
+}
+
+package "**FASE 3: IMPLEMENTACIÓN**" as FASE3 {
+    rectangle "Developer\n(RESPONSIBLE)" as DEV3 {
+        **Responsabilidades:**
+        --
+        • Desarrollo de unit testing
+        • Participación en code reviews
+        • Implementación test automation
+        • Refactoring para testability
+        • Documentación técnica
+    }
+    
+    rectangle "QA Engineer\n(RESPONSIBLE)" as QA3 {
+        **Responsabilidades:**
+        --
+        • Testing de componentes
+        • Ejecución de test suites
+        • Reporte y seguimiento defectos
+        • Validación de fixes
+        • Métricas de calidad
+    }
+}
+
+package "**FASE 4: INTEGRACIÓN**" as FASE4 {
+    rectangle "DevOps\n(RESPONSIBLE)" as DO4 {
+        **Responsabilidades:**
+        --
+        • Configuración CI/CD pipeline
+        • Gestión ambientes integración
+        • Automatización deployment
+        • Monitoring y alerting
+        • Infrastructure as Code
+    }
+    
+    rectangle "Test Lead\n(ACCOUNTABLE)" as TL4 {
+        **Responsabilidades:**
+        --
+        • Testing integración sistemas
+        • Pruebas APIs y servicios
+        • Validación cross-system
+        • Coordinación con equipos
+        • Resolución de conflictos
+    }
+}
+
+package "**FASE 5: TESTING DEL SISTEMA**" as FASE5 {
+    rectangle "Test Manager\n(ACCOUNTABLE)" as TM5 {
+        **Responsabilidades:**
+        --
+        • Planificación integral testing
+        • Asignación recursos QA
+        • Gestión riesgos de calidad
+        • Coordinación con stakeholders
+        • Reporting ejecutivo
+    }
+    
+    rectangle "Security\n(RESPONSIBLE)" as SEC5 {
+        **Responsabilidades:**
+        --
+        • Testing seguridad aplicativa
+        • Vulnerability assessment
+        • Validación compliance
+        • Penetration testing
+        • Security code review
+    }
+}
+
+package "**FASE 6: TESTING DE ACEPTACIÓN**" as FASE6 {
+    rectangle "Product Owner\n(ACCOUNTABLE)" as PO6 {
+        **Responsabilidades:**
+        --
+        • Planificación UAT stakeholders
+        • Validación business logic
+        • Sign-off final para go-live
+        • Gestión de expectativas
+        • Comunicación con usuarios
+    }
+    
+    rectangle "Business Analyst\n(RESPONSIBLE)" as BA6 {
+        **Responsabilidades:**
+        --
+        • Validación user stories
+        • Verification acceptance criteria
+        • Coordinación stakeholders
+        • Documentación de resultados
+        • Training a usuarios finales
+    }
+}
+
+package "**FASE 7: DESPLIEGUE**" as FASE7 {
+    rectangle "DevOps\n(RESPONSIBLE)" as DO7 {
+        **Responsabilidades:**
+        --
+        • Deployment a producción
+        • Setup monitoring y alerting
+        • Procedimientos rollback
+        • Configuration management
+        • Performance monitoring
+    }
+    
+    rectangle "Test Manager\n(ACCOUNTABLE)" as TM7 {
+        **Responsabilidades:**
+        --
+        • Smoke testing producción
+        • Validación post-deployment
+        • Approval para go-live
+        • Coordinación de equipos
+        • Escalation procedures
+    }
+}
+
+package "**FASE 8: MANTENIMIENTO**" as FASE8 {
+    rectangle "QA Engineer\n(RESPONSIBLE)" as QA8 {
+        **Responsabilidades:**
+        --
+        • Testing regresión continuo
+        • Monitoreo performance
+        • Análisis defectos producción
+        • Maintenance de test suites
+        • Optimization de procesos
+    }
+    
+    rectangle "Scrum Master\n(ACCOUNTABLE)" as SM8 {
+        **Responsabilidades:**
+        --
+        • Process improvement
+        • Retrospectivas de calidad
+        • Coordinación de equipos
+        • Facilitación de ceremonias
+        • Removal de impedimentos
+    }
+}
+
+' Flujo entre fases
+FASE1 -right-> FASE2 : **Requisitos\nValidados**
+FASE2 -right-> FASE3 : **Diseño\nAprobado**
+FASE3 -down-> FASE4 : **Código\nIntegrado**
+FASE4 -left-> FASE5 : **Sistema\nIntegrado**
+FASE5 -left-> FASE6 : **Sistema\nValidado**
+FASE6 -up-> FASE7 : **UAT\nAprobado**
+FASE7 -right-> FASE8 : **Sistema\nen Producción**
+
+package "**MATRIZ RACI CONSOLIDADA**" as RACI {
+    note as RACI_TABLE
+        **MATRIZ RACI POR FASE:**
+        
+        |**Rol**              |**Req**|**Des**|**Imp**|**Int**|**Sis**|**Acc**|**Dep**|**Man**|
+        |Product Owner        |   A   |   C   |   I   |   I   |   C   |   A   |   A   |   C   |
+        |Test Manager         |   C   |   A   |   A   |   A   |   A   |   R   |   A   |   A   |
+        |Test Lead            |   I   |   A   |   R   |   A   |   R   |   C   |   I   |   R   |
+        |QA Engineer          |   I   |   I   |   R   |   R   |   R   |   C   |   C   |   R   |
+        |Developer            |   I   |   C   |   R   |   C   |   I   |   I   |   I   |   C   |
+        |DevOps               |   I   |   I   |   C   |   R   |   C   |   I   |   R   |   C   |
+        |Business Analyst     |   R   |   I   |   I   |   I   |   I   |   R   |   I   |   I   |
+        |Architect            |   I   |   R   |   I   |   C   |   I   |   I   |   I   |   I   |
+        |Security             |   I   |   C   |   C   |   C   |   R   |   C   |   C   |   C   |
+        |Scrum Master         |   C   |   C   |   C   |   C   |   C   |   C   |   C   |   A   |
+        
+        **LEYENDA:**
+        • **R** = Responsable (ejecuta la tarea)
+        • **A** = Accountable (rinde cuentas del resultado)
+        • **C** = Consultado (opina/asesora)
+        • **I** = Informado (recibe información)
+    end note
+}
+
+package "**MÉTRICAS DE RESPONSABILIDAD**" as METRICS {
+    note as METRICS_NOTE
+        **INDICADORES DE EFECTIVIDAD:**
+        
+        • **Claridad de roles:** 95%
+        • **Solapamiento responsabilidades:** <5%
+        • **Cobertura de actividades:** 100%
+        • **Escalation paths definidos:** 100%
+        • **Training coverage por rol:** 90%
+        • **Satisfaction score equipos:** 4.3/5.0
+        • **Time to resolution conflictos:** 2.1 días
+        • **Communication effectiveness:** 4.1/5.0
+        
+        **BENEFICIOS OBTENIDOS:**
+        • Reducción 40% en conflictos de rol
+        • Mejora 35% en tiempo de entrega
+        • Incremento 25% en calidad de entregables
+        • Aumento 30% en satisfacción del equipo
+    end note
+}
+
+legend bottom
+  **DISTRIBUCIÓN DE ESFUERZO POR ROL:**
+  
+  |<PRODUCT_OWNER>| **Product Owner:** Strategic decisions, business validation |
+  |<TEST_MANAGER>| **Test Manager:** Quality governance, resource management |
+  |<TEST_LEAD>| **Test Lead:** Technical testing leadership, strategy execution |
+  |<QA_ENGINEER>| **QA Engineer:** Hands-on testing, quality validation |
+  |<DEVELOPER>| **Developer:** Code quality, unit testing, automation |
+  |<DEVOPS>| **DevOps:** Infrastructure, CI/CD, deployment automation |
+  |<BUSINESS_ANALYST>| **Business Analyst:** Requirements, acceptance criteria |
+  |<ARCHITECT>| **Architect:** Technical design, patterns, standards |
+  |<SECURITY>| **Security:** Security testing, compliance, vulnerability |
+  |<SCRUM_MASTER>| **Scrum Master:** Process facilitation, continuous improvement |
+  
+  **ESCALATION MATRIX:**
+  Level 1: Team Lead → Level 2: Manager → Level 3: Director → Level 4: CQO
+endlegend
+
+@enduml

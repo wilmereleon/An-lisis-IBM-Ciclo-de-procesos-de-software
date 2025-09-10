@@ -1,0 +1,257 @@
+@startuml organigrama-calidad-ibm-plantuml
+!theme aws-orange
+!define EXECUTIVE #1B365D
+!define DIRECTOR #2E5984
+!define MANAGER #4A7BA7
+!define LEAD #6BB6FF
+!define SPECIALIST #B3D9FF
+!define SUPPORT #E6F3FF
+
+title **ESTRUCTURA ORGANIZACIONAL DE CALIDAD**\n//IBM SOFTWARE QUALITY ASSURANCE//\n**~180 FTEs | 5 Niveles Jerárquicos | 15 Países**
+
+skinparam defaultFontSize 10
+skinparam titleFontSize 16
+skinparam packageFontSize 12
+skinparam classFontSize 9
+
+skinparam class {
+    BackgroundColor white
+    BorderColor black
+    FontColor black
+    HeaderBackgroundColor lightgray
+}
+
+package "**NIVEL EJECUTIVO**" as EXEC {
+    class "Chief Quality Officer (CQO)" as CQO {
+        **Strategy & Governance**
+        --
+        • Global Quality Strategy
+        • Executive Reporting
+        • Stakeholder Management
+        • Budget: $3M annually
+        • Scope: Global (15 países)
+    }
+}
+
+package "**NIVEL DIRECTIVO**" as DIR {
+    class "Director of\nTest Engineering" as DTE {
+        **Technical Leadership**
+        --
+        • Test Architecture
+        • Tool Strategy
+        • Technical Standards
+        • Team: 65 FTEs
+        • Budget: $1.2M
+    }
+    
+    class "Director of\nQuality Processes" as DQP {
+        **Process Excellence**
+        --
+        • CMMI/TMMi Implementation
+        • Process Optimization
+        • Metrics & Analytics
+        • Team: 45 FTEs
+        • Budget: $800K
+    }
+    
+    class "Director of\nQuality Assurance" as DQA {
+        **Product Quality**
+        --
+        • Product Testing
+        • Customer Satisfaction
+        • Quality Standards
+        • Team: 70 FTEs
+        • Budget: $1M
+    }
+}
+
+package "**NIVEL MANAGER**" as MGR {
+    class "Test Automation\nManager" as TAM {
+        **Automation Strategy**
+        --
+        • Selenium/Cypress Framework
+        • CI/CD Integration
+        • ROI: 340%
+        • Coverage: 87%
+    }
+    
+    class "Performance Test\nManager" as PTM {
+        **Load & Stress Testing**
+        --
+        • JMeter/LoadRunner
+        • Capacity Planning
+        • SLA Compliance: 99.2%
+        • Max Load: 5000 TPS
+    }
+    
+    class "Process Improvement\nManager" as PIM {
+        **CMMI/TMMi Implementation**
+        --
+        • Level 3 Achievement
+        • KPA Implementation
+        • Audit Coordination
+        • Success Rate: 95%
+    }
+    
+    class "Quality Metrics\nManager" as QMM {
+        **Metrics & Analytics**
+        --
+        • Dashboard Development
+        • KPI Monitoring
+        • Predictive Analytics
+        • 45 KPIs tracked
+    }
+    
+    class "Product Quality\nManager" as PQM {
+        **Functional Testing**
+        --
+        • Test Strategy
+        • Requirements Validation
+        • UAT Coordination
+        • Defect Rate: 0.28/KLOC
+    }
+    
+    class "Compliance\nManager" as CM {
+        **Regulatory & Standards**
+        --
+        • ISO 27001/CMMI
+        • Audit Management
+        • Regulatory Compliance
+        • 100% Compliance Rate
+    }
+}
+
+package "**NIVEL TEAM LEAD**" as LEAD_LEVEL {
+    class "UI/UX Test Lead" as UXTL
+    class "API Test Lead" as ATL
+    class "Performance Test Lead" as PTL
+    class "Security Test Lead" as STL
+    class "CMMI Process Lead" as CPL
+    class "TMMi Process Lead" as TPL
+    class "Metrics Analyst Lead" as MAL
+    class "Functional Test Lead" as FTL
+    class "Compliance Test Lead" as CTL
+}
+
+package "**NIVEL SPECIALIST**" as SPEC {
+    class "Selenium\nSpecialists (8)" as SS
+    class "Cypress\nSpecialists (6)" as CS
+    class "JMeter\nSpecialists (5)" as JS
+    class "OWASP\nSpecialists (4)" as OS
+    class "Process\nAnalysts (12)" as PA
+    class "Data\nAnalysts (8)" as DA
+    class "Test\nAnalysts (35)" as TA
+    class "QA\nEngineers (45)" as QE
+    class "Compliance\nAnalysts (6)" as CA
+}
+
+package "**EQUIPOS DE SOPORTE**" as SUPPORT_TEAMS {
+    class "DevOps Support (8)" as DS {
+        • CI/CD Pipeline Management
+        • Environment Provisioning
+        • Monitoring & Alerting
+    }
+    
+    class "Tool Administrators (6)" as TA_ADMIN {
+        • License Management
+        • Tool Configuration
+        • User Access Control
+    }
+    
+    class "Training Team (4)" as TT {
+        • Curriculum Development
+        • Certification Programs
+        • Knowledge Transfer
+    }
+    
+    class "External Consultants (12)" as EC {
+        • Specialized Expertise
+        • Temporary Augmentation
+        • Knowledge Transfer
+    }
+    
+    class "Vendor Management (3)" as VM {
+        • Contract Management
+        • SLA Monitoring
+        • Vendor Relations
+    }
+}
+
+' Relaciones Jerárquicas
+CQO ||--o{ DTE : reports to
+CQO ||--o{ DQP : reports to
+CQO ||--o{ DQA : reports to
+
+DTE ||--o{ TAM : manages
+DTE ||--o{ PTM : manages
+DQP ||--o{ PIM : manages
+DQP ||--o{ QMM : manages
+DQA ||--o{ PQM : manages
+DQA ||--o{ CM : manages
+
+TAM ||--o{ UXTL : leads
+TAM ||--o{ ATL : leads
+PTM ||--o{ PTL : leads
+PTM ||--o{ STL : leads
+PIM ||--o{ CPL : leads
+QMM ||--o{ TPL : leads
+QMM ||--o{ MAL : leads
+PQM ||--o{ FTL : leads
+CM ||--o{ CTL : leads
+
+UXTL ||--o{ SS : coordinates
+ATL ||--o{ CS : coordinates
+PTL ||--o{ JS : coordinates
+STL ||--o{ OS : coordinates
+CPL ||--o{ PA : coordinates
+TPL ||--o{ DA : coordinates
+MAL ||--o{ TA : coordinates
+FTL ||--o{ QE : coordinates
+CTL ||--o{ CA : coordinates
+
+' Relaciones de Soporte
+CQO ..> DS : uses services
+CQO ..> TA_ADMIN : uses services
+CQO ..> TT : uses services
+CQO ..> EC : contracts
+CQO ..> VM : manages
+
+legend right
+  **MÉTRICAS ORGANIZACIONALES:**
+  • **Total FTEs:** ~180 personas
+  • **Ratio QA:Dev:** 1:3.5
+  • **Niveles jerárquicos:** 5
+  • **Span of control:** 4-6 reportes
+  • **Coverage global:** 15 países
+  • **Certificaciones:** 85% del equipo
+  • **Rotación anual:** <8%
+  • **Satisfacción empleados:** 4.2/5.0
+  • **Productividad index:** 92%
+  • **Training hours/year:** 45 por empleado
+  
+  **COLORES POR NIVEL:**
+  |<EXECUTIVE>| Executive Level |
+  |<DIRECTOR>| Director Level |
+  |<MANAGER>| Manager Level |
+  |<LEAD>| Team Lead Level |
+  |<SPECIALIST>| Specialist Level |
+  |<SUPPORT>| Support Teams |
+endlegend
+
+note top of CQO
+  **RESPONSABILIDADES CLAVE:**
+  • Definición de estrategia global de calidad
+  • Reporting ejecutivo y governance
+  • Presupuesto anual: $3M
+  • ROI target: 4.5x
+end note
+
+note bottom of SPEC
+  **ESPECIALISTAS POR ÁREA:**
+  • **Testing:** 88 FTEs (UI, API, Performance, Security)
+  • **Process:** 20 FTEs (CMMI, TMMi, Analytics)
+  • **Quality:** 51 FTEs (Functional, Compliance)
+  • **Innovation:** 8 FTEs (AI/ML, Automation)
+end note
+
+@enduml

@@ -1,0 +1,347 @@
+@startuml plan-comunicacion-stakeholders-plantuml
+!theme aws-orange
+!define MANAGE_CLOSELY #B91C1C
+!define KEEP_SATISFIED #EA580C
+!define KEEP_INFORMED #1E40AF
+!define MONITOR #6B7280
+
+title **MATRIZ DE STAKEHOLDERS - PLAN DE COMUNICACIÓN**\n//Poder vs. Interés en el Proyecto de Calidad IBM//\n**Gestión de 24 Stakeholders Clave | 4 Estrategias Diferenciadas**
+
+skinparam defaultFontSize 10
+skinparam titleFontSize 16
+skinparam packageFontSize 12
+skinparam actorFontSize 9
+skinparam noteFontSize 8
+
+left to right direction
+
+package "**CUADRANTE 1: MANAGE CLOSELY**\n//Alto Poder + Alto Interés//" as MANAGE {
+    actor CQO as "CQO\n(Chief Quality Officer)\n--\nPoder: 9/10\nInterés: 9/10\nInfluence: Strategic\nImpact: Critical\nEngagement: Weekly 1:1"
+    
+    actor "CTO\n(Chief Technology Officer)" as CTO {
+        **Poder:** 9/10
+        **Interés:** 8/10
+        --
+        **Influence:** Technical
+        **Impact:** High
+        **Engagement:** Executive Dashboard
+    }
+    
+    actor "VP Engineering\n(VP Engineering)" as VPE {
+        **Poder:** 8/10
+        **Interés:** 9/10
+        --
+        **Influence:** Operational
+        **Impact:** Critical
+        **Engagement:** Direct Involvement
+    }
+    
+    actor "VP Product\n(VP Product Management)" as VPP {
+        **Poder:** 8/10
+        **Interés:** 8/10
+        --
+        **Influence:** Business
+        **Impact:** High
+        **Engagement:** Weekly Reviews
+    }
+}
+
+package "**CUADRANTE 2: KEEP SATISFIED**\n//Alto Poder + Bajo Interés//" as SATISFY {
+    actor "CEO\n(Chief Executive Officer)" as CEO {
+        **Poder:** 10/10
+        **Interés:** 3/10
+        --
+        **Influence:** Ultimate
+        **Impact:** Strategic
+        **Engagement:** Monthly Briefings
+    }
+    
+    actor "CFO\n(Chief Financial Officer)" as CFO {
+        **Poder:** 8/10
+        **Interés:** 4/10
+        --
+        **Influence:** Financial
+        **Impact:** Budget
+        **Engagement:** ROI Reports
+    }
+    
+    actor "CHRO\n(Chief HR Officer)" as CHRO {
+        **Poder:** 7/10
+        **Interés:** 3/10
+        --
+        **Influence:** People
+        **Impact:** Resources
+        **Engagement:** Quarterly Updates
+    }
+    
+    actor "Board Members\n(Board of Directors)" as BOARD {
+        **Poder:** 9/10
+        **Interés:** 2/10
+        --
+        **Influence:** Governance
+        **Impact:** Strategic
+        **Engagement:** Business Reviews
+    }
+}
+
+package "**CUADRANTE 3: KEEP INFORMED**\n//Bajo Poder + Alto Interés//" as INFORM {
+    actor "QA Teams\n(Quality Engineers)" as QAT {
+        **Poder:** 4/10
+        **Interés:** 9/10
+        --
+        **Influence:** Execution
+        **Impact:** Operational
+        **Engagement:** Bi-weekly Updates
+    }
+    
+    actor "Dev Teams\n(Development Teams)" as DEVT {
+        **Poder:** 5/10
+        **Interés:** 8/10
+        --
+        **Influence:** Implementation
+        **Impact:** Technical
+        **Engagement:** Technical Sessions
+    }
+    
+    actor "DevOps Teams\n(DevOps Engineers)" as DEVOPS {
+        **Poder:** 4/10
+        **Interés:** 8/10
+        --
+        **Influence:** Infrastructure
+        **Impact:** Operational
+        **Engagement:** Collaboration Sessions
+    }
+    
+    actor "Test Leads\n(Test Team Leaders)" as TL {
+        **Poder:** 3/10
+        **Interés:** 9/10
+        --
+        **Influence:** Tactical
+        **Impact:** Quality
+        **Engagement:** Weekly Deep-dives
+    }
+    
+    actor "Scrum Masters\n(Agile Coaches)" as SM {
+        **Poder:** 3/10
+        **Interés:** 7/10
+        --
+        **Influence:** Process
+        **Impact:** Methodology
+        **Engagement:** Training Sessions
+    }
+}
+
+package "**CUADRANTE 4: MONITOR**\n//Bajo Poder + Bajo Interés//" as MONITOR_GROUP {
+    actor "IT Support\n(Support Teams)" as ITS {
+        **Poder:** 2/10
+        **Interés:** 3/10
+        --
+        **Influence:** Minimal
+        **Impact:** Support
+        **Engagement:** Quarterly News
+    }
+    
+    actor "Security Teams\n(InfoSec)" as SEC {
+        **Poder:** 3/10
+        **Interés:** 4/10
+        --
+        **Influence:** Compliance
+        **Impact:** Security
+        **Engagement:** Project Updates
+    }
+    
+    actor "Compliance\n(Compliance Officers)" as COMP {
+        **Poder:** 3/10
+        **Interés:** 3/10
+        --
+        **Influence:** Regulatory
+        **Impact:** Audit
+        **Engagement:** General Updates
+    }
+    
+    actor "External Consultants\n(Third Party)" as EXT {
+        **Poder:** 2/10
+        **Interés:** 4/10
+        --
+        **Influence:** Advisory
+        **Impact:** Specialized
+        **Engagement:** On-demand
+    }
+}
+
+' Relaciones de influencia
+MANAGE -down-> SATISFY : **Strategic\nAlignment**
+SATISFY -down-> INFORM : **Resource\nAllocation**
+INFORM -down-> MONITOR_GROUP : **Operational\nSupport**
+
+package "**ESTRATEGIAS DE COMUNICACIÓN**" as STRATEGIES {
+    note as STRATEGY_MANAGE
+        **🔴 MANAGE CLOSELY Strategy:**
+        
+        **Frequency:** Weekly to Daily
+        **Channels:** 
+        • Face-to-face meetings
+        • Executive dashboards (real-time)
+        • Direct phone/email access
+        • Emergency escalation protocols
+        
+        **Content:**
+        • Strategic decisions & impacts
+        • Risk assessment & mitigation
+        • Resource requirements
+        • Performance against KPIs
+        • Change management updates
+        
+        **Success Metrics:**
+        • Response time: <2 hours
+        • Satisfaction score: >4.5/5
+        • Decision turnaround: <24 hours
+    end note
+    
+    note as STRATEGY_SATISFY
+        **🟠 KEEP SATISFIED Strategy:**
+        
+        **Frequency:** Monthly to Quarterly
+        **Channels:**
+        • Executive briefings (30-45 min)
+        • High-level status reports
+        • Business review presentations
+        • ROI & impact summaries
+        
+        **Content:**
+        • Business value delivered
+        • Financial impact & ROI
+        • Strategic milestones achieved
+        • Risk register (high-level)
+        • Resource utilization
+        
+        **Success Metrics:**
+        • Engagement rate: >80%
+        • Approval time: <1 week
+        • Budget approvals: 100%
+    end note
+    
+    note as STRATEGY_INFORM
+        **🔵 KEEP INFORMED Strategy:**
+        
+        **Frequency:** Bi-weekly to Weekly
+        **Channels:**
+        • Team updates & standups
+        • Technical deep-dive sessions
+        • Training workshops
+        • Collaboration tools (Slack/Teams)
+        
+        **Content:**
+        • Technical implementation details
+        • Process changes & improvements
+        • Training & skill development
+        • Tool updates & new features
+        • Best practices sharing
+        
+        **Success Metrics:**
+        • Participation rate: >85%
+        • Knowledge retention: >75%
+        • Implementation success: >90%
+    end note
+    
+    note as STRATEGY_MONITOR
+        **⚫ MONITOR Strategy:**
+        
+        **Frequency:** Quarterly to As-needed
+        **Channels:**
+        • Company newsletters
+        • Project announcements
+        • Intranet updates
+        • General communications
+        
+        **Content:**
+        • High-level project status
+        • Major milestones achieved
+        • General announcements
+        • Available resources/support
+        
+        **Success Metrics:**
+        • Awareness level: >60%
+        • Information accuracy: 100%
+        • Complaint resolution: <48 hrs
+    end note
+}
+
+package "**MÉTRICAS DE ENGAGEMENT**" as METRICS {
+    note as ENGAGEMENT_METRICS
+        **📊 COMMUNICATION EFFECTIVENESS:**
+        
+        **Current Performance:**
+        • **Stakeholder Satisfaction:** 4.3/5.0 (Target: 4.5/5.0)
+        • **Communication Effectiveness:** 4.1/5.0 (Target: 4.3/5.0)
+        • **Change Readiness Score:** 3.8/5.0 (Target: 4.0/5.0)
+        • **Training Completion Rate:** 89% (Target: 95%)
+        • **Feedback Response Rate:** 73% (Target: 80%)
+        • **Information Accuracy:** 96% (Target: 98%)
+        • **Time to Resolution:** 2.3 days (Target: 2.0 days)
+        
+        **Improvement Actions:**
+        ✅ Implement real-time feedback system
+        ✅ Increase training frequency by 25%
+        ✅ Deploy mobile communication app
+        ✅ Establish 24/7 support channel
+        ✅ Create personalized dashboards
+        
+        **ROI of Communication:**
+        • Reduced project delays: 35%
+        • Improved decision speed: 40%
+        • Higher adoption rates: 28%
+        • **Total Value:** $2.1M annually
+    end note
+}
+
+package "**ESCALATION MATRIX**" as ESCALATION {
+    note as ESCALATION_PATHS
+        **🚨 ESCALATION PROCEDURES:**
+        
+        **Level 1 - Operational Issues:**
+        • **Trigger:** Daily operational problems
+        • **Path:** Team Lead → Test Manager
+        • **SLA:** 4 hours response
+        • **Authority:** Resource reallocation
+        
+        **Level 2 - Project Issues:**
+        • **Trigger:** Project risks, delays
+        • **Path:** Test Manager → Director QA
+        • **SLA:** 24 hours response  
+        • **Authority:** Process changes
+        
+        **Level 3 - Strategic Issues:**
+        • **Trigger:** Strategic misalignment
+        • **Path:** Director QA → CQO
+        • **SLA:** 48 hours response
+        • **Authority:** Strategy adjustment
+        
+        **Level 4 - Executive Issues:**
+        • **Trigger:** Business impact
+        • **Path:** CQO → Executive Committee
+        • **SLA:** 72 hours response
+        • **Authority:** Major decisions
+        
+        **Emergency Protocol:**
+        • **P1 Issues:** Immediate escalation to CQO
+        • **Communication:** All stakeholders notified
+        • **Decision Authority:** Emergency committee
+    end note
+}
+
+legend bottom
+  **COMMUNICATION PLAN SUMMARY:**
+  
+  |<MANAGE_CLOSELY>| **Manage Closely (4 stakeholders):** Daily/Weekly engagement, strategic decisions |
+  |<KEEP_SATISFIED>| **Keep Satisfied (4 stakeholders):** Monthly briefings, high-level updates |
+  |<KEEP_INFORMED>| **Keep Informed (5 stakeholders):** Bi-weekly updates, technical content |
+  |<MONITOR>| **Monitor (4 stakeholders):** Quarterly updates, general information |
+  
+  **TOTAL COMMUNICATION INVESTMENT:** $180K annually
+  **EXPECTED ROI:** 1,167% (reduced delays, better decisions)
+  **NEXT REVIEW:** Monthly stakeholder assessment
+  **OWNER:** Communications Lead & Project Manager
+endlegend
+
+@enduml

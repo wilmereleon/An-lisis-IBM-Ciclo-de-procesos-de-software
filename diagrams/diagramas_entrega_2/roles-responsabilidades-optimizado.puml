@@ -1,0 +1,144 @@
+@startuml roles-responsabilidades-optimizado
+!theme aws-orange
+
+title **MATRIZ RACI - ROLES Y RESPONSABILIDADES POR FASE**\n8 Fases del Ciclo de Vida | 12 Roles Clave
+
+' Definición de actores por área funcional
+package "TEST ENGINEERING" {
+    actor "Test Manager" as TM
+    actor "Test Lead" as TL
+    actor "Test Analyst" as TA
+    actor "Automation Eng" as AE
+}
+
+package "QUALITY ASSURANCE" {
+    actor "QA Manager" as QM
+    actor "QA Analyst" as QA
+    actor "Quality Engineer" as QE
+    actor "Compliance Mgr" as CM
+}
+
+package "DEVELOPMENT" {
+    actor "Dev Manager" as DM
+    actor "Developer" as DEV
+    actor "DevOps Engineer" as DO
+    actor "Product Owner" as PO
+}
+
+' Definición de fases como casos de uso
+usecase "PLANIFICACIÓN\nPlanning Phase" as P1
+usecase "ANÁLISIS\nAnalysis Phase" as P2
+usecase "DISEÑO\nDesign Phase" as P3
+usecase "IMPLEMENTACIÓN\nImplementation" as P4
+usecase "PRUEBAS UNITARIAS\nUnit Testing" as P5
+usecase "PRUEBAS INTEGRACIÓN\nIntegration Testing" as P6
+usecase "PRUEBAS SISTEMA\nSystem Testing" as P7
+usecase "DESPLIEGUE\nDeployment" as P8
+
+' Relaciones RACI - usando diferentes tipos de líneas
+' R = Responsible (línea continua)
+' A = Accountable (línea gruesa)  
+' C = Consulted (línea punteada)
+' I = Informed (línea punto-raya)
+
+' PLANIFICACIÓN
+TM --|> P1 : **A**
+TL --> P1 : **R**
+QM --|> P1 : **A**
+DM --> P1 : **C**
+PO --> P1 : **R**
+TA ..> P1 : **C**
+QA ..> P1 : **C**
+DEV -.-> P1 : **I**
+
+' ANÁLISIS
+TL --|> P2 : **A**
+TA --> P2 : **R**
+QA --> P2 : **R**
+QE --> P2 : **R**
+TM ..> P2 : **C**
+QM ..> P2 : **C**
+DEV ..> P2 : **C**
+PO --> P2 : **C**
+
+' DISEÑO
+TL --|> P3 : **A**
+TA --> P3 : **R**
+AE --> P3 : **R**
+QE --> P3 : **R**
+DEV --> P3 : **C**
+DM ..> P3 : **C**
+TM -.-> P3 : **I**
+QM -.-> P3 : **I**
+
+' IMPLEMENTACIÓN
+DM --|> P4 : **A**
+DEV --> P4 : **R**
+AE --> P4 : **R**
+DO --> P4 : **R**
+TL ..> P4 : **C**
+QE ..> P4 : **C**
+TM -.-> P4 : **I**
+QM -.-> P4 : **I**
+
+' PRUEBAS UNITARIAS
+DEV --|> P5 : **A**
+DEV --> P5 : **R**
+AE --> P5 : **R**
+TL ..> P5 : **C**
+QE ..> P5 : **C**
+TM -.-> P5 : **I**
+QM -.-> P5 : **I**
+
+' PRUEBAS INTEGRACIÓN
+TL --|> P6 : **A**
+TA --> P6 : **R**
+AE --> P6 : **R**
+QE --> P6 : **R**
+DEV ..> P6 : **C**
+TM ..> P6 : **C**
+QM -.-> P6 : **I**
+DM -.-> P6 : **I**
+
+' PRUEBAS SISTEMA
+TM --|> P7 : **A**
+TL --> P7 : **R**
+TA --> P7 : **R**
+QM --|> P7 : **A**
+QA --> P7 : **R**
+QE --> P7 : **R**
+CM --> P7 : **R**
+DEV ..> P7 : **C**
+DM -.-> P7 : **I**
+PO -.-> P7 : **I**
+
+' DESPLIEGUE
+DM --|> P8 : **A**
+DO --> P8 : **R**
+CM --> P8 : **R**
+TM ..> P8 : **C**
+QM ..> P8 : **C**
+TL -.-> P8 : **I**
+QA -.-> P8 : **I**
+PO -.-> P8 : **I**
+
+note bottom
+    **LEYENDA RACI:**
+    • **R** = Responsible (Ejecuta)
+    • **A** = Accountable (Aprueba)
+    • **C** = Consulted (Consultado)
+    • **I** = Informed (Informado)
+    
+    **MÉTRICAS DE PARTICIPACIÓN:**
+    • Test Manager: 87.5% participación
+    • QA Manager: 75% participación
+    • Test Analyst: 62.5% participación
+    • Developer: 62.5% participación
+    
+    **DISTRIBUCIÓN DE CARGA:**
+    • Fase más crítica: Sistema Testing (7 roles)
+    • Fase con mayor accountability: Planificación/Sistema
+    • Ratio R:A = 2.1:1 (óptimo)
+end note
+
+@enduml

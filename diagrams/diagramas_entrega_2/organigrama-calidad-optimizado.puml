@@ -1,0 +1,90 @@
+@startwbs
+!theme aws-orange
+
+title **ESTRUCTURA ORGANIZACIONAL DE CALIDAD IBM**\n180 FTEs | 5 Niveles Jerárquicos | 15 Países
+
+* **ORGANIZACIÓN CALIDAD IBM**
+** **NIVEL EJECUTIVO (C-Level)**
+*** Chief Quality Officer (CQO)
+**** Strategy & Governance
+**** Budget: $3M annually
+**** Scope: Global (15 países)
+
+** **NIVEL DIRECTIVO (Directors)**
+*** Director Test Engineering
+**** Technical Leadership
+**** Team: 65 FTEs
+**** Budget: $1.2M
+*** Director Quality Processes
+**** Process Excellence
+**** Team: 45 FTEs
+**** Budget: $800K
+*** Director Quality Assurance
+**** Product Quality
+**** Team: 70 FTEs
+**** Budget: $1M
+
+** **NIVEL MANAGER (Managers)**
+*** **Test Engineering Managers**
+**** Test Automation Manager
+***** Automation Strategy
+***** ROI: 340%
+***** Coverage: 87%
+**** Performance Test Manager
+***** Load & Stress Testing
+***** SLA: 99.2%
+***** Max Load: 5000 TPS
+*** **Process & Quality Managers**
+**** Process Improvement Manager
+***** CMMI Implementation
+***** Process Optimization
+**** Quality Metrics Manager
+***** KPI Tracking
+***** Dashboard Management
+**** Product Quality Manager
+***** Quality Gates
+***** Release Management
+**** Compliance Manager
+***** Audit & Compliance
+***** Risk Management
+
+** **NIVEL TEAM LEAD (Team Leaders)**
+*** **Technical Leads**
+**** UI/UX Test Lead
+**** API Test Lead
+**** Performance Test Lead
+**** Security Test Lead
+**** Functional Test Lead
+*** **Process Leads**
+**** CMMI Process Lead
+**** TMMi Process Lead
+**** Metrics Analyst Lead
+*** **Compliance Leads**
+**** Compliance Test Lead
+
+** **NIVEL SPECIALIST (Specialists)**
+*** **Automation Specialists**
+**** Selenium Specialists (8)
+**** Cypress Specialists (6)
+**** JMeter Specialists (5)
+*** **Security Specialists**
+**** OWASP Specialists (4)
+*** **Analysis Specialists**
+**** Process Analysts (12)
+**** Data Analysts (8)
+**** Test Analysts (35)
+*** **Quality Engineers**
+**** QA Engineers (45)
+**** Compliance Analysts (6)
+
+** **EQUIPOS DE SOPORTE**
+*** **Technical Support**
+**** DevOps Support (8)
+**** Tool Administrators (6)
+*** **Training & Development**
+**** Training Team (4)
+*** **External Resources**
+**** External Consultants (12)
+**** Vendor Management (3)
+
+@endwbs

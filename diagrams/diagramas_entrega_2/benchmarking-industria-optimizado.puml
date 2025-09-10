@@ -1,0 +1,150 @@
+@startuml benchmarking-industria-optimizado
+!theme aws-orange
+
+title **BENCHMARKING INDUSTRIA - MÉTRICAS DE CALIDAD**\n16 KPIs Críticos | 4 Sectores | ROI Comparativo
+
+' Definición de organizaciones como clases
+class "IBM" as IBM {
+    **MÉTRICAS ACTUALES**
+    --
+    + Defect Density: 2.1/KLOC
+    + Test Coverage: 78%
+    + Automation Rate: 65%
+    + Release Frequency: 14 days
+    + MTTR: 4.2h
+    + Customer Satisfaction: 4.1/5.0
+    + Security Score: 8.7/10
+    + Performance SLA: 99.2%
+    --
+    **ROI TESTING:** 230%
+    **CMMI Level:** 3
+    **ISO Compliance:** 85%
+}
+
+class "Microsoft" as MSFT {
+    **MÉTRICAS LÍDERES**
+    --
+    + Defect Density: 1.8/KLOC
+    + Test Coverage: 85%
+    + Automation Rate: 78%
+    + Release Frequency: 7 days
+    + MTTR: 2.8h
+    + Customer Satisfaction: 4.4/5.0
+    + Security Score: 9.1/10
+    + Performance SLA: 99.7%
+    --
+    **ROI TESTING:** 340%
+    **CMMI Level:** 4
+    **ISO Compliance:** 95%
+}
+
+class "Amazon" as AMZN {
+    **MÉTRICAS EXCELENCIA**
+    --
+    + Defect Density: 1.5/KLOC
+    + Test Coverage: 92%
+    + Automation Rate: 88%
+    + Release Frequency: 1 day
+    + MTTR: 1.5h
+    + Customer Satisfaction: 4.6/5.0
+    + Security Score: 9.3/10
+    + Performance SLA: 99.9%
+    --
+    **ROI TESTING:** 450%
+    **CMMI Level:** 5
+    **ISO Compliance:** 98%
+}
+
+class "Google" as GOOGL {
+    **MÉTRICAS INNOVACIÓN**
+    --
+    + Defect Density: 1.3/KLOC
+    + Test Coverage: 95%
+    + Automation Rate: 92%
+    + Release Frequency: <1 day
+    + MTTR: 1.2h
+    + Customer Satisfaction: 4.5/5.0
+    + Security Score: 9.4/10
+    + Performance SLA: 99.95%
+    --
+    **ROI TESTING:** 520%
+    **CMMI Level:** 5
+    **ISO Compliance:** 100%
+}
+
+' Comparaciones y relaciones
+IBM --> MSFT : **GAP: -15%**
+IBM --> AMZN : **GAP: -35%**
+IBM --> GOOGL : **GAP: -42%**
+
+MSFT --> AMZN : **GAP: -20%**
+MSFT --> GOOGL : **GAP: -28%**
+
+AMZN --> GOOGL : **GAP: -8%**
+
+' Paquetes por categorías de métricas
+package "MÉTRICAS TÉCNICAS" {
+    note as N1
+        **RANKING DEFECT DENSITY:**
+        1. Google: 1.3/KLOC
+        2. Amazon: 1.5/KLOC
+        3. Microsoft: 1.8/KLOC
+        4. **IBM: 2.1/KLOC**
+        
+        **TARGET IBM:** <1.8/KLOC (-15%)
+    end note
+}
+
+package "MÉTRICAS OPERACIONALES" {
+    note as N2
+        **RANKING AUTOMATION:**
+        1. Google: 92%
+        2. Amazon: 88%
+        3. Microsoft: 78%
+        4. **IBM: 65%**
+        
+        **TARGET IBM:** >75% (+10pts)
+    end note
+}
+
+package "MÉTRICAS BUSINESS" {
+    note as N3
+        **RANKING ROI TESTING:**
+        1. Google: 520%
+        2. Amazon: 450%
+        3. Microsoft: 340%
+        4. **IBM: 230%**
+        
+        **TARGET IBM:** >300% (+70pts)
+    end note
+}
+
+package "MÉTRICAS COMPLIANCE" {
+    note as N4
+        **RANKING MADUREZ:**
+        1. Google: CMMI-5, ISO 100%
+        2. Amazon: CMMI-5, ISO 98%
+        3. Microsoft: CMMI-4, ISO 95%
+        4. **IBM: CMMI-3, ISO 85%**
+        
+        **TARGET IBM:** CMMI-4, ISO 90%
+    end note
+}
+
+note bottom
+    **ANÁLISIS COMPETITIVO:**
+    • Position: 4º/4 en ranking general
+    • Strength Areas: Security (top 3), SLA compliance
+    • Critical Gaps: Automation, Release frequency, MTTR
+    • Investment Need: $2.5M para alcanzar top 3
+    • Timeline: 18-24 meses para CMMI-4
+    • Quick Wins: Test coverage (+5%), Automation (+8%)
+    
+    **OPORTUNIDADES DE MEJORA:**
+    1. Automation Strategy: +23 puntos vs líder
+    2. Release Process: De 14 días → 7 días  
+    3. Incident Response: MTTR <3h
+    4. Test Coverage: Objetivo 85%
+end note
+
+@enduml

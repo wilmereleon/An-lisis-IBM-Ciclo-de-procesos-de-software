@@ -1,0 +1,97 @@
+@startuml cronograma-implementacion-optimizado
+!theme aws-orange
+
+title **CRONOGRAMA DE IMPLEMENTACIÓN - PLAN DE CALIDAD IBM**\n36 Meses de Transformación Digital
+
+skinparam activity {
+    BackgroundColor LightBlue
+    BorderColor Black
+    FontColor Black
+}
+
+start
+
+partition "**FASE 1: ESTABILIZACIÓN (6 meses)**" {
+    :Diagnóstico Inicial y Assessment\n(8 semanas, 15 FTEs);
+    :Definición de Procesos Básicos\n(10 semanas, 12 FTEs);
+    :Implementación Herramientas Core\n(12 semanas, 18 FTEs);
+    :Training Básico Nivel 1\n(16 semanas, 45 personas);
+    :Pilot Project Banking Module\n(8 semanas, Core Banking API);
+    :Documentación SOP v1.0\n(6 semanas, 150 páginas);
+    
+    note right
+        **HITOS FASE 1:**
+        • Assessment Complete (Sem 8)
+        • Processes Defined (Sem 16)
+        • Phase 1 Complete (Sem 26)
+        
+        **RECURSOS:**
+        • Personal: 45 FTEs
+        • Presupuesto: $850K
+        • ROI Esperado: 2.1x
+    end note
+}
+
+partition "**FASE 2: ESTANDARIZACIÓN (12 meses)**" {
+    :Implementación CMMI Nivel 3\n(20 semanas, 18 KPAs);
+    :Implementación TMMi Nivel 3\n(24 semanas, Test Organization);
+    :Automatización Testing 70%\n(28 semanas, Selenium/Cypress/JMeter);
+    :Rollout Global 5 Países\n(32 semanas, CO/MX/BR/AR/CL);
+    :Advanced Training Nivel 2\n(20 semanas, 25 certificaciones);
+    :Métricas Dashboard v1.0\n(16 semanas, 45 KPIs);
+    :Certification Preparation\n(12 semanas, CMMI/ISO);
+    :Process Optimization v1.0\n(12 semanas, 15+ procesos);
+    
+    note right
+        **HITOS FASE 2:**
+        • CMMI L3 Ready (Sem 46)
+        • TMMi L3 Ready (Sem 54)
+        • 70% Test Automation (Sem 68)
+        • Phase 2 Complete (Sem 78)
+        
+        **RECURSOS:**
+        • Personal: 78 FTEs
+        • Presupuesto: $1.2M
+        • ROI Esperado: 3.2x
+    end note
+}
+
+partition "**FASE 3: OPTIMIZACIÓN (18 meses)**" {
+    :Implementación CMMI Nivel 4\n(32 semanas, Quantitative Management);
+    :Implementación TMMi Nivel 4\n(36 semanas, Advanced Measurement);
+    :AI/ML Integration Testing\n(28 semanas, Watson/TensorFlow);
+    :Global Rollout Complete\n(40 semanas, 15 países);
+    :Advanced Analytics & Prediction\n(32 semanas, 8 modelos, 85% accuracy);
+    :Expert Training Nivel 3\n(24 semanas, 15 certificaciones);
+    :Process Innovation Lab\n(36 semanas, 12 iniciativas);
+    :Certification & Audit\n(16 semanas, CMMI L4/TMMi L4);
+    
+    note right
+        **HITOS FASE 3:**
+        • CMMI L4 Achieved (Sem 110)
+        • TMMi L4 Achieved (Sem 118)
+        • AI/ML Integrated (Sem 130)
+        • Project Complete (Sem 156)
+        
+        **RECURSOS:**
+        • Personal: 95 FTEs
+        • Presupuesto: $950K
+        • ROI Esperado: 4.8x
+    end note
+}
+
+stop
+
+floating note left
+    **RIESGOS CRÍTICOS:**
+    • Resistencia al cambio (85% prob)
+      → Change management intensivo
+    • Integración herramientas (60% prob)
+      → POCs previos, arquitectura modular
+    • Recursos insuficientes (40% prob)
+      → Ramp-up gradual, outsourcing
+    • Complejidad técnica (55% prob)
+      → Implementación por módulos
+end note
+
+@enduml
