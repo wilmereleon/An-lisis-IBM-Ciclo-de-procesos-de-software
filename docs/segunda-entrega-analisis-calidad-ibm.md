@@ -627,66 +627,66 @@ Define las frecuencias de revisión y reportes:
 
 ### 13.2 Formatos Estándar de Documentación
 
-#### 13.2.1 Templates de Testing
+#### 13.2.1 Plantillas de Pruebas
 
-**1. Test Plan Template:**
+**1. Plantilla de Plan de Pruebas:**
 ```
 1. RESUMEN EJECUTIVO
-   - Objetivos del testing
+   - Objetivos de las pruebas
    - Alcance y limitaciones
    - Criterios de entrada/salida
    
-2. ESTRATEGIA DE TESTING
+2. ESTRATEGIA DE PRUEBAS
    - Tipos de pruebas a realizar
-   - Niveles de testing
+   - Niveles de pruebas
    - Ambientes requeridos
    
 3. RECURSOS Y CRONOGRAMA
-   - Team assignments
-   - Timeline y milestones
-   - Dependencies críticas
+   - Asignaciones de equipo
+   - Cronograma y entregables
+   - Dependencias críticas
    
 4. RIESGOS Y MITIGACIÓN
-   - Risk assessment
-   - Contingency plans
-   - Escalation procedures
+   - Evaluación de riesgos
+   - Planes de contingencia
+   - Procedimientos de escalamiento
 ```
 
-**2. Test Case Template:**
+**2. Plantilla de Casos de Prueba:**
 ```
-TC_ID: [Unique identifier]
-TITLE: [Descriptive test case name]
-PRIORITY: [High/Medium/Low]
-PREREQUISITES: [Setup requirements]
-TEST STEPS: [Step-by-step instructions]
-EXPECTED RESULTS: [Expected outcomes]
-TEST DATA: [Required data sets]
-AUTOMATION: [Yes/No + Framework]
-```
-
-**3. Defect Report Template:**
-```
-DEFECT_ID: [Auto-generated]
-SUMMARY: [One-line description]
-SEVERITY: [Critical/High/Medium/Low]
-PRIORITY: [P1/P2/P3/P4]
-ENVIRONMENT: [Test environment details]
-STEPS TO REPRODUCE: [Detailed steps]
-ACTUAL RESULT: [What happened]
-EXPECTED RESULT: [What should happen]
-ATTACHMENTS: [Screenshots, logs]
+ID_CP: [Identificador único]
+TÍTULO: [Nombre descriptivo del caso de prueba]
+PRIORIDAD: [Alta/Media/Baja]
+PRERREQUISITOS: [Requisitos de configuración]
+PASOS DE PRUEBA: [Instrucciones paso a paso]
+RESULTADOS ESPERADOS: [Resultados esperados]
+DATOS DE PRUEBA: [Conjuntos de datos requeridos]
+AUTOMATIZACIÓN: [Sí/No + Marco de trabajo]
 ```
 
-### 13.3 Procedimientos Operacionales Estándar (SOPs)
+**3. Plantilla de Reporte de Defectos:**
+```
+ID_DEFECTO: [Generado automáticamente]
+RESUMEN: [Descripción de una línea]
+SEVERIDAD: [Crítica/Alta/Media/Baja]
+PRIORIDAD: [P1/P2/P3/P4]
+AMBIENTE: [Detalles del ambiente de prueba]
+PASOS PARA REPRODUCIR: [Pasos detallados]
+RESULTADO ACTUAL: [Lo que ocurrió]
+RESULTADO ESPERADO: [Lo que debería ocurrir]
+ADJUNTOS: [Capturas de pantalla, registros]
+```
 
-#### 13.3.1 SOP-001: Proceso de Testing de Regresión
+### 13.3 Procedimientos Operacionales Estándar (POE)
+
+#### 13.3.1 POE-001: Proceso de Pruebas de Regresión
 
 **Objetivo:** Garantizar que cambios en el código no afecten funcionalidad existente
 
 **Alcance:** Aplicable a todos los proyectos de desarrollo
 
 **Procedimiento:**
-1. **Trigger Event:** Nuevo build disponible en ambiente de testing
+1. **Evento Disparador:** Nueva construcción disponible en ambiente de pruebas
 2. **Pre-ejecución:** 
    - Validar disponibilidad de ambiente
    - Verificar datos de prueba
@@ -697,23 +697,23 @@ ATTACHMENTS: [Screenshots, logs]
    - Documentar fallos inmediatamente
 4. **Post-ejecución:**
    - Generar reporte automático
-   - Notificar stakeholders
-   - Actualizar métricas de dashboard
+   - Notificar partes interesadas
+   - Actualizar métricas de panel de control
 
-**Responsable:** Test Lead  
-**Frecuencia:** Por cada build  
-**SLA:** Completar en <4 horas  
+**Responsable:** Líder de Pruebas  
+**Frecuencia:** Por cada construcción  
+**ANS:** Completar en <4 horas  
 
-#### 13.3.2 SOP-002: Gestión de Ambientes de Testing
+#### 13.3.2 POE-002: Gestión de Ambientes de Pruebas
 
-**Objetivo:** Mantener ambientes estables y disponibles para testing
+**Objetivo:** Mantener ambientes estables y disponibles para pruebas
 
 **Procedimiento:**
-1. **Provisioning:** Automated via Terraform scripts
-2. **Configuration:** Ansible playbooks para setup
-3. **Data Management:** Synthetic data refresh nightly
-4. **Monitoring:** 24x7 health checks con alerting
-5. **Maintenance:** Weekly maintenance windows (Domingos 2-6 AM)
+1. **Aprovisionamiento:** Automatizado vía scripts Terraform
+2. **Configuración:** Libros de jugadas Ansible para configuración
+3. **Gestión de Datos:** Actualización de datos sintéticos nocturna
+4. **Monitoreo:** Verificaciones de salud 24x7 con alertas
+5. **Mantenimiento:** Ventanas de mantenimiento semanales (Domingos 2-6 AM)
 
 ### 13.4 Cronograma de Implementación
 
