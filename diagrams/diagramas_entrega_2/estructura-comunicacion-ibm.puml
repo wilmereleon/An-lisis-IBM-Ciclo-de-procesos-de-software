@@ -1,0 +1,155 @@
+@startuml estructura-comunicacion-ibm
+!theme aws-orange
+top to bottom direction
+
+sprite $businessProcess [16x16/16] {
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFF0FFFFF
+FFFFFFFFFF00FFFF
+FF00000000000FFF
+FF000000000000FF
+FF00000000000FFF
+FFFFFFFFFF00FFFF
+FFFFFFFFFF0FFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+}
+
+sprite $stakeholder [16x16/16] {
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFF00000FFFFF
+FFFF0000000000FF
+FFF000000000000F
+FF00000000000000
+FF00000000000000
+FF00000000000000
+FF00000000000000
+FFF000000000000F
+FFFF0000000000FF
+FFFFFF00000FFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+}
+
+sprite $communication [16x16/16] {
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFF00000000000FF
+FF000000000000FF
+FF000000000000FF
+FF000000000000FF
+FF000000000000FF
+FF000000000000FF
+FF000000000000FF
+FF000000000000FF
+FF000000000000FF
+FFF00000000000FF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+}
+
+title ESTRUCTURA DE COMUNICACION VERTICAL - IBM QUALITY\nFlujo de Comunicación Jerárquico para Gestión de Calidad
+
+rectangle "Marco de Comunicación de Calidad IBM" <<$businessProcess>> {
+    
+    package "NIVEL 1: C-LEVEL EXECUTIVES" <<$stakeholder>> as clevel {
+        rectangle "CEO Strategic Updates" <<$communication>> as ceo
+        rectangle "CTO Technical Reviews" <<$communication>> as cto
+        rectangle "CQO Quality Dashboard" <<$communication>> as cqo
+        ceo -down-> cto : Weekly Sync
+        cto -down-> cqo : Quality Metrics
+    }
+    
+    package "NIVEL 2: VP & DIRECTORS" <<$stakeholder>> as vplevel {
+        rectangle "VP Engineering Reports" <<$communication>> as vpe
+        rectangle "VP Quality Strategy" <<$communication>> as vpq
+        rectangle "Director IT Operations" <<$communication>> as dit
+        vpe -down-> vpq : Bi-weekly Reviews
+        vpq -down-> dit : Implementation Status
+    }
+    
+    package "NIVEL 3: MANAGERS & LEADS" <<$stakeholder>> as mglevel {
+        rectangle "Test Manager Updates" <<$communication>> as tm
+        rectangle "QA Manager Reports" <<$communication>> as qm
+        rectangle "Dev Team Leads Status" <<$communication>> as dtl
+        tm -down-> qm : Daily Standups
+        qm -down-> dtl : Quality Gates
+    }
+    
+    package "NIVEL 4: OPERATIONAL TEAMS" <<$stakeholder>> as oplevel {
+        rectangle "End User Feedback" <<$communication>> as eu
+        rectangle "External Vendor Coord" <<$communication>> as ev
+        rectangle "Support Team Escalation" <<$communication>> as st
+        eu -down-> ev : Requirements
+        ev -down-> st : Issue Resolution
+    }
+    
+    clevel -> vplevel : Strategic Direction
+    vplevel -> mglevel : Tactical Implementation
+    mglevel -> oplevel : Operational Execution
+    oplevel -> mglevel : Feedback Loop
+    mglevel -> vplevel : Status Reports
+    vplevel -> clevel : Progress Updates
+}
+
+' Separación vertical explícita para columna
+IBM_Quality_Communication_Framework -down-> channels : Utilizes
+
+rectangle "Communication Channels & Methods" <<$businessProcess>> as channels {
+    rectangle "Executive Dashboard" <<$communication>> as dash
+    rectangle "Weekly Steering Committee" <<$communication>> as steering
+    rectangle "Bi-weekly Status Reports" <<$communication>> as reports
+    rectangle "Monthly Business Reviews" <<$communication>> as reviews
+    rectangle "Escalation Procedures" <<$communication>> as escalation
+    
+    dash -down-> steering : Real-time KPIs
+    steering -down-> reports : Action Items
+    reports -down-> reviews : Consolidated Status
+    reviews -down-> escalation : Issue Management
+    escalation -down-> dash : Critical Updates
+}
+
+' Separación vertical explícita para columna
+channels -down-> metrics : Measured by
+
+rectangle "Communication Metrics & SLAs" <<$businessProcess>> as metrics {
+    rectangle "Response Time SLA" <<$communication>> as sla {
+        note right : C-Level: <2h\nVP Level: <4h\nManager: <8h\nOperational: <24h
+    }
+    rectangle "Effectiveness KPIs" <<$communication>> as kpis {
+        note right : Satisfaction: >4.0/5.0\nClarity: >85%\nAccuracy: >90%\nCoverage: 100%
+    }
+    rectangle "Escalation Matrix" <<$communication>> as matrix {
+        note right : Level 1: 0-4h\nLevel 2: 4-24h\nLevel 3: 24-48h\nLevel 4: 48h+
+    }
+    
+    sla -down-> kpis : Performance Tracking
+    kpis -down-> matrix : Issue Classification
+    matrix -down-> sla : SLA Monitoring
+}
+
+' Conexión de retroalimentación vertical
+metrics -down-> IBM_Quality_Communication_Framework : Optimizes
+
+note bottom
+**BENEFICIOS DE LA ESTRUCTURA:**
+• Flujo de comunicación bidireccional garantizado
+• Escalación automática basada en criticidad
+• Métricas de efectividad medibles y monitoreadas
+• SLAs diferenciados por nivel organizacional
+• Cobertura 100% de stakeholders relevantes
+• Integración con herramientas corporativas IBM
+end note
+
+@enduml

@@ -1,0 +1,74 @@
+@startuml criterios-validacion-simple
+!theme aws-orange
+top to bottom direction
+
+title CRITERIOS DE VALIDACION - IMPLEMENTACION IBM QUALITY\nKPAs Aplicables para Transformación de Madurez
+
+rectangle "NIVEL 2: GESTIONADO" #FFE5E5 {
+    rectangle "Configuration Management" as CM #lightcoral
+    rectangle "Measurement & Analysis" as MA #lightcoral
+    rectangle "Process & Product QA" as PPQA #lightcoral
+    rectangle "Requirements Management" as REQM #lightcoral
+    
+    CM -> MA
+    MA -> PPQA
+    PPQA -> REQM
+    REQM -> CM
+}
+
+rectangle "NIVEL 3: DEFINIDO" #FFF0E5 {
+    rectangle "Organizational Process Definition" as OPD #orange
+    rectangle "Organizational Process Focus" as OPF #orange
+    rectangle "Organizational Training" as OT #orange
+    rectangle "Integrated Project Management" as IPM #orange
+    
+    OPD -> OPF
+    OPF -> OT
+    OT -> IPM
+    IPM -> OPD
+}
+
+rectangle "NIVEL 4: CUANTITATIVAMENTE GESTIONADO" #FFFAE5 {
+    rectangle "Organizational Process Performance" as OPP #yellow
+    rectangle "Quantitative Project Management" as QPM #yellow
+    
+    OPP -> QPM
+    QPM -> OPP
+}
+
+rectangle "CRITERIOS TMMI" #E5F2FF {
+    rectangle "TM Level 3: Defined Testing" as TM3 #lightblue
+    rectangle "TM Level 4: Managed Testing" as TM4 #lightblue
+    
+    TM3 -> TM4
+}
+
+NIVEL2 -> NIVEL3
+NIVEL3 -> NIVEL4
+CRITERIOS_TMMI -> NIVEL3
+CRITERIOS_TMMI -> NIVEL4
+
+rectangle "METRICAS DE VALIDACION" #F0FFF0 {
+    rectangle "Implementation Metrics" as IM #lightgreen
+    rectangle "Quality Metrics" as QM #lightgreen
+    rectangle "Business Metrics" as BM #lightgreen
+    
+    IM -> QM
+    QM -> BM
+    BM -> IM
+}
+
+NIVEL4 -> METRICAS_DE_VALIDACION
+CRITERIOS_TMMI -> METRICAS_DE_VALIDACION
+
+note bottom
+STRATEGY DE VALIDACION:
+1. Assessment Baseline: Evaluación estado actual por KPA
+2. Gap Analysis: Identificación de brechas específicas
+3. Implementation Roadmap: Plan de cierre de gaps en 36 meses
+4. Milestone Reviews: Validación trimestral de progreso
+5. Certification Goals: CMMI Level 4 + TMMi Level 4 en 36 meses
+6. ROI Tracking: Monitoreo continuo de retorno de inversión
+end note
+
+@enduml

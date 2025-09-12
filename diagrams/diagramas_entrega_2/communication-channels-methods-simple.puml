@@ -1,0 +1,58 @@
+@startuml communication-channels-methods-simple
+!theme aws-orange
+top to bottom direction
+
+title CANALES Y MÉTODOS DE COMUNICACIÓN\nHerramientas y Procesos para Gestión de Calidad IBM
+
+rectangle "Canales y Métodos de Comunicación" as channels {
+    
+    rectangle "Tablero Ejecutivo" as dash
+    note right of dash : KPIs en Tiempo Real\nMétricas de Calidad\nIndicadores de Riesgo\nEstado del Presupuesto
+    
+    rectangle "Comité Directivo Semanal" as steering  
+    note right of steering : Decisiones Estratégicas\nAsignación de Recursos\nRevisiones de Escalación\nDefinición de Prioridades
+    
+    rectangle "Reportes de Estado Quincenales" as reports
+    note right of reports : Actualizaciones de Progreso\nSeguimiento de Hitos\nResumen de Incidencias\nElementos de Acción
+    
+    rectangle "Revisiones de Negocio Mensuales" as reviews
+    note right of reviews : Resumen Ejecutivo\nAnálisis ROI\nAlineación Estratégica\nPlaneación Futura
+    
+    rectangle "Procedimientos de Escalación" as escalation
+    note right of escalation : Incidencias Críticas\nRespuesta de Emergencia\nGestión de Crisis\nResolución Rápida
+    
+    dash --> steering : Alimentar Datos
+    steering --> reports : Generar Acciones
+    reports --> reviews : Consolidar Estado
+    reviews --> escalation : Activar Cuando Sea Necesario
+    escalation --> dash : Actualizar Métricas
+}
+
+rectangle "Características de Canales" as characteristics {
+    rectangle "Matriz de Frecuencia" as frequency
+    note right of frequency : TABLERO EJECUTIVO: Tiempo Real\nCOMITÉ DIRECTIVO: Semanal\nREPORTES DE ESTADO: Quincenal\nREVISIONES DE NEGOCIO: Mensual\nESCALACIONES: Bajo Demanda
+    
+    rectangle "Mapeo de Audiencia" as audience
+    note right of audience : TABLERO: Todos los niveles\nDIRECTIVO: C-Level + VPs\nREPORTES: Gerentes + Líderes\nREVISIONES: Equipo Ejecutivo\nESCALACIONES: Stakeholders relevantes
+    
+    rectangle "Herramientas de Comunicación" as tools
+    note right of tools : TABLERO: IBM Cognos, Tableau\nREUNIONES: WebEx, Teams\nREPORTES: SharePoint, Email\nREVISIONES: PowerPoint, PDF\nESCALACIONES: Teléfono, Chat, Email
+    
+    frequency --> audience : Define
+    audience --> tools : Utiliza
+    tools --> frequency : Soporta
+}
+
+channels --> characteristics : Soportado por
+
+note bottom
+BENEFICIOS DE LOS CANALES:
+• Comunicación multi-canal para diferentes audiencias
+• Frecuencias optimizadas según criticidad y nivel organizacional  
+• Herramientas corporativas estándar IBM integradas
+• Escalación automática basada en SLAs y criticidad
+• Trazabilidad completa de decisiones y acciones
+• Métricas de efectividad medibles en tiempo real
+end note
+
+@enduml

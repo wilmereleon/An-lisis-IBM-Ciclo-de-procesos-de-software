@@ -1,0 +1,62 @@
+@startuml ibm-quality-communication-framework-simple
+!theme aws-orange
+top to bottom direction
+
+title MARCO DE COMUNICACIÓN DE CALIDAD IBM\nEstructura Jerárquica de Comunicación Organizacional
+
+rectangle "Marco de Comunicación de Calidad IBM" {
+    
+    package "NIVEL 1: EJECUTIVOS C-LEVEL" as clevel {
+        rectangle "Actualizaciones Estratégicas CEO" as ceo
+        rectangle "Revisiones Técnicas CTO" as cto
+        rectangle "Tablero de Calidad CQO" as cqo
+        ceo -down-> cto : Sincronización Semanal
+        cto -down-> cqo : Métricas de Calidad
+    }
+    
+    package "NIVEL 2: VP Y DIRECTORES" as vplevel {
+        rectangle "Reportes VP Ingeniería" as vpe
+        rectangle "Estrategia VP Calidad" as vpq
+        rectangle "Director Operaciones TI" as dit
+        vpe -down-> vpq : Revisiones Quincenales
+        vpq -down-> dit : Estado de Implementación
+    }
+    
+    package "NIVEL 3: GERENTES Y LÍDERES" as mglevel {
+        rectangle "Actualizaciones Gerente Pruebas" as tm
+        rectangle "Reportes Gerente QA" as qm
+        rectangle "Estado Líderes Equipo Dev" as dtl
+        tm -down-> qm : Reuniones Diarias
+        qm -down-> dtl : Compuertas de Calidad
+    }
+    
+    package "NIVEL 4: EQUIPOS OPERACIONALES" as oplevel {
+        rectangle "Retroalimentación Usuarios Finales" as eu
+        rectangle "Coordinación Proveedores Externos" as ev
+        rectangle "Escalación Equipo Soporte" as st
+        eu -down-> ev : Requerimientos
+        ev -down-> st : Resolución de Incidencias
+    }
+    
+    ' Flujo jerárquico vertical
+    clevel -down-> vplevel : Dirección Estratégica
+    vplevel -down-> mglevel : Implementación Táctica
+    mglevel -down-> oplevel : Ejecución Operacional
+    
+    ' Feedback loops verticales
+    oplevel -up-> mglevel : Ciclo de Retroalimentación
+    mglevel -up-> vplevel : Reportes de Estado
+    vplevel -up-> clevel : Actualizaciones de Progreso
+}
+
+note bottom
+MARCO DE COMUNICACIÓN DE CALIDAD IBM:
+• 4 Niveles Jerárquicos: C-Level → VP → Gerentes → Operacional
+• 12 Stakeholders Clave distribuidos por influencia e interés
+• Flujo bidireccional: Top-down (Estratégico) + Bottom-up (Retroalimentación)
+• Frecuencias diferenciadas: Semanal (C-Level), Quincenal (VP), Diario (Gerentes)
+• Cobertura 100% de roles críticos en gestión de calidad
+• Integración completa con estructura organizacional IBM
+end note
+
+@enduml

@@ -1,0 +1,95 @@
+@startuml communication-metrics-slas-simple
+!theme aws-orange
+top to bottom direction
+
+title MÉTRICAS Y SLAS DE COMUNICACIÓN\nKPIs y Acuerdos de Nivel de Servicio para Calidad IBM
+
+rectangle "Métricas y SLAs de Comunicación" as metrics {
+    
+    rectangle "SLA de Tiempo de Respuesta" as sla {
+        rectangle "SLA Nivel C" as c_sla
+        note right of c_sla : Objetivo: <2 horas\nEscalación: 2-4h\nCrítico: <30 min\nMedición: 99.5%
+        
+        rectangle "SLA Nivel VP" as vp_sla  
+        note right of vp_sla : Objetivo: <4 horas\nEscalación: 4-8h\nCrítico: <1 hora\nMedición: 99.0%
+        
+        rectangle "SLA Gerencial" as mg_sla
+        note right of mg_sla : Objetivo: <8 horas\nEscalación: 8-24h\nCrítico: <2 horas\nMedición: 98.0%
+        
+        rectangle "SLA Operacional" as op_sla
+        note right of op_sla : Objetivo: <24 horas\nEscalación: Estándar\nCrítico: <4 horas\nMedición: 95.0%
+        
+        c_sla --> vp_sla : Cascada
+        vp_sla --> mg_sla : Delegar
+        mg_sla --> op_sla : Ejecutar
+    }
+    
+    rectangle "KPIs de Efectividad" as kpis {
+        rectangle "Puntuación de Satisfacción" as satisfaction
+        note right of satisfaction : Objetivo: >4.0/5.0\nMedición: Encuesta mensual\nActual: 4.1/5.0\nTendencia: +2% mejora
+        
+        rectangle "Claridad de Comunicación" as clarity
+        note right of clarity : Objetivo: >85%\nMedición: Análisis de retroalimentación\nActual: 87%\nTendencia: Estable
+        
+        rectangle "Precisión de Información" as accuracy
+        note right of accuracy : Objetivo: >90%\nMedición: Verificación de auditoría\nActual: 92%\nTendencia: +1% mejora
+        
+        rectangle "Cobertura de Stakeholders" as coverage
+        note right of coverage : Objetivo: 100%\nMedición: Seguimiento de participación\nActual: 98%\nTendencia: +3% mejora
+        
+        satisfaction --> clarity : Influye
+        clarity --> accuracy : Requiere
+        accuracy --> coverage : Habilita
+    }
+    
+    rectangle "Matriz de Escalación" as matrix {
+        rectangle "Nivel 1: Incidencias de Equipo" as level1
+        note right of level1 : Cronograma: 0-4h\nAlcance: Equipo a Gerente\nResolución: 85%\nAutomatización: 40%
+        
+        rectangle "Nivel 2: Incidencias Gerenciales" as level2
+        note right of level2 : Cronograma: 4-24h\nAlcance: Gerente a Director\nResolución: 90%\nAutomatización: 25%
+        
+        rectangle "Nivel 3: Incidencias Directivas" as level3
+        note right of level3 : Cronograma: 24-48h\nAlcance: Director a VP\nResolución: 95%\nAutomatización: 10%
+        
+        rectangle "Nivel 4: Incidencias Ejecutivas" as level4
+        note right of level4 : Cronograma: 48h+\nAlcance: VP a C-Level\nResolución: 99%\nAutomatización: Manual
+        
+        level1 --> level2 : Escalar si no se resuelve
+        level2 --> level3 : Escalar si no se resuelve
+        level3 --> level4 : Escalar si no se resuelve
+    }
+    
+    sla --> kpis : Seguimiento de Rendimiento
+    kpis --> matrix : Clasificación de Incidencias
+    matrix --> sla : Monitoreo de SLA
+}
+
+rectangle "Tablero de Medición" as dashboard {
+    rectangle "Métricas en Tiempo Real" as realtime
+    note right of realtime : Tiempos de respuesta por nivel\nConteo de escalaciones activas\n% de cumplimiento SLA\nVolumen de comunicación
+    
+    rectangle "Análisis de Tendencias" as trends
+    note right of trends : Rendimiento histórico\nPatrones estacionales\nTrayectorias de mejora\nInsights predictivos
+    
+    rectangle "Sistema de Alertas" as alerts
+    note right of alerts : Advertencias de violación SLA\nActivadores de escalación\nDegradación de rendimiento\nNotificaciones proactivas
+    
+    realtime --> trends : Datos Históricos
+    trends --> alerts : Analítica Predictiva
+    alerts --> realtime : Ciclo de Retroalimentación
+}
+
+metrics --> dashboard : Monitoreado por
+
+note bottom
+BENEFICIOS DEL SISTEMA DE MÉTRICAS:
+• SLAs diferenciados por nivel organizacional garantizan respuesta apropiada
+• KPIs medibles permiten mejora continua de efectividad comunicacional
+• Matriz de escalación automatizada reduce tiempos de resolución
+• Tablero en tiempo real facilita toma de decisiones proactiva
+• Sistema de alertas previene incumplimientos de SLA críticos
+• Análisis de tendencias permite optimización predictiva del sistema
+end note
+
+@enduml

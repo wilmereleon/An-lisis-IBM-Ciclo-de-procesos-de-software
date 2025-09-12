@@ -1,5 +1,6 @@
 @startuml benchmarking-industria-optimizado
 !theme aws-orange
+top to bottom direction
 
 title **BENCHMARKING INDUSTRIA - MÉTRICAS DE CALIDAD**\n16 KPIs Críticos | 4 Sectores | ROI Comparativo
 

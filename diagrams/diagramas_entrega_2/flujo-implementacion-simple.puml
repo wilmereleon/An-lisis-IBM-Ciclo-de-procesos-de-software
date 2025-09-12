@@ -1,0 +1,63 @@
+@startuml flujo-implementacion-simple
+!theme aws-orange
+
+title FLUJO DE IMPLEMENTACION - PLAN DE CALIDAD IBM\nProceso Extremo a Extremo de Transformación Organizacional
+
+start
+
+:Inicio del Proyecto;
+note right : Duración: 2 semanas\nFormación del equipo\nActa del proyecto\nAlineación de stakeholders
+
+:Evaluación del Estado Actual;
+note right : Duración: 4 semanas\nEvaluación CMMI/TMMi\nAnálisis de brechas detallado\nMétricas de línea base
+
+if (Resultados de Evaluación\nNivel actual ≥ 3?) then (Sí)
+    :Implementación Mejorada;
+    note right : Cronograma: 24 meses\nEnfoque en Nivel 4\nOptimización de procesos
+else (No)
+    :Implementación Base;
+    note right : Cronograma: 36 meses\nDesarrollo Nivel 2-3\nEstablecimiento de procesos
+endif
+
+:Fase 1: Estabilización;
+note left : Meses 1-12\nDefinición de procesos\nImplementación de herramientas\nProgramas de entrenamiento\nCompuertas de calidad\nInversión: $1.2M
+
+:Revisión Compuerta Fase 1;
+
+if (¿Éxito Fase 1?) then (Sí)
+    :Fase 2: Estandarización;
+    note right : Meses 13-24\nOptimización de procesos\nImplementación de automatización\nPrograma de métricas\nMejora continua\nInversión: $1.0M
+else (No)
+    :Acciones Correctivas;
+    note left : Duración: 2-4 semanas\nRoot cause analysis\nPlan de recuperación\nResource reallocation
+    -> **Phase 1: Stabilization**;
+endif
+
+:Phase 2 Gate Review;
+
+if (Phase 2 Success?) then (Sí)
+    :Phase 3: Optimization;
+    note right : Meses 25-36\nAdvanced analytics\nAI/ML integration\nPredictive quality\nInnovation programs\nInversión: $0.8M
+else (No)
+    :Corrective Actions;
+    -> **Phase 2: Standardization**;
+endif
+
+:Final Assessment;
+note left : Duración: 3 semanas\nCMMI Level 4 appraisal\nTMMi Level 4 validation\nROI calculation\nBenefits realization
+
+if (Target Achievement?) then (Sí)
+    :Certification & Recognition;
+    note right : Duración: 2 semanas\nOfficial certification\nPublic recognition\nCase study development\nBest practices sharing
+    
+    :Continuous Improvement;
+    note right : Operación Permanente\nLevel 5 preparation\nInnovation cycles\nBenchmarking\nKnowledge sharing
+else (No)
+    :Remediation Plan;
+    note left : Duración: 4-8 semanas\nGap re-analysis\nExtended timeline\nAdditional resources\nStakeholder communication
+    -> **Final Assessment**;
+endif
+
+stop
+
+@enduml
