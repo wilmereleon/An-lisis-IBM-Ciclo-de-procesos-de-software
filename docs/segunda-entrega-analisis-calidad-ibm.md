@@ -594,20 +594,20 @@ Esta estrategia se fundamenta en el **Modelo ADKAR** (Awareness, Desire, Knowled
 
 ### 12.3 Sistema de Alertas y Escalación
 
-Digite las frecuencias de revisión y reportes:
+Define las frecuencias de revisión y reportes:
 
-| **Tipo de Reporte** | **Audiencia** | **Frecuencia** | **SLA de Entrega** | **Formato** |
+| **Tipo de Reporte** | **Audiencia** | **Frecuencia** | **ANS de Entrega** | **Formato** |
 |-------------------|---------------|----------------|-------------------|------------|
-| **Executive Summary** | C-Suite | Mensual | 2do día hábil del mes | PowerPoint + PDF |
-| **Operational Dashboard** | Directors/Managers | Semanal | Lunes 9:00 AM | PowerBI Live |
-| **Team Performance** | Team Leads | Diario | 8:00 AM | Jira Dashboard |
-| **Quality Trends** | All QA Staff | Bi-semanal | Viernes 5:00 PM | Confluence Page |
-| **Incident Reports** | Stakeholders | Por incidente | <30 min del incidente | Email + Teams |
+| **Resumen Ejecutivo** | Alta Dirección | Mensual | 2do día hábil del mes | PowerPoint + PDF |
+| **Panel de Control Operacional** | Directores/Gerentes | Semanal | Lunes 9:00 AM | PowerBI en Vivo |
+| **Rendimiento del Equipo** | Líderes de Equipo | Diario | 8:00 AM | Panel de Control Jira |
+| **Tendencias de Calidad** | Todo el Personal de AC | Quincenal | Viernes 5:00 PM | Página Confluence |
+| **Reportes de Incidentes** | Partes Interesadas | Por incidente | <30 min del incidente | Correo + Teams |
 
 ### 12.4 Benchmarking y Comparativas Industriales
 
-![Comparativo con Industria](../diagrams/benchmarking-industria.png)
-*Figura 12.2: Comparativo de métricas IBM vs. promedio de industria tecnológica*
+![Comparativo con Industria](../diagrams/diagramas_entrega_2/benchmarking-industria-python-optimizado.png)
+*Figura 12.2: Análisis competitivo IBM vs industria tecnológica - Dashboard ejecutivo con métricas, gaps y matriz de posicionamiento*
 
 ---
 
