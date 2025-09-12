@@ -486,6 +486,10 @@ Los modelos analizados incluyen:
 
 ### 11.1 Estrategia de Gestión del Cambio
 
+La transformación hacia un modelo de calidad de software maduro en IBM requiere una **estrategia estructurada de gestión del cambio** que aborde tanto los aspectos técnicos como los humanos de la implementación. La adopción exitosa de nuevos procesos, herramientas y metodologías depende fundamentalmente de la capacidad organizacional para **facilitar la transición** desde el estado actual hacia el estado deseado de madurez en calidad.
+
+Esta estrategia se fundamenta en el **Modelo ADKAR** (Awareness, Desire, Knowledge, Ability, Reinforcement), una metodología probada que estructura el cambio individual como prerequisito para el cambio organizacional. El enfoque reconoce que los procesos de calidad más sofisticados fallarán sin la **adopción humana apropiada**, y que el éxito técnico debe ir acompañado de una transformación cultural que valore la calidad como un **diferenciador competitivo estratégico**.
+
 #### 11.1.1 Modelo ADKAR Aplicado
 
 | **Fase ADKAR** | **Actividades Específicas** | **Entregables** | **Responsable** | **Cronograma** |
@@ -495,6 +499,8 @@ Los modelos analizados incluyen:
 | **Conocimiento** | • Diseño de currículo de entrenamiento<br>• Mapeo de competencias<br>• Rutas de aprendizaje | Materiales de capacitación<br>Matriz de competencias<br>Programa de certificación | Equipo de Capacitación | Semanas 4-16 |
 | **Habilidad** | • Talleres prácticos<br>• Programa de mentoría<br>• Provisión de herramientas | Agenda de talleres<br>Guías de mentoría<br>Acceso a herramientas | Líderes Técnicos | Semanas 8-24 |
 | **Refuerzo** | • Medición de rendimiento<br>• Retroalimentación continua<br>• Ajuste de procesos | Seguimiento de KPIs<br>Sistema de retroalimentación<br>Actualizaciones de proceso | Propietarios de Proceso | Continuo |
+
+**Nota:** *El Modelo ADKAR aplicado a la transformación de calidad de IBM permite un **enfoque sistemático y medible** para asegurar la adopción organizacional. Esta metodología incrementa la probabilidad de éxito de la implementación en un **70%** según estudios de Prosci, al abordar las barreras humanas que típicamente causan el fracaso de iniciativas de cambio tecnológico. La estructura secuencial pero superpuesta de las fases garantiza que cada individuo desarrolle la **concienciación, motivación, competencias y refuerzo** necesarios para convertirse en un agente efectivo de la transformación hacia la excelencia en calidad de software.*
 
 ### 11.2 Plan de Comunicación Detallado
 
