@@ -488,13 +488,13 @@ Los modelos analizados incluyen:
 
 #### 11.1.1 Modelo ADKAR Aplicado
 
-| **Fase ADKAR** | **Actividades Específicas** | **Entregables** | **Responsable** | **Timeline** |
-|---------------|----------------------------|----------------|-----------------|--------------|
-| **Awareness** | • Comunicación visión y beneficios<br>• Executive sponsorship<br>• Business case presentation | Presentation deck<br>FAQ document<br>Benefits calculator | Change Manager | Semanas 1-4 |
-| **Desire** | • Champions program<br>• Success stories sharing<br>• Incentive alignment | Champions network<br>Success metrics<br>Reward system | HR + Change Manager | Semanas 2-8 |
-| **Knowledge** | • Training curriculum design<br>• Competency mapping<br>• Learning paths | Training materials<br>Competency matrix<br>Certification program | Training Team | Semanas 4-16 |
-| **Ability** | • Hands-on workshops<br>• Mentoring program<br>• Tool provision | Workshop agenda<br>Mentoring guidelines<br>Tool access | Technical Leads | Semanas 8-24 |
-| **Reinforcement** | • Performance measurement<br>• Continuous feedback<br>• Process adjustment | KPI tracking<br>Feedback system<br>Process updates | Process Owners | Continuo |
+| **Fase ADKAR** | **Actividades Específicas** | **Entregables** | **Responsable** | **Cronograma** |
+|---------------|----------------------------|----------------|-----------------|----------------|
+| **Concienciación** | • Comunicación de visión y beneficios<br>• Patrocinio ejecutivo<br>• Presentación de caso de negocio | Presentación ejecutiva<br>Documento de preguntas frecuentes<br>Calculadora de beneficios | Gerente de Cambio | Semanas 1-4 |
+| **Deseo** | • Programa de champions<br>• Compartir historias de éxito<br>• Alineación de incentivos | Red de champions<br>Métricas de éxito<br>Sistema de recompensas | RRHH + Gerente de Cambio | Semanas 2-8 |
+| **Conocimiento** | • Diseño de currículo de entrenamiento<br>• Mapeo de competencias<br>• Rutas de aprendizaje | Materiales de capacitación<br>Matriz de competencias<br>Programa de certificación | Equipo de Capacitación | Semanas 4-16 |
+| **Habilidad** | • Talleres prácticos<br>• Programa de mentoría<br>• Provisión de herramientas | Agenda de talleres<br>Guías de mentoría<br>Acceso a herramientas | Líderes Técnicos | Semanas 8-24 |
+| **Refuerzo** | • Medición de rendimiento<br>• Retroalimentación continua<br>• Ajuste de procesos | Seguimiento de KPIs<br>Sistema de retroalimentación<br>Actualizaciones de proceso | Propietarios de Proceso | Continuo |
 
 ### 11.2 Plan de Comunicación Detallado
 

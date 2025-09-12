@@ -2,6 +2,12 @@
 !theme aws-orange
 top to bottom direction
 
+skinparam defaultFontSize 14
+skinparam titleFontSize 18
+skinparam rectangleFontSize 14
+skinparam noteFontSize 12
+skinparam footerFontSize 12
+
 title MÉTRICAS Y SLAS DE COMUNICACIÓN\nKPIs y Acuerdos de Nivel de Servicio para Calidad IBM
 
 rectangle "Métricas y SLAs de Comunicación" as metrics {
