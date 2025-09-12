@@ -465,19 +465,19 @@ Los modelos analizados incluyen:
 
 | **Tipo de Comunicación** | **Audiencia** | **Frecuencia** | **Formato** | **Responsable** |
 |-------------------------|---------------|----------------|-------------|----------------|
-| **Executive Dashboard** | C-Level, VPs | Mensual | PowerBI Dashboard | CQO |
-| **Quality Metrics Review** | Directors, Managers | Semanal | Confluence Report | Quality Metrics Manager |
-| **Team Standup** | Team members | Diario | Jira/Teams | Team Leads |
-| **Process Improvement** | All QA Staff | Trimestral | Workshop presencial | Process Improvement Mgr |
-| **Training & Certification** | Individual contributors | Continuo | LMS Platform | Training Team |
+| **Tablero Ejecutivo** | C-Level, VPs | Mensual | Tablero PowerBI | CQO |
+| **Revisión de Métricas de Calidad** | Directores, Gerentes | Semanal | Reporte Confluence | Gerente de Métricas de Calidad |
+| **Reunión Diaria de Equipo** | Miembros del equipo | Diario | Jira/Teams | Líderes de Equipo |
+| **Mejora de Procesos** | Todo el Personal QA | Trimestral | Taller presencial | Gerente de Mejora de Procesos |
+| **Capacitación y Certificación** | Colaboradores individuales | Continuo | Plataforma LMS | Equipo de Capacitación |
 
-#### 10.3.2 Escalation Matrix
+#### 10.3.2 Matriz de Escalación
 
 | **Nivel** | **Tiempo de Respuesta** | **Criterios de Escalación** | **Responsable** |
 |-----------|------------------------|---------------------------|-----------------|
-| **P0 - Critical** | 15 minutos | Production down, security breach | CQO + On-call Director |
-| **P1 - High** | 2 horas | Customer impact, SLA breach | Director nivel |
-| **P2 - Medium** | 1 día laboral | Process deviation, tool issues | Manager nivel |
+| **P0 - Crítico** | 15 minutos | Producción caída, brecha de seguridad | CQO + Director de guardia |
+| **P1 - Alto** | 2 horas | Impacto al cliente, incumplimiento SLA | Nivel Director |
+| **P2 - Medio** | 1 día laboral | Desviación de proceso, problemas de herramientas | Nivel Gerente |
 | **P3 - Low** | 3 días laborales | Process improvement, training | Team Lead nivel |
 
 ---
@@ -511,25 +511,25 @@ Esta estrategia se fundamenta en el **Modelo ADKAR** (Awareness, Desire, Knowled
 
 #### 11.2.2 Cronograma de Comunicaciones
 
-| **Hito/Evento** | **Audiencia** | **Canal** | **Responsable** | **Timeline** |
-|----------------|---------------|-----------|----------------|--------------|
-| **Project Kickoff** | All stakeholders | Town Hall + Teams | CQO | Semana 1 |
-| **Phase 1 Launch** | Management + Teams | Executive briefing + Workshop | Program Manager | Semana 4 |
-| **Monthly Progress** | Directors + Managers | Dashboard + Report | Quality Metrics Mgr | Mensual |
-| **Quarterly Reviews** | Executive team | Business review meeting | CQO | Trimestral |
-| **Training Rollout** | All QA staff | LMS + Presencial | Training Team | Continuo |
-| **Go-Live Communications** | Company-wide | Email + Intranet | Communications Team | Por fase |
+| **Hito/Evento** | **Audiencia** | **Canal** | **Responsable** | **Cronograma** |
+|----------------|---------------|-----------|----------------|----------------|
+| **Lanzamiento del Proyecto** | Todos los stakeholders | Reunión Masiva + Teams | CQO | Semana 1 |
+| **Lanzamiento Fase 1** | Gerencia + Equipos | Informe ejecutivo + Taller | Gerente de Programa | Semana 4 |
+| **Progreso Mensual** | Directores + Gerentes | Tablero + Reporte | Gerente de Métricas de Calidad | Mensual |
+| **Revisiones Trimestrales** | Equipo ejecutivo | Reunión de revisión de negocio | CQO | Trimestral |
+| **Despliegue de Capacitación** | Todo el personal QA | LMS + Presencial | Equipo de Capacitación | Continuo |
+| **Comunicaciones de Go-Live** | Toda la compañía | Email + Intranet | Equipo de Comunicaciones | Por fase |
 
-### 11.3 Programa de Training y Certificación
+### 11.3 Programa de Capacitación y Certificación
 
-#### 11.3.1 Curriculum de Training por Rol
+#### 11.3.1 Currículo de Capacitación por Rol
 
-| **Rol** | **Módulos de Training** | **Duración** | **Modalidad** | **Certificación** |
-|---------|------------------------|--------------|---------------|-------------------|
-| **Test Manager** | • CMMI/TMMi Leadership<br>• Advanced Test Planning<br>• Risk Management<br>• Team Leadership | 80 horas | Presencial + Virtual | ISTQB Test Manager |
-| **Test Lead** | • Test Strategy Design<br>• Automation Frameworks<br>• Performance Testing<br>• Security Testing | 60 horas | Híbrido | ISTQB Advanced Level |
-| **QA Engineer** | • ISTQB Foundation<br>• Tool Training (Selenium, JMeter)<br>• API Testing<br>• Agile Testing | 40 horas | Virtual + Labs | ISTQB Foundation |
-| **DevOps** | • CI/CD for Testing<br>• Container Testing<br>• Infrastructure as Code<br>• Monitoring & Observability | 50 horas | Labs + Workshop | Cloud Provider Certs |
+| **Rol** | **Módulos de Capacitación** | **Duración** | **Modalidad** | **Certificación** |
+|---------|----------------------------|--------------|---------------|-------------------|
+| **Gerente de Pruebas** | • Liderazgo CMMI/TMMi<br>• Planificación Avanzada de Pruebas<br>• Gestión de Riesgos<br>• Liderazgo de Equipos | 80 horas | Presencial + Virtual | ISTQB Test Manager |
+| **Líder de Pruebas** | • Diseño de Estrategia de Pruebas<br>• Marcos de Automatización<br>• Pruebas de Rendimiento<br>• Pruebas de Seguridad | 60 horas | Híbrido | ISTQB Nivel Avanzado |
+| **Ingeniero QA** | • Fundamentos ISTQB<br>• Capacitación en Herramientas (Selenium, JMeter)<br>• Pruebas de API<br>• Pruebas Ágiles | 40 horas | Virtual + Laboratorios | ISTQB Foundation |
+| **DevOps** | • CI/CD para Pruebas<br>• Pruebas de Contenedores<br>• Infraestructura como Código<br>• Monitoreo y Observabilidad | 50 horas | Laboratorios + Taller | Certificaciones de Proveedores Cloud |
 
 #### 11.3.2 Learning Paths por Nivel de Experiencia
 
@@ -564,33 +564,33 @@ Esta estrategia se fundamenta en el **Modelo ADKAR** (Awareness, Desire, Knowled
 
 #### 12.2.1 Métricas de Calidad del Producto
 
-| **Métrica** | **Definición** | **Target** | **Actual** | **Frecuencia** | **Responsable** |
-|-------------|----------------|------------|-------------|----------------|-----------------|
-| **Defect Density** | Defectos por 1000 líneas de código | <0.3/KLOC | 0.28/KLOC | Semanal | Test Manager |
-| **Defect Leakage** | % defectos encontrados en producción | <2% | 1.8% | Mensual | QA Manager |
-| **Customer Satisfaction** | NPS score de calidad del producto | >70 | 73 | Trimestral | Product Manager |
-| **Mean Time to Defect** | Tiempo promedio para encontrar defecto | <4 hours | 3.2 hours | Continuo | Test Lead |
-| **Fix Rate** | % defectos corregidos en SLA | >95% | 96.5% | Semanal | Development Manager |
+| **Métrica** | **Definición** | **Objetivo** | **Actual** | **Frecuencia** | **Responsable** |
+|-------------|----------------|--------------|-------------|----------------|-----------------|
+| **Densidad de Defectos** | Defectos por 1000 líneas de código | <0.3/KLOC | 0.28/KLOC | Semanal | Gerente de Pruebas |
+| **Filtración de Defectos** | % defectos encontrados en producción | <2% | 1.8% | Mensual | Gerente QA |
+| **Satisfacción del Cliente** | Puntuación NPS de calidad del producto | >70 | 73 | Trimestral | Gerente de Producto |
+| **Tiempo Medio hasta Defecto** | Tiempo promedio para encontrar defecto | <4 horas | 3.2 horas | Continuo | Líder de Pruebas |
+| **Tasa de Corrección** | % defectos corregidos en SLA | >95% | 96.5% | Semanal | Gerente de Desarrollo |
 
 #### 12.2.2 Métricas de Proceso
 
-| **Métrica** | **Definición** | **Target** | **Actual** | **Frecuencia** | **Responsable** |
-|-------------|----------------|------------|-------------|----------------|-----------------|
-| **Test Automation Rate** | % casos de prueba automatizados | >85% | 87% | Mensual | Automation Manager |
-| **Test Execution Velocity** | Casos ejecutados por hora | >50/hour | 58/hour | Diario | Test Lead |
-| **Environment Availability** | % tiempo ambientes disponibles | >98% | 99.2% | Continuo | DevOps Manager |
-| **Code Coverage** | % código cubierto por pruebas | >80% | 83% | Por build | Development Lead |
-| **Pipeline Success Rate** | % builds exitosos en CI/CD | >95% | 97.1% | Continuo | DevOps Manager |
+| **Métrica** | **Definición** | **Objetivo** | **Actual** | **Frecuencia** | **Responsable** |
+|-------------|----------------|--------------|-------------|----------------|-----------------|
+| **Tasa de Automatización de Pruebas** | % casos de prueba automatizados | >85% | 87% | Mensual | Gerente de Automatización |
+| **Velocidad de Ejecución de Pruebas** | Casos ejecutados por hora | >50/hora | 58/hora | Diario | Líder de Pruebas |
+| **Disponibilidad de Ambiente** | % tiempo ambientes disponibles | >98% | 99.2% | Continuo | Gerente DevOps |
+| **Cobertura de Código** | % código cubierto por pruebas | >80% | 83% | Por build | Líder de Desarrollo |
+| **Tasa de Éxito de Pipeline** | % builds exitosos en CI/CD | >95% | 97.1% | Continuo | Gerente DevOps |
 
 #### 12.2.3 Métricas de Eficiencia
 
-| **Métrica** | **Definición** | **Target** | **Actual** | **Frecuencia** | **Responsable** |
-|-------------|----------------|------------|-------------|----------------|-----------------|
-| **Deployment Frequency** | Deployments por día | >1/day | 1.3/day | Diario | Release Manager |
-| **Lead Time** | Tiempo desde commit hasta producción | <2 days | 1.8 days | Continuo | Program Manager |
-| **Mean Time to Recovery** | Tiempo para resolver incidentes P1 | <4 hours | 3.2 hours | Por incidente | Incident Manager |
-| **Change Failure Rate** | % cambios que causan fallos | <5% | 3.8% | Mensual | Change Manager |
-| **Cost per Test Case** | Costo promedio por caso de prueba | <$15 | $12.50 | Trimestral | Finance Team |
+| **Métrica** | **Definición** | **Objetivo** | **Actual** | **Frecuencia** | **Responsable** |
+|-------------|----------------|--------------|-------------|----------------|-----------------|
+| **Frecuencia de Despliegue** | Despliegues por día | >1/día | 1.3/día | Diario | Gerente de Release |
+| **Tiempo de Entrega** | Tiempo desde commit hasta producción | <2 días | 1.8 días | Continuo | Gerente de Programa |
+| **Tiempo Medio de Recuperación** | Tiempo para resolver incidentes P1 | <4 horas | 3.2 horas | Por incidente | Gerente de Incidentes |
+| **Tasa de Fallo de Cambios** | % cambios que causan fallos | <5% | 3.8% | Mensual | Gerente de Cambios |
+| **Costo por Caso de Prueba** | Costo promedio por caso de prueba | <$15 | $12.50 | Trimestral | Equipo de Finanzas |
 
 ### 12.3 Sistema de Alertas y Escalación
 

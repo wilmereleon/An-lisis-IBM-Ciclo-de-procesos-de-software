@@ -2,120 +2,144 @@
 !theme aws-orange
 top to bottom direction
 
+skinparam defaultFontSize 14
+skinparam titleFontSize 18
+skinparam packageFontSize 13
+skinparam noteFontSize 12
+skinparam actorFontSize 12
+
 title **MATRIZ DE STAKEHOLDERS - PLAN DE COMUNICACIÓN**\nGestión de 16 Stakeholders Clave | 4 Estrategias Diferenciadas
 
 skinparam packageStyle rectangle
 skinparam actor {
-    FontSize 10
+    FontSize 12
     FontColor Black
 }
 
-package "CUADRANTE 1: MANAGE CLOSELY\n(Alto Poder + Alto Interés)" #lightcoral {
-    actor "CQO\nChief Quality Officer" as CQO
-    actor "CTO\nChief Technology Officer" as CTO
-    actor "VP Engineering" as VPE
-    actor "VP Product" as VPP
-    
-    note right of CQO
-        Poder: 9/10, Interés: 9/10
-        Engagement: Weekly 1:1
-        Impact: Critical
-    end note
+' Disposición vertical por niveles de poder/interés
+package "NIVEL 1: GESTIONAR DE CERCA (Alto Poder + Alto Interés)" #lightcoral {
+    actor "CQO - Director de Calidad" as CQO
+    actor "CTO - Director de Tecnología" as CTO
+    actor "VP Ingeniería" as VPE
+    actor "VP Producto" as VPP
 }
 
-package "CUADRANTE 2: KEEP SATISFIED\n(Alto Poder + Bajo Interés)" #lightyellow {
-    actor "CEO\nChief Executive Officer" as CEO
-    actor "CFO\nChief Financial Officer" as CFO
-    actor "CHRO\nChief HR Officer" as CHRO
-    actor "Board Members" as BOARD
-    
-    note right of CEO
-        Poder: 10/10, Interés: 3/10
-        Engagement: Monthly Briefings
-        Impact: Strategic
-    end note
+note right of CQO : **Poder:** 9/10, **Interés:** 9/10\n**Compromiso:** Reuniones Semanales 1:1\n**Impacto:** Crítico
+
+package "NIVEL 2: MANTENER SATISFECHO (Alto Poder + Bajo Interés)" #lightyellow {
+    actor "CEO - Director Ejecutivo" as CEO
+    actor "CFO - Director Financiero" as CFO
+    actor "CHRO - Director de RRHH" as CHRO
+    actor "Miembros del Consejo" as BOARD
 }
 
-package "CUADRANTE 3: KEEP INFORMED\n(Bajo Poder + Alto Interés)" #lightblue {
-    actor "QA Teams\nQuality Engineers" as QAT
-    actor "Dev Teams\nDevelopment Teams" as DEVT
-    actor "DevOps Teams" as DEVOPS
-    actor "Test Leads" as TL
+note right of CEO : **Poder:** 10/10, **Interés:** 3/10\n**Compromiso:** Informes Mensuales\n**Impacto:** Estratégico
+
+package "NIVEL 3: MANTENER INFORMADO (Bajo Poder + Alto Interés)" #lightblue {
+    actor "Equipos QA - Ingenieros de Calidad" as QAT
+    actor "Equipos Dev - Equipos de Desarrollo" as DEVT
+    actor "Equipos DevOps" as DEVOPS
+    actor "Líderes de Pruebas" as TL
     actor "Scrum Masters" as SM
-    
-    note right of QAT
-        Poder: 4/10, Interés: 9/10
-        Engagement: Bi-weekly Updates
-        Impact: Operational
-    end note
 }
 
-package "CUADRANTE 4: MONITOR\n(Bajo Poder + Bajo Interés)" #lightgray {
-    actor "IT Support\nSupport Teams" as ITS
-    actor "Security Teams\nInfoSec" as SEC
-    actor "Compliance\nCompliance Officers" as COMP
-    actor "External Consultants" as EXT
-    
-    note right of ITS
-        Poder: 2/10, Interés: 3/10
-        Engagement: Quarterly News
-        Impact: Support
-    end note
+note right of QAT : **Poder:** 4/10, **Interés:** 9/10\n**Compromiso:** Actualizaciones Quincenales\n**Impacto:** Operacional
+
+package "NIVEL 4: MONITOREAR (Bajo Poder + Bajo Interés)" #lightgray {
+    actor "Soporte TI - Equipos de Soporte" as ITS
+    actor "Equipos de Seguridad - InfoSec" as SEC
+    actor "Cumplimiento - Oficiales de Cumplimiento" as COMP
+    actor "Consultores Externos" as EXT
 }
 
-' Relaciones entre cuadrantes
-CQO --> DEVT : Strategic Direction
-CEO --> CQO : Executive Oversight
-QAT --> TL : Operational Reporting
-SEC --> COMP : Compliance Coordination
+note right of ITS : **Poder:** 2/10, **Interés:** 3/10\n**Compromiso:** Noticias Trimestrales\n**Impacto:** Soporte
 
-' Estrategias de comunicación
-package "ESTRATEGIAS DE COMUNICACIÓN" {
-    note as COMM_STRATEGIES
-        **MANAGE CLOSELY (Cuadrante 1):**
-        • Frequency: Daily/Weekly
-        • Channels: Face-to-face, Executive Dashboard
-        • Content: Strategic decisions, KPIs, Risk assessment
-        • SLA: <2 hours response time
-        
-        **KEEP SATISFIED (Cuadrante 2):**
-        • Frequency: Monthly/Quarterly
-        • Channels: Executive briefings, ROI reports
-        • Content: Business value, Financial impact, Milestones
-        • SLA: <1 week approval time
-        
-        **KEEP INFORMED (Cuadrante 3):**
-        • Frequency: Bi-weekly/Weekly
-        • Channels: Team updates, Technical sessions
-        • Content: Implementation details, Process changes
-        • SLA: >85% participation rate
-        
-        **MONITOR (Cuadrante 4):**
-        • Frequency: Quarterly/As-needed
-        • Channels: Newsletters, General communications
-        • Content: High-level status, Announcements
-        • SLA: >60% awareness level
-    end note
-}
+' Relaciones verticales estratégicas
+CQO --> VPE : Dirección Estratégica
+VPE --> DEVT : Implementación Táctica
+DEVT --> TL : Ejecución Operacional
+TL --> ITS : Soporte Técnico
 
-' Escalation Matrix
-package "ESCALATION MATRIX" {
-    note as ESCALATION
-        **ESCALATION LEVELS:**
-        
-        Level 1: Team Lead → Test Manager (4h SLA)
-        Level 2: Test Manager → Director QA (24h SLA)
-        Level 3: Director QA → CQO (48h SLA)
-        Level 4: CQO → Executive Committee (72h SLA)
-        
-        **Emergency Protocol:** P1 Issues → Immediate CQO escalation
-        
-        **Communication Metrics:**
-        • Stakeholder Satisfaction: 4.3/5.0 (Target: 4.5)
-        • Response Time: 2.3 days (Target: 2.0)
-        • Training Completion: 89% (Target: 95%)
-        • ROI of Communication: $2.1M annually
-    end note
-}
+' Estrategias de comunicación consolidadas
+note bottom
+**ESTRATEGIAS DE COMUNICACIÓN VERTICAL:**
+
+**NIVEL 1 - GESTIONAR DE CERCA:**
+• **Frecuencia:** Diaria/Semanal | **Canales:** Cara a cara, Tablero Ejecutivo
+• **Contenido:** Decisiones estratégicas, KPIs, Evaluación de riesgos
+• **SLA:** <2 horas tiempo de respuesta | **Métricas:** 99.5% cumplimiento
+
+**NIVEL 2 - MANTENER SATISFECHO:**
+• **Frecuencia:** Mensual/Trimestral | **Canales:** Informes ejecutivos, Reportes ROI
+• **Contenido:** Valor de negocio, Impacto financiero, Hitos principales
+• **SLA:** <1 semana tiempo de aprobación | **Métricas:** 95% satisfacción
+
+**NIVEL 3 - MANTENER INFORMADO:**
+• **Frecuencia:** Bi-semanal/Semanal | **Canales:** Actualizaciones de equipo, Sesiones técnicas
+• **Contenido:** Detalles de implementación, Cambios de proceso
+• **SLA:** >85% tasa de participación | **Métricas:** 90% comprensión
+
+**NIVEL 4 - MONITOREAR:**
+• **Frecuencia:** Trimestral/Según necesidad | **Canales:** Boletines, Comunicaciones generales
+• **Contenido:** Estado de alto nivel, Anuncios organizacionales
+• **SLA:** >60% nivel de concienciación | **Métricas:** 70% cobertura
+
+**MATRIZ DE ESCALACIÓN:**
+Nivel 1: Líder de Equipo → Gerente de Pruebas (4h SLA)
+Nivel 2: Gerente de Pruebas → Director QA (24h SLA)  
+Nivel 3: Director QA → CQO (48h SLA)
+Nivel 4: CQO → Comité Ejecutivo (72h SLA)
+
+**MÉTRICAS CONSOLIDADAS:**
+• Satisfacción de Stakeholders: 4.3/5.0 (Objetivo: 4.5)
+• Tiempo de Respuesta: 2.3 días (Objetivo: 2.0)
+• Finalización de Capacitación: 89% (Objetivo: 95%)
+• ROI de Comunicación: $2.1M anualmente
+end note
+
+@enduml
+
+' Relaciones verticales estratégicas
+CQO --> VPE : Dirección Estratégica
+VPE --> DEVT : Implementación Táctica
+DEVT --> TL : Ejecución Operacional
+TL --> ITS : Soporte Técnico
+
+' Estrategias de comunicación consolidadas
+note bottom
+**ESTRATEGIAS DE COMUNICACIÓN VERTICAL:**
+
+**NIVEL 1 - MANAGE CLOSELY:**
+• **Frecuencia:** Diaria/Semanal | **Canales:** Face-to-face, Executive Dashboard
+• **Contenido:** Decisiones estratégicas, KPIs, Evaluación de riesgos
+• **SLA:** <2 horas tiempo de respuesta | **Métricas:** 99.5% cumplimiento
+
+**NIVEL 2 - KEEP SATISFIED:**
+• **Frecuencia:** Mensual/Trimestral | **Canales:** Executive briefings, ROI reports
+• **Contenido:** Valor de negocio, Impacto financiero, Hitos principales
+• **SLA:** <1 semana tiempo de aprobación | **Métricas:** 95% satisfacción
+
+**NIVEL 3 - KEEP INFORMED:**
+• **Frecuencia:** Bi-semanal/Semanal | **Canales:** Team updates, Technical sessions
+• **Contenido:** Detalles de implementación, Cambios de proceso
+• **SLA:** >85% tasa de participación | **Métricas:** 90% comprensión
+
+**NIVEL 4 - MONITOR:**
+• **Frecuencia:** Trimestral/Según necesidad | **Canales:** Newsletters, Comunicaciones generales
+• **Contenido:** Estado alto nivel, Anuncios organizacionales
+• **SLA:** >60% nivel de awareness | **Métricas:** 70% cobertura
+
+**MATRIZ DE ESCALACIÓN:**
+Nivel 1: Team Lead → Test Manager (4h SLA)
+Nivel 2: Test Manager → Director QA (24h SLA)  
+Nivel 3: Director QA → CQO (48h SLA)
+Nivel 4: CQO → Executive Committee (72h SLA)
+
+**MÉTRICAS CONSOLIDADAS:**
+• Satisfacción Stakeholders: 4.3/5.0 (Target: 4.5)
+• Tiempo de Respuesta: 2.3 días (Target: 2.0)
+• Completación Training: 89% (Target: 95%)
+• ROI de Comunicación: $2.1M anualmente
+end note
 
 @enduml
