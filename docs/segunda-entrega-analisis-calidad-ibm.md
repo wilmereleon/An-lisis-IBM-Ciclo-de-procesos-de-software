@@ -979,44 +979,243 @@ COBERTURA GENERAL: 100%
 | **Exception Handling** | 90% | 100% | Review de manejo errores |
 
 **C. PROTOCOLO PARA PRUEBAS UNITARIAS (Unit Testing):**
+
+### **C.1. Definición y Alcance**
+
+Las pruebas unitarias validan componentes individuales del software (métodos, funciones, clases) de forma aislada, sin dependencias externas.
+
+**Alcance:** Componentes individuales (métodos, funciones, clases individuales)
+
+### **C.2. Frameworks Recomendados por Tecnología**
+
+| **Tecnología** | **Framework Principal** | **Alternativas** | **Mocking Framework** | **CI/CD Integration** |
+|----------------|------------------------|------------------|-----------------------|-----------------------|
+| **Java** | JUnit 5 | TestNG | Mockito, PowerMock | Maven, Gradle |
+| **C#/.NET** | NUnit | MSTest, xUnit | Moq, NSubstitute | Azure DevOps, GitHub Actions |
+| **JavaScript** | Jest | Mocha, Jasmine | Sinon.js, Jest mocks | npm scripts, Webpack |
+| **Python** | pytest | unittest, nose2 | unittest.mock, pytest-mock | pip, tox |
+| **C/C++** | Google Test | CppUnit, Catch2 | Google Mock, FakeIt | CMake, Make |
+
+### **C.3. Patrón AAA (Arrange-Act-Assert)**
+
+| **Fase** | **Propósito** | **Actividades** | **Ejemplo** |
+|----------|---------------|-----------------|-------------|
+| **Arrange** | Configurar el escenario | • Crear objetos de prueba<br>• Configurar mocks/stubs<br>• Preparar datos de entrada | `Usuario user = new Usuario("test");` |
+| **Act** | Ejecutar la acción | • Llamar al método bajo prueba<br>• Capturar el resultado<br>• Una sola acción por test | `boolean result = service.validar(user);` |
+| **Assert** | Verificar el resultado | • Comparar resultado esperado<br>• Verificar comportamientos<br>• Validar estado final | `assertTrue(result);` |
+| **Cleanup** | Limpiar recursos | • Liberar recursos<br>• Reset de statics<br>• Cerrar conexiones | `@AfterEach cleanup()` |
+
+### **C.4. Criterios de Calidad para Pruebas Unitarias**
+
+| **Criterio** | **Objetivo** | **Umbral Mínimo** | **Umbral Ideal** | **Medición** |
+|-------------|--------------|-------------------|------------------|--------------|
+| **Cobertura de Código** | Líneas ejecutadas | 85% | 95% | Herramientas de cobertura |
+| **Tiempo de Ejecución** | Velocidad por test | < 1 segundo | < 100ms | CI/CD timing |
+| **Independencia** | Tests aislados | 100% | 100% | Ejecución paralela |
+| **Repetibilidad** | Resultados consistentes | 100% | 100% | Múltiples ejecuciones |
+| **Naming Convention** | Nombres descriptivos | 100% | 100% | Code review |
+
+### **C.5. Estrategias de Aislamiento**
+
+#### **C.5.1. Tipos de Test Doubles**
+
+| **Tipo** | **Propósito** | **Cuándo Usar** | **Herramienta** |
+|----------|---------------|-----------------|-----------------|
+| **Mock** | Verificar interacciones | Cuando importa el comportamiento | Mockito, Moq |
+| **Stub** | Proporcionar respuestas | Cuando necesitas datos específicos | Stubs manuales |
+| **Fake** | Implementación simplificada | Para dependencias complejas | In-memory databases |
+| **Spy** | Objeto real con seguimiento | Para verificar llamadas reales | Mockito.spy() |
+| **Dummy** | Objeto sin implementación | Solo para completar parámetros | new Object() |
+
+#### **C.5.2. Dependencias Comunes a Aislar**
+
 ```
-PROTOCOLO_UNITARIAS:
-├── ALCANCE: Componentes individuales (métodos, funciones, clases)
-├── FRAMEWORK: [JUnit, NUnit, pytest, Jest según tecnología]
-├── PATRÓN: AAA (Arrange-Act-Assert)
-├── AISLAMIENTO: Uso de mocks y stubs para dependencias
-├── AUTOMATIZACIÓN: 100% automatizadas en pipeline CI/CD
+DEPENDENCIAS EXTERNAS A MOCKEAR:
+• Bases de datos (DAO/Repository patterns)
+• Servicios web/APIs REST
+• Sistemas de archivos
+• Servicios de email/SMS
+• Reloj del sistema (fechas/tiempo)
+• Generadores de números aleatorios
+• Servicios de logging
+• Configuraciones externas
+```
 
-CRITERIOS_UNITARIAS:
-├── COBERTURA_MÍNIMA: [85% líneas de código]
-├── TIEMPO_EJECUCIÓN: [< 1 segundo por test]
-├── INDEPENDENCIA: [Tests no dependen entre sí]
-├── REPETIBILIDAD: [Resultados consistentes]
-├── NAMING: [Nombres descriptivos y claros]
+### **C.6. Ejemplos Prácticos por Escenario**
 
-ESTRUCTURA_TEST_UNITARIO:
-├── ARRANGE: [Configurar datos y mocks necesarios]
-├── ACT: [Ejecutar el método bajo prueba]
-├── ASSERT: [Verificar resultado esperado]
-├── CLEANUP: [Limpiar recursos si es necesario]
+#### **C.6.1. Test Unitario Básico (Sin Dependencias)**
 
-EJEMPLO_TEST_UNITARIO:
 ```java
-@Test
-public void testValidarLogin_UsuarioValido_RetornaTrue() {
-    // Arrange
-    Usuario usuario = new Usuario("juan123", "Pass123!");
-    LoginService service = new LoginService();
+public class CalculadoraTest {
     
-    // Act
-    boolean resultado = service.validarLogin(usuario);
+    private Calculadora calculadora;
     
-    // Assert
-    assertTrue(resultado);
-    verify(auditService).registrarAcceso(usuario);
+    @BeforeEach
+    void setUp() {
+        // Arrange - Setup
+        calculadora = new Calculadora();
+    }
+    
+    @Test
+    @DisplayName("Sumar dos números positivos debe retornar la suma correcta")
+    void testSumar_DosNumerosPositivos_RetornaSumaCorrecta() {
+        // Arrange
+        int numero1 = 5;
+        int numero2 = 3;
+        int resultadoEsperado = 8;
+        
+        // Act
+        int resultado = calculadora.sumar(numero1, numero2);
+        
+        // Assert
+        assertEquals(resultadoEsperado, resultado);
+    }
 }
 ```
+
+#### **C.6.2. Test Unitario con Mocks (Con Dependencias)**
+
+```java
+public class UserServiceTest {
+    
+    @Mock
+    private UserRepository userRepository;
+    
+    @Mock
+    private EmailService emailService;
+    
+    @InjectMocks
+    private UserService userService;
+    
+    @Test
+    @DisplayName("Crear usuario válido debe persistir y enviar email de bienvenida")
+    void testCrearUsuario_UsuarioValido_PersistYEnviaEmail() {
+        // Arrange
+        Usuario nuevoUsuario = new Usuario("juan123", "juan@test.com");
+        when(userRepository.existeEmail("juan@test.com")).thenReturn(false);
+        when(userRepository.guardar(any(Usuario.class))).thenReturn(nuevoUsuario);
+        
+        // Act
+        Usuario usuarioCreado = userService.crearUsuario(nuevoUsuario);
+        
+        // Assert
+        assertNotNull(usuarioCreado);
+        assertEquals("juan123", usuarioCreado.getNombre());
+        
+        // Verify interactions
+        verify(userRepository).existeEmail("juan@test.com");
+        verify(userRepository).guardar(nuevoUsuario);
+        verify(emailService).enviarBienvenida("juan@test.com");
+    }
+}
 ```
+
+#### **C.6.3. Test de Excepciones**
+
+```java
+@Test
+@DisplayName("Dividir por cero debe lanzar ArithmeticException")
+void testDividir_DivisorCero_LanzaArithmeticException() {
+    // Arrange
+    int dividendo = 10;
+    int divisor = 0;
+    
+    // Act & Assert
+    ArithmeticException exception = assertThrows(
+        ArithmeticException.class,
+        () -> calculadora.dividir(dividendo, divisor)
+    );
+    
+    assertEquals("División por cero no permitida", exception.getMessage());
+}
+```
+
+### **C.7. Convenciones de Naming**
+
+| **Elemento** | **Convención** | **Ejemplo** |
+|-------------|----------------|-------------|
+| **Clase Test** | `[ClaseAProbar]Test` | `UserServiceTest` |
+| **Método Test** | `test[Método]_[Escenario]_[ResultadoEsperado]` | `testValidarEmail_EmailInvalido_RetornaFalse` |
+| **Variables** | Descriptivas y claras | `usuarioValido`, `emailInvalido` |
+| **Constantes** | UPPER_CASE con contexto | `EMAIL_VALIDO_TEST` |
+
+### **C.8. Integración CI/CD para Pruebas Unitarias**
+
+#### **C.8.1. Pipeline Configuration**
+
+```yaml
+# Ejemplo Jenkins Pipeline
+stage('Unit Tests') {
+    steps {
+        script {
+            // Ejecutar tests unitarios
+            sh 'mvn clean test'
+            
+            // Generar reporte de cobertura
+            sh 'mvn jacoco:report'
+            
+            // Validar cobertura mínima
+            sh 'mvn jacoco:check'
+        }
+    }
+    post {
+        always {
+            // Publicar resultados
+            publishTestResults testResultsPattern: 'target/surefire-reports/*.xml'
+            publishCoverage calculateDiffForChangeRequests: true,
+                           sourceFileResolver: sourceFiles('STORE_ALL_BUILD')
+        }
+        failure {
+            // Notificar si fallan
+            emailext body: 'Unit tests failed', 
+                     subject: 'Build Failed',
+                     to: '${CHANGE_AUTHOR_EMAIL}'
+        }
+    }
+}
+```
+
+#### **C.8.2. Quality Gates**
+
+| **Métrica** | **Umbral** | **Acción si Falla** |
+|-------------|------------|---------------------|
+| **Test Pass Rate** | 100% | Bloquear build |
+| **Code Coverage** | 85% | Bloquear merge |
+| **Test Duration** | < 5 min total | Optimizar tests |
+| **Flaky Test Rate** | < 2% | Investigar y corregir |
+
+### **C.9. Métricas y Monitoreo**
+
+#### **C.9.1. KPIs de Pruebas Unitarias**
+
+```
+MÉTRICAS CLAVE:
+┌─────────────────────┬─────────────┬─────────────┬─────────────┐
+│ Métrica             │ Actual      │ Objetivo    │ Tendencia   │
+├─────────────────────┼─────────────┼─────────────┼─────────────┤
+│ Cobertura de Código │    87%      │    >85%     │     ↗       │
+│ Tests Ejecutados    │   1,247     │    All      │     ↗       │
+│ Tiempo Ejecución    │   3.2 min   │   <5 min    │     ↘       │
+│ Tests Fallidos      │     0       │     0       │     →       │
+│ Flaky Tests         │     3       │    <10      │     ↘       │
+└─────────────────────┴─────────────┴─────────────┴─────────────┘
+
+TENDENCIAS SEMANALES:
+• Nuevos tests agregados: +23
+• Cobertura incrementada: +2.1%
+• Tiempo optimizado: -15 segundos
+• Flaky tests resueltos: 2
+```
+
+### **C.10. Troubleshooting Común**
+
+| **Problema** | **Síntoma** | **Solución** |
+|-------------|-------------|--------------|
+| **Tests Lentos** | Ejecución > 1s por test | Usar mocks, reducir I/O |
+| **Flaky Tests** | Fallan intermitentemente | Eliminar dependencias tiempo/orden |
+| **Baja Cobertura** | < 85% líneas cubiertas | Identificar código no probado |
+| **Tests Frágiles** | Rompen con cambios menores | Usar builders, test data factories |
+| **Mocks Complejos** | Setup muy verboso | Refactorizar código bajo prueba |
 
 **D. PROTOCOLO PARA PRUEBAS DE INTEGRACIÓN (Integration Testing):**
 ```
