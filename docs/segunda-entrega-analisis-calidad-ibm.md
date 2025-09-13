@@ -842,37 +842,141 @@ EJEMPLO_CASO_CAJA_NEGRA (Login Bancario):
 ```
 
 **B. PROTOCOLO PARA PRUEBAS DE CAJA BLANCA (White Box Testing):**
+
+### **B.1. Definición y Enfoque**
+
+Las pruebas de caja blanca se enfocan en validar la lógica interna y estructura del código, requiriendo conocimiento completo de la implementación.
+
+**Objetivo Principal:** Validar lógica interna y estructura del código fuente
+
+### **B.2. Técnicas de Cobertura Aplicables**
+
+| **Tipo de Cobertura** | **Descripción** | **Objetivo** | **Umbral Mínimo** |
+|----------------------|-----------------|--------------|-------------------|
+| **Statement Coverage** | Cobertura de Sentencias | Cada línea de código ejecutada al menos una vez | 80% |
+| **Branch Coverage** | Cobertura de Ramas | Todas las ramas condicionales ejercitadas | 70% |
+| **Condition Coverage** | Cobertura de Condiciones | Cada condición booleana evaluada como T/F | 100% |
+| **Path Coverage** | Cobertura de Caminos | Todas las rutas de ejecución cubiertas | Variable |
+| **Function Coverage** | Cobertura de Funciones | Todas las funciones/métodos invocados | 95% |
+
+### **B.3. Criterios de Evaluación Específicos**
+
+| **Criterio** | **Descripción** | **Métrica Objetivo** | **Herramienta** |
+|-------------|-----------------|---------------------|-----------------|
+| **Cobertura de Código** | Líneas de código ejecutadas | Mínimo 80% | SonarQube, JaCoCo |
+| **Cobertura de Ramas** | Ramas condicionales probadas | Mínimo 70% | Istanbul, OpenCover |
+| **Complejidad Ciclomática** | Métodos complejos cubiertos | Métodos >10 = 100% | Complexity tools |
+| **Rutas Críticas** | Caminos de alto impacto | 100% cobertura | Code analysis |
+| **Manejo de Excepciones** | Casos de error cubiertos | Todas las excepciones | Exception testing |
+
+### **B.4. Estrategia de Diseño de Casos de Prueba**
+
+#### **B.4.1. Por Tipo de Estructura de Código**
+
+| **Estructura** | **Estrategia de Prueba** | **Casos Requeridos** |
+|---------------|-------------------------|---------------------|
+| **Sentencias Secuenciales** | Ejecutar cada línea al menos una vez | 1 caso por secuencia |
+| **Decisiones (if/else)** | Ejercitar todas las ramas | 2 casos mínimo (T/F) |
+| **Condiciones Múltiples** | Probar todas las combinaciones | 2^n casos (n=condiciones) |
+| **Bucles (for/while)** | Probar 0, 1, n iteraciones | 3 casos por bucle |
+| **Switch/Case** | Ejercitar todos los casos + default | 1 caso por rama |
+
+#### **B.4.2. Técnicas Específicas por Complejidad**
+
 ```
-ENFOQUE_CAJA_BLANCA:
-├── OBJETIVO: Validar lógica interna y estructura del código
-├── TÉCNICAS_APLICABLES:
-│   ├── Cobertura de Sentencias (Statement Coverage)
-│   ├── Cobertura de Ramas (Branch Coverage)
-│   ├── Cobertura de Condiciones (Condition Coverage)
-│   ├── Cobertura de Caminos (Path Coverage)
-│   └── Cobertura de Funciones (Function Coverage)
+MÉTODOS SIMPLES (Complejidad 1-5):
+• Cobertura de sentencias suficiente
+• 1-2 casos de prueba por método
+• Enfoque en happy path + 1 error case
 
-CRITERIOS_EVALUACIÓN_CAJA_BLANCA:
-├── COBERTURA_CÓDIGO: [Mínimo 80% líneas de código ejecutadas]
-├── COBERTURA_RAMAS: [Mínimo 70% de todas las ramas condicionales]
-├── COBERTURA_CONDICIONES: [Todas las condiciones booleanas evaluadas]
-├── COMPLEJIDAD_CICLOMÁTICA: [Métodos con complejidad > 10 probados]
-├── RUTAS_CRÍTICAS: [Caminos de mayor impacto cubiertos]
+MÉTODOS MODERADOS (Complejidad 6-10):
+• Cobertura de ramas obligatoria
+• 3-5 casos de prueba por método
+• Incluir casos límite y excepciones
 
-DISEÑO_CASOS_CAJA_BLANCA:
-├── SENTENCIAS: [Cada línea de código ejecutada al menos una vez]
-├── DECISIONES: [Cada rama if/else, switch/case ejercitada]
-├── CONDICIONES: [Cada condición booleana verdadera y falsa]
-├── BUCLES: [Iteraciones 0, 1, n veces probadas]
-├── EXCEPCIONES: [Manejo de errores y casos excepcionales]
-
-EJEMPLO_CASO_CAJA_BLANCA (Validación Login):
-├── RAMA_TRUE: if (usuario.existe()) → ejecutar autenticación
-├── RAMA_FALSE: if (usuario.existe()) → retornar error "usuario no existe"
-├── CONDICIÓN_AND: if (usuario.activo() && password.válido())
-├── BUCLE_FOR: for (intentos < 3) → probar 0, 1, 2, 3 iteraciones
-├── EXCEPCIÓN: try-catch para SQLException en consulta BD
+MÉTODOS COMPLEJOS (Complejidad >10):
+• Cobertura de caminos requerida
+• 5+ casos de prueba por método
+• Refactoring recomendado antes de testing
+• Análisis exhaustivo de todas las rutas
 ```
+
+### **B.5. Ejemplo Práctico: Validación de Login**
+
+#### **B.5.1. Código a Probar**
+```java
+public boolean validarLogin(String usuario, String password) {
+    if (usuario == null || usuario.isEmpty()) {        // Línea 1
+        return false;                                   // Línea 2
+    }
+    
+    if (password == null || password.length() < 8) {   // Línea 3
+        return false;                                   // Línea 4
+    }
+    
+    Usuario user = buscarUsuario(usuario);              // Línea 5
+    if (user == null) {                                 // Línea 6
+        return false;                                   // Línea 7
+    }
+    
+    if (user.estaBloqueado()) {                         // Línea 8
+        return false;                                   // Línea 9
+    }
+    
+    return user.validarPassword(password);              // Línea 10
+}
+```
+
+#### **B.5.2. Casos de Prueba para Cobertura Completa**
+
+| **Caso** | **Usuario** | **Password** | **Estado Usuario** | **Rama Ejercitada** | **Resultado** |
+|----------|-------------|--------------|-------------------|---------------------|---------------|
+| **CP-WB-01** | null | "ValidPass123" | N/A | Línea 1 → 2 | false |
+| **CP-WB-02** | "" | "ValidPass123" | N/A | Línea 1 → 2 | false |
+| **CP-WB-03** | "juan123" | null | N/A | Línea 3 → 4 | false |
+| **CP-WB-04** | "juan123" | "123" | N/A | Línea 3 → 4 | false |
+| **CP-WB-05** | "noexiste" | "ValidPass123" | N/A | Línea 6 → 7 | false |
+| **CP-WB-06** | "juan123" | "ValidPass123" | Bloqueado | Línea 8 → 9 | false |
+| **CP-WB-07** | "juan123" | "ValidPass123" | Activo | Línea 10 | true/false |
+| **CP-WB-08** | "juan123" | "WrongPass" | Activo | Línea 10 | false |
+
+#### **B.5.3. Análisis de Cobertura**
+
+```
+COBERTURA DE SENTENCIAS: 10/10 líneas = 100% ✓
+COBERTURA DE RAMAS: 8/8 ramas = 100% ✓
+COBERTURA DE CONDICIONES:
+• usuario == null: ✓ (CP-WB-01)
+• usuario.isEmpty(): ✓ (CP-WB-02)  
+• password == null: ✓ (CP-WB-03)
+• password.length() < 8: ✓ (CP-WB-04)
+• user == null: ✓ (CP-WB-05)
+• user.estaBloqueado(): ✓ (CP-WB-06)
+
+COMPLEJIDAD CICLOMÁTICA: 5 (Aceptable)
+CASOS DE PRUEBA TOTALES: 8
+COBERTURA GENERAL: 100%
+```
+
+### **B.6. Herramientas Recomendadas por Tecnología**
+
+| **Tecnología** | **Herramienta Principal** | **Alternativas** | **Integración CI/CD** |
+|----------------|--------------------------|------------------|-----------------------|
+| **Java** | JaCoCo | Cobertura, Clover | Maven, Gradle |
+| **C#/.NET** | OpenCover | dotCover, NCover | Azure DevOps |
+| **JavaScript** | Istanbul/NYC | Jest Coverage | Jenkins, GitHub Actions |
+| **Python** | Coverage.py | pytest-cov | CircleCI, Travis |
+| **C/C++** | gcov | LCOV, Bullseye | CMake, Make |
+
+### **B.7. Criterios de Aceptación para Release**
+
+| **Criterio** | **Umbral Mínimo** | **Umbral Objetivo** | **Acción si No Cumple** |
+|-------------|-------------------|--------------------|-----------------------|
+| **Statement Coverage** | 80% | 90% | Bloquear release |
+| **Branch Coverage** | 70% | 85% | Revisar con arquitecto |
+| **Métodos Complejos** | 100% | 100% | Refactoring obligatorio |
+| **Critical Path** | 100% | 100% | Testing manual adicional |
+| **Exception Handling** | 90% | 100% | Review de manejo errores |
 
 **C. PROTOCOLO PARA PRUEBAS UNITARIAS (Unit Testing):**
 ```
