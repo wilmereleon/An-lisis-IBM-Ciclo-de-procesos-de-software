@@ -1,0 +1,265 @@
+@startuml flujo-proceso-testing-completo
+!theme aws-orange
+!define PLANIFICATION #2E86AB
+!define DESIGN #A23B72
+!define EXECUTION #F18F01
+!define ANALYSIS #C73E1D
+!define CLOSURE #4CAF50
+!define MANAGEMENT #9E9E9E
+!define DECISION #FFD700
+!define AUTOMATION #00BCD4
+
+title **PROCESO DE TESTING IBM - FLUJO COMPLETO**\n//Integración CMMI + TMMi + DevOps + Automatización//
+
+start
+
+' ================================
+' FASE 1: PLANIFICACIÓN
+' ================================
+partition "**FASE 1: PLANIFICACIÓN DE TESTING (CMMI L2-L3)**" PLANIFICATION {
+    :1.1 Análisis de
+    Requerimientos
+    de Testing;
+    
+    :1.2 Estimación de
+    Esfuerzo y Recursos;
+    
+    :1.3 Definición
+    Estrategia de Testing;
+    
+    :1.4 Plan de
+    Testing Maestro;
+    note right
+        **Entregables:**
+        • Test Strategy Document
+        • Test Plan Master
+        • Resource Allocation
+        • Risk Assessment
+    end note
+}
+
+' ================================
+' FASE 2: DISEÑO DE TESTS
+' ================================
+partition "**FASE 2: DISEÑO DE TESTS (TMMi L3)**" DESIGN {
+    :2.1 Diseño de Casos
+    de Prueba (Black Box);
+    
+    :2.2 Diseño de Casos
+    de Prueba (White Box);
+    
+    :2.3 Casos de Prueba
+    de Integración;
+    
+    :2.4 Test Data
+    Management;
+    
+    note right
+        **Técnicas aplicadas:**
+        • Equivalence Partitioning
+        • Boundary Value Analysis
+        • Decision Table Testing
+        • State Transition Testing
+    end note
+}
+
+' ================================
+' DECISIÓN: AUTOMATIZACIÓN
+' ================================
+if (¿Automatizar Tests?) then (SÍ)
+    partition "**AUTOMATIZACIÓN**" AUTOMATION {
+        :3A. Desarrollo de
+        Scripts de Automatización;
+        note right
+            **Frameworks:**
+            • Selenium WebDriver
+            • JUnit/TestNG
+            • Rest Assured
+            • Cypress
+        end note
+    }
+else (NO)
+    partition "**TESTING MANUAL**" EXECUTION {
+        :3B. Preparación
+        Manual de Tests;
+        note right
+            **Herramientas:**
+            • Test Case Management
+            • Manual Execution
+            • Excel Templates
+        end note
+    }
+endif
+
+' ================================
+' FASE 3: EJECUCIÓN DE TESTS
+' ================================
+partition "**FASE 3: EJECUCIÓN DE TESTS (DevOps + CI/CD)**" EXECUTION {
+    :3.1 Tests Unitarios
+    (JUnit/NUnit);
+    
+    :3.2 Tests de Integración
+    (API Testing);
+    
+    :3.3 Tests de Sistema
+    (End-to-End);
+    
+    :3.4 Tests de Aceptación
+    (UAT);
+    
+    :3.5 Tests de Regresión;
+    
+    note right
+        **Pipeline CI/CD:**
+        • Jenkins/Azure DevOps
+        • Automated Triggers
+        • Parallel Execution
+        • Real-time Reporting
+    end note
+}
+
+' ================================
+' MONITOREO CONTINUO
+' ================================
+partition "**MONITOREO CONTINUO**" MANAGEMENT {
+    :Recolección de Métricas
+    en Tiempo Real;
+    
+    note left
+        **KPIs Clave:**
+        • Code Coverage >85%
+        • Test Pass Rate >95%
+        • Defect Density <0.5/KLOC
+        • Time to Market
+    end note
+    
+    :Dashboard de Métricas
+    Ejecutivo;
+}
+
+' ================================
+' DECISIÓN: QUALITY GATE
+' ================================
+if (¿Quality Gate PASS?) then (FAIL)
+    partition "**ANÁLISIS DE DEFECTOS**" ANALYSIS {
+        :4A. Análisis de Defectos
+        y Correcciones;
+        
+        :Root Cause Analysis;
+        
+        :Corrección de Issues;
+        
+        note right
+            **Proceso de Defectos:**
+            • Triage de Severidad
+            • Assignment & Tracking
+            • Verification & Closure
+        end note
+    }
+    
+    ' Bucle de retroalimentación
+    :Retorno a Ejecución
+    o Diseño según Tipo
+    de Defecto;
+    
+    -> Inicio del bucle de testing;
+    detach
+    
+else (PASS)
+    partition "**APROBACIÓN RELEASE**" CLOSURE {
+        :4B. Aprobación para
+        Release;
+    }
+endif
+
+' ================================
+' FASE 4: ANÁLISIS Y MEJORA
+' ================================
+partition "**FASE 4: ANÁLISIS Y MEJORA CONTINUA (CMMI L4-L5)**" ANALYSIS {
+    :4.1 Root Cause Analysis
+    de Defectos;
+    
+    :4.2 Análisis de Tendencias
+    y Métricas;
+    
+    :4.3 Optimización de
+    Procesos;
+    
+    :4.4 Lecciones Aprendidas;
+    
+    note right
+        **Mejora Continua:**
+        • Process Optimization
+        • Tool Enhancement
+        • Skill Development
+        • Best Practices Update
+    end note
+}
+
+' ================================
+' FASE 5: CIERRE Y ENTREGA
+' ================================
+partition "**FASE 5: CIERRE Y ENTREGA**" CLOSURE {
+    :5.1 Reporte Final
+    de Testing;
+    
+    :5.2 Documentación
+    de Release;
+    
+    :5.3 Handover a
+    Operaciones;
+    
+    note right
+        **Entregables Finales:**
+        • Test Summary Report
+        • Release Notes
+        • Known Issues Log
+        • Operations Manual
+    end note
+}
+
+' ================================
+' FEEDBACK LOOP
+' ================================
+:Retroalimentación para
+Próximo Ciclo;
+
+note left
+    **Feedback Loop:**
+    • Métricas históricas
+    • Lecciones aprendidas
+    • Process improvements
+    • Tool optimizations
+end note
+
+stop
+
+' ================================
+' LEYENDA Y HERRAMIENTAS
+' ================================
+legend right
+    **HERRAMIENTAS INTEGRADAS**
+    |= Categoría |= Herramienta |
+    | Test Management | Jira, Azure DevOps, TestRail |
+    | Automation | Selenium, Cypress, Playwright |
+    | Unit Testing | JUnit, NUnit, pytest, Jest |
+    | API Testing | Postman, Rest Assured, SoapUI |
+    | Performance | JMeter, LoadRunner, K6 |
+    | Security | OWASP ZAP, SonarQube, Veracode |
+    | CI/CD | Jenkins, Azure Pipelines, GitLab |
+    | Monitoring | Grafana, Kibana, New Relic |
+    
+    **ESTÁNDARES APLICADOS**
+    • IEEE 829 - Test Documentation
+    • ISO/IEC 29119 - Software Testing
+    • CMMI L5 - Process Maturity
+    • TMMi L4 - Test Maturity
+    
+    **MÉTRICAS CLAVE**
+    • Code Coverage: >85%
+    • Defect Density: <0.5/KLOC
+    • Test Automation Rate: >70%
+    • Mean Time to Resolution: <2h
+endlegend
+
+@enduml

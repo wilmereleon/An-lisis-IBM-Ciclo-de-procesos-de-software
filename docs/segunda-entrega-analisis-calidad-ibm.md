@@ -200,8 +200,11 @@ Los modelos analizados incluyen:
 
 ### 4.1 Key Process Areas (KPAs) Aplicables
 
-![Criterios de Validación CMMI](../diagrams/criterios-validacion-estado-ibm.png)
-*Figura 4.1: Estado actual vs. objetivo de KPAs CMMI para IBM*
+![Criterios de Validación CMMI](../diagrams/criterios-validacion-simple.png)
+*Figura 4.1: Estado actual vs. objetivo de KPAs CMMI para IBM - Cronograma Gantt*
+
+![Criterios de Validación Detallado](../diagrams/criterios-validacion-estado-ibm.png)
+*Figura 4.2: Estado detallado de implementación por niveles de madurez CMMI/TMMi*
 
 ### 4.2 Evaluación Detallada por Niveles de Madurez
 
@@ -2109,8 +2112,142 @@ EJEMPLO: SISTEMA E-COMMERCE
 
 ### 13.4 Cronograma de Implementación
 
-![Cronograma de Implementación](../diagrams/cronograma-implementacion-calidad.png)
-*Figura 13.1: Cronograma detallado de 36 meses con fases, actividades, recursos y riesgos*
+#### **13.4.1 Vista General del Cronograma (36 Meses)**
+
+| **Año** | **Trimestre** | **Fase Principal** | **Entregables Clave** | **Presupuesto** | **Recursos** |
+|---------|---------------|-------------------|----------------------|-----------------|--------------|
+| **Año 1** | Q1-Q2 | Estabilización | Assessment, Baseline, Pilot | $850K | 45 FTEs |
+| **Año 1** | Q3-Q4 | Estandarización | Procesos CMMI L3, Training | $750K | 65 FTEs |
+| **Año 2** | Q1-Q2 | Optimización | Automatización, TMMi L3 | $900K | 85 FTEs |
+| **Año 2** | Q3-Q4 | Integración | DevSecOps, CI/CD completo | $650K | 75 FTEs |
+| **Año 3** | Q1-Q2 | Maduración | CMMI L4, Métricas avanzadas | $500K | 60 FTEs |
+| **Año 3** | Q3-Q4 | Sostenibilidad | CMMI L5, Centro excelencia | $350K | 45 FTEs |
+
+#### **13.4.2 Cronograma Detallado por Fases**
+
+##### **FASE 1: ESTABILIZACIÓN (Meses 1-6)**
+
+| **Actividad** | **Duración** | **Recursos** | **Dependencias** | **Riesgos** | **Mitigación** |
+|---------------|--------------|--------------|------------------|-------------|----------------|
+| **Assessment Inicial** | Semanas 1-8 | 8 consultores senior | Acceso a sistemas | Resistencia equipos | Sponsorship ejecutivo |
+| **Gap Analysis CMMI** | Semanas 6-12 | 6 analistas CMMI | Assessment completado | Documentación limitada | Entrevistas estructuradas |
+| **Definición Procesos L2** | Semanas 8-16 | 12 process engineers | Gap analysis | Consenso stakeholders | Workshops facilitados |
+| **Setup Herramientas Core** | Semanas 10-20 | 8 DevOps engineers | Infraestructura IT | Integración legacy | POCs pre-implementación |
+| **Training Foundation** | Semanas 12-24 | 4 trainers + 60 students | Procesos definidos | Disponibilidad recursos | Training modular |
+| **Proyecto Piloto** | Semanas 16-24 | 15 desarrolladores | Training completado | Scope creep | Project charter claro |
+
+**Hitos Críticos:**
+- Semana 8: Assessment aprobado por C-level
+- Semana 16: Procesos CMMI L2 certificados
+- Semana 20: Herramientas productivas
+- Semana 24: Piloto en producción con métricas
+
+##### **FASE 2: ESTANDARIZACIÓN (Meses 7-18)**
+
+| **Actividad** | **Duración** | **Recursos** | **Dependencias** | **Riesgos** | **Mitigación** |
+|---------------|--------------|--------------|------------------|-------------|----------------|
+| **Rollout Procesos L3** | Semanas 25-36 | 20 process engineers | Piloto exitoso | Resistencia al cambio | Change management |
+| **Implementación TMMi L2** | Semanas 28-40 | 12 test engineers | Procesos CMMI estables | Falta expertise TMMi | Consultoría externa |
+| **Automatización Tests** | Semanas 32-48 | 18 automation engineers | Herramientas setup | Complejidad técnica | Framework incremental |
+| **Centro Competencia** | Semanas 36-52 | 8 senior specialists | Procesos maduros | Definición roles | Job descriptions claras |
+| **Métricas Básicas** | Semanas 40-56 | 6 data analysts | Automatización partial | Calidad de datos | Data governance |
+| **Training Avanzado** | Semanas 44-60 | 6 trainers + 120 students | Centro competencia | Scheduling conflicts | Training pipeline |
+
+**Hitos Críticos:**
+- Semana 36: CMMI L3 assessment passed
+- Semana 48: 80% tests automatizados
+- Semana 56: Métricas dashboard operativo
+- Semana 60: 120+ personas certificadas avanzado
+
+##### **FASE 3: OPTIMIZACIÓN (Meses 19-30)**
+
+| **Actividad** | **Duración** | **Recursos** | **Dependencias** | **Riesgos** | **Mitigación** |
+|---------------|--------------|--------------|------------------|-------------|----------------|
+| **TMMi L3-L4** | Semanas 61-84 | 15 senior testers | TMMi L2 estable | Complejidad organizacional | Roadmap por productos |
+| **DevSecOps Pipeline** | Semanas 68-92 | 20 DevSecOps engineers | Automatización completa | Security compliance | Security by design |
+| **AI/ML en Testing** | Semanas 76-100 | 12 ML engineers | Pipeline estable | Madurez tecnológica | POCs controlados |
+| **Métricas Predictivas** | Semanas 84-108 | 8 data scientists | AI/ML funcionando | Modelos complejos | Iteraciones cortas |
+| **Optimización Performance** | Semanas 88-112 | 10 performance engineers | Métricas disponibles | Baseline moving | Benchmarks estables |
+| **Scaling Internacional** | Semanas 96-120 | 25 coordinadores globales | Procesos optimizados | Diferencias culturales | Localización procesos |
+
+**Hitos Críticos:**
+- Semana 84: TMMi L4 assessment
+- Semana 100: AI/ML modelos en producción
+- Semana 112: Performance optimizada 40%
+- Semana 120: 5 países con procesos estándar
+
+##### **FASE 4: MADURACIÓN Y SOSTENIBILIDAD (Meses 31-36)**
+
+| **Actividad** | **Duración** | **Recursos** | **Dependencias** | **Riesgos** | **Mitigación** |
+|---------------|--------------|--------------|------------------|-------------|----------------|
+| **CMMI L5 Preparation** | Semanas 121-144 | 12 CMMI experts | Métricas predictivas | Assessment complexity | Consultoría CMMI L5 |
+| **Innovation Lab** | Semanas 124-148 | 8 innovation engineers | Scaling completado | ROI no claro | Innovation metrics |
+| **Knowledge Management** | Semanas 128-152 | 6 knowledge managers | Procesos maduros | Knowledge silos | Gamification |
+| **Sustainability Plan** | Semanas 132-156 | 4 strategy consultants | Todos los procesos | Budget cuts | Executive commitment |
+| **Final Assessment** | Semanas 148-156 | Auditors externos | Implementation completa | Standards evolution | Continuous monitoring |
+
+#### **13.4.3 Recursos y Presupuesto Detallado**
+
+##### **Distribución de Recursos por Rol**
+
+| **Rol** | **Año 1** | **Año 2** | **Año 3** | **Total** | **Costo Promedio** |
+|---------|-----------|-----------|-----------|-----------|-------------------|
+| **CMMI Consultants** | 12 | 8 | 4 | 24 | $180K/año |
+| **TMMi Specialists** | 8 | 15 | 10 | 33 | $160K/año |
+| **DevOps Engineers** | 15 | 25 | 20 | 60 | $140K/año |
+| **Test Automation** | 20 | 30 | 25 | 75 | $130K/año |
+| **Process Engineers** | 25 | 20 | 15 | 60 | $120K/año |
+| **Data Scientists** | 5 | 12 | 8 | 25 | $170K/año |
+| **Project Managers** | 8 | 10 | 8 | 26 | $150K/año |
+| **Trainers/Change Mgmt** | 12 | 15 | 10 | 37 | $110K/año |
+
+##### **Inversión por Categoría**
+
+```
+INVERSIÓN TOTAL: $4.05M (36 meses)
+
+DESGLOSE POR CATEGORÍA:
+┌─────────────────────┬─────────────┬─────────────┬─────────────┐
+│ Categoría           │ Año 1       │ Año 2       │ Año 3       │
+├─────────────────────┼─────────────┼─────────────┼─────────────┤
+│ Recursos Humanos    │   $1.2M     │   $1.8M     │   $1.1M     │
+│ Herramientas/Lic.   │   $300K     │   $200K     │   $150K     │
+│ Consultoría Externa │   $400K     │   $250K     │   $100K     │
+│ Training/Certif.    │   $200K     │   $300K     │   $150K     │
+│ Infraestructura     │   $150K     │   $100K     │   $50K      │
+│ Contingencia (10%)  │   $225K     │   $265K     │   $155K     │
+├─────────────────────┼─────────────┼─────────────┼─────────────┤
+│ TOTAL ANUAL         │   $2.475M   │   $2.915M   │   $1.655M   │
+└─────────────────────┴─────────────┴─────────────┴─────────────┘
+
+ROI PROYECTADO:
+• Año 1: -$2.475M (Inversión)
+• Año 2: -$1.500M (Recuperación parcial)
+• Año 3: +$2.100M (ROI positivo)
+• Año 4: +$4.200M (ROI 4.2x)
+```
+
+#### **13.4.4 Gestión de Riesgos por Fase**
+
+| **Riesgo** | **Probabilidad** | **Impacto** | **Fase Crítica** | **Estrategia de Mitigación** |
+|------------|------------------|-------------|------------------|------------------------------|
+| **Resistencia al Cambio** | Alta | Alto | Fases 1-2 | Change management, comunicación, quick wins |
+| **Falta de Expertise** | Media | Alto | Todas | Consultoría externa, training intensivo |
+| **Budget Constraints** | Media | Alto | Fase 3 | Business case sólido, ROI demos |
+| **Technical Complexity** | Alta | Medio | Fases 2-3 | POCs, iteraciones cortas, rollback plans |
+| **Scope Creep** | Media | Medio | Todas | Project charter claro, change control |
+| **Resource Availability** | Alta | Medio | Fases 1-2 | Resource planning, backup resources |
+| **Legacy Integration** | Alta | Medio | Fases 1-2 | Technical spikes, integration testing |
+| **Compliance Issues** | Baja | Alto | Fase 4 | Legal review, compliance checkpoints |
+
+![Cronograma de Implementación](../diagrams/cronograma-gantt-final.png)
+*Figura 13.1: Cronograma Gantt de 36 meses con progreso en tiempo real y fases de implementación*
+
+![Cronograma de Implementación Detallado](../diagrams/cronograma-testing-tabla.png)
+*Figura 13.2: Cronograma detallado por actividades, recursos y dependencias*
+
+![Proceso de Testing Completo](../diagrams/flujo-proceso-testing-completo.png)
+*Figura 13.3: Flujo completo del proceso de testing integrado con CMMI + TMMi + DevOps*
 
 ---
 

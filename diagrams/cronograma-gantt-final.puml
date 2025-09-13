@@ -1,0 +1,87 @@
+@startgantt cronograma-gantt-final
+
+<style>
+ganttDiagram {
+  task {
+    BackGroundColor GreenYellow
+    LineColor Green 
+    unstarted {
+      BackGroundColor Fuchsia 
+      LineColor FireBrick
+    }
+    done {
+      BackGroundColor LightGreen
+      LineColor DarkGreen
+    }
+  }
+}
+</style>
+
+title Cronograma de Implementación Testing IBM - 36 Meses
+
+project starts the 1st of january 2025
+
+-- FASE 1: ESTABILIZACIÓN --
+[Assessment Inicial] requires 8 weeks
+[Gap Analysis CMMI] requires 6 weeks
+[Definición Procesos L2] requires 8 weeks
+[Setup Herramientas] requires 10 weeks
+[Training Foundation] requires 12 weeks
+[Proyecto Piloto] requires 8 weeks
+
+[Assessment Inicial] is 100% complete
+[Gap Analysis CMMI] is 100% complete
+[Definición Procesos L2] is 90% complete
+[Setup Herramientas] is 70% complete
+[Training Foundation] is 50% complete
+[Proyecto Piloto] is 30% complete
+
+[Gap Analysis CMMI] starts at [Assessment Inicial]'s end
+[Definición Procesos L2] starts at [Gap Analysis CMMI]'s end
+[Setup Herramientas] starts at [Definición Procesos L2]'s end
+[Training Foundation] starts at [Setup Herramientas]'s end
+[Proyecto Piloto] starts at [Training Foundation]'s end
+
+-- FASE 2: ESTANDARIZACIÓN --
+[Rollout Procesos L3] requires 12 weeks
+[Implementación TMMi L2] requires 12 weeks
+[Automatización Tests] requires 16 weeks
+[Centro Competencia] requires 16 weeks
+
+[Rollout Procesos L3] is 85% complete
+[Implementación TMMi L2] is 75% complete
+[Automatización Tests] is 60% complete
+[Centro Competencia] is 45% complete
+
+[Rollout Procesos L3] starts at [Proyecto Piloto]'s end
+[Implementación TMMi L2] starts at [Rollout Procesos L3]'s end
+[Automatización Tests] starts at [Implementación TMMi L2]'s end
+[Centro Competencia] starts at [Automatización Tests]'s end
+
+-- FASE 3: OPTIMIZACIÓN --
+[TMMi L3-L4] requires 24 weeks
+[DevSecOps Pipeline] requires 24 weeks
+[AI/ML en Testing] requires 24 weeks
+
+[TMMi L3-L4] is 40% complete
+[DevSecOps Pipeline] is 30% complete
+[AI/ML en Testing] is 15% complete
+
+[TMMi L3-L4] starts at [Centro Competencia]'s end
+[DevSecOps Pipeline] starts at [TMMi L3-L4]'s end
+[AI/ML en Testing] starts at [DevSecOps Pipeline]'s end
+
+-- FASE 4: MADURACIÓN --
+[CMMI L5 Preparation] requires 24 weeks
+[Innovation Lab] requires 24 weeks
+[Final Assessment] requires 8 weeks
+
+[CMMI L5 Preparation] is 0% complete
+[Innovation Lab] is 0% complete
+[Final Assessment] is 0% complete
+
+[CMMI L5 Preparation] starts at [AI/ML en Testing]'s end
+[Innovation Lab] starts at [CMMI L5 Preparation]'s end
+[Final Assessment] starts at [Innovation Lab]'s end
+
+@endgantt

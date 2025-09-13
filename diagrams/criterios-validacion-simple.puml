@@ -1,0 +1,80 @@
+@startgantt criterios-validacion-simple
+
+<style>
+ganttDiagram {
+  task {
+    BackGroundColor GreenYellow
+    LineColor Green 
+    unstarted {
+      BackGroundColor Fuchsia 
+      LineColor FireBrick
+    }
+    done {
+      BackGroundColor LightGreen
+      LineColor DarkGreen
+    }
+  }
+}
+</style>
+
+title **CRITERIOS DE VALIDACIÓN CMMI - ESTADO ACTUAL vs OBJETIVO IBM**
+
+project starts the 1st of january 2025
+
+-- **NIVEL 3 CMMI - DEFINIDO (ESTADO ACTUAL: COMPLETADO)** --
+[Desarrollo de Requisitos] requires 12 weeks
+[Solución Técnica] requires 12 weeks
+[Integración del Producto] requires 12 weeks
+[Verificación y Validación] requires 12 weeks
+[Gestión Integrada Proyectos] requires 12 weeks
+[Gestión de Riesgos] requires 12 weeks
+
+[Desarrollo de Requisitos] is 100% complete
+[Solución Técnica] is 100% complete
+[Integración del Producto] is 100% complete
+[Verificación y Validación] is 100% complete
+[Gestión Integrada Proyectos] is 100% complete
+[Gestión de Riesgos] is 100% complete
+
+-- **NIVEL 3 TMMi - DEFINIDO (ESTADO ACTUAL: COMPLETADO)** --
+[Organización de Pruebas] requires 10 weeks
+[Programa de Entrenamiento] requires 10 weeks
+[Ciclo de Vida de Pruebas] requires 10 weeks
+[Pruebas No Funcionales] requires 10 weeks
+
+[Organización de Pruebas] is 100% complete
+[Programa de Entrenamiento] is 100% complete
+[Ciclo de Vida de Pruebas] is 100% complete
+[Pruebas No Funcionales] is 100% complete
+
+-- **NIVEL 4 CMMI - CUANTITATIVAMENTE GESTIONADO (OBJETIVO 2026)** --
+[Gestión Cuantitativa Proyectos] requires 24 weeks
+[Rendimiento Organizacional] requires 30 weeks
+
+[Gestión Cuantitativa Proyectos] is 40% complete
+[Rendimiento Organizacional] is 35% complete
+
+[Gestión Cuantitativa Proyectos] starts at [Gestión de Riesgos]'s end
+[Rendimiento Organizacional] starts at [Gestión Cuantitativa Proyectos]'s end
+
+-- **NIVEL 4 TMMi - MEDIDO (OBJETIVO 2026)** --
+[Medición de Pruebas] requires 18 weeks
+[Evaluación Calidad Producto] requires 24 weeks
+
+[Medición de Pruebas] is 45% complete
+[Evaluación Calidad Producto] is 25% complete
+
+[Medición de Pruebas] starts at [Pruebas No Funcionales]'s end
+[Evaluación Calidad Producto] starts at [Medición de Pruebas]'s end
+
+-- **NIVEL 5 CMMI - OPTIMIZACIÓN (OBJETIVO 2027)** --
+[Innovación Organizacional] requires 36 weeks
+[Análisis Causal y Resolución] requires 30 weeks
+
+[Innovación Organizacional] is 0% complete
+[Análisis Causal y Resolución] is 0% complete
+
+[Innovación Organizacional] starts at [Rendimiento Organizacional]'s end
+[Análisis Causal y Resolución] starts at [Evaluación Calidad Producto]'s end
+
+@endgantt

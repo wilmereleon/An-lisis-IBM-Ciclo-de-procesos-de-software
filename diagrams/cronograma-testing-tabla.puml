@@ -1,0 +1,190 @@
+@startuml cronograma-testing-tabla
+!theme aws-orange
+
+title **CRONOGRAMA DE IMPLEMENTACIÓN TESTING IBM - 36 MESES**\n//Integración CMMI + TMMi + DevOps + Automatización//
+
+scale 0.8
+
+' Configuración de colores
+!define ESTABILIZACION #2E86AB
+!define ESTANDARIZACION #A23B72  
+!define OPTIMIZACION #F18F01
+!define MADURACION #4CAF50
+!define TESTING #00BCD4
+!define CONTINUO #9E9E9E
+
+rectangle "**CRONOGRAMA MAESTRO DE IMPLEMENTACIÓN**" {
+
+  rectangle "**AÑO 1 (2025)**" as AÑO1 {
+    
+    rectangle "**Q1-Q2: ESTABILIZACIÓN**" ESTABILIZACION {
+      rectangle "Meses 1-2" {
+        [Assessment Inicial\n8 semanas] as A1
+        [Gap Analysis CMMI\n6 semanas] as G1
+      }
+      
+      rectangle "Meses 3-4" {
+        [Definición Procesos L2\n8 semanas] as D1
+        [Setup Herramientas\n10 semanas] as H1
+      }
+      
+      rectangle "Meses 5-6" {
+        [Training Foundation\n12 semanas] as T1
+        [Proyecto Piloto\n8 semanas] as P1
+      }
+      
+      A1 -> G1
+      G1 -> D1
+      D1 -> H1
+      H1 -> T1
+      T1 -> P1
+    }
+    
+    rectangle "**Q3-Q4: ESTANDARIZACIÓN**" ESTANDARIZACION {
+      rectangle "Meses 7-9" {
+        [Rollout Procesos L3\n12 semanas] as R2
+        [Implementación TMMi L2\n12 semanas] as TM2
+      }
+      
+      rectangle "Meses 10-12" {
+        [Automatización Tests\n16 semanas] as AT2
+        [Centro Competencia\n16 semanas] as CC2
+        [Métricas Básicas\n16 semanas] as M2
+      }
+      
+      P1 -> R2
+      R2 -> TM2
+      TM2 -> AT2
+      R2 -> CC2
+      CC2 -> M2
+    }
+  }
+
+  rectangle "**AÑO 2 (2026)**" as AÑO2 {
+    
+    rectangle "**Q1-Q2: OPTIMIZACIÓN TEMPRANA**" OPTIMIZACION {
+      rectangle "Meses 13-15" {
+        [TMMi L3 Iniciación\n12 semanas] as TM3A
+        [DevSecOps Setup\n12 semanas] as DS3A
+      }
+      
+      rectangle "Meses 16-18" {
+        [Automatización Avanzada\n16 semanas] as AA3
+        [Pipeline CI/CD\n16 semanas] as CI3
+      }
+      
+      M2 -> TM3A
+      AT2 -> DS3A
+      TM3A -> AA3
+      DS3A -> CI3
+    }
+    
+    rectangle "**Q3-Q4: OPTIMIZACIÓN AVANZADA**" OPTIMIZACION {
+      rectangle "Meses 19-21" {
+        [TMMi L3-L4\n24 semanas] as TM3B
+        [AI/ML en Testing\n24 semanas] as AI3
+      }
+      
+      rectangle "Meses 22-24" {
+        [Métricas Predictivas\n24 semanas] as MP3
+        [Scaling Internacional\n24 semanas] as SI3
+      }
+      
+      AA3 -> TM3B
+      CI3 -> AI3
+      AI3 -> MP3
+      TM3B -> SI3
+    }
+  }
+
+  rectangle "**AÑO 3 (2027)**" as AÑO3 {
+    
+    rectangle "**Q1-Q2: MADURACIÓN**" MADURACION {
+      rectangle "Meses 25-27" {
+        [CMMI L5 Preparation\n23 semanas] as C5
+        [Innovation Lab\n24 semanas] as IL4
+      }
+      
+      rectangle "Meses 28-30" {
+        [Knowledge Management\n24 semanas] as KM4
+        [Optimización Final\n16 semanas] as OF4
+      }
+      
+      MP3 -> C5
+      SI3 -> IL4
+      C5 -> KM4
+      IL4 -> OF4
+    }
+    
+    rectangle "**Q3-Q4: SOSTENIBILIDAD**" MADURACION {
+      rectangle "Meses 31-33" {
+        [Sustainability Plan\n20 semanas] as SP4
+        [Excellence Center\n20 semanas] as EC4
+      }
+      
+      rectangle "Meses 34-36" {
+        [Final Assessment\n8 semanas] as FA4
+        [Handover & Closure\n8 semanas] as HC4
+      }
+      
+      KM4 -> SP4
+      OF4 -> EC4
+      SP4 -> FA4
+      EC4 -> HC4
+    }
+  }
+
+  rectangle "**PROCESOS DE TESTING INTEGRADOS**" TESTING {
+    
+    rectangle "**Testing Fase 1: Fundación**" {
+      [Planificación Testing Básica\n6 semanas]
+      [Diseño de Casos Manual\n8 semanas]
+      [Ejecución Manual\n12 semanas]
+    }
+    
+    rectangle "**Testing Fase 2: Automatización**" {
+      [Scripts de Automatización\n20 semanas]
+      [Pipeline de Ejecución\n16 semanas]
+      [Reporting Automático\n12 semanas]
+    }
+    
+    rectangle "**Testing Fase 3: Optimización**" {
+      [AI/ML Test Generation\n24 semanas]
+      [Predictive Analytics\n20 semanas]
+      [Self-Healing Tests\n16 semanas]
+    }
+    
+    rectangle "**Testing Fase 4: Excelencia**" {
+      [Continuous Testing\n20 semanas]
+      [Zero-Touch Deployment\n16 semanas]
+      [Innovation Testing\n12 semanas]
+    }
+  }
+
+  rectangle "**ACTIVIDADES CONTINUAS (36 Meses)**" CONTINUO {
+    [Monitoreo 24x7]
+    [Capacitación]
+    [Gestión Riesgos]
+    [Métricas & KPIs]
+    [Change Management]
+  }
+}
+
+' Tabla de hitos principales
+note bottom
+  **HITOS PRINCIPALES**
+  =====================================
+  • Mes 2: Assessment Completado
+  • Mes 6: Piloto en Producción
+  • Mes 12: CMMI L3 Certificado
+  • Mes 18: TMMi L3 Implementado
+  • Mes 24: AI/ML en Producción
+  • Mes 30: CMMI L4 Assessment
+  • Mes 36: CMMI L5 + Excellence Center
+  
+  **INVERSIÓN TOTAL: $4.05M**
+  **ROI PROYECTADO: 4.2x en Año 4**
+  **RECURSOS PICO: 85 FTEs (Año 2)**
+end note
+
+@enduml
