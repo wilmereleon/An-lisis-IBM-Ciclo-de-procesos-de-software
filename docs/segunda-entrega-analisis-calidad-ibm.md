@@ -95,7 +95,7 @@ Los modelos analizados incluyen:
 
 ### 2.2 Selección Estratégica Basada en Análisis Cuantitativo
 
-![Selección de Modelos Adecuados IBM](../diagrams/seleccion-modelos-adecuados-ibm.png)
+![Selección de Modelos Adecuados IBM](../diagrams/seleccion-estrategica-modelos-python.png)
 *Figura 2.1: Selección estratégica de modelos basada en criterios ponderados y análisis cuantitativo*
 
 **🏆 Estrategia de Selección Final:**
@@ -124,12 +124,12 @@ Los modelos analizados incluyen:
 
 #### 2.2.2 Métricas y Medición
 
-![Evaluación Cuantitativa de Modelos](../diagrams/evaluacion-cuantitativa-modelos.png)
+![Evaluación Cuantitativa de Modelos](../diagrams/evaluacion-cuantitativa-python.png)
 *Figura 2.2: Evaluación cuantitativa basada en criterios ponderados*
 
 ### 2.3 Comparativo de Pros y Contras
 
-![Comparativo Pros y Contras](../diagrams/comparativo-pros-contras-modelos.png)
+![Comparativo Pros y Contras](../diagrams/pros-contras-modelos-python.png)
 *Figura 2.3: Análisis de ventajas y desventajas por modelo*
 
 ---
@@ -141,7 +141,7 @@ Los modelos analizados incluyen:
 ![Matriz DOFA IBM](../diagrams/matriz-dofa-ibm.png)
 *Figura 3.1: Matriz DOFA con estrategias específicas para IBM*
 
-![Análisis DOFA IBM Detallado](../diagrams/analisis-dofa-ibm-detallado.png)
+![Análisis DOFA IBM Detallado](../diagrams/dofa-detallado-cuantificado-python.png)
 *Figura 3.2: Análisis DOFA detallado con factores específicos cuantificados*
 
 ### 3.2 Fortalezas y Debilidades Identificadas
@@ -200,10 +200,10 @@ Los modelos analizados incluyen:
 
 ### 4.1 Key Process Areas (KPAs) Aplicables
 
-![Criterios de Validación CMMI](../diagrams/criterios-validacion-simple.png)
-*Figura 4.1: Estado actual vs. objetivo de KPAs CMMI para IBM - Cronograma Gantt*
+![Criterios de Validación CMMI Python](../diagrams/criterios-validacion-cmmi-python.png)
+*Figura 4.1: Estado actual vs. objetivo de KPAs CMMI para IBM - Análisis Python de alta calidad*
 
-![Criterios de Validación Detallado](../diagrams/criterios-validacion-estado-ibm.png)
+![Criterios de Validación Detallado](../diagrams/criterios-validacion-detallado-python.png)
 *Figura 4.2: Estado detallado de implementación por niveles de madurez CMMI/TMMi*
 
 ### 4.2 Evaluación Detallada por Niveles de Madurez
@@ -346,8 +346,8 @@ Los modelos analizados incluyen:
 
 ### 7.1 Análisis Multicriterio
 
-![Análisis Multicriterio](../diagrams/analisis-multicriterio-seleccion.png)
-*Figura 7.1: Evaluación ponderada de modelos con criterios específicos para IBM*
+![Análisis Multicriterio Python](../diagrams/analisis-multicriterio-python.png)
+*Figura 7.1: Evaluación ponderada de modelos con criterios específicos para IBM - Análisis Python*
 
 ### 7.2 Modelo Híbrido Recomendado: CMMI + TMMi
 
@@ -427,7 +427,7 @@ Los modelos analizados incluyen:
 
 ### 10.1 Organigrama de Calidad
 
-![Organigrama de Calidad IBM](../diagrams/diagramas_entrega_2/organigrama-calidad-ibm.png)
+![Organigrama de Calidad IBM Python](../diagrams/organigrama-calidad-ibm-python.png)
 *Figura 10.1: Estructura organizacional de calidad con ~180 FTEs distribuidos en 5 niveles jerárquicos*
 
 #### 10.1.1 Descripción de Niveles Jerárquicos
@@ -449,7 +449,7 @@ Los modelos analizados incluyen:
 
 ### 10.2 Matriz de Roles y Responsabilidades
 
-![Roles y Responsabilidades por Fase](../diagrams/diagramas_entrega_2/roles-responsabilidades-fases.png)
+![Matriz RACI Python](../diagrams/matriz-raci-python.png)
 *Figura 10.2: Matriz RACI detallada por fase del ciclo de vida con responsabilidades específicas*
 
 #### 10.2.1 Definición de Roles Clave
