@@ -627,54 +627,1143 @@ Define las frecuencias de revisión y reportes:
 
 ### 13.2 Formatos Estándar de Documentación
 
-#### 13.2.1 Plantillas de Pruebas
+#### 13.2.1 Plantillas de Pruebas Basadas en ISO/IEC 29119
 
-**1. Plantilla de Plan de Pruebas:**
+La documentación de pruebas en IBM sigue los estándares internacionales ISO/IEC 29119 que define cuatro partes fundamentales:
+- **Parte 1**: Conceptos y Vocabulario (BS 7925-1)
+- **Parte 2**: Procesos Organizacionales, de Proyecto y Niveles de Prueba (BS 7925-2, IEEE 1008)
+- **Parte 3**: Documentación (IEEE 829)
+- **Parte 4**: Técnicas de Pruebas (BS 7925-2)
+
+**1. Plantilla de Plan de Pruebas (Nivel Proyecto):**
 ```
 1. RESUMEN EJECUTIVO
    - Objetivos de las pruebas
    - Alcance y limitaciones
    - Criterios de entrada/salida
+   - Resumen de riesgos críticos
    
 2. ESTRATEGIA DE PRUEBAS
-   - Tipos de pruebas a realizar
-   - Niveles de pruebas
-   - Ambientes requeridos
+   - Tipos de pruebas a realizar (funcional, no funcional, regresión)
+   - Niveles de pruebas (unitaria, integración, sistema, aceptación)
+   - Ambientes requeridos y configuraciones
+   - Criterios de cobertura mínima (80% cobertura de código)
    
 3. RECURSOS Y CRONOGRAMA
-   - Asignaciones de equipo
-   - Cronograma y entregables
-   - Dependencias críticas
+   - Asignaciones de equipo y roles RACI
+   - Cronograma detallado con entregables
+   - Dependencias críticas y ruta crítica
+   - Estimaciones de esfuerzo por actividad
    
 4. RIESGOS Y MITIGACIÓN
-   - Evaluación de riesgos
-   - Planes de contingencia
-   - Procedimientos de escalamiento
+   - Evaluación de riesgos (técnicos, cronograma, recursos)
+   - Planes de contingencia específicos
+   - Procedimientos de escalamiento por severidad
+   - Métricas de control y seguimiento
+   
+5. GESTIÓN DE CONFIGURACIÓN
+   - Control de versiones de casos de prueba
+   - Gestión de datos de prueba
+   - Ambientes y sus configuraciones
+   - Trazabilidad requisitos-pruebas
 ```
 
-**2. Plantilla de Casos de Prueba:**
+**2. Plantilla Extendida de Casos de Prueba (IEEE 829):**
 ```
-ID_CP: [Identificador único]
-TÍTULO: [Nombre descriptivo del caso de prueba]
-PRIORIDAD: [Alta/Media/Baja]
-PRERREQUISITOS: [Requisitos de configuración]
-PASOS DE PRUEBA: [Instrucciones paso a paso]
-RESULTADOS ESPERADOS: [Resultados esperados]
-DATOS DE PRUEBA: [Conjuntos de datos requeridos]
-AUTOMATIZACIÓN: [Sí/No + Marco de trabajo]
+INFORMACIÓN GENERAL:
+├── ID_CP: [Formato: PRY_MOD_FUN_###]
+├── TÍTULO: [Nombre descriptivo y único]
+├── AUTOR: [Responsable del diseño]
+├── FECHA_CREACIÓN: [dd/mm/yyyy]
+├── VERSIÓN: [Control de cambios]
+├── ESTADO: [Borrador/Revisión/Aprobado/Ejecutado]
+
+CLASIFICACIÓN:
+├── PRIORIDAD: [Crítica/Alta/Media/Baja]
+├── SEVERIDAD: [Bloqueante/Mayor/Menor/Trivial]
+├── TIPO_PRUEBA: [Funcional/No_Funcional/Regresión/Smoke]
+├── NIVEL_PRUEBA: [Unitaria/Integración/Sistema/Aceptación]
+├── TÉCNICA: [Caja_Negra/Caja_Blanca/Caja_Gris]
+
+TRAZABILIDAD:
+├── REQUISITO_ID: [Referencia a requisito específico]
+├── HISTORIA_USUARIO: [US_ID relacionada]
+├── DEFECTO_ORIGEN: [Si aplica, ID del defecto]
+
+CONDICIONES DE PRUEBA:
+├── PRERREQUISITOS: [Estado del sistema requerido]
+├── DATOS_PRUEBA: [Conjunto específico de datos]
+├── AMBIENTE: [Configuración del entorno]
+├── HERRAMIENTAS: [Software/hardware necesario]
+
+DISEÑO DE PRUEBA:
+├── PASOS_DETALLADOS:
+│   ├── Paso 1: [Acción específica]
+│   ├── Paso 2: [Verificación intermedia]
+│   └── Paso N: [Resultado esperado]
+├── RESULTADOS_ESPERADOS: [Por cada paso]
+├── CRITERIOS_APROBACIÓN: [Condiciones de éxito]
+
+AUTOMATIZACIÓN:
+├── AUTOMATIZABLE: [Sí/No + Justificación]
+├── FRAMEWORK: [Selenium/Cypress/REST_Assured]
+├── SCRIPT_ASOCIADO: [Ruta del script automatizado]
+├── FRECUENCIA_EJECUCIÓN: [Manual/CI/CD/Nocturna]
+
+POST-EJECUCIÓN:
+├── RESULTADO_ACTUAL: [Aprobado/Fallido/Bloqueado]
+├── DEFECTOS_ENCONTRADOS: [Lista de IDs]
+├── TIEMPO_EJECUCIÓN: [Duración real]
+├── OBSERVACIONES: [Notas del ejecutor]
 ```
 
-**3. Plantilla de Reporte de Defectos:**
+**2.1. Plantilla Funcional de Casos de Prueba (Basada en Formato de Imagen):**
 ```
-ID_DEFECTO: [Generado automáticamente]
-RESUMEN: [Descripción de una línea]
-SEVERIDAD: [Crítica/Alta/Media/Baja]
-PRIORIDAD: [P1/P2/P3/P4]
-AMBIENTE: [Detalles del ambiente de prueba]
-PASOS PARA REPRODUCIR: [Pasos detallados]
-RESULTADO ACTUAL: [Lo que ocurrió]
-RESULTADO ESPERADO: [Lo que debería ocurrir]
-ADJUNTOS: [Capturas de pantalla, registros]
+┌─────────────────────────────────────────────────────────────────────┐
+│                         CASO DE PRUEBA                              │
+├─────────────────────────────────────────────────────────────────────┤
+│ INFORMACIÓN BÁSICA                                                  │
+├─────────────────────────────────────────────────────────────────────┤
+│ Nombre:          [Descripción específica del caso de prueba]        │
+│ Autor:           [Federico Toledo / Nombre del diseñador]           │
+│ Fecha:           [09/01/2014 / dd/mm/yyyy]                          │
+│ Descripción:     [Un usuario debe registrarse para hacer uso del    │
+│                  sistema, y para ello debe hacer "login" con su     │
+│                  usuario y password. Si no cuenta con él, debe      │
+│                  registrarse en el sistema creando así su usuario]  │
+├─────────────────────────────────────────────────────────────────────┤
+│ ACTORES DEL SISTEMA                                                 │
+├─────────────────────────────────────────────────────────────────────┤
+│ Usuario a través de la interfaz web                                │
+├─────────────────────────────────────────────────────────────────────┤
+│ PRE-CONDICIONES                                                     │
+├─────────────────────────────────────────────────────────────────────┤
+│ El usuario debe estar registrado en el sistema                     │
+├─────────────────────────────────────────────────────────────────────┤
+│ FLUJO NORMAL                                                        │
+├─────────────────────────────────────────────────────────────────────┤
+│ 1. El usuario accede al sistema con la URL principal               │
+│ 2. El sistema solicita credenciales                                │
+│ 3. El usuario ingresa proporcionando usuario y password            │
+│ 4. El sistema valida las credenciales del usuario                  │
+│ 5. El sistema da la bienvenida                                     │
+├─────────────────────────────────────────────────────────────────────┤
+│ FLUJO ALTERNATIVO                                                   │
+├─────────────────────────────────────────────────────────────────────┤
+│ 3. El usuario no recuerda su password por lo que solicita que se   │
+│    le envíe por e-mail                                             │
+│ 4. El sistema solicita el e-mail y envía una clave temporal        │
+├─────────────────────────────────────────────────────────────────────┤
+│ FLUJO ALTERNATIVO                                                   │
+├─────────────────────────────────────────────────────────────────────┤
+│ 3. El usuario no está registrado en el sistema por lo que solicita │
+│    crear una cuenta                                                 │
+│ 4. El sistema solicita los datos necesarios para crear la cuenta   │
+│ 5. El usuario ingresa los datos y confirma                         │
+│ 6. El sistema crea la cuenta del usuario                           │
+├─────────────────────────────────────────────────────────────────────┤
+│ EXCEPCIONES                                                         │
+├─────────────────────────────────────────────────────────────────────┤
+│ E1. Usuario y password incorrectos: Si esto sucede tres veces      │
+│     consecutivas la cuenta del usuario se bloquea por seguridad    │
+│ E2. [E4]: El e-mail proporcionado no está registrado en el sistema.│
+│     El sistema notifica el error                                    │
+├─────────────────────────────────────────────────────────────────────┤
+│ POST-CONDICIONES                                                    │
+├─────────────────────────────────────────────────────────────────────┤
+│ El usuario accede al sistema y se registra su acceso en la tabla   │
+│ de registro de actividad                                            │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                    TABLA DE EJECUCIÓN                               │
+├─────────────────────────────────────────────────────────────────────┤
+│ ID: [mt01] │ Target Description: [Ingreso a banca virtual]          │
+│ Type: [     ] │ Priority: [media]                                   │
+│ Pre-Conditions: [Creación de cuenta                                │
+│                  2)Ingreso banca virtual]                          │
+├──────┬─────────────────────────┬──────┬──────┬─────────────────────┤
+│      │        Steps            │ Pass │ Fail │    Bug report ID    │
+│  #   │    Expected result      │      │      │                     │
+├──────┼─────────────────────────┼──────┼──────┼─────────────────────┤
+│  1   │ Acceso a banca digital  │ se visualiza correctamente       │
+│      │ Ingresar datos solicitados│    │      │                     │
+│      │ (tipo:nombre,documento, │      │      │                     │
+│      │ contraseña)            │      │      │                     │
+├──────┼─────────────────────────┼──────┼──────┼─────────────────────┤
+│  2   │ Seleccionar opción ingreso│ Acceso correcto a la Banca    │
+│      │                         │ virtual                         │
+├──────┼─────────────────────────┼──────┼──────┼─────────────────────┤
+│  3   │                         │                                 │
+├──────┼─────────────────────────┼──────┼──────┼─────────────────────┤
+│  4   │                         │                                 │
+├──────┼─────────────────────────┼──────┼──────┼─────────────────────┤
+│  5   │                         │                                 │
+├──────┼─────────────────────────┼──────┼──────┼─────────────────────┤
+│  6   │                         │                                 │
+├──────┼─────────────────────────┼──────┼──────┼─────────────────────┤
+│ Executor: [Mercurio Avellaneda Vargas] │ Date: [        ] │ kt-23 │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**2.2. Protocolos de Evaluación por Técnica de Prueba:**
+
+**A. PROTOCOLO PARA PRUEBAS DE CAJA NEGRA (Black Box Testing):**
+```
+ENFOQUE_CAJA_NEGRA:
+├── OBJETIVO: Validar funcionalidad sin conocimiento interno del código
+├── TÉCNICAS_APLICABLES:
+│   ├── Partición de Equivalencia
+│   ├── Análisis de Valores Límite
+│   ├── Pruebas de Estado-Transición
+│   ├── Tablas de Decisión
+│   └── Casos de Uso
+
+CRITERIOS_EVALUACIÓN_CAJA_NEGRA:
+├── COBERTURA_REQUISITOS: [100% requisitos funcionales probados]
+├── ESCENARIOS_USUARIO: [Todos los flujos de usuario cubiertos]
+├── DATOS_ENTRADA: [Valores válidos, inválidos y límite probados]
+├── ESTADOS_SISTEMA: [Todas las transiciones validadas]
+├── INTERFAZ_USUARIO: [Navegación y usabilidad verificadas]
+
+DISEÑO_CASOS_CAJA_NEGRA:
+├── ENTRADA_VÁLIDA: [Datos dentro del dominio esperado]
+├── ENTRADA_INVÁLIDA: [Datos fuera del dominio, casos negativos]
+├── VALORES_LÍMITE: [Valores mínimos, máximos y justo en los bordes]
+├── COMBINACIONES: [Diferentes combinaciones de entradas]
+├── FLUJOS_ALTERNATIVOS: [Caminos alternativos de ejecución]
+
+EJEMPLO_CASO_CAJA_NEGRA (Login Bancario):
+├── ENTRADA_VÁLIDA: Usuario="juan123", Password="Pass123!"
+├── ENTRADA_INVÁLIDA: Usuario="", Password="123"
+├── VALORES_LÍMITE: Password de 8 caracteres (mínimo), 20 caracteres (máximo)
+├── CASOS_NEGATIVOS: Usuario inexistente, password incorrecto
+├── FLUJOS_ALTERNATIVOS: Recuperación de password, creación de cuenta
+```
+
+**B. PROTOCOLO PARA PRUEBAS DE CAJA BLANCA (White Box Testing):**
+```
+ENFOQUE_CAJA_BLANCA:
+├── OBJETIVO: Validar lógica interna y estructura del código
+├── TÉCNICAS_APLICABLES:
+│   ├── Cobertura de Sentencias (Statement Coverage)
+│   ├── Cobertura de Ramas (Branch Coverage)
+│   ├── Cobertura de Condiciones (Condition Coverage)
+│   ├── Cobertura de Caminos (Path Coverage)
+│   └── Cobertura de Funciones (Function Coverage)
+
+CRITERIOS_EVALUACIÓN_CAJA_BLANCA:
+├── COBERTURA_CÓDIGO: [Mínimo 80% líneas de código ejecutadas]
+├── COBERTURA_RAMAS: [Mínimo 70% de todas las ramas condicionales]
+├── COBERTURA_CONDICIONES: [Todas las condiciones booleanas evaluadas]
+├── COMPLEJIDAD_CICLOMÁTICA: [Métodos con complejidad > 10 probados]
+├── RUTAS_CRÍTICAS: [Caminos de mayor impacto cubiertos]
+
+DISEÑO_CASOS_CAJA_BLANCA:
+├── SENTENCIAS: [Cada línea de código ejecutada al menos una vez]
+├── DECISIONES: [Cada rama if/else, switch/case ejercitada]
+├── CONDICIONES: [Cada condición booleana verdadera y falsa]
+├── BUCLES: [Iteraciones 0, 1, n veces probadas]
+├── EXCEPCIONES: [Manejo de errores y casos excepcionales]
+
+EJEMPLO_CASO_CAJA_BLANCA (Validación Login):
+├── RAMA_TRUE: if (usuario.existe()) → ejecutar autenticación
+├── RAMA_FALSE: if (usuario.existe()) → retornar error "usuario no existe"
+├── CONDICIÓN_AND: if (usuario.activo() && password.válido())
+├── BUCLE_FOR: for (intentos < 3) → probar 0, 1, 2, 3 iteraciones
+├── EXCEPCIÓN: try-catch para SQLException en consulta BD
+```
+
+**C. PROTOCOLO PARA PRUEBAS UNITARIAS (Unit Testing):**
+```
+PROTOCOLO_UNITARIAS:
+├── ALCANCE: Componentes individuales (métodos, funciones, clases)
+├── FRAMEWORK: [JUnit, NUnit, pytest, Jest según tecnología]
+├── PATRÓN: AAA (Arrange-Act-Assert)
+├── AISLAMIENTO: Uso de mocks y stubs para dependencias
+├── AUTOMATIZACIÓN: 100% automatizadas en pipeline CI/CD
+
+CRITERIOS_UNITARIAS:
+├── COBERTURA_MÍNIMA: [85% líneas de código]
+├── TIEMPO_EJECUCIÓN: [< 1 segundo por test]
+├── INDEPENDENCIA: [Tests no dependen entre sí]
+├── REPETIBILIDAD: [Resultados consistentes]
+├── NAMING: [Nombres descriptivos y claros]
+
+ESTRUCTURA_TEST_UNITARIO:
+├── ARRANGE: [Configurar datos y mocks necesarios]
+├── ACT: [Ejecutar el método bajo prueba]
+├── ASSERT: [Verificar resultado esperado]
+├── CLEANUP: [Limpiar recursos si es necesario]
+
+EJEMPLO_TEST_UNITARIO:
+```java
+@Test
+public void testValidarLogin_UsuarioValido_RetornaTrue() {
+    // Arrange
+    Usuario usuario = new Usuario("juan123", "Pass123!");
+    LoginService service = new LoginService();
+    
+    // Act
+    boolean resultado = service.validarLogin(usuario);
+    
+    // Assert
+    assertTrue(resultado);
+    verify(auditService).registrarAcceso(usuario);
+}
+```
+```
+
+**D. PROTOCOLO PARA PRUEBAS DE INTEGRACIÓN (Integration Testing):**
+```
+PROTOCOLO_INTEGRACIÓN:
+├── ENFOQUE: Big Bang, Top-Down, Bottom-Up, Sandwich
+├── ALCANCE: Interfaces entre componentes/módulos/servicios
+├── TIPOS: Integración de módulos, APIs, bases de datos, servicios externos
+├── AMBIENTE: Ambiente dedicado con datos de prueba controlados
+
+CRITERIOS_INTEGRACIÓN:
+├── INTERFACES_CUBIERTAS: [100% interfaces entre módulos]
+├── FLUJOS_DATOS: [Todos los flujos de datos validados]
+├── PROTOCOLOS: [Comunicación entre servicios verificada]
+├── CONTRATOS_API: [Esquemas de request/response validados]
+├── TRANSACCIONES: [Rollback y commits distribuidos probados]
+
+TIPOS_PRUEBAS_INTEGRACIÓN:
+├── INTEGRACIÓN_MÓDULOS: [Componentes internos de la aplicación]
+├── INTEGRACIÓN_API: [Servicios REST/SOAP entre sistemas]
+├── INTEGRACIÓN_BD: [Operaciones CRUD y transacciones]
+├── INTEGRACIÓN_EXTERNA: [Servicios terceros y partners]
+├── INTEGRACIÓN_UI: [Frontend con backend]
+
+EJEMPLO_TEST_INTEGRACIÓN:
+├── MÓDULOS: LoginController + UserService + DatabaseDAO
+├── FLUJO: HTTP Request → Controller → Service → DAO → Database
+├── VALIDACIONES: Response HTTP 200, datos persistidos, logs generados
+├── DATOS: Usuario test con permisos específicos
+├── CLEANUP: Rollback de transacciones test
+```
+
+**E. PROTOCOLO PARA PRUEBAS DE SISTEMA (System Testing):**
+```
+PROTOCOLO_SISTEMA:
+├── ALCANCE: Sistema completo en ambiente production-like
+├── PERSPECTIVA: End-to-end desde perspectiva del usuario final
+├── TIPOS: Funcional, rendimiento, seguridad, usabilidad, compatibilidad
+├── AMBIENTE: Réplica exacta de producción con datos reales anonimizados
+
+CRITERIOS_SISTEMA:
+├── REQUISITOS_FUNCIONALES: [100% casos de uso implementados]
+├── REQUISITOS_NO_FUNCIONALES: [SLAs de rendimiento cumplidos]
+├── FLUJOS_BUSINESS: [Procesos de negocio end-to-end validados]
+├── INTEGRACIÓN_COMPLETA: [Todos los sistemas externos conectados]
+├── SCENARIOS_REALES: [Casos de uso reales del cliente]
+
+CATEGORÍAS_PRUEBAS_SISTEMA:
+├── FUNCIONALES: [Casos de uso completos del negocio]
+├── RENDIMIENTO: [Carga, estrés, volumen, picos]
+├── SEGURIDAD: [Autenticación, autorización, vulnerabilidades]
+├── USABILIDAD: [Navegación, accesibilidad, experiencia usuario]
+├── COMPATIBILIDAD: [Browsers, OS, dispositivos móviles]
+├── RECUPERACIÓN: [Backup, restore, disaster recovery]
+
+EJEMPLO_FLUJO_SISTEMA (Banca Online):
+├── LOGIN: Autenticación multi-factor
+├── NAVEGACIÓN: Consulta saldos y movimientos
+├── TRANSACCIÓN: Transferencia entre cuentas
+├── NOTIFICACIÓN: Email y SMS confirmación
+├── AUDITORÍA: Registro completo en logs
+├── LOGOUT: Cierre seguro de sesión
+```
+
+**F. PROTOCOLO PARA PRUEBAS DE ACEPTACIÓN (Acceptance Testing):**
+```
+PROTOCOLO_ACEPTACIÓN:
+├── PROPÓSITO: Validar que el sistema cumple necesidades del negocio
+├── PARTICIPANTES: Product Owner, usuarios finales, stakeholders
+├── CRITERIOS: Acceptance criteria definidos en user stories
+├── AMBIENTE: Production o staging environment
+├── DATOS: Datos reales (producción) o representativos
+
+TIPOS_ACEPTACIÓN:
+├── UAT (User Acceptance Testing): [Usuarios finales]
+├── BAT (Business Acceptance Testing): [Stakeholders negocio]
+├── AAT (Alpha Acceptance Testing): [Testing interno]
+├── CAT (Customer Acceptance Testing): [Cliente final]
+
+CRITERIOS_ACEPTACIÓN:
+├── USER_STORIES: [100% acceptance criteria cumplidos]
+├── BUSINESS_RULES: [Reglas de negocio implementadas]
+├── USABILIDAD: [Interfaz intuitiva y eficiente]
+├── PERFORMANCE: [Tiempos de respuesta aceptables]
+├── DATOS: [Migración y integridad de datos validada]
+
+PROCESO_ACEPTACIÓN:
+├── PLANIFICACIÓN: [Definir scenarios con business]
+├── PREPARACIÓN: [Ambiente y datos preparados]
+├── EJECUCIÓN: [Usuarios ejecutan scenarios reales]
+├── DOCUMENTACIÓN: [Issues y feedback capturados]
+├── SIGN_OFF: [Aprobación formal para go-live]
+```
+```
+IDENTIFICACIÓN:
+├── ID_DEFECTO: [Generado automáticamente: DEF_YYYY_####]
+├── PROYECTO: [Código del proyecto]
+├── VERSIÓN_SOFTWARE: [Build/release afectada]
+├── FECHA_REPORTE: [Timestamp completo]
+├── REPORTADO_POR: [Tester responsable]
+
+CLASIFICACIÓN:
+├── TIPO_DEFECTO: [Funcional/Rendimiento/Usabilidad/Seguridad]
+├── SEVERIDAD: [S1_Crítica/S2_Alta/S3_Media/S4_Baja]
+├── PRIORIDAD: [P1_Inmediata/P2_Alta/P3_Media/P4_Baja]
+├── PROBABILIDAD: [Siempre/Frecuente/Ocasional/Rara]
+
+DESCRIPCIÓN TÉCNICA:
+├── RESUMEN: [Una línea descriptiva clara]
+├── DESCRIPCIÓN_DETALLADA: [Comportamiento observado]
+├── MÓDULO_AFECTADO: [Componente específico]
+├── FUNCIONALIDAD: [Feature o proceso impactado]
+
+REPRODUCIBILIDAD:
+├── AMBIENTE_PRUEBA: [OS, browser, versión]
+├── DATOS_UTILIZADOS: [Dataset específico]
+├── PASOS_REPRODUCIR:
+│   ├── Paso 1: [Acción precisa]
+│   ├── Paso 2: [Condición específica]
+│   └── Paso N: [Punto de fallo]
+├── FRECUENCIA: [% de reproducibilidad]
+
+EVIDENCIAS:
+├── CAPTURAS_PANTALLA: [Archivos adjuntos]
+├── LOGS_SISTEMA: [Registros relevantes]
+├── VIDEOS: [Si aplica, grabación del error]
+├── DATOS_ENTRADA: [Inputs que causan el fallo]
+
+IMPACTO Y ANÁLISIS:
+├── RESULTADO_ESPERADO: [Comportamiento correcto]
+├── RESULTADO_ACTUAL: [Lo que realmente ocurre]
+├── IMPACTO_NEGOCIO: [Efecto en usuarios/procesos]
+├── WORKAROUND: [Solución temporal disponible]
+
+SEGUIMIENTO:
+├── ASIGNADO_A: [Desarrollador responsable]
+├── ESTADO: [Nuevo/Asignado/En_Progreso/Resuelto/Cerrado]
+├── RESOLUCIÓN: [Fijo/No_es_Defecto/Duplicado/No_Reproducible]
+├── FECHA_RESOLUCIÓN: [Cuando se cierra]
+├── VERIFICACIÓN: [Tester que valida la corrección]
+```
+
+#### 13.2.2 Plantillas de Documentación de Suites de Pruebas
+
+**Definición de Suite de Pruebas:**
+Suite de Prueba es un conjunto de casos de prueba que tienen en común el hecho de que se refieren a un solo módulo, funcionalidad, prioridad o tipo de prueba.
+
+**4. Plantilla de Suite de Pruebas Maestra:**
+```
+INFORMACIÓN DE SUITE:
+├── ID_SUITE: [Identificador único: SUI_PROYECTO_MODULO]
+├── NOMBRE: [Descriptivo del conjunto]
+├── TIPO_SUITE: [Ver taxonomía de suites especializada]
+├── PROPÓSITO: [Objetivo específico de la suite]
+├── ALCANCE: [Funcionalidades cubiertas]
+├── RESPONSABLE: [Test Lead/QA Manager]
+
+COMPOSICIÓN:
+├── CASOS_INCLUIDOS: [Lista de IDs de casos de prueba]
+├── TOTAL_CASOS: [Cantidad numérica]
+├── DISTRIBUCIÓN_PRIORIDAD:
+│   ├── Críticos: [Número y %]
+│   ├── Altos: [Número y %]
+│   ├── Medios: [Número y %]
+│   └── Bajos: [Número y %]
+
+CRITERIOS_EJECUCIÓN:
+├── CONDICIONES_ENTRADA: [Prerrequisitos de la suite]
+├── ORDEN_EJECUCIÓN: [Secuencial/Paralelo/Específico]
+├── DEPENDENCIAS: [Entre casos de la suite]
+├── TIEMPO_ESTIMADO: [Duración total estimada]
+
+AUTOMATIZACIÓN:
+├── NIVEL_AUTOMATIZACIÓN: [% de casos automatizados]
+├── HERRAMIENTAS: [Framework y tecnologías]
+├── CONFIGURACIÓN_CI_CD: [Pipeline de ejecución]
+├── REPORTES_AUTOMÁTICOS: [Dashboard y notificaciones]
+```
+
+**A. Taxonomía de Suites de Pruebas Especializadas:**
+
+```
+TEST SUITE (Suite Principal)
+│
+├── FUNCTIONAL TEST CASES SUITE (Suite de Casos Funcionales)
+│   ├── Propósito: Validar funcionalidades core del sistema
+│   ├── Criterios: Casos de requisitos funcionales
+│   ├── Ejecución: Post-desarrollo, pre-release
+│   └── Automatización: 70-80% automatizable
+│
+├── CUSTOMER SPECIFIC TEST CASE SUITE (Suite Específica del Cliente)
+│   ├── Propósito: Validar requisitos específicos del cliente
+│   ├── Criterios: User stories y acceptance criteria
+│   ├── Ejecución: Durante UAT (User Acceptance Testing)
+│   └── Automatización: 50-60% automatizable
+│
+├── BUILD RELEASE SANITY TEST CASE SUITE (Suite de Pruebas de Sanidad)
+│   ├── Propósito: Verificar estabilidad básica del build
+│   ├── Criterios: Smoke tests críticos
+│   ├── Ejecución: Cada nueva construcción (CI/CD)
+│   └── Automatización: 95-100% automatizada
+│
+├── DEVELOPMENT PHASE TEST CASE SUITE (Suite de Fase de Desarrollo)
+│   ├── Propósito: Pruebas durante desarrollo activo
+│   ├── Criterios: Unit tests e integration tests
+│   ├── Ejecución: Continua durante desarrollo
+│   └── Automatización: 90-95% automatizada
+│
+└── QA PHASE TEST CASE SUITE (Suite de Fase QA)
+    ├── Propósito: Verificación completa pre-producción
+    ├── Criterios: System testing y regression testing
+    ├── Ejecución: Fase final antes de release
+    └── Automatización: 80-85% automatizada
+```
+
+**B. Plantillas Específicas por Tipo de Suite:**
+
+**B.1. Suite de Casos Funcionales (Functional Test Cases Suite):**
+```
+CONFIGURACIÓN_FUNCIONAL:
+├── MÓDULOS_CUBIERTOS: [Lista de funcionalidades]
+├── ESCENARIOS_PRINCIPALES: [Happy paths]
+├── ESCENARIOS_ALTERNATIVOS: [Edge cases]
+├── VALIDACIONES_NEGOCIO: [Business rules]
+├── INTERFACES_USUARIO: [UI/UX components]
+
+CRITERIOS_FUNCIONALES:
+├── COBERTURA_REQUISITOS: [% requisitos cubiertos]
+├── FLUJOS_NEGOCIO: [End-to-end workflows]
+├── INTEGRACIONES: [APIs y servicios externos]
+├── DATOS_MAESTROS: [Configuraciones core]
+
+MÉTRICAS_FUNCIONALES:
+├── CASOS_APROBADOS: [Funcionalidades working]
+├── CASOS_FALLIDOS: [Features con defectos]
+├── COBERTURA_CÓDIGO: [% código ejecutado]
+├── DENSIDAD_DEFECTOS: [Bugs por funcionalidad]
+```
+
+**B.2. Suite Específica del Cliente (Customer Specific Test Case Suite):**
+```
+CONFIGURACIÓN_CLIENTE:
+├── CLIENTE_OBJETIVO: [Nombre/perfil del cliente]
+├── REQUISITOS_ESPECÍFICOS: [Custom requirements]
+├── CONFIGURACIONES_PERSONALIZADAS: [Client-specific config]
+├── INTEGRACIONES_TERCEROS: [Client systems]
+├── DATOS_CLIENTE: [Specific datasets]
+
+CRITERIOS_ACEPTACIÓN:
+├── USER_STORIES: [Lista de historias de usuario]
+├── ACCEPTANCE_CRITERIA: [Criterios de aceptación]
+├── BUSINESS_SCENARIOS: [Casos de negocio reales]
+├── PERFORMANCE_REQUIREMENTS: [SLAs específicos]
+
+VALIDACIÓN_UAT:
+├── USUARIOS_FINALES: [Stakeholders clave]
+├── AMBIENTES_CLIENTE: [Réplica de producción]
+├── DATOS_REALES: [Production-like data]
+├── SIGN_OFF_CRITERIA: [Criterios de aprobación]
+```
+
+**B.3. Suite de Pruebas de Sanidad (Build Release Sanity Test Case Suite):**
+```
+CONFIGURACIÓN_SANIDAD:
+├── SMOKE_TESTS: [Funcionalidades críticas básicas]
+├── HEALTH_CHECKS: [Servicios y conectividad]
+├── DEPLOYMENT_VALIDATION: [Verificación de despliegue]
+├── CONFIGURATION_TESTS: [Configuraciones esenciales]
+├── INTEGRATION_POINTS: [APIs críticas]
+
+CRITERIOS_SANIDAD:
+├── TIEMPO_MÁXIMO: [15-30 minutos total]
+├── AUTOMATIZACIÓN: [100% automatizada]
+├── CRITERIOS_GO_NO_GO: [Bloqueo si falla]
+├── NOTIFICACIONES: [Alertas inmediatas]
+
+COBERTURA_SANIDAD:
+├── LOGIN_BÁSICO: [Autenticación core]
+├── NAVEGACIÓN_PRINCIPAL: [Menús y links]
+├── TRANSACCIONES_CRÍTICAS: [Core business functions]
+├── CONEXIONES_BD: [Database connectivity]
+├── SERVICIOS_EXTERNOS: [Third-party integrations]
+```
+
+**B.4. Suite de Fase de Desarrollo (Development Phase Test Case Suite):**
+```
+CONFIGURACIÓN_DESARROLLO:
+├── UNIT_TESTS: [Pruebas unitarias por módulo]
+├── INTEGRATION_TESTS: [Pruebas de integración]
+├── COMPONENT_TESTS: [Pruebas de componentes]
+├── API_TESTS: [Pruebas de servicios]
+├── DATABASE_TESTS: [Pruebas de persistencia]
+
+CRITERIOS_DESARROLLO:
+├── CODE_COVERAGE: [>80% líneas cubiertas]
+├── BRANCH_COVERAGE: [>70% ramas cubiertas]
+├── COMPLEXITY_TESTS: [Métodos complejos cubiertos]
+├── PERFORMANCE_UNIT: [Tests de rendimiento unitario]
+
+INTEGRACIÓN_CI_CD:
+├── BUILD_TRIGGERS: [Ejecución automática en commits]
+├── FAILURE_ACTIONS: [Break build si fallan]
+├── REPORTING: [Reportes en pipeline]
+├── QUALITY_GATES: [Gates de calidad automáticos]
+```
+
+**B.5. Suite de Fase QA (QA Phase Test Case Suite):**
+```
+CONFIGURACIÓN_QA:
+├── SYSTEM_TESTS: [Pruebas de sistema completo]
+├── REGRESSION_TESTS: [Pruebas de regresión]
+├── PERFORMANCE_TESTS: [Pruebas de rendimiento]
+├── SECURITY_TESTS: [Pruebas de seguridad]
+├── COMPATIBILITY_TESTS: [Pruebas de compatibilidad]
+
+CRITERIOS_QA:
+├── FUNCTIONAL_COVERAGE: [100% requisitos funcionales]
+├── NON_FUNCTIONAL_COVERAGE: [90% requisitos no funcionales]
+├── DEFECT_DENSITY: [<2 defectos por KLOC]
+├── PERFORMANCE_SLA: [Cumplimiento de SLAs]
+
+ENTREGABLES_QA:
+├── TEST_EXECUTION_REPORT: [Reporte de ejecución]
+├── DEFECT_ANALYSIS: [Análisis de defectos]
+├── COVERAGE_REPORT: [Reporte de cobertura]
+├── RISK_ASSESSMENT: [Evaluación de riesgos]
+├── GO_LIVE_RECOMMENDATION: [Recomendación de go-live]
+```
+
+**C. Gestión y Coordinación de Suites de Pruebas:**
+
+```
+JERARQUÍA DE EJECUCIÓN DE SUITES:
+┌─ FASE 1: Development Phase Test Case Suite
+│  ├─ Ejecución: Continua (cada commit)
+│  ├─ Duración: 5-15 minutos
+│  ├─ Criterio_Paso: >95% casos aprobados
+│  └─ Acción_Fallo: Bloquear merge/deployment
+│
+├─ FASE 2: Build Release Sanity Test Case Suite  
+│  ├─ Ejecución: Cada build (post-deployment)
+│  ├─ Duración: 15-30 minutos
+│  ├─ Criterio_Paso: 100% casos críticos aprobados
+│  └─ Acción_Fallo: Rollback automático
+│
+├─ FASE 3: Functional Test Cases Suite
+│  ├─ Ejecución: Nightly o por demanda
+│  ├─ Duración: 2-4 horas
+│  ├─ Criterio_Paso: >90% casos aprobados
+│  └─ Acción_Fallo: Análisis de impacto
+│
+├─ FASE 4: Customer Specific Test Case Suite
+│  ├─ Ejecución: Pre-UAT y por demanda cliente
+│  ├─ Duración: 4-8 horas
+│  ├─ Criterio_Paso: 100% acceptance criteria
+│  └─ Acción_Fallo: Reunión con cliente
+│
+└─ FASE 5: QA Phase Test Case Suite
+   ├─ Ejecución: Pre-release (semanal)
+   ├─ Duración: 8-24 horas
+   ├─ Criterio_Paso: Criterios de release cumplidos
+   └─ Acción_Fallo: Go/No-Go decision
+```
+
+**D. Matriz de Interdependencias entre Suites:**
+
+| **Suite Origen** | **Suite Dependiente** | **Criterio Habilitador** | **Tiempo Espera** |
+|------------------|----------------------|--------------------------|-------------------|
+| Development Phase | Build Release Sanity | >95% unit tests pass | Inmediato |
+| Build Release Sanity | Functional Test Cases | 100% smoke tests pass | 30 min |
+| Functional Test Cases | Customer Specific | >90% functional pass | 2 horas |
+| Customer Specific | QA Phase | 100% acceptance pass | 24 horas |
+| QA Phase | Production Release | Release criteria met | 48-72 horas |
+
+**E. Métricas de Efectividad por Suite:**
+
+```
+MÉTRICAS_DEVELOPMENT_SUITE:
+├── Code Coverage: >80%
+├── Test Execution Time: <15 min
+├── Defect Detection Rate: >85%
+├── False Positive Rate: <5%
+
+MÉTRICAS_SANITY_SUITE:
+├── Execution Time: <30 min
+├── Critical Path Coverage: 100%
+├── Automated Cases: 100%
+├── Availability SLA: 99.9%
+
+MÉTRICAS_FUNCTIONAL_SUITE:
+├── Requirements Coverage: >95%
+├── Business Scenario Coverage: 100%
+├── Defect Density: <3 defects/feature
+├── Automation Rate: >75%
+
+MÉTRICAS_CUSTOMER_SUITE:
+├── Acceptance Criteria Coverage: 100%
+├── User Story Validation: 100%
+├── Customer Satisfaction: >90%
+├── UAT Success Rate: >95%
+
+MÉTRICAS_QA_SUITE:
+├── System Coverage: >98%
+├── Non-functional Coverage: >90%
+├── Release Readiness Score: >85%
+├── Risk Assessment Score: <Medium
+```
+
+#### 13.2.3 Plantillas de Reportes de Ejecución
+
+**Definición de Test Report:**
+Test Summary Report (informe final de la prueba) - Documento que resume las tareas y los resultados de la prueba.
+
+**5. Plantilla de Reporte de Ejecución (Test Report) - Formato Estándar:**
+```
+ENCABEZADO DEL REPORTE:
+├── PROYECTO: [Nombre del proyecto y versión]
+├── CICLO_PRUEBAS: [Identificador único del ciclo]
+├── TIPO_REPORTE: [Test Summary Report]
+├── PERÍODO_EJECUCIÓN: [Fecha inicio - Fecha fin]
+├── RESPONSABLE_TESTING: [Test Manager/Lead]
+├── FECHA_GENERACIÓN: [dd/mm/yyyy hh:mm]
+├── VERSIÓN_REPORTE: [v1.0]
+
+ESTADÍSTICAS GENERALES DE LOS CASOS DE PRUEBA APROBADOS:
+┌──────────────────────────────────────────────────────────┐
+│                    RESUMEN GENERAL                      │
+├──────────────────────────────────────────────────────────┤
+│ TOTAL CASOS EJECUTADOS: [165]                           │
+│                                                          │
+│ RESULTADO          │ CANTIDAD  │ PORCENTAJE             │
+│ ──────────────────│ ─────────│ ──────────────────    │
+│ Passed (Aprobado) │    157    │        95%             │
+│ Failed (Fallado)  │     3     │         2%             │
+│ Skipped (Omitido) │     2     │         1%             │
+│ Blocked (Bloqueado)│     3     │         2%             │
+└──────────────────────────────────────────────────────────┘
+
+ANÁLISIS DETALLADO POR CATEGORÍA:
+├── CASOS_PLANIFICADOS: [Total definidos para el ciclo]
+├── CASOS_EJECUTADOS: [Cantidad realmente ejecutada]
+├── PORCENTAJE_EJECUCIÓN: [% completado del plan]
+├── TASA_ÉXITO_GENERAL: [95% - Casos Passed/Total]
+├── TASA_FALLO_GENERAL: [2% - Casos Failed/Total]
+
+DISTRIBUCIÓN VISUAL DE RESULTADOS:
+├── PASSED (APROBADOS): [95% | 🟢 Verde | 157 casos]
+│   └── Criterio: Todos los pasos ejecutados exitosamente
+├── FAILED (FALLADOS): [2% | 🔴 Rojo | 3 casos]
+│   └── Criterio: Al menos un paso falló o no cumplió expectativa
+├── SKIPPED (OMITIDOS): [1% | 🟡 Amarillo | 2 casos]
+│   └── Criterio: No ejecutado por dependencias o decisión técnica
+├── BLOCKED (BLOQUEADOS): [2% | ⚫ Gris | 3 casos]
+│   └── Criterio: No ejecutable por problemas de ambiente/datos
+
+MÉTRICAS DE RENDIMIENTO:
+├── TIEMPO_TOTAL_EJECUCIÓN: [Duración del ciclo completo]
+├── TIEMPO_PROMEDIO_CASO: [Duración promedio por caso]
+├── CASOS_POR_HORA: [Productividad del equipo]
+├── EFICIENCIA_EJECUCIÓN: [Ratio planificado vs real]
+
+ANÁLISIS DE DEFECTOS ENCONTRADOS:
+├── TOTAL_DEFECTOS_IDENTIFICADOS: [Cantidad de bugs encontrados]
+├── DISTRIBUCIÓN_POR_SEVERIDAD:
+│   ├── Críticos (Bloqueantes): [S1: # casos]
+│   ├── Altos (Funcionalidad mayor): [S2: # casos]
+│   ├── Medios (Funcionalidad menor): [S3: # casos]
+│   └── Bajos (Cosméticos): [S4: # casos]
+├── ESTADO_ACTUAL_DEFECTOS:
+│   ├── Nuevos/Abiertos: [# pendientes de asignación]
+│   ├── En_Progreso: [# siendo trabajados]
+│   ├── Resueltos: [# fix disponible para testing]
+│   ├── Verificados: [# fix confirmado por QA]
+│   └── Cerrados: [# completamente resueltos]
+
+DENSIDAD_DEFECTOS_POR_MÓDULO:
+├── MÓDULO_A: [# defectos / # casos ejecutados]
+├── MÓDULO_B: [# defectos / # casos ejecutados]
+├── MÓDULO_C: [# defectos / # casos ejecutados]
+└── PROMEDIO_GENERAL: [Defectos totales / Casos totales]
+```
+
+**6. Plantilla de Test Summary Report Detallado (Basado en imagen de referencia):**
+```
+TEST SUMMARY REPORT
+═══════════════════════════════════════════════════════════
+
+Test Summary Report (informe final de la prueba)
+Documento que resume las tareas y los resultados de la prueba
+
+┌─────────────────────────────────────────────────────────┐
+│    ESTADÍSTICAS GENERALES DE LOS CASOS DE PRUEBA       │
+│                    APROBADOS                           │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│  Pasó: [165] casos ejecutados en total                 │
+│                                                         │
+│  ┌─────────────┬──────────┬─────────────┐              │
+│  │ Resultado   │ Cantidad │ Porcentaje  │              │
+│  ├─────────────┼──────────┼─────────────┤              │
+│  │ Passed      │   157    │     95%     │              │
+│  │ Failed      │    3     │     2%      │              │
+│  │ Skipped     │    2     │     1%      │              │
+│  │ Blocked     │    3     │     2%      │              │
+│  └─────────────┴──────────┴─────────────┘              │
+└─────────────────────────────────────────────────────────┘
+
+INTERPRETACIÓN DE RESULTADOS:
+├── PASSED (95%): Casos ejecutados exitosamente
+│   └── Indicador: Funcionalidad working según especificación
+├── FAILED (2%): Casos con defectos identificados
+│   └── Acción: Defectos reportados y asignados para corrección
+├── SKIPPED (1%): Casos no ejecutados intencionalmente
+│   └── Razón: Dependencias no cumplidas o fuera de alcance
+├── BLOCKED (2%): Casos no ejecutables por impedimentos
+│   └── Causa: Problemas de ambiente, datos o configuración
+
+CRITERIOS DE CALIDAD ALCANZADOS:
+├── TASA_ÉXITO_OBJETIVO: [>90%] ✓ CUMPLIDO (95%)
+├── TASA_FALLO_MÁXIMA: [<5%] ✓ CUMPLIDO (2%)
+├── CASOS_BLOQUEADOS_MAX: [<3%] ✓ CUMPLIDO (2%)
+├── COBERTURA_MÍNIMA: [>95%] ✓ CUMPLIDO (99%)
+
+RECOMENDACIÓN_FINAL:
+├── ESTADO_RELEASE: [GO / NO-GO]
+├── JUSTIFICACIÓN: [Basada en criterios cumplidos]
+├── RIESGOS_RESIDUALES: [Análisis de casos Failed/Blocked]
+├── ACCIONES_PENDIENTES: [Para casos Failed/Blocked]
+```
+
+**7. Plantilla de Reporte de Resumen por Módulos:**
+```
+DESGLOSE POR MÓDULOS/COMPONENTES:
+┌─────────────────┬────────┬────────┬────────┬─────────┬─────────────┐
+│ Módulo/Feature  │ Total  │ Passed │ Failed │ Blocked │ % Éxito     │
+├─────────────────┼────────┼────────┼────────┼─────────┼─────────────┤
+│ Login/Auth      │   25   │   24   │    1   │    0    │    96%      │
+│ Dashboard       │   30   │   30   │    0   │    0    │   100%      │
+│ Transactions    │   45   │   43   │    1   │    1    │    96%      │
+│ Reports         │   35   │   33   │    1   │    1    │    94%      │
+│ Admin Panel     │   30   │   27   │    0   │    1    │    90%      │
+├─────────────────┼────────┼────────┼────────┼─────────┼─────────────┤
+│ TOTAL GENERAL   │  165   │  157   │    3   │    3    │    95%      │
+└─────────────────┴────────┴────────┴────────┴─────────┴─────────────┘
+
+ANÁLISIS_POR_MÓDULO:
+├── MEJOR_RENDIMIENTO: [Dashboard - 100% éxito]
+├── ÁREA_RIESGO: [Admin Panel - 90% éxito]
+├── DEFECTOS_CONCENTRADOS: [Login, Transactions, Reports]
+├── MÓDULOS_ESTABLES: [Dashboard - sin incidencias]
+```
+
+**8. Plantilla de Métricas de Tendencias:**
+```
+COMPARATIVA HISTÓRICA (Últimos 5 Ciclos):
+┌────────────┬─────────┬─────────┬─────────┬─────────┬─────────┐
+│ Ciclo      │ Ciclo-5 │ Ciclo-4 │ Ciclo-3 │ Ciclo-2 │ Actual  │
+├────────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+│ % Passed   │   89%   │   92%   │   93%   │   94%   │   95%   │
+│ % Failed   │    8%   │    5%   │    4%   │    3%   │    2%   │
+│ % Blocked  │    3%   │    3%   │    3%   │    3%   │    2%   │
+│ Defectos   │   15    │   12    │   10    │    8    │    6    │
+└────────────┴─────────┴─────────┴─────────┴─────────┴─────────┘
+
+TENDENCIA_CALIDAD: [📈 MEJORANDO - +6% en 5 ciclos]
+TENDENCIA_DEFECTOS: [📉 REDUCIENDO - -60% en 5 ciclos]
+MADUREZ_PRODUCTO: [🎯 ALTA - Consistencia >90% por 3 ciclos]
+```
+
+#### 13.2.4 Herramientas de Documentación y Listas de Verificación
+
+**A. Herramientas Recomendadas para Gestión de Casos de Prueba:**
+
+*¿Cómo hacer las pruebas? Herramientas para documentar Pruebas*
+
+**A.1. Herramientas Especializadas para Documentación de Casos de Prueba:**
+
+| **Herramienta** | **Tipo** | **Fortalezas** | **Recomendado Para** | **Integración** |
+|----------------|----------|----------------|---------------------|-----------------|
+| **Test Management System (TMS)** | Plataforma integral | Gestión completa del ciclo de vida | Empresas grandes como IBM | CI/CD, ALM, Reporting |
+| **Zephyr for Jira** | Plugin especializado | Integración nativa con Jira, reportes avanzados | Equipos ágiles con Jira | Jira, Confluence, Jenkins |
+| **XRay for Jira** | Plugin enterprise | Trazabilidad completa, automation support | Proyectos con alta trazabilidad | Jira, Cucumber, Selenium |
+| **TestRail** | Suite dedicada | Interface intuitiva, métricas detalladas | Equipos QA especializados | Jenkins, Selenium, APIs |
+| **TestLink** | Herramienta open source | Costo-efectivo, customizable | Proyectos con presupuesto limitado | Mantis, LDAP, APIs |
+| **Plantilla Excel** | Solución básica | Simplicidad, universalmente disponible | Equipos pequeños (menos recomendable) | Office Suite, básica |
+
+**A.2. Recomendación Específica para IBM:**
+
+```
+HERRAMIENTA RECOMENDADA PRINCIPAL: 
+┌─────────────────────────────────────────────────────────────────────┐
+│                     ZEPHYR FOR JIRA                                │
+├─────────────────────────────────────────────────────────────────────┤
+│ JUSTIFICACIÓN:                                                      │
+│ • Integración perfecta con ecosistema Atlassian (Jira/Confluence)  │
+│ • Soporte para metodologías ágiles (Scrum/Kanban)                  │
+│ • Trazabilidad completa desde requisitos hasta defectos            │
+│ • Reportes ejecutivos y métricas avanzadas                         │
+│ • Escalabilidad empresarial para equipos distribuidos              │
+│ • API robusta para integraciones custom                            │
+└─────────────────────────────────────────────────────────────────────┘
+
+CONFIGURACIÓN RECOMENDADA PARA IBM:
+├── ESTRUCTURA_PROYECTOS: Por línea de producto/cliente
+├── WORKFLOW: Custom para reflejar procesos IBM
+├── CAMPOS_PERSONALIZADOS: Cliente, Módulo, Criticidad, Ambiente
+├── INTEGRACIONES: Jenkins, Azure DevOps, Selenium Grid
+├── REPORTES: Dashboard ejecutivo con KPIs de calidad
+├── USUARIOS: Roles diferenciados (Tester, Lead, Manager, Stakeholder)
+
+ALTERNATIVA ENTERPRISE:
+┌─────────────────────────────────────────────────────────────────────┐
+│                        XRAY FOR JIRA                               │
+├─────────────────────────────────────────────────────────────────────┤
+│ CUANDO USAR:                                                        │
+│ • Proyectos que requieren trazabilidad regulatoria                 │
+│ • Ambientes con alta automatización (BDD/Cucumber)                 │
+│ • Necesidad de pre-condiciones complejas                           │
+│ • Reportes de compliance y auditoría                               │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**A.3. Evaluación Comparativa de Herramientas:**
+
+```
+MATRIZ DE EVALUACIÓN PARA IBM:
+┌─────────────────┬─────────┬──────────┬──────────┬─────────┬─────────┐
+│ Criterio        │ Zephyr  │ XRay     │ TestRail │ TMS     │ Excel   │
+├─────────────────┼─────────┼──────────┼──────────┼─────────┼─────────┤
+│ Facilidad Uso   │    9    │    7     │    8     │    6    │   10    │
+│ Integración     │   10    │   10     │    7     │    8    │    3    │
+│ Escalabilidad   │    9    │    9     │    8     │   10    │    2    │
+│ Costo-Beneficio │    8    │    7     │    8     │    6    │   10    │
+│ Reportes        │    9    │   10     │    9     │    8    │    4    │
+│ Automatización  │    8    │   10     │    7     │    7    │    2    │
+│ Soporte IBM     │    9    │    8     │    7     │    8    │    5    │
+├─────────────────┼─────────┼──────────┼──────────┼─────────┼─────────┤
+│ TOTAL (70 max)  │   62    │   61     │   54     │   53    │   36    │
+│ RECOMENDACIÓN   │  🥇 1°   │  🥈 2°    │  🥉 3°    │   4°    │   5°    │
+└─────────────────┴─────────┴──────────┴──────────┴─────────┴─────────┘
+
+CONSIDERACIÓN ESPECIAL SOBRE EXCEL:
+• Mantenibilidad y trazabilidad limitada
+• Reutilización de casos es limitada
+• Sobre todo porque la mantenibilidad y trazabilidad, 
+  así como reutilización de casos es limitada
+```
+
+**A.4. Plan de Implementación de Herramientas para IBM:**
+
+```
+FASE 1: EVALUACIÓN Y SELECCIÓN (Mes 1-2)
+├── POC_ZEPHYR: Pilot con 2 equipos por 30 días
+├── POC_XRAY: Pilot con 1 equipo regulatorio por 30 días
+├── EVALUACIÓN: Métricas de adopción y eficiencia
+├── DECISIÓN: Selección final basada en resultados
+└── PROCUREMENT: Proceso de compra y licenciamiento
+
+FASE 2: IMPLEMENTACIÓN PILOTO (Mes 3-4)
+├── CONFIGURACIÓN: Setup inicial según estándares IBM
+├── MIGRACIÓN_DATOS: Casos existentes desde Excel/Word
+├── CAPACITACIÓN: Training para 20 usuarios clave
+├── WORKFLOWS: Configuración de procesos personalizados
+└── INTEGRACIONES: Conexión con herramientas existentes
+
+FASE 3: ROLLOUT GRADUAL (Mes 5-12)
+├── EQUIPOS_TEMPRANOS: 5 equipos adopters (Mes 5-6)
+├── FEEDBACK_ITERACIÓN: Ajustes basados en feedback
+├── EXPANSION: 15 equipos adicionales (Mes 7-9)
+├── CONSOLIDACIÓN: Todos los equipos QA (Mes 10-12)
+└── OPTIMIZACIÓN: Fine-tuning y automatizaciones
+
+FASE 4: MADUREZ Y OPTIMIZACIÓN (Mes 13+)
+├── MÉTRICAS_AVANZADAS: KPIs y dashboards ejecutivos
+├── AUTOMATIZACIÓN: APIs para CI/CD integration
+├── BEST_PRACTICES: Documentación de lecciones aprendidas
+├── GOVERNANCE: Políticas y estándares establecidos
+└── EXPANSIÓN: Rollout a equipos de desarrollo
+```
+
+**A.5. Estructura Recomendada en Zephyr para IBM:**
+
+```
+ORGANIZACIÓN_PROYECTOS:
+IBM_BANKING/
+├── Cycles/
+│   ├── 2024_Q1_Release
+│   ├── 2024_Q2_Security_Update
+│   └── 2024_Q3_Feature_Release
+├── Test_Cases/
+│   ├── Functional/
+│   │   ├── Login_Authentication
+│   │   ├── Transaction_Processing
+│   │   └── Report_Generation
+│   ├── Non_Functional/
+│   │   ├── Performance
+│   │   ├── Security
+│   │   └── Usability
+│   └── Regression/
+│       ├── Smoke_Tests
+│       ├── Critical_Path
+│       └── Full_Regression
+├── Test_Executions/
+│   ├── Environment_QA1
+│   ├── Environment_UAT
+│   └── Environment_PreProd
+└── Reports/
+    ├── Executive_Summary
+    ├── Defect_Analysis
+    └── Coverage_Reports
+
+CUSTOM_FIELDS_IBM:
+├── Cliente: [Banco_X, Gobierno_Y, Empresa_Z]
+├── Módulo: [Core_Banking, Payments, Reporting]
+├── Criticidad_Negocio: [Crítica, Alta, Media, Baja]
+├── Ambiente_Target: [QA1, QA2, UAT, Staging, Prod]
+├── Automation_Status: [Manual, Automated, In_Progress]
+├── Compliance_Required: [SOX, PCI, GDPR, None]
+└── Release_Target: [2024.Q1, 2024.Q2, Future]
+```
+
+**A.6. ROI Esperado de la Implementación:**
+
+```
+BENEFICIOS CUANTIFICABLES:
+├── EFICIENCIA_DOCUMENTACIÓN: +40% velocidad en creación casos
+├── REUTILIZACIÓN_CASOS: +60% aprovechamiento casos existentes
+├── TRAZABILIDAD: 95% casos trazados a requisitos
+├── REPORTES_AUTOMÁTICOS: -80% tiempo en generación reportes
+├── DEFECT_TRACKING: +50% velocidad en resolución bugs
+├── COMPLIANCE: 100% auditorías con documentación completa
+
+INVERSIÓN_ESTIMADA (100 usuarios):
+├── LICENCIAS_ANUALES: $15,000 (Zephyr for Jira)
+├── SETUP_CONSULTORÍA: $25,000 (implementación inicial)
+├── CAPACITACIÓN: $10,000 (training de equipos)
+├── MANTENIMIENTO: $5,000/año (admin y soporte)
+└── TOTAL_PRIMER_AÑO: $55,000
+
+ROI_CALCULADO:
+├── AHORRO_ANUAL: $120,000 (eficiencia + calidad)
+├── PAYBACK_PERIOD: 5.5 meses
+├── ROI_3_AÑOS: 450%
+└── BENEFICIOS_INTANGIBLES: Mejor calidad, compliance, satisfacción equipos
+```
+
+**B. Lista de Verificación para Casos de Prueba (Checklist):**
+
+```
+✓ DISEÑO DE CASOS:
+  □ ID único y descriptivo asignado
+  □ Título claro y sin ambigüedades
+  □ Trazabilidad a requisito específico establecida
+  □ Prioridad y severidad apropiadas asignadas
+  □ Prerrequisitos claramente definidos
+  □ Pasos detallados y ejecutables
+  □ Resultados esperados específicos y medibles
+  □ Datos de prueba identificados y disponibles
+
+✓ REVISIÓN Y APROBACIÓN:
+  □ Revisión técnica por peer completada
+  □ Validación de factibilidad técnica
+  □ Aprobación del Product Owner obtenida
+  □ Estimación de tiempo de ejecución realizada
+  □ Identificación de candidatos para automatización
+
+✓ EJECUCIÓN:
+  □ Ambiente de prueba validado y disponible
+  □ Datos de prueba cargados y verificados
+  □ Herramientas de testing configuradas
+  □ Evidencias capturadas durante ejecución
+  □ Resultados documentados apropiadamente
+  □ Defectos reportados con información completa
+
+✓ MANTENIMIENTO:
+  □ Casos actualizados por cambios de requisitos
+  □ Obsoletos identificados y marcados
+  □ Versiones controladas en repositorio
+  □ Métricas de efectividad monitoreadas
+```
+
+**C. Características Críticas de Casos de Prueba Efectivos:**
+
+```
+CARACTERÍSTICAS ESENCIALES:
+├── CLARIDAD: Instrucciones sin ambigüedad
+├── COMPLETITUD: Información suficiente para ejecución
+├── CONSISTENCIA: Formato estándar y terminología
+├── TRAZABILIDAD: Vinculación clara a requisitos
+├── MANTENIBILIDAD: Fácil actualización y modificación
+├── REPETIBILIDAD: Resultados consistentes en múltiples ejecuciones
+├── INDEPENDENCIA: No dependencia innecesaria de otros casos
+└── ESCALABILIDAD: Adaptable a diferentes ambientes
+
+ATRIBUTOS DE CALIDAD:
+├── PRECISIÓN: Pasos específicos y medibles
+├── RELEVANCIA: Alineado con objetivos de negocio
+├── EFICIENCIA: Optimización de tiempo de ejecución
+├── COBERTURA: Escenarios positivos y negativos
+├── REALISMO: Datos y escenarios representativos
+└── AUTOMATIZACIÓN: Potencial para automatización futura
+```
+
+**D. Formatos de Casos de Prueba por Tipo:**
+
+```
+FORMATO PARA PRUEBAS FUNCIONALES:
+├── Entrada: [Datos específicos de input]
+├── Acción: [Operación a realizar]
+├── Validación: [Resultado esperado específico]
+├── Criterio_Éxito: [Condición de aprobación]
+
+FORMATO PARA PRUEBAS DE RENDIMIENTO:
+├── Carga: [Usuarios concurrentes/transacciones por segundo]
+├── Duración: [Tiempo de ejecución de la prueba]
+├── Recursos: [CPU, memoria, ancho de banda]
+├── Umbrales: [Tiempo de respuesta aceptable]
+├── Métricas: [KPIs específicos a monitorear]
+
+FORMATO PARA PRUEBAS DE SEGURIDAD:
+├── Vector_Ataque: [Tipo de vulnerabilidad a probar]
+├── Método: [Técnica de testing específica]
+├── Payload: [Datos maliciosos o herramientas]
+├── Detección: [Mecanismos de seguridad esperados]
+├── Impacto: [Consecuencias de una brecha]
+
+FORMATO PARA PRUEBAS DE USABILIDAD:
+├── Perfil_Usuario: [Tipo de usuario objetivo]
+├── Tarea: [Acción específica a realizar]
+├── Contexto: [Situación de uso real]
+├── Criterios_UX: [Facilidad, eficiencia, satisfacción]
+├── Métricas: [Tiempo de tarea, tasa de errores]
+```
+
+**E. Escenarios de Prueba - Ejemplos por Dominio:**
+
+```
+EJEMPLO: SISTEMA BANCARIO ONLINE
+┌─ Módulo: Transferencias
+├─ Escenario_Positivo: Transferencia exitosa entre cuentas propias
+├─ Escenario_Negativo: Transferencia con saldo insuficiente
+├─ Escenario_Límite: Transferencia por monto máximo permitido
+├─ Escenario_Seguridad: Intento de transferencia sin autenticación
+└─ Escenario_Rendimiento: 1000 transferencias concurrentes
+
+EJEMPLO: SISTEMA E-COMMERCE
+┌─ Módulo: Carrito de Compras
+├─ Escenario_Funcional: Agregar producto al carrito
+├─ Escenario_Integración: Cálculo de impuestos y envío
+├─ Escenario_Usabilidad: Navegación intuitiva del carrito
+├─ Escenario_Compatibilidad: Carrito en diferentes navegadores
+└─ Escenario_Recuperación: Persistencia después de timeout
 ```
 
 ### 13.3 Procedimientos Operacionales Estándar (POE)
