@@ -1,0 +1,171 @@
+@startuml plantilla-casos-prueba-iso29119
+!theme aws-orange
+
+' Configuraciones para imagen clara
+skinparam dpi 200
+skinparam defaultFontSize 11
+skinparam maxMessageSize 500
+skinparam wrapWidth 300
+
+' Colores corporativos
+skinparam backgroundColor #FAFAFA
+skinparam rectangle {
+    BackgroundColor #E8F4FD
+    BorderColor #2E86C1
+    FontColor #1B4F72
+}
+
+' Título principal
+rectangle "PLANTILLA FUNCIONAL DE CASOS DE PRUEBA\n**ISO/IEC 29119 - Sistema de Registro de Usuario**" as titulo {
+    skinparam rectangle {
+        BackgroundColor #2E86C1
+        FontColor White
+        FontSize 14
+        FontStyle bold
+    }
+}
+
+' Sección 1: Información Básica
+rectangle "**INFORMACIÓN BÁSICA**" as info_basica {
+    skinparam rectangle {
+        BackgroundColor #D5E8F7
+        BorderColor #2874A6
+        FontColor #1B4F72
+        FontStyle bold
+    }
+}
+
+rectangle "**Nombre:** Validación de Login de Usuario en Sistema de Banca Virtual\n**Autor:** Federico Toledo / Equipo QA IBM\n**Fecha:** 09/01/2024\n**Descripción:** Un usuario debe registrarse para hacer uso del\nsistema, y para ello debe hacer ""login"" con su usuario y\npassword. Si no cuenta con él, debe registrarse en el\nsistema creando así su usuario" as info_detalle {
+    skinparam rectangle {
+        BackgroundColor #EBF5FB
+        BorderColor #5DADE2
+    }
+}
+
+' Sección 2: Actores
+rectangle "**ACTORES DEL SISTEMA**" as actores_titulo {
+    skinparam rectangle {
+        BackgroundColor #D5E8F7
+        FontStyle bold
+    }
+}
+
+rectangle "Usuario a través de la interfaz web" as actores_detalle {
+    skinparam rectangle {
+        BackgroundColor #EBF5FB
+        BorderColor #5DADE2
+    }
+}
+
+' Sección 3: Pre-condiciones
+rectangle "**PRE-CONDICIONES**" as precond_titulo {
+    skinparam rectangle {
+        BackgroundColor #D5E8F7
+        FontStyle bold
+    }
+}
+
+rectangle "El usuario debe estar registrado en el sistema" as precond_detalle {
+    skinparam rectangle {
+        BackgroundColor #EBF5FB
+        BorderColor #5DADE2
+    }
+}
+
+' Sección 4: Flujo Normal
+rectangle "**FLUJO NORMAL**" as flujo_normal_titulo {
+    skinparam rectangle {
+        BackgroundColor #D5E8F7
+        FontStyle bold
+    }
+}
+
+rectangle "1. El usuario accede al sistema con la URL principal\n2. El sistema solicita credenciales\n3. El usuario ingresa proporcionando usuario y password\n4. El sistema valida las credenciales del usuario\n5. El sistema da la bienvenida" as flujo_normal_detalle {
+    skinparam rectangle {
+        BackgroundColor #EBF5FB
+        BorderColor #5DADE2
+    }
+}
+
+' Sección 5: Flujos Alternativos
+rectangle "**FLUJO ALTERNATIVO 1**" as flujo_alt1_titulo {
+    skinparam rectangle {
+        BackgroundColor #FDF2E9
+        BorderColor #E67E22
+        FontStyle bold
+    }
+}
+
+rectangle "3. El usuario no recuerda su password por lo que\n   solicita que se le envíe por e-mail\n4. El sistema solicita el e-mail y envía una clave temporal" as flujo_alt1_detalle {
+    skinparam rectangle {
+        BackgroundColor #FEF9E7
+        BorderColor #F39C12
+    }
+}
+
+rectangle "**FLUJO ALTERNATIVO 2**" as flujo_alt2_titulo {
+    skinparam rectangle {
+        BackgroundColor #FDF2E9
+        BorderColor #E67E22
+        FontStyle bold
+    }
+}
+
+rectangle "3. El usuario no está registrado en el sistema por lo\n   que solicita crear una cuenta\n4. El sistema solicita los datos necesarios para crear\n   la cuenta\n5. El usuario ingresa los datos y confirma\n6. El sistema crea la cuenta del usuario" as flujo_alt2_detalle {
+    skinparam rectangle {
+        BackgroundColor #FEF9E7
+        BorderColor #F39C12
+    }
+}
+
+' Sección 6: Excepciones
+rectangle "**EXCEPCIONES**" as excepciones_titulo {
+    skinparam rectangle {
+        BackgroundColor #FADBD8
+        BorderColor #E74C3C
+        FontStyle bold
+    }
+}
+
+rectangle "**E1.** Usuario y password incorrectos: Si esto sucede\ntres veces consecutivas la cuenta del usuario se\nbloquea por seguridad\n**E2.** [E4]: El e-mail proporcionado no está registrado\nen el sistema. El sistema notifica el error" as excepciones_detalle {
+    skinparam rectangle {
+        BackgroundColor #FDEDEC
+        BorderColor #EC7063
+    }
+}
+
+' Sección 7: Post-condiciones
+rectangle "**POST-CONDICIONES**" as postcond_titulo {
+    skinparam rectangle {
+        BackgroundColor #D5F4E6
+        BorderColor #27AE60
+        FontStyle bold
+    }
+}
+
+rectangle "El usuario accede al sistema y se registra su acceso\nen la tabla de registro de actividad" as postcond_detalle {
+    skinparam rectangle {
+        BackgroundColor #EAFAF1
+        BorderColor #58D68D
+    }
+}
+
+' Layout vertical
+titulo --> info_basica
+info_basica --> info_detalle
+info_detalle --> actores_titulo
+actores_titulo --> actores_detalle
+actores_detalle --> precond_titulo
+precond_titulo --> precond_detalle
+precond_detalle --> flujo_normal_titulo
+flujo_normal_titulo --> flujo_normal_detalle
+flujo_normal_detalle --> flujo_alt1_titulo
+flujo_alt1_titulo --> flujo_alt1_detalle
+flujo_alt1_detalle --> flujo_alt2_titulo
+flujo_alt2_titulo --> flujo_alt2_detalle
+flujo_alt2_detalle --> excepciones_titulo
+excepciones_titulo --> excepciones_detalle
+excepciones_detalle --> postcond_titulo
+postcond_titulo --> postcond_detalle
+
+@enduml

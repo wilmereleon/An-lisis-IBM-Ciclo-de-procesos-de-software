@@ -9,6 +9,14 @@
 !includeurl ICONURL/font-awesome-5/database.puml
 !includeurl ICONURL/font-awesome-5/envelope.puml
 
+' Configuraciones específicas para diagramas largos
+skinparam dpi 200
+skinparam defaultFontSize 11
+skinparam minClassWidth 100
+skinparam maxMessageSize 500
+skinparam wrapWidth 300
+skinparam style strictuml
+
 title <size:20><b>FLUJO COMPLETO DE TESTING EN CICLO DE DESARROLLO</b></size>\n<size:16>Sistema de Registro de Usuario - ISO/IEC 29119</size>\n<size:12>Incluye Testing desde Análisis de Requisitos hasta Cierre de Proyecto</size>
 
 skinparam {

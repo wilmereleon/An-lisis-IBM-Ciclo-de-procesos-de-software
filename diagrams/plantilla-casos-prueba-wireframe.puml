@@ -1,0 +1,118 @@
+@startuml plantilla-casos-prueba-wireframe
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam handwritten false
+skinparam monochrome false
+
+' Configuraciones para wireframe
+skinparam rectangle {
+    BorderColor #333333
+    BackgroundColor #F8F9FA
+    FontColor #333333
+    FontSize 10
+}
+
+skinparam note {
+    BorderColor #666666
+    BackgroundColor #E8F4FD
+    FontColor #333333
+    FontSize 9
+}
+
+salt
+{
+  {+
+    **PLANTILLA FUNCIONAL DE CASOS DE PRUEBA**
+    **ISO/IEC 29119 - Sistema de Registro de Usuario**
+    .
+    {T
+      + **INFORMACIÓN BÁSICA**
+    }
+    {#
+      | Campo | Descripción |
+      | **Nombre** | Validación de Login de Usuario en Sistema de Banca Virtual |
+      | **Autor** | Federico Toledo / Equipo QA IBM |
+      | **Fecha** | 09/01/2024 |
+      | **Descripción** | Un usuario debe registrarse para hacer uso del sistema... |
+    }
+    .
+    {T
+      + **ACTORES DEL SISTEMA**
+    }
+    {
+      • Usuario a través de la interfaz web
+    }
+    .
+    {T
+      + **PRE-CONDICIONES**
+    }
+    {
+      • El usuario debe estar registrado en el sistema
+    }
+    .
+    {T
+      + **FLUJO NORMAL**
+    }
+    {#
+      | Paso | Acción |
+      | 1 | El usuario accede al sistema con la URL principal |
+      | 2 | El sistema solicita credenciales |
+      | 3 | El usuario ingresa proporcionando usuario y password |
+      | 4 | El sistema valida las credenciales del usuario |
+      | 5 | El sistema da la bienvenida |
+    }
+    .
+    {T
+      + **FLUJOS ALTERNATIVOS**
+    }
+    {#
+      | Flujo | Descripción |
+      | **Alt 1** | 3. Usuario solicita recovery password por e-mail |
+      |  | 4. Sistema envía clave temporal |
+      | **Alt 2** | 3. Usuario solicita crear nueva cuenta |
+      |  | 4. Sistema solicita datos de registro |
+      |  | 5. Usuario confirma y se crea cuenta |
+    }
+    .
+    {T
+      + **EXCEPCIONES**
+    }
+    {#
+      | ID | Descripción |
+      | E1 | Usuario/password incorrectos (3 intentos = bloqueo) |
+      | E2 | E-mail no registrado (sistema notifica error) |
+    }
+    .
+    {T
+      + **POST-CONDICIONES**
+    }
+    {
+      • Acceso registrado en tabla de actividad del sistema
+    }
+    .
+    .
+    {T
+      + **TABLA DE EJECUCIÓN**
+    }
+    {
+      **ID:** mt01 | **Target:** Ingreso banca virtual | **Type:** Funcional | **Priority:** Media
+      **Pre-Conditions:** 1) Creación de cuenta 2) Ingreso banca virtual
+    }
+    {#
+      | # | Steps / Expected Result | Pass | Fail | Bug Report ID |
+      | 1 | **Acceso a banca digital** | ✓ |  |  |
+      |   | Ingresar datos solicitados |   |  |  |
+      |   | **Expected:** Se visualiza correctamente |   |  |  |
+      | 2 | **Seleccionar opción ingreso** | ✓ |  |  |
+      |   | **Expected:** Acceso correcto a Banca virtual |   |  |  |
+      | 3 |  |  |  |  |
+      | 4 |  |  |  |  |
+      | 5 |  |  |  |  |
+      | 6 |  |  |  |  |
+    }
+    {
+      **Executor:** Mercurio Avellaneda Vargas | **Date:** __________ | **ID:** kt-23
+    }
+  }
+}
+@enduml
