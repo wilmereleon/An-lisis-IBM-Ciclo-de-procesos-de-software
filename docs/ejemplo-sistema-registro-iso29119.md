@@ -15,10 +15,109 @@
 
 ## 🔄 **FASE 1: PLANIFICACIÓN (PLANNING)**
 
+### 🌊 **Flujo Completo del Proceso de Testing**
+
+![Flujo de Proceso de Testing](../diagrams/flujo-proceso-testing-registro-usuario.png)
+*Figura 1.1: Flujo completo del proceso de testing **en todo el ciclo de desarrollo** con casos de éxito y fallo según ISO/IEC 29119*
+
+Este diagrama ilustra el **flujo completo del proceso de testing** para el sistema de registro de usuarios, mostrando **actividades de testing desde la fase de análisis de requisitos hasta el cierre del proyecto**:
+
+#### **🧪 Testing en Fases Tempranas (Shift-Left Testing):**
+
+**FASE 1: Análisis de Requisitos**
+- ✅ **Requirements Review:** Validación de testabilidad
+- 📋 **Criterios de Aceptación:** Definición de condiciones verificables  
+- 🔍 **Análisis de Ambigüedades:** Identificación temprana de problemas
+- 📊 **Test Planning Inicial:** Estrategia por requisito
+
+**FASE 2: Diseño del Sistema**
+- 🎨 **Design Review:** Validación de testabilidad de arquitectura
+- 🔌 **Puntos de Inyección:** Identificación de interfaces testables
+- 📝 **Test Design Specification:** Casos derivados del diseño
+- 🏗️ **Architecture Testing:** Validación de decisiones de diseño
+
+**FASE 3: Planificación de Testing**  
+- 📋 **Test Plan Formal:** Estrategia, recursos, cronograma
+- ⚠️ **Análisis de Riesgos:** Identificación y mitigación
+- 🎯 **Criterios de Salida:** Definición de umbrales de calidad
+
+**FASE 4: Implementación de Código**
+- 🧪 **Code Review con Testing Focus:** Revisión de testabilidad
+- 🔧 **Unit Testing:** TDD/BDD durante desarrollo
+- 📊 **Quality Gates:** CI/CD con métricas automatizadas
+- 📈 **Coverage Tracking:** Monitoreo continuo de cobertura
+
+#### **🟢 Flujos de Éxito (Verde):**
+- Ejecución exitosa de todas las fases de testing
+- Cumplimiento de criterios de salida 
+- Aprobación condicional para release
+- Métricas objetivo alcanzadas (91.2% éxito)
+
+#### **🔴 Flujos de Fallo (Rojo):**
+- Identificación y gestión de defectos
+- Procesos de re-testing y corrección
+- Escalación a management cuando es necesario
+- Bloqueo de release en casos críticos
+
+#### **⚠️ Puntos de Decisión Críticos:**
+- Evaluación de criterios de salida
+- Decisiones Go/No-Go para release
+- Aprobaciones excepcionales con condiciones
+- Validación de correcciones post-defecto
+
+#### **📊 Métricas del Proceso Visualizadas (Actualizadas):**
+| **Fase** | **Actividad de Testing** | **Métrica** | **Resultado Real** | **Status** |
+|----------|--------------------------|-------------|-------------------|-----------|
+| **Requisitos** | Requirements Review | % Req. Testables | 100% (todos claros) | ✅ PASSED |
+| **Diseño** | Design Review | Testability Score | 95% (arquitectura limpia) | ✅ PASSED |  
+| **Planificación** | Test Plan | Aprobación Stakeholders | ✅ Aprobado | ✅ PASSED |
+| **Implementación** | Code Review + Unit Tests | Coverage | 91.04% | ✅ PASSED |
+| **Email Validation** | System Testing | Success Rate | 100% (8/8) | ✅ PASSED |
+| **Password Validation** | System Testing | Success Rate | 83.3% (10/12) | ⚠️ PARTIAL |
+| **Registration Flow** | Integration Testing | Success Rate | 90% (9/10) | ⚠️ PARTIAL |
+| **End-to-End** | E2E Testing | Success Rate | 100% (4/4) | ✅ PASSED |
+| **Overall** | Todo el Proceso | Success Rate | 91.2% (31/34) | ✅ ACCEPTABLE |
+
+#### **🐛 Gestión de Defectos en el Flujo:**
+- **DEF-001:** Regex restrictivo → Corrección programada (Severidad Media)
+- **DEF-002:** Buffer overflow → **CRÍTICO** - Bloquea release 
+- **DEF-003:** Race condition → **CRÍTICO** - Bloquea release
+- **DEF-004:** Error genérico → Mejora futura (Severidad Baja)
+- **DEF-005:** Timeout inconsistente → Post-release (Severidad Media)
+
+#### **💡 Actividades de Testing por Fase Explicadas:**
+
+**🧪 Testing en Análisis de Requisitos:**
+- **Técnica:** Requirements-based testing preparation
+- **Entregables:** Checklist de testabilidad, matriz de trazabilidad inicial
+- **Ejemplo Real:** 
+  - REQ-REG-001: "Email must comply with RFC 5322" → Testeable ✅
+  - REQ-REG-002: "Password should be secure" → Ambiguo ❌ → Requiere criterios específicos
+
+**🎨 Testing en Diseño:**
+- **Técnica:** Design inspection, testability analysis
+- **Entregables:** Test design specification, environment requirements
+- **Ejemplo Real:**
+  - Arquitectura microservicios → Testeable ✅ (APIs independientes)
+  - Base de datos embebida → Problemático ❌ → Requiere refactoring
+
+**📋 Testing en Planificación:**
+- **Técnica:** Risk-based test planning, resource allocation
+- **Entregables:** Test plan, test strategy, risk matrix
+- **Ejemplo Real:**
+  - Plan aprobado con 200h esfuerzo, $18,500 presupuesto
+  - 5 riesgos identificados con mitigaciones específicas
+
+**🔧 Testing en Implementación:**
+- **Técnica:** Unit testing, code review, static analysis
+- **Entregables:** Unit tests, coverage reports, quality metrics
+- **Ejemplo Real:**
+  - 91.04% coverage alcanzado vs. 85% objetivo
+  - Quality gates en CI/CD bloquean código defectuoso
+
 ### 📄 **Test Plan - ISO/IEC 29119-3 Template**
 
-```markdown
-# TEST PLAN - PORTAL REGISTRO USUARIOS SECUREAPP
+**# TEST PLAN - PORTAL REGISTRO USUARIOS SECUREAPP**
 **Documento ID:** TP-SECUREAPP-001
 **Versión:** 1.0
 **Fecha:** 14 de septiembre de 2025
@@ -109,7 +208,6 @@ Definir la estrategia, alcance, enfoque y recursos para las pruebas del sistema 
 | Retrasos en desarrollo | Media | Alto | Buffer de 2 días en cronograma |
 | Indisponibilidad de ambiente | Baja | Alto | Ambiente backup configurado |
 | Cambios en requerimientos | Alta | Medio | Proceso de gestión de cambios |
-```
 
 ---
 
@@ -117,8 +215,7 @@ Definir la estrategia, alcance, enfoque y recursos para las pruebas del sistema 
 
 ### 📄 **Test Analysis Report - ISO/IEC 29119-3**
 
-```markdown
-# TEST ANALYSIS REPORT - REGISTRO DE USUARIOS
+**# TEST ANALYSIS REPORT - REGISTRO DE USUARIOS**
 **Documento ID:** TAR-SECUREAPP-001
 **Fecha:** 14 de septiembre de 2025
 
@@ -210,7 +307,6 @@ Definir la estrategia, alcance, enfoque y recursos para las pruebas del sistema 
 - Monitor de base de datos (MongoDB Compass)
 - Capturador de emails (MailHog)
 - Proxy para manipular requests (Charles/Burp)
-```
 
 ---
 
@@ -218,8 +314,7 @@ Definir la estrategia, alcance, enfoque y recursos para las pruebas del sistema 
 
 ### 📄 **Test Design Specification - ISO/IEC 29119-3**
 
-```markdown
-# TEST DESIGN SPECIFICATION - REGISTRO DE USUARIOS
+**# TEST DESIGN SPECIFICATION - REGISTRO DE USUARIOS**
 **Documento ID:** TDS-SECUREAPP-001
 **Versión:** 1.0
 
@@ -237,8 +332,8 @@ Definir la estrategia, alcance, enfoque y recursos para las pruebas del sistema 
 - **P5:** Emails excesivamente largos (>254 caracteres)
 
 **Casos de Prueba Derivados:**
-```
-TC-EMAIL-001: Email válido estándar
+
+**TC-EMAIL-001: Email válido estándar**
 - Entrada: "usuario@dominio.com"
 - Resultado Esperado: Validación exitosa
 
@@ -258,10 +353,9 @@ TC-EMAIL-005: Email en límite de longitud (254 caracteres)
 - Entrada: [email de 254 caracteres exactos]
 - Resultado Esperado: Validación exitosa
 
-TC-EMAIL-006: Email excediendo límite (255 caracteres)
+**TC-EMAIL-006: Email excediendo límite (255 caracteres)**
 - Entrada: [email de 255 caracteres]
 - Resultado Esperado: Error "Email demasiado largo"
-```
 
 ### 1.2 Test Suite: Validación de Contraseña (TS-PASS-001)
 
@@ -285,8 +379,8 @@ TC-EMAIL-006: Email excediendo límite (255 caracteres)
 | R6    | V  | V  | V  | V  | F  | Inválida  |
 
 **Casos Derivados:**
-```
-TC-PASS-001: Contraseña cumple todos los criterios
+
+**TC-PASS-001: Contraseña cumple todos los criterios**
 - Entrada: "SecurePass123!"
 - Resultado: Validación exitosa
 
@@ -298,8 +392,7 @@ TC-PASS-003: Sin mayúscula
 - Entrada: "securepass123!"
 - Resultado: Error "Debe contener al menos una mayúscula"
 
-[... continúa para todas las reglas ...]
-```
+**[... continúa para todas las reglas ...]**
 
 ### 1.3 Test Suite: Flujo de Registro Completo (TS-FLOW-001)
 
@@ -315,8 +408,8 @@ TC-PASS-003: Sin mayúscula
 - S7: Error de validación
 
 **Transiciones:**
-```
-TC-FLOW-001: Registro exitoso completo
+
+**TC-FLOW-001: Registro exitoso completo**
 Estados: S1 → S2 → S3 → S4 → S5 → S6
 Acciones: 
 1. Abrir formulario
@@ -338,7 +431,6 @@ Acciones:
 4. Confirmar contraseña: "ExistingUser123!"
 5. Clic en "Registrar"
 6. Verificar error: "Email ya registrado"
-```
 
 ## 2. ESPECIFICACIÓN DE DATOS DE PRUEBA
 
@@ -409,7 +501,6 @@ Acciones:
 - Campo 'emailConfirmed' = false inicialmente
 - Timestamp de creación registrado
 - Token de confirmación generado y válido
-```
 
 ---
 
@@ -417,8 +508,7 @@ Acciones:
 
 ### 📄 **Test Case Specification - ISO/IEC 29119-3**
 
-```markdown
-# TEST CASE SPECIFICATION - REGISTRO DE USUARIOS
+**# TEST CASE SPECIFICATION - REGISTRO DE USUARIOS**
 **Documento ID:** TCS-SECUREAPP-001
 
 ## 1. CASOS DE PRUEBA DETALLADOS
@@ -462,6 +552,7 @@ Acciones:
   - Email de confirmación enviado
 
 **Verificaciones Post-Ejecución:**
+
 ```sql
 -- Verificar usuario en base de datos
 SELECT email, status, created_at FROM users 
@@ -578,6 +669,7 @@ WHERE user_email = 'newuser@test.com';
    - Token de confirmación marcado como usado
 
 **Datos de Verificación:**
+
 ```javascript
 // Verificar estructura del email
 expect(email.from).toBe('noreply@secureapp.com');
@@ -679,7 +771,6 @@ describe('User Registration Flow', () => {
   });
 });
 ```
-```
 
 ---
 
@@ -687,8 +778,7 @@ describe('User Registration Flow', () => {
 
 ### 📄 **Test Execution Report - ISO/IEC 29119-3**
 
-```markdown
-# TEST EXECUTION REPORT - REGISTRO DE USUARIOS
+**# TEST EXECUTION REPORT - REGISTRO DE USUARIOS**
 **Documento ID:** TER-SECUREAPP-001
 **Fecha Ejecución:** 14 de septiembre de 2025
 **Ejecutado por:** Ana Martínez (Test Executor)
@@ -844,7 +934,6 @@ All files              |   90.59 |    84.72 |     100 |   91.04 |
 - Agregar validación de fortaleza de contraseña con scoring
 - Considerar autenticación de dos factores opcional
 - Implementar logs detallados para auditoría
-```
 
 ---
 
@@ -852,8 +941,7 @@ All files              |   90.59 |    84.72 |     100 |   91.04 |
 
 ### 📄 **Test Summary Report - ISO/IEC 29119-3**
 
-```markdown
-# TEST SUMMARY REPORT - REGISTRO DE USUARIOS SECUREAPP
+**# TEST SUMMARY REPORT - REGISTRO DE USUARIOS SECUREAPP**
 **Documento ID:** TSR-SECUREAPP-001
 **Fecha:** 14 de septiembre de 2025
 **Project Manager:** María González
@@ -1021,7 +1109,6 @@ El sistema de registro de usuarios SecureApp ha completado su ciclo de pruebas c
 ### Anexo C: Logs Completos de Ejecución de Pruebas
 ### Anexo D: Evidencias Fotográficas de Defectos
 ### Anexo E: Scripts de Automatización Desarrollados
-```
 
 ---
 
@@ -1043,5 +1130,29 @@ Este ejemplo práctico demuestra cómo las **plantillas ISO/IEC 29119** proporci
 - Test Case Specification
 - Test Execution Report
 - Test Summary Report
+
+### 🌊 **Visualización del Proceso Completo**
+
+El **diagrama de flujo del proceso de testing** (Figura 1.1) proporciona una vista integral de cómo se aplican las plantillas ISO/IEC 29119 en la práctica, mostrando:
+
+#### **Integración de Plantillas en el Flujo:**
+1. **Test Plan** → Define la estrategia inicial y criterios de decisión
+2. **Test Analysis/Design** → Establece casos de prueba y datos de entrada  
+3. **Test Implementation** → Configura ambiente y herramientas de ejecución
+4. **Test Execution** → Ejecuta casos y gestiona defectos encontrados
+5. **Test Reporting** → Evalúa criterios y decide sobre el release
+
+#### **Valor Agregado del Diagrama:**
+- **Trazabilidad Visual:** Conecta cada fase con sus entregables específicos
+- **Gestión de Riesgos:** Muestra claramente los puntos de fallo y recuperación
+- **Métricas Integradas:** Incluye KPIs reales del proyecto (91.2% éxito, 91.04% cobertura)
+- **Decisiones Basadas en Datos:** Ilustra cómo las métricas influyen en las decisiones Go/No-Go
+
+#### **Aplicabilidad Práctica:**
+Este diagrama puede ser **reutilizado y adaptado** para otros proyectos de testing, simplemente ajustando:
+- Los tipos de casos de prueba específicos
+- Las métricas objetivo según el contexto del proyecto  
+- Los criterios de salida según la criticidad del sistema
+- Los procesos de escalación según la estructura organizacional
 
 Cada plantilla aporta valor específico al proceso y juntas forman un ecosistema de documentación que garantiza calidad, repetibilidad y mejora continua en el proceso de testing.

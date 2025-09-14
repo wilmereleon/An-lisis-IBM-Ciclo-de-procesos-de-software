@@ -1,0 +1,385 @@
+@startuml flujo-proceso-testing-registro-usuario
+!theme aws-orange
+!define ICONURL https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master
+!includeurl ICONURL/common.puml
+!includeurl ICONURL/font-awesome-5/check_circle.puml
+!includeurl ICONURL/font-awesome-5/times_circle.puml
+!includeurl ICONURL/font-awesome-5/bug.puml
+!includeurl ICONURL/font-awesome-5/cogs.puml
+!includeurl ICONURL/font-awesome-5/database.puml
+!includeurl ICONURL/font-awesome-5/envelope.puml
+
+title <size:20><b>FLUJO COMPLETO DE TESTING EN CICLO DE DESARROLLO</b></size>\n<size:16>Sistema de Registro de Usuario - ISO/IEC 29119</size>\n<size:12>Incluye Testing desde Análisis de Requisitos hasta Cierre de Proyecto</size>
+
+skinparam {
+    backgroundColor #F8F9FA
+    activity {
+        BackgroundColor #E3F2FD
+        BorderColor #1976D2
+        FontColor #0D47A1
+        FontSize 11
+        FontName Arial
+    }
+    decision {
+        BackgroundColor #FFF3E0
+        BorderColor #F57C00
+        FontColor #E65100
+        FontSize 11
+        FontName Arial
+    }
+    note {
+        BackgroundColor #F3E5F5
+        BorderColor #7B1FA2
+        FontColor #4A148C
+        FontSize 10
+    }
+    arrow {
+        Color #1976D2
+        FontColor #0D47A1
+        FontSize 10
+    }
+}
+
+start
+
+partition "**FASE 1: ANÁLISIS DE REQUISITOS**" #FFE0B2 {
+    :📋 **Review de Requisitos**
+    • Testabilidad de requisitos
+    • Criterios de aceptación
+    • Análisis de ambigüedades;
+    
+    if (🔍 **¿Requisitos Testables?**) then (✅ SÍ)
+        :✅ **Requirements Review: PASSED**
+        • 100% requisitos con criterios verificables
+        • Trazabilidad establecida;
+    else (❌ NO)
+        :<color:red>❌ **Requirements Review: FAILED**</color>
+        • Requisitos ambiguos identificados
+        • Criterios de aceptación faltantes;
+        
+        :🔧 **Refinamiento de Requisitos**
+        • Clarificar ambigüedades
+        • Definir criterios SMART
+        • Re-review con stakeholders;
+        
+        :🔄 **Re-validation**
+        Requisitos refinados;
+        
+        stop
+    endif
+    
+    :📊 **Test Planning Inicial**
+    • Estrategia de testing por requisito
+    • Estimación de esfuerzo inicial
+    • Identificación de riesgos tempranos;
+}
+
+partition "**FASE 2: DISEÑO DEL SISTEMA**" #E1F5FE {
+    :🎨 **Review de Diseño**
+    • Testabilidad de arquitectura
+    • Puntos de inyección de fallas
+    • Estrategia de mocking/stubbing;
+    
+    if (🔍 **¿Diseño Testeable?**) then (✅ SÍ)
+        :✅ **Design Review: PASSED**
+        • Arquitectura soporta testing
+        • Interfaces bien definidas;
+    else (❌ NO)
+        :<color:red>❌ **Design Review: FAILED**</color>
+        • Arquitectura monolítica
+        • Dependencias acopladas;
+        
+        :🔧 **Refactoring de Diseño**
+        • Introducir interfaces
+        • Separación de responsabilidades
+        • Puntos de prueba identificados;
+        
+        stop
+    endif
+    
+    :📝 **Test Design Specification**
+    • Casos de prueba derivados del diseño
+    • Test data requirements
+    • Environment specifications;
+}
+
+partition "**FASE 3: PLANIFICACIÓN DE TESTING**" #E8F5E8 {
+    :📋 **Elaborar Test Plan**
+    • Definir estrategia de testing
+    • Establecer criterios de entrada/salida
+    • Asignar recursos y cronograma;
+    
+    :📊 **Análisis de Riesgos**
+    • Identificar riesgos de producto
+    • Definir estrategias de mitigación
+    • Priorizar casos críticos;
+    :📊 **Análisis de Riesgos de Testing**
+    • Identificar riesgos de producto
+    • Definir estrategias de mitigación
+    • Priorizar casos críticos;
+    
+    if (🔍 **¿Plan de Testing Aprobado?**) then (✅ SÍ)
+        :✅ **Test Plan: APPROVED**
+        • Estrategia alineada con requisitos
+        • Recursos y cronograma validados;
+    else (❌ NO)
+        :<color:red>❌ **Test Plan: REJECTED**</color>
+        • Cobertura insuficiente
+        • Recursos inadecuados;
+        
+        :🔧 **Revisión de Plan**
+        • Ajustar estrategia
+        • Reasignar recursos
+        • Replantear cronograma;
+        
+        stop
+    endif
+}
+
+partition "**FASE 4: IMPLEMENTACIÓN DE CÓDIGO**" #FFF3E0 {
+    :🔍 **Análisis de Requerimientos**
+    • REG-001: Validación email
+    • REG-002: Política contraseñas
+    • REG-003: Unicidad usuario
+    • REG-004: Email confirmación;
+    
+    :🧪 **Code Review con Enfoque en Testing**
+    • Revisión de testabilidad del código
+    • Validación de unit tests implementados
+    • Quality gates automatizados;
+    
+    if (🔍 **¿Code Review PASS?**) then (✅ SÍ)
+        :✅ **Code Review: PASSED**
+        • Código testeable y bien estructurado
+        • Unit tests con >85% coverage;
+    else (❌ NO)
+        :<color:red>❌ **Code Review: FAILED**</color>
+        • Código no testeable
+        • Coverage insuficiente;
+        
+        :🔧 **Refactoring de Código**
+        • Mejorar testabilidad
+        • Aumentar coverage
+        • Corregir code smells;
+        
+        stop
+    endif
+    
+    note right
+        **Actividades de Testing:**
+        • Unit Testing durante desarrollo
+        • TDD/BDD practices
+        • Continuous Integration
+        • Static Code Analysis
+    end note
+}
+
+partition "**FASE 5: TESTING DE INTEGRACIÓN/SISTEMA**" #F3E5F5 {
+    :⚙️ **Setup Ambiente de Testing**
+    • Backend Node.js + MongoDB
+    • Frontend React.js
+    • Mock Email Service (MailHog);
+    
+}
+
+partition "**FASE 5: TESTING DE INTEGRACIÓN/SISTEMA**" #F3E5F5 {
+    :⚙️ **Setup Ambiente de Testing**
+    • Backend Node.js + MongoDB
+    • Frontend React.js  
+    • Mock Email Service (MailHog);
+    
+    :🔧 **Configurar Herramientas**
+    • Jest (Pruebas unitarias)
+    • Cypress (E2E)
+    • Supertest (API);
+}
+
+partition "**FASE 6: EJECUCIÓN DE TESTING**" #E3F2FD {
+    :▶️ **Ejecutar Test Suite**
+    Validación Email (8 casos);
+    
+    if (🔍 **¿Tests Email PASS?**) then (✅ SÍ)
+        :✅ **Email Validation: PASSED**
+        • 100% casos exitosos
+        • RFC 5322 compliance verificado;
+    else (❌ NO)
+        :<color:red>❌ **Email Validation: FAILED**</color>
+        • Registrar defecto
+        • Analizar causa raíz;
+        
+        :🐛 **Gestión de Defectos**
+        • Crear ticket en sistema
+        • Asignar prioridad/severidad
+        • Coordinar con desarrollo;
+        
+        :🔄 **Re-testing**
+        Una vez corregido;
+        
+        stop
+    endif
+    
+    :▶️ **Ejecutar Test Suite**
+    Validación Contraseña (12 casos);
+    
+    if (🔍 **¿Tests Contraseña PASS?**) then (✅ SÍ)
+        :✅ **Password Validation: PASSED**
+        • 83.3% casos exitosos inicialmente
+        • Política seguridad verificada;
+    else (❌ NO)
+        :<color:red>❌ **Password Validation: FAILED**</color>
+        • DEF-001: Regex restrictivo
+        • DEF-002: Buffer overflow;
+        
+        note left
+            **Defectos Identificados:**
+            • Caracteres especiales Unicode
+            • Contraseñas >100 caracteres
+            • Severidad: Media/Alta
+        end note
+        
+        :🔧 **Proceso de Corrección**
+        • Expandir regex validación
+        • Implementar límite máximo
+        • Validar correcciones;
+        
+        :🔄 **Re-testing**
+        Casos TC-PASS-007, TC-PASS-012;
+        
+        stop
+    endif
+    
+    :▶️ **Ejecutar Test Suite**
+    Registro Completo (10 casos);
+    
+    if (🔍 **¿Tests Registro PASS?**) then (✅ SÍ)
+        :✅ **Registration Flow: PASSED**
+        • 90% casos exitosos
+        • Integración DB/Email OK;
+    else (❌ NO)
+        :<color:red>❌ **Registration Flow: FAILED**</color>
+        • DEF-003: Race condition
+        • Unicidad usuario comprometida;
+        
+        :🔧 **Implementar Solución**
+        • Unique constraints en BD
+        • Locks transaccionales
+        • Retry logic;
+        
+        :🔄 **Re-testing Crítico**
+        TC-REG-015 + pruebas concurrencia;
+        
+        stop
+    endif
+    
+    :▶️ **Ejecutar Test Suite**
+    End-to-End (4 casos);
+    
+    if (🔍 **¿Tests E2E PASS?**) then (✅ SÍ)
+        :✅ **E2E Testing: PASSED**
+        • 100% flujo completo
+        • Email activation verificado;
+    else (❌ NO)
+        :<color:red>❌ **E2E Testing: FAILED**</color>
+        • Integración fallida
+        • User journey interrumpido;
+        
+        :🔍 **Análisis de Integración**
+        • Verificar conectividad servicios
+        • Validar configuración ambientes
+        • Revisar datos de prueba;
+        
+        stop
+    endif
+}
+
+partition "**FASE 7: EVALUACIÓN Y REPORTE**" #E8F5E8 {
+    :📊 **Compilar Métricas**
+    • 91.2% casos exitosos
+    • 5 defectos identificados
+    • Cobertura código: 91.04%;
+    
+    if (📋 **¿Criterios Salida Cumplidos?**) then (✅ SÍ)
+        :✅ **Criterios de Salida: MET**
+        • 100% casos ejecutados ✓
+        • Cobertura ≥85% ✓
+        • Documentación completa ✓;
+        
+        note right
+            **Métricas Finales:**
+            • Test Success Rate: 91.2%
+            • Code Coverage: 91.04%
+            • Defect Density: 0.15/KLOC
+            • Performance: <2s avg
+        end note
+    else (❌ NO)
+        :<color:red>❌ **Criterios Pendientes**</color>
+        • 2 defectos altos abiertos
+        • Funcionalidad crítica afectada;
+        
+        :⚠️ **Escalación a Management**
+        • Informar riesgos a stakeholders
+        • Solicitar decisión Go/No-Go
+        • Documentar excepciones;
+        
+        if (🎯 **¿Aprobación Excepcional?**) then (✅ SÍ)
+            :📋 **Release Condicional**
+            Sujeto a correcciones post-release;
+        else (❌ NO)
+            :<color:red>🚫 **RELEASE BLOQUEADO**</color>;
+            stop
+        endif
+    endif
+}
+
+partition "**FASE 8: CIERRE Y LECCIONES APRENDIDAS**" #FFF8E1 {
+    :📄 **Test Summary Report**
+    • Resumen ejecutivo
+    • Análisis de calidad
+    • Lecciones aprendidas;
+    
+    if (🎯 **¿Release Aprobado?**) then (✅ SÍ)
+        :🎉 **RELEASE APPROVED**
+        **CONDICIONALMENTE APTO**
+        Para correcciones específicas;
+        
+        :📋 **Plan Post-Release**
+        • DEF-002: Buffer overflow (4h)
+        • DEF-003: Race condition (8h)
+        • Fecha límite: 18 Sept 2025;
+        
+        :📊 **Métricas de Éxito**
+        • User Satisfaction: >4.7/5.0
+        • System Availability: 99.9%
+        • Performance: <2s response;
+        
+        :✅ **PROYECTO COMPLETADO**
+        200 horas esfuerzo
+        $18,500 USD inversión;
+        
+    else (❌ NO)
+        :<color:red>🚫 **RELEASE REJECTED**</color>
+        Defectos críticos pendientes;
+        
+        :🔄 **Ciclo de Corrección**
+        Retornar a fase de corrección;
+        
+        stop
+    endif
+}
+
+:🏆 **PROCESO FINALIZADO**
+Sistema listo para producción;
+
+stop
+
+legend right
+    |<color:green>✅</color>| **Flujo de Éxito** |
+    |<color:red>❌</color>| **Flujo de Fallo** |
+    |<color:orange>⚠️</color>| **Punto de Decisión Crítico** |
+    |<color:blue>🔄</color>| **Re-testing Required** |
+    |<color:purple>📊</color>| **Métricas y Medición** |
+    |<color:brown>🧪</color>| **Actividades de Testing Temprano** |
+    |<color:navy>📋</color>| **Reviews y Validaciones** |
+endlegend
+
+@enduml
