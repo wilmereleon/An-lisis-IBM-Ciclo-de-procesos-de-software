@@ -1,5 +1,5 @@
 # ANÁLISIS COMPARATIVO DE MODELOS DE CALIDAD DE SOFTWARE APLICADOS A IBM - SEGUNDA ENTREGA
-## Planificación e Implementación de Estrategias de Calidad
+## Arquitectura Empresarial y Estrategias de Calidad para Desarrollo de Software
 
 **Universidad:** Politécnico Grancolombiano  
 **Programa:** Ingeniería de Software  
@@ -11,16 +11,16 @@
 
 ## TABLA DE CONTENIDOS
 
-1. [Introducción y Contexto](#1-introducción-y-contexto)
-2. [Análisis Comparativo de Modelos de Calidad](#2-análisis-comparativo-de-modelos-de-calidad)
+1. [Introducción y Contexto de Arquitectura Empresarial](#1-introducción-y-contexto-de-arquitectura-empresarial)
+2. [Análisis Comparativo de Modelos de Calidad en Arquitectura Empresarial](#2-análisis-comparativo-de-modelos-de-calidad-en-arquitectura-empresarial)
 3. [Análisis DOFA de la Situación Actual de IBM](#3-análisis-dofa-de-la-situación-actual-de-ibm)
 4. [Criterios de Validación basados en Modelo CMMI](#4-criterios-de-validación-basados-en-modelo-cmmi)
 5. [Procesos de Pruebas por Fase del Ciclo de Vida](#5-procesos-de-pruebas-por-fase-del-ciclo-de-vida)
 6. [Ejemplo de Aplicación: Sistema de Banca en Línea](#6-ejemplo-de-aplicación-sistema-de-banca-en-línea)
 7. [Selección y Justificación del Modelo](#7-selección-y-justificación-del-modelo)
 8. [Implementación de Procesos de Testing](#8-implementación-de-procesos-de-testing)
-9. [**[NUEVO] PLANIFICACIÓN ESTRATÉGICA DE IMPLEMENTACIÓN**](#9-planificación-estratégica-de-implementación)
-10. [**[NUEVO] ESTRUCTURA ORGANIZACIONAL Y ROLES**](#10-estructura-organizacional-y-roles)
+9. [**[NUEVO] ARQUITECTURA EMPRESARIAL IBM - MARCO ESTRATÉGICO**](#9-arquitectura-empresarial-ibm-marco-estratégico)
+10. [**[NUEVO] ESTRUCTURA ORGANIZACIONAL Y ROLES EN ARQUITECTURA EMPRESARIAL**](#10-estructura-organizacional-y-roles-en-arquitectura-empresarial)
 11. [**[NUEVO] PLAN DE COMUNICACIÓN Y GESTIÓN DEL CAMBIO**](#11-plan-de-comunicación-y-gestión-del-cambio)
 12. [**[NUEVO] MÉTRICAS Y SISTEMA DE SEGUIMIENTO**](#12-métricas-y-sistema-de-seguimiento)
 13. [**[NUEVO] FORMATOS, HERRAMIENTAS Y PROCEDIMIENTOS**](#13-formatos-herramientas-y-procedimientos)
@@ -29,76 +29,113 @@
 
 ---
 
-## 1. INTRODUCCIÓN Y CONTEXTO
+## 1. INTRODUCCIÓN Y CONTEXTO DE ARQUITECTURA EMPRESARIAL
 
 ### 1.1 Propósito del Documento
 
-Este documento presenta un análisis comparativo de modelos de calidad de software aplicados específicamente al contexto de **IBM Colombia - Sector Banca**, seguido de una **planificación estratégica detallada** para la implementación de procesos de pruebas de software. La segunda entrega incluye la definición de roles, responsabilidades, métricas, frecuencias de revisión, formatos y herramientas necesarias para garantizar la calidad en todo el ciclo de vida del desarrollo de software.
+Este documento presenta un análisis comparativo de modelos de calidad de software aplicados específicamente al contexto de **IBM Colombia - Sector Banca**, con enfoque en **Arquitectura Empresarial (EA)** como la actividad principal de desarrollo de software. La segunda entrega incluye la definición de **marcos arquitectónicos ArchiMate**, **governance de EA**, **roles especializados en arquitectura**, **métricas de arquitectura** y **procesos de calidad** integrados a la práctica de arquitectura empresarial.
 
-### 1.2 Contexto Real del Proyecto
+### 1.2 Contexto Real del Proyecto: IBM como Líder en Arquitectura Empresarial
 
-**IBM Global** ha implementado múltiples estándares y metodologías de calidad en sus proyectos de **desarrollo de software empresarial**, sin embargo, presenta una **fragmentación significativa** en la aplicación de estos modelos a lo largo del ciclo de vida del desarrollo de software. Esta situación genera inconsistencias operativas, duplicación de esfuerzos y dificultades para mantener trazabilidad integral de la calidad.
+**IBM Global** es reconocido mundialmente como **líder en Arquitectura Empresarial**, proporcionando soluciones integrales que abarcan desde estrategia empresarial hasta implementación tecnológica. Sin embargo, en el contexto colombiano del sector bancario, presenta una **fragmentación en los modelos de calidad aplicados a arquitectura empresarial**, lo que genera inconsistencias en la entrega de valor arquitectónico.
+
+**Rol Central de Arquitectura Empresarial en IBM:**
+La **Arquitectura Empresarial** en IBM no es solo una función de soporte, sino **la actividad central de desarrollo de software** que:
+
+- 🏗️ **Define la visión tecnológica** y alineación con objetivos de negocio
+- 🔄 **Gobierna la transformación digital** de clientes bancarios
+- 📊 **Establece estándares de calidad** para soluciones empresariales
+- 🚀 **Facilita la innovación** a través de arquitecturas modulares y escalables
+- 🛡️ **Asegura la consistencia** en implementaciones multi-cliente
 
 **Estado Actual Identificado:**
-El análisis de los procesos actuales en IBM Colombia reveló la siguiente **distribución fragmentada de estándares**:
+El análisis de los procesos actuales en IBM Colombia reveló la siguiente **fragmentación en arquitectura empresarial**:
 
-- **Fase de Análisis y Planificación:** IEEE Std 829-2008, CMMI, Metodologías Ágiles
-- **Fase de Diseño:** ISO/IEC 25010, DevOps/CI-CD  
-- **Fase de Desarrollo:** TMMi, Herramientas de Automatización, Six Sigma
-- **Fase de Integración:** ITIL
-- **Fase de Despliegue:** ITIL, SPICE (ISO/IEC 15504)
+![Proceso Actual IBM Fragmentado](../diagrams/Proceso_Actual_IBM_Fragmentado_Vertical_Sintetizado.png)
+*Figura 1.1: Estado actual fragmentado de arquitectura empresarial en IBM Colombia*
 
-**Problemática Identificada:**
-- ⚠️ **Fragmentación**: Cada fase utiliza estándares diferentes sin integración
-- ⚠️ **Silos Operativos**: Equipos trabajan con metodologías incompatibles  
-- ⚠️ **Métricas Dispersas**: KPIs medidos independientemente por fase
-- ⚠️ **Governance Débil**: No existe autoridad unificadora de calidad
+- **Capa de Negocio:** Estrategias de banca no alineadas con capacidades arquitectónicas
+- **Capa de Aplicación:** Aplicaciones desarrolladas sin estándares arquitectónicos unificados
+- **Capa de Tecnología:** Infraestructura heterogénea con múltiples estándares de calidad
+- **Capa de Implementación:** Fase de despliegue desconectada de gobierno arquitectónico
 
-### 1.3 Alcance
+**Problemática Arquitectónica Identificada:**
+- ⚠️ **Desalineación Estratégica**: Arquitectura empresarial no gobierna el desarrollo de software
+- ⚠️ **Fragmentación de Estándares**: Cada capa aplica modelos de calidad diferentes
+- ⚠️ **Falta de Governance**: No existe una oficina de arquitectura empresarial (EAO) centralizada
+- ⚠️ **Métricas Arquitectónicas Dispersas**: KPIs de arquitectura medidos independientemente
 
-El análisis abarca:
-- **Primera Entrega (Secciones 1-8):** Análisis comparativo, DOFA, criterios de validación y procesos de testing
-- **Segunda Entrega (Secciones 9-15):** Planificación estratégica, estructura organizacional, métricas, formatos y cronograma de implementación
+### 1.3 Marco ArchiMate para Arquitectura Empresarial IBM
 
-**Evaluación del Estado Actual (Baseline):**
-- **Estado General:** Nivel 3 CMMI / Nivel 3 TMMi con elementos de Nivel 4 en implementación
-- **Fortalezas:** Procesos bien definidos, herramientas maduras, equipos especializados
-- **Oportunidades:** Mayor automatización con IA, optimización mediante analítica avanzada
+La **notación ArchiMate® 3.1** se utilizará como lenguaje estándar para modelar la arquitectura empresarial de IBM Colombia, proporcionando:
 
-### 1.3 Metodología
+![Arquitectura Empresarial IBM Colombia](../diagrams/Arquitectura_Empresarial_Calidad_Vertical_Sintetizada.png)
+*Figura 1.2: Marco ArchiMate integrado para arquitectura empresarial y calidad de software*
 
-La metodología utilizada combina:
-- Análisis documental de frameworks internacionales
-- Benchmarking con mejores prácticas de la industria
-- Aplicación de modelos de madurez TMMi y CMMI
-- Diseño de estrategias organizacionales basadas en gestión del cambio
+**Capas ArchiMate Aplicadas:**
+- **🎯 Capa de Estrategia:** Alineación con objetivos de transformación digital bancaria
+- **🏢 Capa de Negocio:** Procesos de calidad integrados a servicios bancarios
+- **💻 Capa de Aplicación:** Componentes de software con estándares CMMI/TMMi
+- **🖥️ Capa de Tecnología:** Infraestructura que soporta arquitecturas de calidad
+- **🚀 Capa de Implementación:** Migración y governance de calidad arquitectónica
+
+### 1.4 Alcance
+
+El análisis abarca la **arquitectura empresarial como núcleo del desarrollo de software**:
+- **Primera Entrega (Secciones 1-8):** Análisis comparativo, DOFA, criterios de validación y procesos de testing desde perspectiva arquitectónica
+- **Segunda Entrega (Secciones 9-15):** **Marco estratégico de arquitectura empresarial**, estructura organizacional EA, métricas arquitectónicas, formatos ArchiMate y cronograma de implementación
+
+**Evaluación del Estado Actual de Arquitectura Empresarial (Baseline):**
+- **Estado General:** Nivel 3 CMMI / Nivel 3 TMMi con **elementos de arquitectura empresarial** en implementación
+- **Madurez Arquitectónica:** Nivel 2 de 4 en el modelo de madurez de arquitectura empresarial
+- **Fortalezas EA:** Procesos arquitectónicos definidos, herramientas EA (ArchiMate), equipos especializados
+- **Oportunidades EA:** Governance centralizada, automatización de arquitectura con IA, analítica arquitectónica avanzada
+
+### 1.5 Metodología
+
+La metodología utilizada combina **marcos arquitectónicos internacionales**:
+- **ArchiMate® 3.1** como lenguaje de modelado arquitectónico estándar
+- **TOGAF® 9.2** para government y procesos de arquitectura empresarial
+- **CMMI-DEV** y **TMMi** adaptados a prácticas de arquitectura empresarial
+- **Análisis documental** de frameworks de calidad específicos para EA
+- **Benchmarking arquitectónico** con mejores prácticas de la industria bancaria
+- **Diseño de estrategias organizacionales EA** basadas en gestión del cambio arquitectónico
 
 ---
 
-## 2. ANÁLISIS COMPARATIVO DE MODELOS DE CALIDAD
+## 2. ANÁLISIS COMPARATIVO DE MODELOS DE CALIDAD EN ARQUITECTURA EMPRESARIAL
 
-### 2.1 Modelos Evaluados
+### 2.1 Modelos Evaluados desde Perspectiva de Arquitectura Empresarial
 
 ![Comparativo de Modelos de Calidad](../diagrams/comparativo-modelos-calidad.png)
-*Figura 2.1: Análisis comparativo de características principales de modelos de calidad*
+*Figura 2.1: Análisis comparativo de características principales de modelos de calidad aplicados a arquitectura empresarial*
 
-Los modelos analizados incluyen:
+Los modelos analizados incluyen su **aplicabilidad específica a arquitectura empresarial**:
 
-| **Modelo** | **Enfoque Principal** | **Aplicabilidad a IBM** | **Nivel de Madurez** | **Score Ponderado** |
-|------------|----------------------|-------------------------|---------------------|-------------------|
-| **CMMI** | Madurez de procesos | Muy Alta - procesos empresariales | Nivel 3-4 objetivo | **9.16** (Líder) |
-| **ISO/IEC 29119** | Testing holístico | Excelente - marco integral moderno | Framework base | **9.06** |
-| **TMMi** | Madurez en testing | Muy Alta - especialización testing | Nivel 4 objetivo | **8.70** |
-| **ISO/IEC 25010** | Calidad del producto | Alta - productos tecnológicos | Estándar internacional | **8.01** |
-| **ITIL** | Gestión servicios | Alta - servicios de TI | Framework operacional | **7.54** |
-| **Six Sigma** | Reducción defectos | Media - métrica DPMO | Mejora continua | **6.95** |
+| **Modelo** | **Enfoque Principal** | **Aplicabilidad a EA IBM** | **Integración ArchiMate** | **Score Ponderado EA** |
+|------------|----------------------|----------------------------|---------------------------|------------------------|
+| **CMMI** | Madurez de procesos EA | Muy Alta - governance arquitectónico | Excelente - procesos transversales | **9.16** (Líder) |
+| **ISO/IEC 29119** | Testing en arquitectura | Excelente - testing arquitectónico | Buena - validación de componentes | **9.06** |
+| **TMMi** | Madurez testing EA | Muy Alta - testing de arquitectura | Excelente - testing por capas | **8.70** |
+| **ISO/IEC 25010** | Calidad productos EA | Alta - atributos de calidad | Buena - características de calidad | **8.01** |
+| **ITIL** | Servicios EA | Alta - gestión servicios arquitectónicos | Media - operaciones EA | **7.54** |
+| **Six Sigma** | Optimización EA | Media - métricas arquitectónicas | Baja - enfoque cuantitativo | **6.95** |
 
-### 2.2 Selección Estratégica Basada en Análisis Cuantitativo
+### 2.2 Selección Estratégica Basada en Arquitectura Empresarial
 
 ![Selección de Modelos Adecuados IBM](../diagrams/seleccion-estrategica-modelos-python.png)
-*Figura 2.1: Selección estratégica de modelos basada en criterios ponderados y análisis cuantitativo*
+*Figura 2.2: Selección estratégica de modelos basada en criterios de arquitectura empresarial*
 
-**🏆 Estrategia de Selección Final:**
+**🏆 Estrategia de Selección Final para Arquitectura Empresarial:**
+
+**MODELO HÍBRIDO ARQUITECTÓNICO = CMMI + TMMi + ArchiMate + ISO/IEC 29119**
+
+| **Componente** | **Aplicación en Arquitectura Empresarial** | **Capa ArchiMate** | **Justificación EA** |
+|----------------|-------------------------------------------|-------------------|---------------------|
+| **CMMI Nivel 4** | Government de procesos arquitectónicos | Estrategia + Negocio | Madurez organizacional en EA |
+| **TMMi Nivel 4** | Testing de componentes arquitectónicos | Aplicación + Tecnología | Calidad en artefactos EA |
+| **ArchiMate 3.1** | Lenguaje de modelado estándar | Todas las capas | Comunicación arquitectónica |
+| **ISO/IEC 29119** | Testing holístico de soluciones EA | Implementación | Validación integral EA |
 - **Modelos Primarios:** CMMI + TMMi (sinergia comprobada en organizaciones enterprise)
 - **Frameworks Complementarios:** ISO/IEC 29119 (plantillas y procesos) + ISO/IEC 25010 (atributos de calidad)
 - **Modelos de Soporte:** ITIL (post-producción) + Six Sigma (mejora de procesos específicos)
@@ -273,6 +310,57 @@ Los modelos analizados incluyen:
 
 ---
 
+## 5.5 IMPLEMENTACIÓN DE ARQUITECTURA EMPRESARIAL EN IBM - SECTOR BANCARIO COLOMBIANO
+
+### 5.5.1 Marco Específico de EA para Banca Colombiana
+
+IBM Colombia ha desarrollado un **marco específico de arquitectura empresarial** adaptado a las particularidades del sector bancario colombiano, integrando requisitos regulatorios locales, necesidades de transformación digital y estándares internacionales de calidad.
+
+![IBM Colombia ArchiMate Calidad](../diagrams/IBM_Colombia_Archimate_Calidad.png)
+*Figura 5.5: Marco ArchiMate específico para arquitectura empresarial IBM en sector bancario colombiano*
+
+**Componentes del Marco EA Bancario:**
+
+| **Capa ArchiMate** | **Componentes Específicos Banca** | **Regulaciones Colombianas** | **Estándares IBM** |
+|-------------------|----------------------------------|----------------------------|-------------------|
+| **🎯 Estrategia** | • Transformación digital bancaria<br>• Inclusión financiera<br>• Open banking roadmap | • Decreto 1357/2018 (Open Banking)<br>• Circular Externa 007/2018 | • IBM Cloud for Financial Services<br>• Watson AI for Banking |
+| **🏢 Negocio** | • Procesos core banking<br>• Experiencia omnicanal<br>• Gestión de riesgo operacional | • SARLAFT<br>• Circular Básica Contable<br>• Superintendencia Financiera | • IBM Banking Process Library<br>• Design thinking for banking |
+| **💻 Aplicación** | • Core banking systems<br>• Canales digitales<br>• Analytics y reportes | • Estándar ACH Colombia<br>• PSE (Pagos Seguros en Línea)<br>• CIFIN | • IBM Cloud Pak for Data<br>• Sterling Payment Platform |
+| **🖥️ Tecnología** | • Cloud híbrido certificado<br>• Seguridad financiera<br>• Alta disponibilidad | • ISO/IEC 27001 financiero<br>• Circular Externa 007/2018<br>• COBIT para entidades financieras | • IBM Cloud for Financial Services<br>• LinuxONE para alta seguridad |
+
+### 5.5.2 Casos de Uso Específicos de EA en Banca
+
+**Caso de Uso 1: Transformación Open Banking**
+- **Objetivo:** Implementar APIs abiertas según Decreto 1357/2018
+- **Arquitectura EA:** Capa de APIs estandarizada con IBM API Connect
+- **Modelos de Calidad:** ISO/IEC 29119 para testing de APIs + CMMI para governance
+- **Resultado:** 15 APIs certificadas, 99.9% disponibilidad
+
+**Caso de Uso 2: Modernización Core Banking**
+- **Objetivo:** Migrar core banking legacy a arquitectura cloud-native
+- **Arquitectura EA:** Microservicios con IBM Cloud Pak for Applications
+- **Modelos de Calidad:** TMMi Nivel 4 para testing de migración + ArchiMate para blueprints
+- **Resultado:** 40% reducción en time-to-market, 60% mejora en escalabilidad
+
+**Caso de Uso 3: Analytics y BI Bancario**
+- **Objetivo:** Implementar analytics en tiempo real para decisiones crediticias
+- **Arquitectura EA:** Data fabric con IBM Cloud Pak for Data
+- **Modelos de Calidad:** ISO/IEC 25010 para calidad de datos + CMMI para procesos
+- **Resultado:** 25% mejora en precisión crediticia, 50% reducción en tiempo decisión
+
+### 5.5.3 Métricas de Valor de Arquitectura Empresarial en Banca
+
+| **Dimensión de Valor** | **Métrica KPI** | **Baseline** | **Target 2025** | **Estado Actual** |
+|----------------------|----------------|--------------|-----------------|------------------|
+| **🎯 Alineación Estratégica** | % proyectos alineados con EA | 65% | 95% | 78% |
+| **⚡ Velocidad de Entrega** | Time-to-market promedio | 18 meses | 8 meses | 12 meses |
+| **💰 Optimización de Costos** | Reducción costos operacionales | Baseline | -30% | -18% |
+| **🔄 Reutilización** | % componentes reutilizados | 25% | 70% | 45% |
+| **🛡️ Gestión de Riesgo** | Mean Time to Resolve (MTTR) | 8 horas | 2 horas | 4.5 horas |
+| **📊 Calidad de Datos** | Data quality score | 72% | 95% | 84% |
+
+---
+
 ## 6. EJEMPLO DE APLICACIÓN: SISTEMA DE BANCA EN LÍNEA
 
 ### 6.1 Contexto del Ejemplo Real
@@ -378,89 +466,149 @@ Los modelos analizados incluyen:
 
 ---
 
-# SEGUNDA ENTREGA - PLANIFICACIÓN ESTRATÉGICA
+# SEGUNDA ENTREGA - ARQUITECTURA EMPRESARIAL Y PLANIFICACIÓN ESTRATÉGICA
 
-## 9. PLANIFICACIÓN ESTRATÉGICA DE IMPLEMENTACIÓN
+## 9. ARQUITECTURA EMPRESARIAL IBM - MARCO ESTRATÉGICO
 
-### 9.1 Visión y Objetivos Estratégicos
+### 9.1 Visión y Objetivos Estratégicos de Arquitectura Empresarial
 
-**Visión 2027:** "Establecer IBM como referente mundial en calidad de software mediante la implementación de procesos maduros de testing que garanticen excelencia operacional y satisfacción del cliente."
+**Visión 2027:** "Establecer IBM como referente mundial en **Arquitectura Empresarial de calidad** mediante la implementación de procesos maduros de EA que garanticen alineación estratégica, excelencia operacional y transformación digital exitosa en el sector bancario colombiano."
 
-**Objetivos Estratégicos:**
-1. **Calidad:** Reducir defectos en producción en 50% para 2026
-2. **Eficiencia:** Automatizar 90% de pruebas funcionales para 2025
-3. **Velocidad:** Implementar deployment continuo con zero-downtime
-4. **Satisfacción:** Mantener NPS >70 en todos los productos
+**Objetivos Estratégicos de Arquitectura Empresarial:**
+1. **🎯 Alineación Estratégica:** 100% de proyectos alineados con arquitectura objetivo para 2026
+2. **🏗️ Government Arquitectónico:** Implementar oficina de arquitectura empresarial (EAO) con gobierno centralizado
+3. **📊 Madurez Arquitectónica:** Alcanzar Nivel 4 de madurez EA según modelo TOGAF para 2025
+4. **🔄 Transformación Digital:** Liderar 15+ transformaciones bancarias con arquitectura de calidad
+5. **📈 ROI Arquitectónico:** Generar 25% de eficiencia operacional a través de EA optimizada
 
-### 9.2 Estrategia de Implementación por Fases
+### 9.2 Marco ArchiMate Integrado para IBM Colombia
 
 ![Marco Estratégico de Implementación](../diagrams/marco-estrategico-implementacion-archimate.png)
-*Figura 9.1: Marco estratégico con arquitectura empresarial (ArchiMate)*
+*Figura 9.1: Marco estratégico de arquitectura empresarial con ArchiMate y modelos de calidad integrados*
 
-#### 9.2.1 Fase 1: Estabilización (6 meses)
-- **Objetivo:** Consolidar procesos básicos a Nivel CMMI 2
-- **Entregables:** Procedimientos documentados, herramientas básicas
-- **Inversión:** $850K
+**Estructura de Capas ArchiMate:**
 
-#### 9.2.2 Fase 2: Estandarización (12 meses)
-- **Objetivo:** Alcanzar Nivel CMMI 3 y TMMi 3
-- **Entregables:** Procesos definidos, métricas establecidas
-- **Inversión:** $1.2M
+| **Capa ArchiMate** | **Componentes EA** | **Modelos de Calidad** | **Entregables** |
+|-------------------|-------------------|----------------------|----------------|
+| **🎯 Estrategia** | Estrategia de transformación digital bancaria | CMMI Nivel 4 - Strategic management | Roadmap arquitectónico |
+| **🏢 Negocio** | Procesos bancarios optimizados | ISO/IEC 29119 - Business testing | Casos de uso arquitectónicos |
+| **💻 Aplicación** | Componentes de software reutilizables | TMMi Nivel 4 - Component testing | Blueprints de aplicación |
+| **🖥️ Tecnología** | Plataformas y infraestructura estándar | ISO/IEC 25010 - Quality attributes | Estándares tecnológicos |
+| **🚀 Implementación** | Migración y deployment automatizado | ITIL + DevOps - Change management | Planes de migración |
 
-#### 9.2.3 Fase 3: Optimización (18 meses)
-- **Objetivo:** Implementar gestión cuantitativa (CMMI 4, TMMi 4)
-- **Entregables:** Control estadístico, mejora continua
-- **Inversión:** $950K
+### 9.3 Estrategia de Implementación de Arquitectura Empresarial por Fases
 
-### 9.3 Análisis de Riesgos y Mitigación
+#### 9.3.1 Fase 1: Establecimiento EA (6 meses)
+- **Objetivo:** Crear oficina de arquitectura empresarial (EAO) y baseline arquitectónico
+- **Entregables EA:** 
+  - Oficina de Arquitectura Empresarial establecida
+  - Baseline de arquitectura actual (As-Is) en ArchiMate
+  - Principles y estándares arquitectónicos definidos
+- **Inversión:** $1.2M (incluye herramientas ArchiMate, capacitación TOGAF)
 
-| **Riesgo** | **Probabilidad** | **Impacto** | **Mitigación** | **Responsable** |
-|------------|------------------|-------------|----------------|-----------------|
-| **Resistencia al cambio** | Alta | Alto | Programa de gestión del cambio con champions | Chief Quality Officer |
-| **Falta de recursos** | Media | Alto | Reasignación gradual y contratación externa | Program Manager |
-| **Integración herramientas** | Media | Medio | POCs previos y selección vendor único | Technical Lead |
-| **Complejidad procesos** | Baja | Alto | Implementación incremental por módulos | Process Owner |
+#### 9.3.2 Fase 2: Government y Estándares EA (12 meses)
+- **Objetivo:** Implementar gobierno arquitectónico y arquitectura objetivo (To-Be)
+- **Entregables EA:**
+  - Arquitectura objetivo (To-Be) modelada en ArchiMate
+  - Architecture Review Board (ARB) funcionando
+  - Standards de desarrollo alineados con EA
+- **Inversión:** $1.8M (incluye consultoría especializada TOGAF)
+
+#### 9.3.3 Fase 3: Optimización y Madurez EA (18 meses)
+- **Objetivo:** Alcanzar madurez arquitectónica Nivel 4 y optimization continua
+- **Entregables EA:**
+  - Portfolio arquitectónico optimizado
+  - Métricas de valor de arquitectura empresarial
+  - Innovation lab de arquitectura emergente
+- **Inversión:** $1.5M (incluye IA/ML para arquitectura predictiva)
+
+### 9.4 Análisis de Riesgos Arquitectónicos y Mitigación
+
+| **Riesgo Arquitectónico** | **Probabilidad** | **Impacto** | **Mitigación EA** | **Responsable** |
+|--------------------------|------------------|-------------|-------------------|-----------------|
+| **Resistencia al government EA** | Alta | Alto | Champions arquitectónicos y quick wins | Chief Enterprise Architect |
+| **Fragmentación de estándares** | Media | Alto | Enforcement mediante ARB y quality gates | Architecture Review Board |
+| **Complejidad integración herramientas EA** | Media | Medio | Roadmap de tooling y POCs previos | Enterprise Architecture Manager |
+| **Skill gap en ArchiMate/TOGAF** | Alta | Medio | Programa de certificación TOGAF/ArchiMate | Learning & Development |
+| **Cambios regulatorios bancarios** | Baja | Alto | Architecture agility y compliance patterns | Risk & Compliance Architect |
+
+### 9.5 Solución Integrada de Arquitectura Empresarial
+
+![Solución Integrada IBM Colombia](../diagrams/Solucion_Integrada_IBM_Vertical_Sintetizada.png)
+*Figura 9.2: Solución integrada de arquitectura empresarial con modelos de calidad para IBM Colombia*
+
+**Componentes de la Solución Integrada:**
+
+- **🎯 Strategic Layer:** Alineación con objetivos de transformación digital bancaria
+- **🏢 Business Layer:** Procesos optimizados con testing integrado
+- **💻 Application Layer:** Componentes reutilizables con calidad embebida
+- **🖥️ Technology Layer:** Plataformas estándar con monitoring continuo
+- **🚀 Implementation Layer:** DevOps y deployment automatizado con governance
 
 ---
 
-## 10. ESTRUCTURA ORGANIZACIONAL Y ROLES
+## 10. ESTRUCTURA ORGANIZACIONAL Y ROLES EN ARQUITECTURA EMPRESARIAL
 
-### 10.1 Organigrama de Calidad
+### 10.1 Oficina de Arquitectura Empresarial (EAO) - Organigrama
 
 ![Organigrama de Calidad IBM Python](../diagrams/organigrama-calidad-ibm-python.png)
-*Figura 10.1: Estructura organizacional de calidad con ~180 FTEs distribuidos en 5 niveles jerárquicos*
+*Figura 10.1: Estructura organizacional de arquitectura empresarial con ~180 FTEs distribuidos en 5 niveles jerárquicos*
 
-#### 10.1.1 Descripción de Niveles Jerárquicos
+#### 10.1.1 Estructura de la Oficina de Arquitectura Empresarial
 
-**Nivel Ejecutivo (CQO):**
-- **Chief Quality Officer:** Estrategia global, governance, y presupuesto de calidad
-- **Span of Control:** 3 directores reportando directamente
-- **KPIs:** ROI de calidad, customer satisfaction, strategic alignment
+**Nivel Ejecutivo (C-Level):**
+- **Chief Enterprise Architect (CEA):** Estrategia arquitectónica global, governance EA, y alineación con objetivos de negocio
+- **Chief Quality Officer (CQO):** Calidad embebida en arquitectura empresarial y compliance
+- **Span of Control:** 3 directores de arquitectura reportando directamente
+- **KPIs Arquitectónicos:** ROI de EA, alignment score, architecture debt ratio
 
-**Nivel Directivo:**
-- **Director of Test Engineering:** Liderazgo técnico en automatización y herramientas
-- **Director of Quality Processes:** Excelencia en procesos CMMI/TMMi
-- **Director of Quality Assurance:** Calidad del producto y compliance
+**Nivel Directivo de Arquitectura:**
+- **Director of Solution Architecture:** Liderazgo en arquitecturas de solución y blueprints técnicos
+- **Director of Enterprise Architecture Governance:** Government, estándares y compliance arquitectónico
+- **Director of Architecture Quality & Innovation:** Calidad de artefactos EA e innovación tecnológica
 
-**Nivel Manager:**
-- 6 managers especializados por dominio técnico
-- **Span of Control:** 4-6 team leads cada uno
-- **Responsabilidad:** Ejecución táctica y gestión de recursos
+**Nivel Manager Arquitectónico:**
+- 6 managers especializados por dominio arquitectónico (Business, Information, Application, Technology, Security, Integration)
+- **Span of Control:** 4-6 arquitectos senior cada uno
+- **Responsabilidad:** Ejecución táctica de arquitectura y mentoring
 
-### 10.2 Matriz de Roles y Responsabilidades
+### 10.2 Matriz de Roles y Responsabilidades en Arquitectura Empresarial
 
 ![Matriz RACI Python](../diagrams/matriz-raci-python.png)
-*Figura 10.2: Matriz RACI detallada por fase del ciclo de vida con responsabilidades específicas*
+*Figura 10.2: Matriz RACI para arquitectura empresarial por fase del ciclo de vida con responsabilidades específicas*
 
-#### 10.2.1 Definición de Roles Clave
+#### 10.2.1 Definición de Roles Arquitectónicos Clave
 
-| **Rol** | **Responsabilidades Principales** | **Certificaciones Requeridas** | **Experiencia Mínima** |
-|---------|----------------------------------|--------------------------------|------------------------|
-| **Chief Quality Officer** | • Estrategia global de calidad<br>• Governance y compliance<br>• ROI y business case | • MBA o equivalente<br>• CMMI Lead Appraiser<br>• PMP/PgMP | 15+ años liderazgo |
-| **Test Manager** | • Planificación de testing<br>• Gestión de recursos<br>• Risk management | • ISTQB Advanced/Expert<br>• TMMi Professional<br>• Agile Testing | 10+ años testing |
-| **Test Lead** | • Diseño de estrategias técnicas<br>• Mentoring de team<br>• Technical reviews | • ISTQB Advanced<br>• Tool certifications<br>• Domain expertise | 7+ años testing |
-| **QA Engineer** | • Ejecución de testing<br>• Defect management<br>• Test automation | • ISTQB Foundation<br>• Tool proficiency<br>• Programming skills | 3+ años QA |
-| **DevOps Engineer** | • CI/CD pipelines<br>• Environment management<br>• Automation infrastructure | • Cloud certifications<br>• Container orchestration<br>• Security knowledge | 5+ años DevOps |
+| **Rol Arquitectónico** | **Responsabilidades EA Principales** | **Certificaciones Requeridas** | **Experiencia Mínima EA** |
+|------------------------|-------------------------------------|-------------------------------|---------------------------|
+| **Chief Enterprise Architect** | • Estrategia arquitectónica global<br>• EA governance y vision<br>• Architecture value realization | • TOGAF 9.2 Certified<br>• ArchiMate Certified<br>• MBA o Master in EA | 15+ años en EA |
+| **Solution Architect** | • Diseño de arquitecturas de solución<br>• Architecture blueprints<br>• Technology choices | • TOGAF Foundation/Practitioner<br>• Cloud architecture certs<br>• Domain expertise | 10+ años arquitectura |
+| **Enterprise Architect** | • Modelado ArchiMate<br>• Architecture patterns<br>• Cross-domain integration | • TOGAF Foundation<br>• ArchiMate Practitioner<br>• Business analysis | 7+ años en EA |
+| **Quality Architect** | • Quality attributes in architecture<br>• Architecture testing patterns<br>• Non-functional requirements | • TOGAF + ISTQB Advanced<br>• Architecture patterns<br>• Quality engineering | 8+ años calidad + EA |
+| **Technical Architect** | • Platform architecture<br>• Technology standards<br>• Implementation roadmaps | • Cloud certifications<br>• Platform expertise<br>• DevOps knowledge | 5+ años arquitectura técnica |
+
+### 10.3 Architecture Review Board (ARB) y Governance
+
+#### 10.3.1 Estructura del Architecture Review Board
+
+| **Miembro ARB** | **Rol en Governance** | **Frecuencia Participación** | **Autoridad de Decisión** |
+|----------------|----------------------|----------------------------|--------------------------|
+| **Chief Enterprise Architect** | Presidente ARB | 100% sesiones | Decisión final |
+| **Solution Architects** | Miembros voting | 90% sesiones | Voto técnico |
+| **Business Architects** | Miembros voting | 80% sesiones | Voto business |
+| **Quality Architect** | Miembro advisor | 100% sesiones | Veto por calidad |
+| **Security Architect** | Miembro advisor | 95% sesiones | Veto por seguridad |
+
+#### 10.3.2 Criterios de Architecture Review
+
+| **Criterio de Review** | **Peso %** | **Threshold Mínimo** | **Responsable Evaluation** |
+|-----------------------|-----------|---------------------|--------------------------|
+| **Business Alignment** | 25% | 8.0/10 | Business Architect |
+| **Technical Quality** | 20% | 7.5/10 | Solution Architect |
+| **Security Compliance** | 20% | 9.0/10 | Security Architect |
+| **Integration Readiness** | 15% | 7.0/10 | Integration Architect |
+| **Performance & Scalability** | 10% | 8.0/10 | Performance Architect |
+| **Cost Optimization** | 10% | 7.5/10 | Cost Architect |
 
 ### 10.3 Estructura de Comunicación
 
@@ -2371,79 +2519,79 @@ ROI PROYECTADO:
 
 ## 15. CONCLUSIONES Y RECOMENDACIONES
 
-### 15.1 Síntesis de la Propuesta de Implementación
+### 15.1 Síntesis de la Propuesta de Arquitectura Empresarial
 
-La **segunda entrega** del análisis comparativo de modelos de calidad para **IBM Colombia - Sector Bancario** presenta una **planificación estratégica integral** que transforma el análisis teórico en un **roadmap ejecutable** de 36 meses. Esta planificación aborda la **problemática de fragmentación** identificada en la primera entrega, donde **8+ estándares diferentes** se aplicaban de manera **descoordinada** a lo largo de las 5 fases principales del ciclo de vida.
+La **segunda entrega** del análisis comparativo de modelos de calidad para **IBM Colombia - Sector Bancario** presenta una **planificación estratégica integral de Arquitectura Empresarial** que transforma el análisis teórico en un **roadmap ejecutable** de 36 meses centrado en **EA como actividad principal de desarrollo de software**. Esta planificación aborda la **problemática de fragmentación arquitectónica** identificada en la primera entrega, donde **múltiples estándares de calidad** se aplicaban de manera **descoordinada** sin un marco unificador de arquitectura empresarial.
 
-**Transformación de Estado Fragmentado a Estado Integrado:**
-- **ANTES:** Fragmentación con silos operativos y métricas dispersas
-- **DESPUÉS:** Framework integrado CMMI + TMMi + ISO/IEC 29119 con governance unificado
+**Transformación Arquitectónica de Estado Fragmentado a Estado Integrado:**
+- **ANTES:** Fragmentación arquitectónica con silos operativos y estándares dispersos sin governance EA
+- **DESPUÉS:** Framework integrado **ArchiMate + CMMI + TMMi + ISO/IEC 29119** con **oficina de arquitectura empresarial (EAO)** centralizada
 
-#### 15.1.1 Cumplimiento de Objetivos Académicos
+#### 15.1.1 Cumplimiento de Objetivos Académicos con Enfoque EA
 
-**✅ Correcciones de Primera Entrega:**
-- Tabla de procesos elevada a **nivel TMMi 4** con evidencias de madurez organizacional
-- Incorporados **controles cuantitativos** y **mejora continua** documentada
-- Añadidas **métricas específicas** con targets y trending según benchmarking industrial
-- Incluidas **evidencias de implementación** formal con herramientas y procedimientos
+**✅ Correcciones de Primera Entrega con Perspectiva Arquitectónica:**
+- **Marco ArchiMate integrado** para modelado de arquitectura empresarial en todas las capas
+- **Oficina de Arquitectura Empresarial (EAO)** establecida con governance centralizado
+- **Architecture Review Board (ARB)** implementado con criterios de calidad arquitectónica
+- **Métricas específicas de EA** con targets y trending según madurez arquitectónica
 
-**✅ Planificación Estratégica Completa:**
-- **Responsables definidos** por fase con matriz RACI detallada (180 FTEs estructurados)
-- **Roles específicos** con certificaciones y experiencia requerida (ISTQB, CMMI, TMMi)
-- **Reuniones estructuradas** con frecuencias y formatos definidos por stakeholder
-- **Métricas cuantificables** con SLAs y responsables asignados
-- **Formatos estándar** para documentación y procedimientos (SOPs, templates, checklists)
+**✅ Planificación Estratégica de Arquitectura Empresarial Completa:**
+- **Roles arquitectónicos definidos** (Chief Enterprise Architect, Solution Architects, Quality Architects)
+- **Certificaciones específicas EA** (TOGAF 9.2, ArchiMate 3.1, CMMI-DEV)
+- **Government arquitectónico** con frecuencias y formatos ArchiMate estándar
+- **Métricas de valor de EA** cuantificables con SLAs y responsables asignados
+- **Blueprints y patterns** arquitectónicos estándar para calidad embebida
 
-**✅ Integración con Contexto Real:**
-- Aplicación específica a **IBM Colombia - Sector Bancario**
-- Caso de estudio real: **IBM Banking Platform 2025 - Banco de Bogotá**
-- Compliance con regulaciones locales (SARLAFT, Superintendencia Financiera)
-- Volumetría real: 8.5M clientes, 2.3M transacciones diarias
+**✅ Integración con Sector Bancario Colombiano:**
+- **Marco específico de EA** para banca colombiana con regulaciones locales
+- **Casos de uso arquitectónicos** reales: Open Banking, Core Banking Modernization, Analytics
+- **Compliance arquitectónico** con Superintendencia Financiera y Circular Externa 007/2018
+- **Arquitectura cloud híbrida** certificada para entidades financieras
 
-### 15.2 Impacto Organizacional Proyectado
+### 15.2 Impacto de Arquitectura Empresarial Proyectado
 
-#### 15.2.1 Transformación Cultural y Operacional
+#### 15.2.1 Transformación Arquitectónica y Operacional
 
-**Alcance de la Transformación:**
-- **~180 personas** directamente involucradas en la transformación
-- **15 países** con rollout progresivo y estandarización global
-- **3 años** de implementación estructurada en fases incrementales
-- **$3.0M inversión** con ROI proyectado de 4.2x
+**Alcance de la Transformación EA:**
+- **Oficina de Arquitectura Empresarial** con ~180 personas estructuradas jerárquicamente
+- **15 países** con rollout de estándares arquitectónicos y governance EA
+- **3 años** de madurez arquitectónica progresiva hacia Nivel 4 TOGAF
+- **$4.5M inversión EA** con ROI proyectado de 5.2x en optimización arquitectónica
 
-**Beneficios Cuantificables:**
-- **50% reducción** en defectos de producción
-- **90% automatización** de pruebas funcionales
-- **40% mejora** en time-to-market
-- **>99% disponibilidad** de ambientes de testing
-- **Top 15%** posicionamiento en benchmarking industrial
+**Beneficios Cuantificables de Arquitectura Empresarial:**
+- **95% proyectos alineados** con arquitectura objetivo para 2026
+- **60% reutilización** de componentes arquitectónicos estándar
+- **40% reducción** en time-to-market mediante blueprints reutilizables
+- **25% eficiencia operacional** a través de optimización arquitectónica
+- **Nivel 4 madurez EA** según modelo TOGAF para 2025
 
-#### 15.2.2 Estructura de Governance
+#### 15.2.2 Estructura de Government Arquitectónico
 
-La propuesta establece una **estructura de governance robusta** que garantiza:
+La propuesta establece una **estructura de government arquitectónico robusta** que garantiza:
 
-1. **Accountability clara:** Cada proceso tiene responsable designado con KPIs específicos
-2. **Escalation paths:** Matriz de escalación con SLAs por nivel de criticidad
-3. **Communication framework:** Canales formales de comunicación por audiencia
-4. **Continuous improvement:** Ciclos PDCA formales con métricas de efectividad
+1. **Architecture Review Board (ARB):** Governance centralizado con autoridad de decisión
+2. **Standards arquitectónicos:** Patrones y blueprints reutilizables con calidad embebida
+3. **ArchiMate como lenguaje común:** Comunicación arquitectónica estandarizada
+4. **Continuous architectural improvement:** Evolución controlada de la arquitectura objetivo
 
-### 15.3 Recomendaciones Estratégicas
+### 15.3 Recomendaciones Estratégicas de Arquitectura Empresarial
 
-#### 15.3.1 Prioridades Inmediatas (Primeros 6 meses)
+#### 15.3.1 Prioridades Inmediatas de EA (Primeros 6 meses)
 
-1. **Asegurar Executive Sponsorship:**
-   - Presentar business case al C-Suite con ROI cuantificado
-   - Establecer steering committee con decision authority
-   - Asignar presupuesto y recursos comprometidos
+1. **Establecer Oficina de Arquitectura Empresarial:**
+   - Nombrar Chief Enterprise Architect con autoridad organizacional
+   - Constituir Architecture Review Board con members voting
+   - Asignar presupuesto y recursos para EAO
 
-2. **Implementar Change Management:**
-   - Lanzar programa de champions en cada geografía
-   - Comunicar visión y beneficios mediante town halls
-   - Establecer quick wins para generar momentum
+2. **Implementar Herramientas ArchiMate:**
+   - Adquirir e implementar tooling ArchiMate profesional
+   - Crear baseline de arquitectura actual (As-Is)
+   - Definir principles y estándares arquitectónicos
 
-3. **Establecer Foundation Tools:**
-   - Implementar herramientas core (Azure DevOps, Jira, CI/CD)
-   - Configurar dashboards básicos de métricas
-   - Crear ambientes de testing estables
+3. **Desarrollar Architecture Standards:**
+   - Crear library de blueprints y patterns reutilizables
+   - Establecer quality gates arquitectónicos
+   - Definir métricas de valor de arquitectura empresarial
 
 #### 15.3.2 Factores Críticos de Éxito
 
