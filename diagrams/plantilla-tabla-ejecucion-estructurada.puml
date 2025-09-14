@@ -1,0 +1,68 @@
+@startsalt plantilla-tabla-ejecucion-estructurada
+title <color:Blue><size:16><b>TABLA DE EJECUCIÓN - CASOS DE PRUEBA</b></color>
+header <color:Navy><b>ISO/IEC 29119 | Sistema de Banca Virtual | ID: mt01</b></color>
+footer <color:Gray><size:10>Executor: Mercurio Avellaneda Vargas | Date: __________ | Version: 1.0</color>
+caption <color:Purple><i>Plantilla estructurada para documentación de ejecución de pruebas</i></color>
+
+legend
+<color:Blue><b>INFORMACIÓN DEL CASO</b></color>
+Target: Ingreso a banca virtual
+Type: Funcional
+Priority: Media
+Pre-Conditions: 
+1) Creación de cuenta
+2) Ingreso banca virtual
+end legend
+
+{+
+  ==<color:Blue><b>CASOS DE PRUEBA - PASOS DE EJECUCIÓN
+  ====
+  
+  <color:Blue><b>TC-001: Acceso a banca digital              | "PASSED    " | [   FAIL   ] | "BUG-ID     "
+  <color:Gray>• Ingresar datos solicitados                  | .            | .             | .
+  <color:Gray>• Tipo: nombre, documento, contraseña         | .            | .             | .
+  <color:Blue><i>Expected: Se visualiza correctamente       | .            | .             | .
+  ====
+  
+  <color:Blue><b>TC-002: Seleccionar opción ingreso          | "PASSED    " | [   FAIL   ] | "           "
+  <color:Blue><i>Expected: Acceso correcto a Banca virtual  | .            | .             | .
+  ====
+  
+  <color:Gray><b>TC-003: [Definir nuevo caso]               | "           " | [   FAIL   ] | "           "
+  <color:Gray><i>Expected: [Resultado esperado]             | .            | .             | .
+  ====
+  
+  <color:Gray><b>TC-004: [Definir nuevo caso]               | "           " | [   FAIL   ] | "           "
+  <color:Gray><i>Expected: [Resultado esperado]             | .            | .             | .
+  ====
+  
+  <color:Gray><b>TC-005: [Definir nuevo caso]               | "           " | [   FAIL   ] | "           "
+  <color:Gray><i>Expected: [Resultado esperado]             | .            | .             | .
+  ====
+  
+  <color:Gray><b>TC-006: [Definir nuevo caso]               | "           " | [   FAIL   ] | "           "
+  <color:Gray><i>Expected: [Resultado esperado]             | .            | .             | .
+  ====
+  ====
+  
+  ==<color:Green><b>RESUMEN DE EJECUCIÓN
+  
+  <color:Green><b>Tests Ejecutados:    | "2/6       "
+  <color:Green><b>Tests Passed:        | "2         "
+  <color:Red><b>Tests Failed:          | "0         "
+  <color:Orange><b>Tests Pending:       | "4         "
+  <color:Blue><b>Success Rate:         | "100%      "
+  
+  ====
+  
+  ==<color:Purple><b>ACCIONES REQUERIDAS
+  
+  [<color:Green><b> APROBAR RELEASE ]  |  [<color:Orange><b> CONTINUAR TESTING ]  |  [<color:Red><b> BLOQUEAR RELEASE ]
+  
+  <color:Gray><b>Comentarios:
+  "Casos principales ejecutados exitosamente.               "
+  "Pendientes casos de validación adicional.               "
+  "Sin defectos críticos identificados.                    "
+}
+
+@endsalt

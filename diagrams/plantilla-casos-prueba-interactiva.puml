@@ -1,0 +1,143 @@
+@startuml plantilla-casos-prueba-interactiva
+skinparam backgroundColor #F8F9FA
+skinparam defaultFontSize 11
+
+title <size:18><color:Blue><b>PLANTILLA CASOS DE PRUEBA ISO/IEC 29119</b></color></size>\n<size:14>Flujo Interactivo de Documentación</size>
+
+(*) --> "
+{{
+salt
+{+
+  ==<color:Blue><size:14><b>INFORMACIÓN BÁSICA
+  ----
+  <b>Nombre: ""Validación Login Usuario""
+  <b>Autor: ""Federico Toledo""  
+  <b>Fecha: ""09/01/2024""
+  <b>ID: ""mt01""
+  ----
+  [<color:Green><b>Continuar >]
+}
+}}
+" as inicio
+
+inicio -right-> "
+{{
+salt
+{+
+  ==<color:Purple><size:14><b>ACTORES Y CONDICIONES
+  ----
+  <b>Actores:
+  * Usuario web
+  * Sistema auth
+  ----
+  <b>Pre-condiciones:
+  [] Usuario registrado
+  [] Sistema disponible
+  [] BD operativa
+  ----
+  [< Anterior] | [<color:Green><b>Continuar >]
+}
+}}
+" as actores
+
+actores -right-> "
+{{
+salt
+{+
+  ==<color:Green><size:14><b>FLUJO PRINCIPAL
+  ----
+  # Acceso URL principal
+  # Sistema solicita credenciales
+  # Usuario ingresa datos
+  # Validación credenciales
+  # Sistema da bienvenida
+  ----
+  <color:Orange><b>¿Flujo exitoso?
+  () Sí - Continuar
+  () No - Ver alternativas
+  ----
+  [< Anterior] | [<color:Green><b>Continuar >]
+}
+}}
+" as flujo
+
+flujo -down-> "
+{{
+salt
+{+
+  ==<color:Red><size:14><b>FLUJOS ALTERNATIVOS
+  ----
+  <color:Red><b>Alt 1: Recovery Password
+  * Usuario olvida password
+  * Solicita envío por email
+  * Sistema envía clave temporal
+  ----
+  <color:Red><b>Alt 2: Registro Nuevo
+  * Usuario no registrado
+  * Solicita crear cuenta
+  * Sistema crea usuario
+  ----
+  [< Anterior] | [<color:Green><b>Continuar >]
+}
+}}
+" as alternativas
+
+alternativas -right-> "
+{{
+salt
+{+
+  ==<color:Red><size:14><b>EXCEPCIONES
+  ----
+  <color:Red><b>E1: Credenciales incorrectas
+  ""3 intentos → Bloqueo cuenta""
+  ----
+  <color:Red><b>E2: Email no registrado
+  ""Sistema notifica error""
+  ----
+  [< Anterior] | [<color:Green><b>Ir a Ejecución >]
+}
+}}
+" as excepciones
+
+excepciones -down-> "
+{{
+salt
+{+
+  ==<color:Blue><size:14><b>TABLA DE EJECUCIÓN
+  ----
+  {#
+  | <b># | <b>Test Case | <b>Status |
+  | 1 | Acceso banca digital | <color:Green>✓ PASS |
+  | 2 | Selección ingreso | <color:Green>✓ PASS |
+  | 3 | Validación datos | <color:Gray>- PENDING |
+  | 4 | Manejo errores | <color:Gray>- PENDING |
+  }
+  ----
+  <b>Executor: ""Mercurio Avellaneda""
+  <b>Date: ""__________""
+  <b>ID: ""kt-23""
+  ----
+  [< Anterior] | [<color:Green><b>Finalizar]
+}
+}}
+" as ejecucion
+
+ejecucion -up-> "
+{{
+salt
+{+
+  ==<color:Green><size:14><b>RESULTADO FINAL
+  ----
+  <color:Green><b>✓ Caso de prueba documentado
+  <color:Green><b>✓ Flujos principales definidos  
+  <color:Green><b>✓ Excepciones identificadas
+  <color:Green><b>✓ Tabla ejecución preparada
+  ----
+  <color:Blue><b>Estado: READY FOR EXECUTION
+  ----
+  [<color:Blue><b>Nuevo Caso] | [<color:Green><b>Exportar]
+}
+}}
+" as resultado
+
+@enduml

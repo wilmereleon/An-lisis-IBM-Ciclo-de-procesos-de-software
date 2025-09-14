@@ -1,118 +1,108 @@
-@startuml plantilla-casos-prueba-wireframe
-!theme plain
-skinparam backgroundColor #FFFFFF
-skinparam handwritten false
-skinparam monochrome false
-
-' Configuraciones para wireframe
-skinparam rectangle {
-    BorderColor #333333
-    BackgroundColor #F8F9FA
-    FontColor #333333
-    FontSize 10
-}
-
-skinparam note {
-    BorderColor #666666
-    BackgroundColor #E8F4FD
-    FontColor #333333
-    FontSize 9
-}
-
-salt
-{
-  {+
-    **PLANTILLA FUNCIONAL DE CASOS DE PRUEBA**
-    **ISO/IEC 29119 - Sistema de Registro de Usuario**
-    .
-    {T
-      + **INFORMACIÓN BÁSICA**
+@startsalt plantilla-casos-prueba-wireframe
+{+
+  ==<color:Blue><size:16><b>PLANTILLA FUNCIONAL DE CASOS DE PRUEBA
+  ==<color:Navy><size:12>ISO/IEC 29119 - Sistema de Registro de Usuario
+  ----
+  
+  {^<color:DarkBlue><b>INFORMACIÓN BÁSICA
+    ==Campo                                | ==Descripción
+    <b>Nombre                               | Validación de Login de Usuario en Sistema de Banca Virtual
+    <b>Autor                                | Federico Toledo / Equipo QA IBM  
+    <b>Fecha                                | 09/01/2024
+    <b>Descripción                          | Un usuario debe registrarse para hacer uso del sistema,
+    .                                      | y para ello debe hacer "login" con su usuario y password.
+    .                                      | Si no cuenta con él, debe registrarse creando su usuario
+  }
+  ====
+  
+  {^<color:Green><b>ACTORES DEL SISTEMA
+    * Usuario a través de la interfaz web
+    * Sistema de autenticación
+    * Base de datos de usuarios
+  }
+  ====
+  
+  {^<color:Orange><b>PRE-CONDICIONES
+    * El usuario debe estar registrado en el sistema
+    * La aplicación debe estar disponible
+    * La base de datos debe estar operativa
+  }
+  ====
+  
+  {^<color:Purple><b>FLUJO NORMAL
+    ==Paso | ==Acción
+    <b>1    | El usuario accede al sistema con la URL principal
+    <b>2    | El sistema solicita credenciales
+    <b>3    | El usuario ingresa proporcionando usuario y password  
+    <b>4    | El sistema valida las credenciales del usuario
+    <b>5    | El sistema da la bienvenida
+  }
+  ====
+  
+  {^<color:Brown><b>FLUJOS ALTERNATIVOS
+    ==Flujo     | ==Descripción
+    <color:Red><b>Alt 1 | **3.** Usuario solicita recovery password por e-mail
+    .           | **4.** Sistema envía clave temporal
+    ----
+    <color:Red><b>Alt 2 | **3.** Usuario solicita crear nueva cuenta
+    .           | **4.** Sistema solicita datos de registro  
+    .           | **5.** Usuario confirma y se crea cuenta
+  }
+  ====
+  
+  {^<color:Red><b>EXCEPCIONES
+    ==ID | ==Descripción
+    <b>E1 | <color:Red>Usuario/password incorrectos (3 intentos = bloqueo)
+    <b>E2 | <color:Red>E-mail no registrado (sistema notifica error)
+  }
+  ====
+  
+  {^<color:Green><b>POST-CONDICIONES
+    * Acceso registrado en tabla de actividad del sistema
+    * Sesión del usuario iniciada correctamente
+    * Log de auditoría actualizado
+  }
+  ====
+  ====
+  
+  {^<color:Blue><b>TABLA DE EJECUCIÓN
+    <b>ID: <color:Navy>mt01 | <b>Target: <color:Navy>Ingreso banca virtual | <b>Type: <color:Navy>Funcional | <b>Priority: <color:Navy>Media
+    <b>Pre-Conditions: <color:Navy>1) Creación de cuenta  2) Ingreso banca virtual
+    ====
+    
+    {+
+      <color:Blue><b>Paso 1: Acceso a banca digital                    | "PASSED    " | [   FAIL   ] | "           "
+      <color:Gray>Ingresar datos solicitados                          | .            | .             | .
+      <color:Gray>(tipo: nombre, documento, contraseña)               | .            | .             | .
+      <color:Blue><i>Expected: Se visualiza correctamente             | .            | .             | .
+      ----
+      <color:Blue><b>Paso 2: Seleccionar opción ingreso               | "PASSED    " | [   FAIL   ] | "           "
+      <color:Blue><i>Expected: Acceso correcto a Banca virtual        | .            | .             | .
+      ----
+      <color:Gray><b>Paso 3: [Nuevo caso de prueba]                   | "           " | [   FAIL   ] | "           "
+      <color:Gray><i>Expected: [Definir resultado esperado]           | .            | .             | .
+      ----
+      <color:Gray><b>Paso 4: [Nuevo caso de prueba]                   | "           " | [   FAIL   ] | "           "
+      <color:Gray><i>Expected: [Definir resultado esperado]           | .            | .             | .
+      ----
+      <color:Gray><b>Paso 5: [Nuevo caso de prueba]                   | "           " | [   FAIL   ] | "           "
+      <color:Gray><i>Expected: [Definir resultado esperado]           | .            | .             | .
+      ----
+      <color:Gray><b>Paso 6: [Nuevo caso de prueba]                   | "           " | [   FAIL   ] | "           "
+      <color:Gray><i>Expected: [Definir resultado esperado]           | .            | .             | .
     }
-    {#
-      | Campo | Descripción |
-      | **Nombre** | Validación de Login de Usuario en Sistema de Banca Virtual |
-      | **Autor** | Federico Toledo / Equipo QA IBM |
-      | **Fecha** | 09/01/2024 |
-      | **Descripción** | Un usuario debe registrarse para hacer uso del sistema... |
-    }
-    .
-    {T
-      + **ACTORES DEL SISTEMA**
-    }
-    {
-      • Usuario a través de la interfaz web
-    }
-    .
-    {T
-      + **PRE-CONDICIONES**
-    }
-    {
-      • El usuario debe estar registrado en el sistema
-    }
-    .
-    {T
-      + **FLUJO NORMAL**
-    }
-    {#
-      | Paso | Acción |
-      | 1 | El usuario accede al sistema con la URL principal |
-      | 2 | El sistema solicita credenciales |
-      | 3 | El usuario ingresa proporcionando usuario y password |
-      | 4 | El sistema valida las credenciales del usuario |
-      | 5 | El sistema da la bienvenida |
-    }
-    .
-    {T
-      + **FLUJOS ALTERNATIVOS**
-    }
-    {#
-      | Flujo | Descripción |
-      | **Alt 1** | 3. Usuario solicita recovery password por e-mail |
-      |  | 4. Sistema envía clave temporal |
-      | **Alt 2** | 3. Usuario solicita crear nueva cuenta |
-      |  | 4. Sistema solicita datos de registro |
-      |  | 5. Usuario confirma y se crea cuenta |
-    }
-    .
-    {T
-      + **EXCEPCIONES**
-    }
-    {#
-      | ID | Descripción |
-      | E1 | Usuario/password incorrectos (3 intentos = bloqueo) |
-      | E2 | E-mail no registrado (sistema notifica error) |
-    }
-    .
-    {T
-      + **POST-CONDICIONES**
-    }
-    {
-      • Acceso registrado en tabla de actividad del sistema
-    }
-    .
-    .
-    {T
-      + **TABLA DE EJECUCIÓN**
-    }
-    {
-      **ID:** mt01 | **Target:** Ingreso banca virtual | **Type:** Funcional | **Priority:** Media
-      **Pre-Conditions:** 1) Creación de cuenta 2) Ingreso banca virtual
-    }
-    {#
-      | # | Steps / Expected Result | Pass | Fail | Bug Report ID |
-      | 1 | **Acceso a banca digital** | ✓ |  |  |
-      |   | Ingresar datos solicitados |   |  |  |
-      |   | **Expected:** Se visualiza correctamente |   |  |  |
-      | 2 | **Seleccionar opción ingreso** | ✓ |  |  |
-      |   | **Expected:** Acceso correcto a Banca virtual |   |  |  |
-      | 3 |  |  |  |  |
-      | 4 |  |  |  |  |
-      | 5 |  |  |  |  |
-      | 6 |  |  |  |  |
-    }
-    {
-      **Executor:** Mercurio Avellaneda Vargas | **Date:** __________ | **ID:** kt-23
-    }
+    ====
+    <b>Executor: <color:Navy>Mercurio Avellaneda Vargas | <b>Date: <color:Navy>"__________" | <b>ID: <color:Navy>kt-23
+  }
+  ====
+  
+  {^<color:Gray><b>INSTRUCCIONES DE USO
+    # Completar todos los campos obligatorios
+    # Validar que los criterios de entrada se cumplan
+    # Ejecutar cada paso del flujo normal
+    # Documentar cualquier desviación en flujos alternativos
+    # Registrar defectos encontrados con severidad apropiada
+    # Actualizar estado de ejecución (Pass/Fail)
   }
 }
-@enduml
+@endsalt
