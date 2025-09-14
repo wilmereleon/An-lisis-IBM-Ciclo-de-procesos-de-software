@@ -504,7 +504,7 @@ IBM Colombia ha desarrollado un **marco específico de arquitectura empresarial*
   - Oficina de Arquitectura Empresarial establecida
   - Baseline de arquitectura actual (As-Is) en ArchiMate
   - Principles y estándares arquitectónicos definidos
-- **Inversión:** $1.2M (incluye herramientas ArchiMate, capacitación TOGAF)
+- **Inversión:** $4,800 millones COP (incluye herramientas ArchiMate, capacitación TOGAF)
 
 #### 9.3.2 Fase 2: Government y Estándares EA (12 meses)
 - **Objetivo:** Implementar gobierno arquitectónico y arquitectura objetivo (To-Be)
@@ -512,7 +512,7 @@ IBM Colombia ha desarrollado un **marco específico de arquitectura empresarial*
   - Arquitectura objetivo (To-Be) modelada en ArchiMate
   - Architecture Review Board (ARB) funcionando
   - Standards de desarrollo alineados con EA
-- **Inversión:** $1.8M (incluye consultoría especializada TOGAF)
+- **Inversión:** $7,200 millones COP (incluye consultoría especializada TOGAF)
 
 #### 9.3.3 Fase 3: Optimización y Madurez EA (18 meses)
 - **Objetivo:** Alcanzar madurez arquitectónica Nivel 4 y optimization continua
@@ -520,7 +520,7 @@ IBM Colombia ha desarrollado un **marco específico de arquitectura empresarial*
   - Portfolio arquitectónico optimizado
   - Métricas de valor de arquitectura empresarial
   - Innovation lab de arquitectura emergente
-- **Inversión:** $1.5M (incluye IA/ML para arquitectura predictiva)
+- **Inversión:** $6,000 millones COP (incluye IA/ML para arquitectura predictiva)
 
 ### 9.4 Análisis de Riesgos Arquitectónicos y Mitigación
 
@@ -741,7 +741,7 @@ Esta estrategia se fundamenta en el **Modelo ADKAR** (Awareness, Desire, Knowled
 | **Tiempo de Entrega** | Tiempo desde commit hasta producción | <2 días | 1.8 días | Continuo | Gerente de Programa |
 | **Tiempo Medio de Recuperación** | Tiempo para resolver incidentes P1 | <4 horas | 3.2 horas | Por incidente | Gerente de Incidentes |
 | **Tasa de Fallo de Cambios** | % cambios que causan fallos | <5% | 3.8% | Mensual | Gerente de Cambios |
-| **Costo por Caso de Prueba** | Costo promedio por caso de prueba | <$15 | $12.50 | Trimestral | Equipo de Finanzas |
+| **Costo por Caso de Prueba** | Costo promedio por caso de prueba | <$60,000 COP | $50,000 COP | Trimestral | Equipo de Finanzas |
 
 ### 12.3 Sistema de Alertas y Escalación
 
@@ -2099,14 +2099,14 @@ BENEFICIOS CUANTIFICABLES:
 ├── COMPLIANCE: 100% auditorías con documentación completa
 
 INVERSIÓN_ESTIMADA (100 usuarios):
-├── LICENCIAS_ANUALES: $15,000 (Zephyr for Jira)
-├── SETUP_CONSULTORÍA: $25,000 (implementación inicial)
-├── CAPACITACIÓN: $10,000 (training de equipos)
-├── MANTENIMIENTO: $5,000/año (admin y soporte)
-└── TOTAL_PRIMER_AÑO: $55,000
+├── LICENCIAS_ANUALES: $60 millones COP (Zephyr for Jira)
+├── SETUP_CONSULTORÍA: $100 millones COP (implementación inicial)
+├── CAPACITACIÓN: $40 millones COP (training de equipos)
+├── MANTENIMIENTO: $20 millones COP/año (admin y soporte)
+└── TOTAL_PRIMER_AÑO: $220 millones COP
 
 ROI_CALCULADO:
-├── AHORRO_ANUAL: $120,000 (eficiencia + calidad)
+├── AHORRO_ANUAL: $480 millones COP (eficiencia + calidad)
 ├── PAYBACK_PERIOD: 5.5 meses
 ├── ROI_3_AÑOS: 450%
 └── BENEFICIOS_INTANGIBLES: Mejor calidad, compliance, satisfacción equipos
@@ -2264,12 +2264,12 @@ EJEMPLO: SISTEMA E-COMMERCE
 
 | **Año** | **Trimestre** | **Fase Principal** | **Entregables Clave** | **Presupuesto** | **Recursos** |
 |---------|---------------|-------------------|----------------------|-----------------|--------------|
-| **Año 1** | Q1-Q2 | Estabilización | Assessment, Baseline, Pilot | $850K | 45 FTEs |
-| **Año 1** | Q3-Q4 | Estandarización | Procesos CMMI L3, Training | $750K | 65 FTEs |
-| **Año 2** | Q1-Q2 | Optimización | Automatización, TMMi L3 | $900K | 85 FTEs |
-| **Año 2** | Q3-Q4 | Integración | DevSecOps, CI/CD completo | $650K | 75 FTEs |
-| **Año 3** | Q1-Q2 | Maduración | CMMI L4, Métricas avanzadas | $500K | 60 FTEs |
-| **Año 3** | Q3-Q4 | Sostenibilidad | CMMI L5, Centro excelencia | $350K | 45 FTEs |
+| **Año 1** | Q1-Q2 | Estabilización | Assessment, Baseline, Pilot | $3,400 millones COP | 45 FTEs |
+| **Año 1** | Q3-Q4 | Estandarización | Procesos CMMI L3, Training | $3,000 millones COP | 65 FTEs |
+| **Año 2** | Q1-Q2 | Optimización | Automatización, TMMi L3 | $3,600 millones COP | 85 FTEs |
+| **Año 2** | Q3-Q4 | Integración | DevSecOps, CI/CD completo | $2,600 millones COP | 75 FTEs |
+| **Año 3** | Q1-Q2 | Maduración | CMMI L4, Métricas avanzadas | $2,000 millones COP | 60 FTEs |
+| **Año 3** | Q3-Q4 | Sostenibilidad | CMMI L5, Centro excelencia | $1,400 millones COP | 45 FTEs |
 
 #### **13.4.2 Cronograma Detallado por Fases**
 
@@ -2340,39 +2340,39 @@ EJEMPLO: SISTEMA E-COMMERCE
 
 | **Rol** | **Año 1** | **Año 2** | **Año 3** | **Total** | **Costo Promedio** |
 |---------|-----------|-----------|-----------|-----------|-------------------|
-| **CMMI Consultants** | 12 | 8 | 4 | 24 | $180K/año |
-| **TMMi Specialists** | 8 | 15 | 10 | 33 | $160K/año |
-| **DevOps Engineers** | 15 | 25 | 20 | 60 | $140K/año |
-| **Test Automation** | 20 | 30 | 25 | 75 | $130K/año |
-| **Process Engineers** | 25 | 20 | 15 | 60 | $120K/año |
-| **Data Scientists** | 5 | 12 | 8 | 25 | $170K/año |
-| **Project Managers** | 8 | 10 | 8 | 26 | $150K/año |
-| **Trainers/Change Mgmt** | 12 | 15 | 10 | 37 | $110K/año |
+| **CMMI Consultants** | 12 | 8 | 4 | 24 | $720 millones COP/año |
+| **TMMi Specialists** | 8 | 15 | 10 | 33 | $640 millones COP/año |
+| **DevOps Engineers** | 15 | 25 | 20 | 60 | $560 millones COP/año |
+| **Test Automation** | 20 | 30 | 25 | 75 | $520 millones COP/año |
+| **Process Engineers** | 25 | 20 | 15 | 60 | $480 millones COP/año |
+| **Data Scientists** | 5 | 12 | 8 | 25 | $680 millones COP/año |
+| **Project Managers** | 8 | 10 | 8 | 26 | $600 millones COP/año |
+| **Trainers/Change Mgmt** | 12 | 15 | 10 | 37 | $440 millones COP/año |
 
 ##### **Inversión por Categoría**
 
 ```
-INVERSIÓN TOTAL: $4.05M (36 meses)
+INVERSIÓN TOTAL: $16,200 millones COP (36 meses)
 
 DESGLOSE POR CATEGORÍA:
 ┌─────────────────────┬─────────────┬─────────────┬─────────────┐
 │ Categoría           │ Año 1       │ Año 2       │ Año 3       │
 ├─────────────────────┼─────────────┼─────────────┼─────────────┤
-│ Recursos Humanos    │   $1.2M     │   $1.8M     │   $1.1M     │
-│ Herramientas/Lic.   │   $300K     │   $200K     │   $150K     │
-│ Consultoría Externa │   $400K     │   $250K     │   $100K     │
-│ Training/Certif.    │   $200K     │   $300K     │   $150K     │
-│ Infraestructura     │   $150K     │   $100K     │   $50K      │
-│ Contingencia (10%)  │   $225K     │   $265K     │   $155K     │
+│ Recursos Humanos    │   $4,800 millones COP     │   $7,200 millones COP     │   $4,400 millones COP     │
+│ Herramientas/Lic.   │   $1,200 millones COP     │   $800 millones COP     │   $600 millones COP     │
+│ Consultoría Externa │   $1,600 millones COP     │   $1,000 millones COP     │   $400 millones COP     │
+│ Training/Certif.    │   $800 millones COP     │   $1,200 millones COP     │   $600 millones COP     │
+│ Infraestructura     │   $600 millones COP     │   $400 millones COP     │   $200 millones COP     │
+│ Contingencia (10%)  │   $900 millones COP     │   $1,060 millones COP     │   $620 millones COP     │
 ├─────────────────────┼─────────────┼─────────────┼─────────────┤
-│ TOTAL ANUAL         │   $2.475M   │   $2.915M   │   $1.655M   │
+│ TOTAL ANUAL         │   $9,900 millones COP   │   $11,660 millones COP   │   $6,620 millones COP   │
 └─────────────────────┴─────────────┴─────────────┴─────────────┘
 
 ROI PROYECTADO:
-• Año 1: -$2.475M (Inversión)
-• Año 2: -$1.500M (Recuperación parcial)
-• Año 3: +$2.100M (ROI positivo)
-• Año 4: +$4.200M (ROI 4.2x)
+• Año 1: -$9,900 millones COP (Inversión)
+• Año 2: -$6,000 millones COP (Recuperación parcial)
+• Año 3: +$8,400 millones COP (ROI positivo)
+• Año 4: +$16,800 millones COP (ROI 4.2x)
 ```
 
 #### **13.4.4 Gestión de Riesgos por Fase**
@@ -2404,7 +2404,7 @@ ROI PROYECTADO:
 ### 14.1 Resumen Ejecutivo del Cronograma
 
 **Duración Total:** 36 meses (3 años)  
-**Inversión Total:** $3.0M  
+**Inversión Total:** $12,000 millones COP  
 **ROI Proyectado:** 4.2x  
 **Recursos:** 180 FTEs (ramp-up gradual)  
 
@@ -2432,7 +2432,7 @@ ROI PROYECTADO:
 - 60+ personas certificadas ISTQB Foundation
 - Pilot project completado con métricas
 
-**Presupuesto:** $850K  
+**Presupuesto:** $3,400 millones COP  
 **Recursos:** 45 FTEs + 12 consultores externos  
 
 #### 14.2.2 FASE 2: ESTANDARIZACIÓN (Meses 7-18)
@@ -2457,7 +2457,7 @@ ROI PROYECTADO:
 - Global rollout en 5 países completado
 - Dashboard de métricas v1.0 operativo
 
-**Presupuesto:** $1.2M  
+**Presupuesto:** $4,800 millones COP  
 **Recursos:** 78 FTEs + 15 consultores  
 
 #### 14.2.3 FASE 3: OPTIMIZACIÓN (Meses 19-36)
@@ -2482,7 +2482,7 @@ ROI PROYECTADO:
 - Innovation lab operativo
 - Benchmarking top 10% industria
 
-**Presupuesto:** $950K  
+**Presupuesto:** $3,800 millones COP  
 **Recursos:** 95 FTEs + 8 innovation specialists  
 
 ### 14.3 Gestión de Riesgos por Fase
@@ -2556,7 +2556,7 @@ La **segunda entrega** del análisis comparativo de modelos de calidad para **IB
 - **Oficina de Arquitectura Empresarial** con ~180 personas estructuradas jerárquicamente
 - **15 países** con rollout de estándares arquitectónicos y governance EA
 - **3 años** de madurez arquitectónica progresiva hacia Nivel 4 TOGAF
-- **$4.5M inversión EA** con ROI proyectado de 5.2x en optimización arquitectónica
+- **$18,000 millones COP inversión EA** con ROI proyectado de 5.2x en optimización arquitectónica
 
 **Beneficios Cuantificables de Arquitectura Empresarial:**
 - **95% proyectos alineados** con arquitectura objetivo para 2026
@@ -2642,14 +2642,14 @@ La propuesta establece una **estructura de government arquitectónico robusta** 
    - Eliminar **silos operativos** con roles y responsabilidades claras
    - Integrar **métricas dispersas** en dashboard ejecutivo único
 
-3. **Invertir en automation-first strategy** para sustainable competitive advantage
-4. **Establecer innovation labs** para experimentación continua con IA/ML en testing
-5. **Crear culture of quality** mediante incentivos alineados y recognition programs
+3. **Invertir en estrategia de automatización prioritaria (automation-first strategy)** para ventaja competitiva sostenible (sustainable competitive advantage)
+4. **Establecer laboratorios de innovación (innovation labs)** para experimentación continua con IA/ML en testing
+5. **Crear cultura de calidad (culture of quality)** mediante incentivos alineados y programas de reconocimiento (recognition programs)
 
 **Evolución del Estado Actual (Nivel 3) al Objetivo (Nivel 4):**
 - **Gap crítico:** Gestión cuantitativa de procesos (40% implementado)
 - **Timeline:** 24-30 meses para alcanzar madurez completa
-- **Inversión:** $3.0M con ROI proyectado 4.2x
+- **Inversión:** $12,000 millones COP con ROI proyectado 4.2x
 
 #### 15.5.2 Para el Contexto Académico
 
@@ -2665,7 +2665,7 @@ Esta segunda entrega demuestra la **aplicación práctica** de marcos teóricos 
 #### Para Implementación Inmediata:
 
 1. **Presentar propuesta** al steering committee ejecutivo
-2. **Asegurar funding** para Fase 1 ($850K)
+2. **Asegurar funding** para Fase 1 ($3,400 millones COP)
 3. **Iniciar recruitment** de key positions (CQO, Program Manager)
 4. **Comenzar change management** activities
 5. **Establecer PMO** para execution oversight
