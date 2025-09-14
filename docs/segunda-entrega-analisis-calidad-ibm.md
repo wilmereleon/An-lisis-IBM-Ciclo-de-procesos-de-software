@@ -259,9 +259,9 @@ Los modelos analizados incluyen:
 |----------|--------------------------|---------------------------|---------------------------|---------------------|
 | **1. Requisitos** | • **Proceso Documentado:** Revisión testabilidad con checklist formal<br>• **Trazabilidad Gestionada:** RTM automatizada con herramientas ALM<br>• **Estimación Basada en Datos:** Uso de métricas históricas | • Peer review obligatorio (2+ revisores)<br>• Gate de aprobación con criterios cuantitativos<br>• Auditorías de trazabilidad semanales | • **Cobertura:** 98% requisitos trazables<br>• **Defectos Tempranos:** <0.1 defectos/requisito<br>• **Tiempo Estimación:** ±10% precisión vs. real | • Lecciones aprendidas documentadas<br>• Mejoras de proceso trimestrales<br>• Benchmarking contra estándares industria |
 | **2. Diseño** | • **Arquitectura Testing:** Framework estándar definido<br>• **Casos Reutilizables:** Librería de patterns por dominio<br>• **Ambientes Automatizados:** Provisioning con IaC | • Design reviews con QA arquitecto<br>• Validación testabilidad automatizada<br>• Compliance con estándares corporativos | • **Cobertura Diseño:** 95% componentes<br>• **Reutilización:** 70% casos de librería<br>• **Setup Ambientes:** <2h automatizado | • Análisis ROI de reutilización<br>• Optimización continua de patterns<br>• Feedback loop con desarrollo |
-| **3. Implementación** | • **Testing Unitario Obligatorio:** >85% coverage mandatorio<br>• **Code Quality Gates:** SonarQube integrado en CI/CD<br>• **Defect Prevention:** Análisis de causa raíz sistemático | • Pre-commit hooks automatizados<br>• Quality gates que bloquean deployment<br>• Revisiones de código con IA/ML | • **Cobertura:** 87% promedio sostenido<br>• **Calidad:** <0.3 defectos/KLOC<br>• **Velocidad:** 95% builds sin fallos | • Análisis predictivo de defectos<br>• Identificación hotspots automática<br>• Capacitación continua developers |
-| **4. Integración** | • **CI/CD Maduro:** Pipeline completamente automatizado<br>• **Testing Paralelo:** Distribución automática de carga<br>• **Gestión Dependencias:** Versionado y compatibility matrix | • Smoke tests automáticos obligatorios<br>• Performance gates en cada build<br>• Security scanning automatizado | • **Automatización:** 85% test cases<br>• **Tiempo Ejecución:** <30 min full suite<br>• **Stability:** 99.5% pipeline success rate | • Optimización continua de pipeline<br>• Análisis de flaky tests<br>• Métricas de developer experience |
-| **5. Testing Sistema** | • **Test Management Formal:** Test plans aprobados por stakeholders<br>• **Risk-Based Testing:** Priorización automática por impacto<br>• **Performance Engineering:** Modelado de carga predictivo | • Exit criteria cuantitativos obligatorios<br>• Sign-off formal multi-stakeholder<br>• Regression testing automatizado 90%+ | • **Funcional:** 99.8% pass rate objetivo<br>• **Performance:** <2s response time 95ile<br>• **Security:** 0 vulnerabilidades P0/P1 | • Post-mortem de defectos sistemático<br>• Correlación defectos vs. métricas<br>• Refinamiento continuo de estrategias |
+| **3. Implementación** | • **Testing Unitario Obligatorio:** >85% coverage mandatorio<br>• **Code Quality Gates:** SonarQube integrado en CI/CD<br>• **Prevención de Defectos:** Análisis de causa raíz sistemático | • Pre-commit hooks automatizados<br>• Quality gates que bloquean deployment<br>• Revisiones de código con IA/ML | • **Cobertura:** 87% promedio sostenido<br>• **Calidad:** <0.3 defectos/KLOC<br>• **Velocidad:** 95% builds sin fallos | • Análisis predictivo de defectos<br>• Identificación hotspots automática<br>• Capacitación continua developers |
+| **4. Integración** | • **CI/CD Maduro:** Pipeline completamente automatizado<br>• **Testing Paralelo:** Distribución automática de carga<br>• **Gestión Dependencias:** Versionado y compatibility matrix | • Smoke tests automáticos obligatorios<br>• Performance gates en cada build<br>• Security scanning automatizado | • **Automatización:** 85% test cases<br>• **Tiempo Ejecución:** <30 min full suite<br>• **Stability:** 99.5% pipeline success rate | • Optimización continua de pipeline<br>• Análisis de pruebas inestables<br>• Métricas de developer experience |
+| **5. Testing Sistema** | • **Test Management Formal:** Test plans aprobados por stakeholders<br>• **Risk-Based Testing:** Priorización automática por impacto<br>• **Performance Engineering:** Modelado de carga predictivo | • Criterios de salida cuantitativos obligatorios<br>• Aprobación formal multi-stakeholder<br>• Regression testing automatizado 90%+ | • **Funcional:** 99.8% tasa de éxito objetivo<br>• **Performance:** <2s response time 95ile<br>• **Security:** 0 vulnerabilidades P0/P1 | • Post-mortem de defectos sistemático<br>• Correlación defectos vs. métricas<br>• Refinamiento continuo de estrategias |
 | **6. Aceptación** | • **UAT Estructurado:** Metodología formal con usuarios certificados<br>• **Business Validation:** Criterios aceptación cuantificables<br>• **Go/No-Go Decision:** Framework de decisión basado en métricas | • Business stakeholder approval formal<br>• User satisfaction surveys obligatorias<br>• Production readiness assessment | • **User Satisfaction:** >4.7/5.0 objetivo<br>• **Business KPIs:** 100% criterios cumplidos<br>• **Defect Leakage:** <0.1% a producción | • Análisis de satisfacción por segmento<br>• Optimización de user experience<br>• Feedback integration en roadmap |
 | **7. Despliegue** | • **Deployment Automation:** Zero-downtime deployments<br>• **Rollback Procedures:** Automated rollback en <5 min<br>• **Production Monitoring:** Real-time health checks | • Canary deployments obligatorios<br>• Automated rollback triggers<br>• 24x7 monitoring con alerting | • **Deployment Success:** 99.9% objetivo<br>• **Rollback Time:** <3 min promedio<br>• **Availability:** 99.99% SLA | • Análisis de deployment failures<br>• Optimización de deployment windows<br>• Chaos engineering practices |
 | **8. Mantenimiento** | • **Continuous Testing:** Regression suite 24x7<br>• **Predictive Analytics:** ML para predicción de fallos<br>• **Technical Debt Management:** Tracking y priorización sistemática | • Automated health checks continuos<br>• Performance degradation alerts<br>• Security vulnerability scanning diario | • **MTTR:** <4h para P1, <24h para P2<br>• **Prevention:** 40% reducción defectos YoY<br>• **Tech Debt:** <15% del backlog | • Análisis de patterns de fallos<br>• Optimización basada en machine learning<br>• Innovation labs para nuevas tecnologías |
@@ -856,11 +856,11 @@ Las pruebas de caja blanca se enfocan en validar la lógica interna y estructura
 
 | **Tipo de Cobertura** | **Descripción** | **Objetivo** | **Umbral Mínimo** |
 |----------------------|-----------------|--------------|-------------------|
-| **Statement Coverage** | Cobertura de Sentencias | Cada línea de código ejecutada al menos una vez | 80% |
-| **Branch Coverage** | Cobertura de Ramas | Todas las ramas condicionales ejercitadas | 70% |
-| **Condition Coverage** | Cobertura de Condiciones | Cada condición booleana evaluada como T/F | 100% |
-| **Path Coverage** | Cobertura de Caminos | Todas las rutas de ejecución cubiertas | Variable |
-| **Function Coverage** | Cobertura de Funciones | Todas las funciones/métodos invocados | 95% |
+| **Cobertura de Sentencias** | Cobertura de Sentencias | Cada línea de código ejecutada al menos una vez | 80% |
+| **Cobertura de Ramas** | Cobertura de Ramas | Todas las ramas condicionales ejercitadas | 70% |
+| **Cobertura de Condiciones** | Cobertura de Condiciones | Cada condición booleana evaluada como V/F | 100% |
+| **Cobertura de Caminos** | Cobertura de Caminos | Todas las rutas de ejecución cubiertas | Variable |
+| **Cobertura de Funciones** | Cobertura de Funciones | Todas las funciones/métodos invocados | 95% |
 
 ### **B.3. Criterios de Evaluación Específicos**
 
@@ -868,9 +868,9 @@ Las pruebas de caja blanca se enfocan en validar la lógica interna y estructura
 |-------------|-----------------|---------------------|-----------------|
 | **Cobertura de Código** | Líneas de código ejecutadas | Mínimo 80% | SonarQube, JaCoCo |
 | **Cobertura de Ramas** | Ramas condicionales probadas | Mínimo 70% | Istanbul, OpenCover |
-| **Complejidad Ciclomática** | Métodos complejos cubiertos | Métodos >10 = 100% | Complexity tools |
-| **Rutas Críticas** | Caminos de alto impacto | 100% cobertura | Code analysis |
-| **Manejo de Excepciones** | Casos de error cubiertos | Todas las excepciones | Exception testing |
+| **Complejidad Ciclomática** | Métodos complejos cubiertos | Métodos >10 = 100% | Herramientas de Complejidad |
+| **Rutas Críticas** | Caminos de alto impacto | 100% cobertura | Análisis de Código |
+| **Manejo de Excepciones** | Casos de error cubiertos | Todas las excepciones | Pruebas de Excepciones |
 
 ### **B.4. Estrategia de Diseño de Casos de Prueba**
 
@@ -879,10 +879,10 @@ Las pruebas de caja blanca se enfocan en validar la lógica interna y estructura
 | **Estructura** | **Estrategia de Prueba** | **Casos Requeridos** |
 |---------------|-------------------------|---------------------|
 | **Sentencias Secuenciales** | Ejecutar cada línea al menos una vez | 1 caso por secuencia |
-| **Decisiones (if/else)** | Ejercitar todas las ramas | 2 casos mínimo (T/F) |
+| **Decisiones (si/sino)** | Ejercitar todas las ramas | 2 casos mínimo (V/F) |
 | **Condiciones Múltiples** | Probar todas las combinaciones | 2^n casos (n=condiciones) |
-| **Bucles (for/while)** | Probar 0, 1, n iteraciones | 3 casos por bucle |
-| **Switch/Case** | Ejercitar todos los casos + default | 1 caso por rama |
+| **Bucles (para/mientras)** | Probar 0, 1, n iteraciones | 3 casos por bucle |
+| **Selección/Caso** | Ejercitar todos los casos + predeterminado | 1 caso por rama |
 
 #### **B.4.2. Técnicas Específicas por Complejidad**
 
@@ -890,7 +890,7 @@ Las pruebas de caja blanca se enfocan en validar la lógica interna y estructura
 MÉTODOS SIMPLES (Complejidad 1-5):
 • Cobertura de sentencias suficiente
 • 1-2 casos de prueba por método
-• Enfoque en happy path + 1 error case
+• Enfoque en flujo principal + 1 caso de error
 
 MÉTODOS MODERADOS (Complejidad 6-10):
 • Cobertura de ramas obligatoria
@@ -900,7 +900,7 @@ MÉTODOS MODERADOS (Complejidad 6-10):
 MÉTODOS COMPLEJOS (Complejidad >10):
 • Cobertura de caminos requerida
 • 5+ casos de prueba por método
-• Refactoring recomendado antes de testing
+• Refactorización recomendada antes de probar
 • Análisis exhaustivo de todas las rutas
 ```
 
@@ -940,7 +940,7 @@ public boolean validarLogin(String usuario, String password) {
 | **CP-WB-04** | "juan123" | "123" | N/A | Línea 3 → 4 | false |
 | **CP-WB-05** | "noexiste" | "ValidPass123" | N/A | Línea 6 → 7 | false |
 | **CP-WB-06** | "juan123" | "ValidPass123" | Bloqueado | Línea 8 → 9 | false |
-| **CP-WB-07** | "juan123" | "ValidPass123" | Activo | Línea 10 | true/false |
+| **CP-WB-07** | "juan123" | "ValidPass123" | Activo | Línea 10 | verdadero/falso |
 | **CP-WB-08** | "juan123" | "WrongPass" | Activo | Línea 10 | false |
 
 #### **B.5.3. Análisis de Cobertura**
@@ -975,11 +975,11 @@ COBERTURA GENERAL: 100%
 
 | **Criterio** | **Umbral Mínimo** | **Umbral Objetivo** | **Acción si No Cumple** |
 |-------------|-------------------|--------------------|-----------------------|
-| **Statement Coverage** | 80% | 90% | Bloquear release |
-| **Branch Coverage** | 70% | 85% | Revisar con arquitecto |
-| **Métodos Complejos** | 100% | 100% | Refactoring obligatorio |
-| **Critical Path** | 100% | 100% | Testing manual adicional |
-| **Exception Handling** | 90% | 100% | Review de manejo errores |
+| **Cobertura de Sentencias** | 80% | 90% | Bloquear lanzamiento |
+| **Cobertura de Ramas** | 70% | 85% | Revisar con arquitecto |
+| **Métodos Complejos** | 100% | 100% | Refactorización obligatoria |
+| **Ruta Crítica** | 100% | 100% | Pruebas manuales adicionales |
+| **Manejo de Excepciones** | 90% | 100% | Revisión de manejo de errores |
 
 **C. PROTOCOLO PARA PRUEBAS UNITARIAS (Unit Testing):**
 
@@ -991,11 +991,11 @@ Las pruebas unitarias validan componentes individuales del software (métodos, f
 
 ### **C.2. Frameworks Recomendados por Tecnología**
 
-| **Tecnología** | **Framework Principal** | **Alternativas** | **Mocking Framework** | **CI/CD Integration** |
+| **Tecnología** | **Framework Principal** | **Alternativas** | **Framework de Simulación** | **Integración CI/CD** |
 |----------------|------------------------|------------------|-----------------------|-----------------------|
 | **Java** | JUnit 5 | TestNG | Mockito, PowerMock | Maven, Gradle |
 | **C#/.NET** | NUnit | MSTest, xUnit | Moq, NSubstitute | Azure DevOps, GitHub Actions |
-| **JavaScript** | Jest | Mocha, Jasmine | Sinon.js, Jest mocks | npm scripts, Webpack |
+| **JavaScript** | Jest | Mocha, Jasmine | Sinon.js, Jest mocks | scripts npm, Webpack |
 | **Python** | pytest | unittest, nose2 | unittest.mock, pytest-mock | pip, tox |
 | **C/C++** | Google Test | CppUnit, Catch2 | Google Mock, FakeIt | CMake, Make |
 
@@ -1182,7 +1182,7 @@ stage('Unit Tests') {
 
 | **Métrica** | **Umbral** | **Acción si Falla** |
 |-------------|------------|---------------------|
-| **Test Pass Rate** | 100% | Bloquear build |
+| **Tasa de Éxito de Pruebas** | 100% | Bloquear build |
 | **Code Coverage** | 85% | Bloquear merge |
 | **Test Duration** | < 5 min total | Optimizar tests |
 | **Flaky Test Rate** | < 2% | Investigar y corregir |
@@ -1200,14 +1200,14 @@ MÉTRICAS CLAVE:
 │ Tests Ejecutados    │   1,247     │    All      │     ↗       │
 │ Tiempo Ejecución    │   3.2 min   │   <5 min    │     ↘       │
 │ Tests Fallidos      │     0       │     0       │     →       │
-│ Flaky Tests         │     3       │    <10      │     ↘       │
+│ Pruebas Inestables  │     3       │    <10      │     ↘       │
 └─────────────────────┴─────────────┴─────────────┴─────────────┘
 
 TENDENCIAS SEMANALES:
 • Nuevos tests agregados: +23
 • Cobertura incrementada: +2.1%
 • Tiempo optimizado: -15 segundos
-• Flaky tests resueltos: 2
+• Pruebas inestables resueltas: 2
 ```
 
 ### **C.10. Troubleshooting Común**
@@ -1599,7 +1599,7 @@ MÉTRICAS_DEVELOPMENT_SUITE:
 ├── Code Coverage: >80%
 ├── Test Execution Time: <15 min
 ├── Defect Detection Rate: >85%
-├── False Positive Rate: <5%
+├── Tasa de Falsos Positivos: <5%
 
 MÉTRICAS_SANITY_SUITE:
 ├── Execution Time: <30 min
