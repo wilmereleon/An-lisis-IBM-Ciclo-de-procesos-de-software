@@ -610,16 +610,8 @@ Una estrategia de prueba de software proporciona una **guía estructurada** que 
 
 **Cronograma Integrado de 22 Semanas:**
 
-```
-Semana:  1----5----10----15----20-22
-Fase 1:  [====Planificación====]
-Fase 2:      [====Diseño=====]
-Fase 3:         [========Ejecución========]
-Fase 4:                    [=Cierre=]
-                                
-Hitos:   ↑    ↑     ↑      ↑     ↑
-         Start Design Exec.  UAT   Close
-```
+![Cronograma Integrado de 22 Semanas](../diagrams/cronograma-integrado-22-semanas.png)
+*Figura 8.1: Cronograma de Gantt para estrategia de pruebas integrada de 22 semanas*
 
 **Criterios de Transición entre Fases:**
 

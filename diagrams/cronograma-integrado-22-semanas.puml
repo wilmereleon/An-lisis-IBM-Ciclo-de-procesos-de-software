@@ -1,0 +1,39 @@
+@startgantt
+!theme vibrant
+title Cronograma Integrado de Estrategia de Pruebas - 22 Semanas
+
+printscale weekly zoom 1
+saturday are closed
+sunday are closed
+
+Project starts the 1st of january 2025
+
+[Planificación de Pruebas] lasts 4 weeks
+[Planificación de Pruebas] is colored in LightBlue
+
+[Diseño de Casos de Prueba] lasts 6 weeks
+[Diseño de Casos de Prueba] starts at [Planificación de Pruebas]'s start
+[Diseño de Casos de Prueba] is colored in LightGreen
+
+[Ejecución de Pruebas] lasts 14 weeks  
+[Ejecución de Pruebas] starts 2025/01/15
+[Ejecución de Pruebas] is colored in Orange
+
+[Cierre y Lecciones Aprendidas] lasts 4 weeks
+[Cierre y Lecciones Aprendidas] starts 2025/05/19
+[Cierre y Lecciones Aprendidas] is colored in LightCoral
+
+-- Hitos Críticos --
+[Start Project] happens 2025/01/01
+[Design Complete] happens 2025/02/12
+[Execution Start] happens 2025/01/15
+[UAT Complete] happens 2025/05/19
+[Project Close] happens 2025/06/16
+
+[Start Project] is colored in Red
+[Design Complete] is colored in Green
+[Execution Start] is colored in Blue
+[UAT Complete] is colored in Purple
+[Project Close] is colored in Red
+
+@endgantt
