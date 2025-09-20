@@ -563,7 +563,7 @@ Una estrategia de prueba de software proporciona una **guía estructurada** que 
 
 #### 8.1.1 Fases de la Estrategia de Pruebas
 
-![Estrategia de Pruebas IBM](../diagrams/estrategia-pruebas-hilo-conductor.png)
+![Estrategia de Pruebas IBM](../diagrams/estrategia-pruebas-vertical.png)
 *Figura 8.1: Hilo conductor de la estrategia de pruebas por fases del ciclo de vida*
 
 **Fase 1: Planificación de Pruebas (Semanas 1-4)**
