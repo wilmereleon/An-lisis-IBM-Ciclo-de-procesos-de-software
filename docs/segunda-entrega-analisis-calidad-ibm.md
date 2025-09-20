@@ -2300,7 +2300,7 @@ Release Manager: ________________  Fecha: ____________
 
 **Dashboard Interactivo Implementado:** `dashboard_demo.html`
 
-![Dashboard Principal IBM](../docs/graficos/dashboard_metricas_completo.png)
+![Dashboard Principal IBM](../diagrams/diagramas_entrega_2/dashborad1.png)
 *Figura 12A.1a: Dashboard Principal - Monitoreo en tiempo real de 15 KPIs críticos (Implementación: dashboard_demo.html)*
 
 Este dashboard proporciona monitoreo en tiempo real de 15 KPIs críticos de calidad, con auto-refresh cada 15 segundos y alertas inteligentes basadas en umbrales configurables. Utiliza IBM Carbon Design System para mantener la identidad corporativa auténtica.
@@ -2314,7 +2314,7 @@ Este dashboard proporciona monitoreo en tiempo real de 15 KPIs críticos de cali
 
 **Dashboard ML Predictivo:** `ml_dashboard_demo.html`
 
-![Dashboard ML IBM](../docs/graficos/metricas_comparativas_barras.png)
+![Dashboard ML IBM](../diagrams/diagramas_entrega_2/dashboard2%20ML.png)
 *Figura 12A.1b: Dashboard ML Predictivo - Análisis predictivo con Machine Learning (Implementación: ml_dashboard_demo.html)*
 
 Complementariamente, se implementó un dashboard de análisis predictivo que utiliza Machine Learning (Random Forest, Isolation Forest, Prophet) para generar predicciones de 24 horas con 87.4% de precisión promedio.
