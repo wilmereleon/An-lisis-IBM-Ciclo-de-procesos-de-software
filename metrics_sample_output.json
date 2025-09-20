@@ -1,0 +1,172 @@
+{
+  "timestamp": "2025-09-20T12:19:20.123456",
+  "collection_source": "IBM_Quality_Automation",
+  "environment": "production",
+  "data_sources": [
+    "jira_prod",
+    "sonarqube_main",
+    "azure_devops_pipelines",
+    "security_scanner",
+    "apm_datadog",
+    "customer_feedback_api"
+  ],
+  "metrics": {
+    "product_quality": {
+      "defect_density": {
+        "value": 1.58,
+        "unit": "defects/KLOC",
+        "threshold": 2.5,
+        "status": "GOOD",
+        "trend": "IMPROVING"
+      },
+      "defect_leakage": {
+        "value": 2.8,
+        "unit": "%",
+        "threshold": 5.0,
+        "status": "GOOD",
+        "trend": "STABLE"
+      },
+      "code_coverage": {
+        "value": 92.7,
+        "unit": "%",
+        "threshold": 80.0,
+        "status": "EXCELLENT",
+        "trend": "IMPROVING"
+      },
+      "code_quality_score": {
+        "value": 9.2,
+        "unit": "/10",
+        "threshold": 8.0,
+        "status": "EXCELLENT",
+        "trend": "STABLE"
+      }
+    },
+    "process_efficiency": {
+      "pipeline_success_rate": {
+        "value": 93.7,
+        "unit": "%",
+        "threshold": 95.0,
+        "status": "CRITICAL",
+        "trend": "DECLINING",
+        "alert_triggered": true
+      },
+      "deployment_frequency": {
+        "value": 2.3,
+        "unit": "per_day",
+        "threshold": 1.0,
+        "status": "EXCELLENT",
+        "trend": "IMPROVING"
+      },
+      "lead_time": {
+        "value": 5.8,
+        "unit": "days",
+        "threshold": 7.0,
+        "status": "WARNING",
+        "trend": "INCREASING"
+      },
+      "change_failure_rate": {
+        "value": 9.8,
+        "unit": "%",
+        "threshold": 10.0,
+        "status": "WARNING",
+        "trend": "STABLE"
+      }
+    },
+    "security_performance": {
+      "security_score": {
+        "value": 9.1,
+        "unit": "/10",
+        "threshold": 8.5,
+        "status": "GOOD",
+        "trend": "STABLE"
+      },
+      "performance_score": {
+        "value": 94.1,
+        "unit": "%",
+        "threshold": 90.0,
+        "status": "GOOD",
+        "trend": "STABLE"
+      },
+      "availability": {
+        "value": 98.24,
+        "unit": "%",
+        "threshold": 98.0,
+        "status": "GOOD",
+        "trend": "STABLE"
+      }
+    },
+    "business_impact": {
+      "user_satisfaction": {
+        "value": 4.3,
+        "unit": "/5",
+        "threshold": 4.0,
+        "status": "GOOD",
+        "trend": "IMPROVING"
+      },
+      "customer_retention": {
+        "value": 87.3,
+        "unit": "%",
+        "threshold": 85.0,
+        "status": "GOOD",
+        "trend": "STABLE"
+      },
+      "revenue_impact": {
+        "value": 0.1,
+        "unit": "%",
+        "threshold": 0.0,
+        "status": "POSITIVE",
+        "trend": "STABLE"
+      }
+    }
+  },
+  "alerts": [
+    {
+      "id": "ALERT_001",
+      "metric": "pipeline_success_rate",
+      "value": 93.7,
+      "threshold": 95.0,
+      "severity": "CRITICAL",
+      "alert_type": "BELOW_MIN",
+      "unit": "%",
+      "timestamp": "2025-09-20T12:19:20.123456",
+      "action_required": "Investigar fallos en CI/CD, optimizar scripts",
+      "escalation_needed": true,
+      "notifications_sent": {
+        "slack": true,
+        "email": true,
+        "pagerduty": true,
+        "jira_ticket": "AUTO-12345"
+      },
+      "affected_teams": ["DevOps", "Platform Engineering", "On-call"],
+      "estimated_impact": "Medium - potential deployment delays"
+    }
+  ],
+  "summary": {
+    "overall_status": "CRITICAL",
+    "total_metrics": 12,
+    "metrics_in_good_state": 10,
+    "metrics_with_warnings": 1,
+    "critical_alerts": 1,
+    "high_alerts": 0,
+    "recommendations": [
+      "Immediate investigation of CI/CD pipeline failures required",
+      "Monitor lead time trend to prevent future delays",
+      "Continue current practices for product quality metrics"
+    ]
+  },
+  "metadata": {
+    "collection_duration_ms": 2340,
+    "data_freshness": {
+      "jira": "< 5 minutes",
+      "sonarqube": "< 15 minutes",
+      "azure_devops": "< 2 minutes",
+      "security_scanner": "< 30 minutes"
+    },
+    "next_collection": "2025-09-20T12:34:20.123456",
+    "dashboard_url": "http://ibm-quality-dashboard.internal/live",
+    "export_files": [
+      "metrics_20250920_1219.json",
+      "metrics_trend_20250920.csv"
+    ]
+  }
+}
