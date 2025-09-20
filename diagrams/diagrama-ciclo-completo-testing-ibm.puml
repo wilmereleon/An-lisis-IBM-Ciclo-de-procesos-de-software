@@ -1,0 +1,67 @@
+@startuml diagrama-ciclo-completo-testing-ibm
+title Ciclo Completo de Testing - IBM Software Development
+
+rectangle "PROCESO INTEGRADO DE TESTING IBM" {
+    
+    rectangle "FASE 1: PLANIFICACION" #E8F4FD {
+        rectangle "Analisis de Requisitos"
+        rectangle "Test Strategy Definition"
+        rectangle "Resource Planning"
+        rectangle "Environment Setup"
+    }
+    
+    rectangle "FASE 2: DISENO" #D1ECF1 {
+        rectangle "Test Case Design"
+        rectangle "Test Data Preparation"
+        rectangle "Automation Scripts"
+        rectangle "Test Environment Config"
+    }
+    
+    rectangle "FASE 3: EJECUCION" #D4EDDA {
+        rectangle "Unit Testing"
+        rectangle "Integration Testing"
+        rectangle "System Testing"
+        rectangle "User Acceptance Testing"
+    }
+    
+    rectangle "FASE 4: EVALUACION" #F8D7DA {
+        rectangle "Results Analysis"
+        rectangle "Defect Management"
+        rectangle "Test Closure"
+        rectangle "Lessons Learned"
+    }
+}
+
+rectangle "HERRAMIENTAS Y FRAMEWORKS" #LightYellow {
+    rectangle "CMMI L3-L5"
+    rectangle "TMMi L3-L4"
+    rectangle "ISO/IEC 29119"
+    rectangle "DevOps Tools"
+}
+
+rectangle "METRICAS Y REPORTES" #LightCyan {
+    rectangle "Test Coverage"
+    rectangle "Defect Density"
+    rectangle "Execution Time"
+    rectangle "Quality Gates"
+}
+
+"FASE 1: PLANIFICACION" --> "FASE 2: DISENO"
+"FASE 2: DISENO" --> "FASE 3: EJECUCION"
+"FASE 3: EJECUCION" --> "FASE 4: EVALUACION"
+
+"HERRAMIENTAS Y FRAMEWORKS" --> "FASE 1: PLANIFICACION"
+"HERRAMIENTAS Y FRAMEWORKS" --> "FASE 2: DISENO"
+"HERRAMIENTAS Y FRAMEWORKS" --> "FASE 3: EJECUCION"
+
+"FASE 3: EJECUCION" --> "METRICAS Y REPORTES"
+"FASE 4: EVALUACION" --> "METRICAS Y REPORTES"
+
+note bottom
+CRONOGRAMA: 22 semanas
+RECURSOS: 85 FTE especializados
+COBERTURA: 95%+ de requisitos
+AUTOMATIZACION: 80%+ de test cases
+end note
+
+@enduml

@@ -1,0 +1,66 @@
+@startuml matriz-roles-responsabilidades-testing
+title Matriz RACI - Roles y Responsabilidades en Testing IBM
+
+!define RESPONSIBLE #FF6B6B
+!define ACCOUNTABLE #4ECDC4
+!define CONSULTED #45B7D1
+!define INFORMED #96CEB4
+
+rectangle "ACTIVIDADES DE TESTING" {
+    rectangle "Test Planning" as planning
+    rectangle "Test Design" as design
+    rectangle "Test Execution" as execution
+    rectangle "Defect Management" as defects
+    rectangle "Test Reporting" as reporting
+    rectangle "Quality Gates" as gates
+}
+
+rectangle "ROLES" {
+    rectangle "Test Manager" as tm
+    rectangle "QA Lead" as qal
+    rectangle "QA Engineer" as qae
+    rectangle "Developer" as dev
+    rectangle "Business Analyst" as ba
+    rectangle "Product Owner" as po
+    rectangle "DevOps Engineer" as devops
+}
+
+planning --> tm : R/A
+planning --> qal : R
+planning --> ba : C
+planning --> po : C
+
+design --> qal : R/A
+design --> qae : R
+design --> ba : C
+design --> dev : I
+
+execution --> qae : R/A
+execution --> qal : R
+execution --> devops : C
+execution --> tm : I
+
+defects --> qae : R
+defects --> qal : A
+defects --> dev : R
+defects --> tm : I
+
+reporting --> qal : R/A
+reporting --> tm : R
+reporting --> po : C
+reporting --> qae : C
+
+gates --> tm : A
+gates --> qal : R
+gates --> po : C
+gates --> ba : C
+
+note bottom
+LEYENDA:
+R = Responsible (Ejecuta)
+A = Accountable (Responde)
+C = Consulted (Consultado)
+I = Informed (Informado)
+end note
+
+@enduml

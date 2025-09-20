@@ -1,0 +1,51 @@
+@startuml automatizacion-completa-ibm
+!theme vibrant
+title Automatización Completa IBM Quality Management
+
+package "Componentes Principales" {
+    [Generador Metricas] as GM
+    [Analytics Predictivo] as AP  
+    [Integracion Enterprise] as IE
+}
+
+package "Fuentes de Datos" {
+    [Jira] as JIRA
+    [Azure DevOps] as ADO
+    [SonarQube] as SQ
+    [Jenkins] as JENKINS
+    [Base de Datos] as DB
+}
+
+package "Salidas" {
+    [Dashboard Ejecutivo] as DE
+    [Reportes PDF] as PDF
+    [Alertas Email] as EMAIL
+    [Predicciones ML] as ML
+    [Metricas JSON] as JSON
+}
+
+actor "Stakeholders" as ST
+actor "QA Team" as QA
+actor "DevOps" as DO
+
+GM --> DE
+GM --> JSON
+AP --> ML
+IE --> EMAIL
+
+JIRA --> IE
+ADO --> IE
+SQ --> GM
+JENKINS --> GM
+DB --> AP
+
+DE --> ST
+PDF --> ST
+EMAIL --> QA
+ML --> DO
+
+note right of GM : Genera metricas\nen tiempo real
+note right of AP : Predice tendencias\ny genera alertas
+note right of IE : Integra datos de\nmultiples fuentes
+
+@enduml

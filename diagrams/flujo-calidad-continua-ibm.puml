@@ -1,0 +1,67 @@
+@startuml flujo-calidad-continua-ibm
+title Flujo de Calidad Continua - IBM DevOps Integration
+
+start
+
+:Desarrollo de Codigo;
+note right: Developer commits
+
+:Static Code Analysis;
+note right: SonarQube, CodeQL
+
+if (Quality Gates Pass?) then (yes)
+  :Unit Tests Execution;
+  
+  if (Unit Tests Pass?) then (yes)
+    :Build Package;
+    
+    :Deploy to QA Environment;
+    
+    :Automated Integration Tests;
+    
+    if (Integration Tests Pass?) then (yes)
+      :Performance Testing;
+      
+      if (Performance OK?) then (yes)
+        :Security Scanning;
+        
+        if (Security Clear?) then (yes)
+          :Deploy to UAT;
+          
+          :User Acceptance Testing;
+          
+          if (UAT Approved?) then (yes)
+            :Deploy to Production;
+            
+            :Production Monitoring;
+            
+            :Metrics Collection;
+            
+            stop
+          else (no)
+            :UAT Defect Report;
+            :Fix UAT Issues;
+            :UAT Defect Report; -> :Desarrollo de Codigo;
+          endif
+        else (no)
+          :Security Fix Required;
+          :Security Fix Required; -> :Desarrollo de Codigo;
+        endif
+      else (no)
+        :Performance Optimization;
+        :Performance Optimization; -> :Desarrollo de Codigo;
+      endif
+    else (no)
+      :Integration Fix Required;
+      :Integration Fix Required; -> :Desarrollo de Codigo;
+    endif
+  else (no)
+    :Unit Test Fix Required;
+    :Unit Test Fix Required; -> :Desarrollo de Codigo;
+  endif
+else (no)
+  :Code Quality Issues;
+  :Code Quality Issues; -> :Desarrollo de Codigo;
+endif
+
+@enduml

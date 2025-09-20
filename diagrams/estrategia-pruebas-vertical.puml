@@ -1,0 +1,52 @@
+@startuml estrategia-pruebas-vertical
+title Estrategia de Pruebas - Hilo Conductor IBM
+
+rectangle "FASE 1: PLANIFICACION" as fase1
+rectangle "QUALITY GATE 1" as qg1
+rectangle "FASE 2: DISENO" as fase2
+rectangle "QUALITY GATE 2" as qg2
+rectangle "FASE 3: EJECUCION" as fase3
+rectangle "QUALITY GATE 3" as qg3
+rectangle "FASE 4: CIERRE" as fase4
+
+fase1 --> qg1
+qg1 --> fase2
+fase2 --> qg2
+qg2 --> fase3
+fase3 --> qg3
+qg3 --> fase4
+
+note right of fase1
+Semanas 1-4:
+- Analisis de Requisitos
+- Definicion de Estrategia
+- Estimacion de Recursos
+- Setup de Ambientes
+end note
+
+note right of fase2
+Semanas 3-8:
+- Diseno de Casos de Prueba
+- Scripts de Automatizacion
+- Preparacion de Datos
+- Revision y Aprobacion
+end note
+
+note right of fase3
+Semanas 7-20:
+- Pruebas Unitarias
+- Pruebas de Integracion
+- Pruebas de Sistema
+- Pruebas de Rendimiento
+- Gestion de Defectos
+end note
+
+note right of fase4
+Semanas 19-22:
+- Verificacion de Criterios
+- Analisis de Metricas
+- Lecciones Aprendidas
+- Transferencia de Conocimiento
+end note
+
+@enduml

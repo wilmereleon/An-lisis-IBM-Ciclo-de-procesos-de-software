@@ -1,0 +1,131 @@
+# Configuración Enterprise para IBM Quality Metrics Integration
+# Este archivo debe ser personalizado con credenciales reales en producción
+
+jira:
+  url: "https://ibm.atlassian.net"
+  username: "quality@ibm.com"
+  api_token: "YOUR_JIRA_API_TOKEN_HERE"
+  project_keys:
+    - "QUAL"
+    - "TEST"
+    - "DEFECT"
+  search_filters:
+    defect_types: ["Bug", "Defect", "Issue"]
+    priorities: ["Critical", "High", "Medium", "Low"]
+    max_results: 1000
+
+azure_devops:
+  organization: "ibm"
+  project: "Quality"
+  pat_token: "YOUR_AZURE_DEVOPS_PAT_TOKEN_HERE"
+  team_project_collections:
+    - "QualityManagement"
+    - "TestingFramework"
+  build_definitions:
+    - "CI-Quality-Pipeline"
+    - "Integration-Tests"
+    - "Performance-Tests"
+
+email:
+  smtp_server: "smtp.ibm.com"
+  smtp_port: 587
+  use_tls: true
+  username: "quality-reports@ibm.com"
+  password: "YOUR_EMAIL_PASSWORD_HERE"
+  recipients:
+    management:
+      - "cio@ibm.com"
+      - "quality-director@ibm.com"
+    qa_leads:
+      - "qa-team-leads@ibm.com"
+      - "testing-managers@ibm.com"
+    development:
+      - "dev-team-leads@ibm.com"
+  cc_recipients:
+    - "quality-metrics@ibm.com"
+
+scheduling:
+  daily_report:
+    time: "08:00"
+    timezone: "America/Bogota"
+    enabled: true
+  weekly_report:
+    day: "Monday"
+    time: "09:00"
+    timezone: "America/Bogota"
+    enabled: true
+  monthly_report:
+    day: "1st"
+    time: "10:00"
+    timezone: "America/Bogota"
+    enabled: true
+
+database:
+  type: "sqlite"
+  path: "data/quality_metrics.db"
+  backup_retention_days: 90
+  
+alertas:
+  umbrales:
+    defectos_criticos_max: 5
+    tasa_exito_minima: 85.0
+    tiempo_resolucion_max_horas: 48
+    defectos_sin_asignar_max: 10
+    tendencia_empeoramiento_dias: 7
+  
+  notificaciones:
+    email_inmediato: true
+    slack_webhook: "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
+    teams_webhook: "https://ibm.webhook.office.com/YOUR/TEAMS/WEBHOOK"
+
+integraciones_adicionales:
+  sonarqube:
+    url: "https://sonarqube.ibm.com"
+    token: "YOUR_SONARQUBE_TOKEN"
+    projects:
+      - "ibm-quality-framework"
+      - "testing-automation-suite"
+  
+  jenkins:
+    url: "https://jenkins.ibm.com"
+    username: "quality-automation"
+    api_token: "YOUR_JENKINS_TOKEN"
+    jobs:
+      - "Quality-Pipeline"
+      - "Integration-Tests"
+      - "Performance-Tests"
+  
+  grafana:
+    url: "https://grafana.ibm.com"
+    api_key: "YOUR_GRAFANA_API_KEY"
+    dashboard_ids:
+      - 12345  # Quality Metrics Dashboard
+      - 67890  # Testing Performance Dashboard
+
+exportacion:
+  formatos:
+    - "excel"
+    - "pdf" 
+    - "json"
+    - "csv"
+  
+  destinos:
+    local_path: "reports/"
+    s3_bucket: "ibm-quality-reports"
+    sharepoint_site: "https://ibm.sharepoint.com/sites/quality"
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  handlers:
+    file:
+      enabled: true
+      path: "logs/integration.log"
+      max_size_mb: 10
+      backup_count: 5
+    console:
+      enabled: true
+    syslog:
+      enabled: false
+      host: "syslog.ibm.com"
+      port: 514

@@ -1,0 +1,86 @@
+@startuml reuniones-control-proceso-simple
+!theme aws-orange
+title Proceso de Reuniones de Control y Seguimiento IBM
+
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontSize 11
+skinparam titleFontSize 16
+skinparam titleFontStyle bold
+
+rectangle "JERARQUIA DE REUNIONES" #LightGray {
+    rectangle "NIVEL ESTRATEGICO" #D4EDDA
+    rectangle "NIVEL TACTICO" #D1ECF1
+    rectangle "NIVEL OPERACIONAL" #E8F4FD
+}
+
+rectangle "NIVEL ESTRATEGICO - CONTROL EJECUTIVO" #D4EDDA {
+    rectangle "Monthly Quality Board\n\nDuracion: 120 min\nParticipantes: C-Level + Directors\nFrecuencia: Ultimo jueves del mes" as monthly_board
+    
+    rectangle "ENTREGABLES:\n• Executive Dashboard\n• Quality ROI Report\n• Strategic Risk Assessment" as strategic_deliverables
+}
+
+rectangle "NIVEL TACTICO - CONTROL GERENCIAL" #D1ECF1 {
+    rectangle "Weekly Quality Review\n\nDuracion: 60 min\nParticipantes: QA Leads + Test Managers\nFrecuencia: Viernes 2:00 PM" as weekly_review
+    
+    rectangle "ENTREGABLES:\n• Weekly Metrics Report\n• Defect Trend Analysis\n• Risk Register Updates" as tactical_deliverables
+}
+
+rectangle "NIVEL OPERACIONAL - CONTROL DIARIO" #E8F4FD {
+    rectangle "Daily Quality Standup\n\nDuracion: 15 min\nParticipantes: QA Team + Scrum Master\nFrecuencia: Diario 9:00 AM" as daily_standup
+    
+    rectangle "ENTREGABLES:\n• Daily Status Update\n• Impediments Log\n• Test Execution Status" as operational_deliverables
+}
+
+rectangle "QUALITY GATES - CONTROL POR MILESTONE" #F8D7DA {
+    rectangle "Quality Gate Review\n\nDuracion: 45 min\nParticipantes: ARB + Quality Team\nFrecuencia: Por milestone definido" as qg_review
+    
+    rectangle "ENTREGABLES:\n• Gate Decision Report\n• Quality Metrics Summary\n• Coverage Analysis" as gates_deliverables
+}
+
+' Flujo vertical
+monthly_board -down-> strategic_deliverables
+weekly_review -down-> tactical_deliverables
+daily_standup -down-> operational_deliverables
+qg_review -down-> gates_deliverables
+
+' Flujo de informacion ascendente
+operational_deliverables -up-> tactical_deliverables : "Issues escalados"
+tactical_deliverables -up-> strategic_deliverables : "Tendencias"
+strategic_deliverables -right-> gates_deliverables : "Directrices"
+
+' Actores
+actor "Executive Team" as exec_team
+actor "Test Managers" as test_mgrs
+actor "QA Engineers" as qa_engineers
+actor "Stakeholders" as stakeholders
+
+exec_team -right-> monthly_board
+test_mgrs -right-> weekly_review
+qa_engineers -right-> daily_standup
+stakeholders -right-> qg_review
+
+rectangle "TEMPLATES Y HERRAMIENTAS" #LightYellow {
+    rectangle "Agenda Templates" as agenda_templates
+    rectangle "Meeting Minutes" as minutes_templates
+    rectangle "Reporting Tools" as reporting_tools
+    rectangle "Collaboration Tools" as collab_tools
+}
+
+agenda_templates -down-> minutes_templates
+minutes_templates -down-> reporting_tools
+reporting_tools -down-> collab_tools
+
+strategic_deliverables -right-> agenda_templates
+tactical_deliverables -right-> minutes_templates
+operational_deliverables -right-> reporting_tools
+gates_deliverables -right-> collab_tools
+
+note bottom
+**CRONOGRAMA DE REUNIONES:**
+• Daily Standup: 9:00 AM (15 min)
+• Weekly Review: Viernes 2:00 PM (60 min) 
+• Monthly Board: Ultimo jueves 9:00 AM (120 min)
+• Quality Gates: Por milestone (45 min)
+end note
+
+@enduml
