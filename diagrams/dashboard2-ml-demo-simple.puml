@@ -1,0 +1,64 @@
+@startuml dashboard2-ml-demo-simple
+skinparam backgroundColor #f4f4f4
+skinparam defaultFontName "IBM Plex Sans"
+
+title <size:20><color:#8a3ffc><b>IBM ML Quality Analytics Dashboard</b></color></size>
+
+rectangle "IBM ML HEADER" as header #8a3ffc {
+    <color:#ffffff><size:14><b>IBM ML Quality Analytics Dashboard</b> AI/ML POWERED   Models: Active</color>
+}
+
+rectangle "ML STATUS" as status #e8e8ff {
+    <size:10>Models Trained: 6/6    Training Data: 2,161 samples    Prediction Horizon: 24h    Overall Accuracy: 87.4%</size>
+}
+
+rectangle "PREDICCIONES ML - HORIZONTE 24H" as predictions1 #e8f5e8 {
+    <size:12><b>Defect Density</b></size>
+    <size:8>Current: 1.85 defects/KLOC</size>
+    <size:16><b>1.94</b></size>
+    <size:10>+4.7% (Confidence: 84.7%)</size>
+    <size:8>Slight increase predicted. Weekly cycle detected</size>
+    ====
+    <size:12><b>Pipeline Success Rate</b></size>
+    <size:8>Current: 97.97%</size>
+    <size:16><b>96.61%</b></size>
+    <size:10>-1.4% (Confidence: 89.8%)</size>
+    <size:8>Downward trend. Correlation with deployment frequency</size>
+}
+
+rectangle "PREDICCIONES ML - CONTINUACION" as predictions2 #e8e8ff {
+    <size:12><b>Lead Time</b></size>
+    <size:8>Current: 4.87 days</size>
+    <size:16><b>4.97</b></size>
+    <size:10>+2.1% (Confidence: 87.8%)</size>
+    <size:8>Minor increase. Seasonality mid-week pattern</size>
+    ====
+    <size:12><b>Customer Satisfaction</b></size>
+    <size:8>Current: 4.21/5</size>
+    <size:16><b>4.17</b></size>
+    <size:10>-0.8% (Confidence: 93.0%)</size>
+    <size:8>Slight decline but within normal variance</size>
+}
+
+rectangle "ANALISIS DE RIESGO ML" as risk #e8f5e8 {
+    <color:#24a148><size:16><b>NO CRITICAL RISKS DETECTED</b></size></color>
+    <size:12>All metrics predicted to remain within acceptable thresholds for next 24 hours</size>
+    
+    <size:14><b>Overall Risk Score: 25 (LOW RISK)</b></size>
+}
+
+rectangle "ACTIVE ML MODELS" as models #fff8e1 {
+    <size:12><b>Random Forest: 87.4%</b></size>
+    <size:8>Value prediction with 100 estimators</size>
+    ====
+    <size:12><b>Isolation Forest: 92.0%</b></size>
+    <size:8>Anomaly detection, 10% contamination</size>
+    ====
+    <size:12><b>Prophet: 85.2%</b></size>
+    <size:8>Time series with seasonality detection</size>
+    ====
+    <size:12><b>Risk Engine: 89.1%</b></size>
+    <size:8>Custom ensemble for risk scoring</size>
+}
+
+@enduml

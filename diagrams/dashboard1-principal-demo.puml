@@ -1,0 +1,67 @@
+@startuml dashboard1-principal-demo
+!define LIGHTBLUE #e1f5fe
+!define LIGHTGREEN #e8f5e8
+!define LIGHTYELLOW #fff8e1
+!define BLUE #0f62fe
+!define GREEN #24a148
+!define YELLOW #f1c21b
+
+skinparam backgroundColor #f4f4f4
+skinparam defaultFontName "IBM Plex Sans"
+
+title <size:20><color:#0f62fe><b>📊 IBM Quality Metrics Dashboard - Live</b></color></size>
+
+rectangle "IBM HEADER" as header #0f62fe {
+    <color:#ffffff><size:14><b>IBM Quality Metrics Dashboard</b>                   ⚪ Auto-refresh: ON (15s)</color>
+}
+
+rectangle "MÉTRICAS DE CALIDAD DEL PRODUCTO" as quality #LIGHTGREEN {
+    <size:12><b>🏭 Densidad de Defectos</b></size>
+    <size:16><b>1.85/KLOC</b></size>
+    <color:#24a148>🟢 -2.3% vs objetivo</color>
+    ----
+    <size:12><b>� Cobertura de Código</b></size>
+    <size:16><b>89.7%</b></size>
+    <color:#f1c21b>🟡 +1.2% esta semana</color>
+    ----
+    <size:12><b>🔒 Score de Seguridad</b></size>
+    <size:16><b>8.5/10</b></size>
+    <color:#24a148>🟢 Dentro del rango</color>
+}
+
+rectangle "MÉTRICAS DE PROCESO DE TESTING" as process #LIGHTBLUE {
+    <size:12><b>🚀 Tasa Éxito Pipeline</b></size>
+    <size:16><b>97.97%</b></size>
+    <color:#24a148>🟢 +0.5% mejora</color>
+    ----
+    <size:12><b>📈 Frecuencia Despliegue</b></size>
+    <size:16><b>2.8/día</b></size>
+    <color:#24a148>🟢 Objetivo cumplido</color>
+    ----
+    <size:12><b>⏱️ Tiempo de Entrega</b></size>
+    <size:16><b>4.87 días</b></size>
+    <color:#f1c21b>🟡 Monitorear</color>
+}
+
+rectangle "MÉTRICAS DEVOPS Y NEGOCIO" as devops #LIGHTYELLOW {
+    <size:12><b>📈 Performance Score</b></size>
+    <size:16><b>92.1%</b></size>
+    <color:#24a148>🟢 Óptimo</color>
+    ----
+    <size:12><b>⏱️ Disponibilidad</b></size>
+    <size:16><b>100%</b></size>
+    <color:#24a148>🟢 Sin incidentes</color>
+    ----
+    <size:12><b>👥 Satisfacción Usuario</b></size>
+    <size:16><b>4.21/5</b></size>
+    <color:#24a148>🟢 +0.1 mejora</color>
+}
+
+rectangle "ALERTAS ACTIVAS" as alerts #fff8e1 {
+    <color:#f1c21b><size:14><b>🟡 1 ALERTA MEDIA</b></size></color>
+    <size:10>Tiempo de Entrega: 4.87 días (objetivo: <4.5)</size>
+    
+    <color:#24a148><size:14><b>🟢 ESTADO GENERAL: SALUDABLE</b></size></color>
+}
+
+@enduml
