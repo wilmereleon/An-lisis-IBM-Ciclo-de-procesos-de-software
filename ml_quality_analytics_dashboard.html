@@ -24,6 +24,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
     
+    <!-- Sistema Reactivo -->
+    <script src="scripts/ibm-quality-data-manager.js"></script>
+    
     <style>
         :root {
             /* IBM Carbon Design System Variables */
@@ -789,11 +792,17 @@
     <!-- IBM Carbon Header/Navbar -->
     <header class="bx--header">
         <a href="#" class="bx--header__name">
+            <!-- IBM Watson AI Icon -->
             <svg class="bx--header__logo" viewBox="0 0 32 32">
-                <path d="M8.24 25.14L7 24l4.05-4.24.39.4-.47.47L8.52 23l1.36-1.37-.41-.41 4.36-4.59L14 17l-5.79 6.14H8.2zm-5.92-8.12L3.73 15.6l4.2-4.44.4.4-.47.48L5.41 14.4l1.38-1.38-.41-.41L10.55 8.4l.17.37-5.79 6.14H2.3z"/>
-                <path d="M27.12 8h-6.23l-3.7 3.9 3.7 3.9h6.23L32 12l-4.88-4zM22.12 14l2.57-2.7L26.88 14h-4.76zm5.76-4L26.12 8h-2.5l1.26 2z"/>
+                <path d="M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14S23.7,2,16,2z M16,28c-6.6,0-12-5.4-12-12S9.4,4,16,4s12,5.4,12,12S22.6,28,16,28z"/>
+                <path d="M16,6c-5.5,0-10,4.5-10,10s4.5,10,10,10s10-4.5,10-10S21.5,6,16,6z M16,24c-4.4,0-8-3.6-8-8s3.6-8,8-8s8,3.6,8,8S20.4,24,16,24z"/>
+                <circle cx="16" cy="16" r="4"/>
+                <circle cx="16" cy="9" r="1"/>
+                <circle cx="23" cy="16" r="1"/>
+                <circle cx="16" cy="23" r="1"/>
+                <circle cx="9" cy="16" r="1"/>
             </svg>
-            IBM Quality Analytics
+            IBM Quality Management
         </a>
         
         <nav class="bx--header-nav">
@@ -1453,6 +1462,63 @@
             }
             return data;
         }
+
+        // Integración con Sistema Reactivo
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar si el data manager está disponible
+            if (typeof IBMQualityManager !== 'undefined') {
+                // Suscribirse a actualizaciones de métricas
+                IBMQualityManager.subscribe('metricsUpdated', function(metrics) {
+                    console.log('ML Dashboard: Métricas actualizadas', metrics);
+                    updateMLMetrics(metrics);
+                });
+
+                // Suscribirse a cambios de datos
+                IBMQualityManager.subscribe('dataChanged', function(change) {
+                    if (change.type === 'testExecutions') {
+                        console.log('ML Dashboard: Nuevas ejecuciones de prueba detectadas');
+                        updatePredictions();
+                    }
+                });
+
+                // Función para actualizar métricas ML basadas en datos reales
+                function updateMLMetrics(metrics) {
+                    // Actualizar predicciones ML basadas en métricas reales
+                    const mlPredictions = {
+                        qualityScore: metrics.quality?.score || 85,
+                        defectPrediction: metrics.defectMetrics?.density || 2.5,
+                        riskLevel: metrics.riskMetrics?.averageScore || 15,
+                        coverageImpact: metrics.coverage?.line || 85
+                    };
+
+                    IBMQualityManager.updateMLPredictions([{
+                        timestamp: new Date().toISOString(),
+                        ...mlPredictions,
+                        model: 'Random Forest',
+                        confidence: 87.4
+                    }]);
+                }
+
+                // Función para actualizar predicciones
+                function updatePredictions() {
+                    // Simular nuevas predicciones basadas en datos actuales
+                    const testCases = IBMQualityManager.getTestCases();
+                    const executions = IBMQualityManager.getTestExecutions();
+                    
+                    if (executions.length > 0) {
+                        const latestExecution = executions[executions.length - 1];
+                        console.log('ML Dashboard: Procesando nueva ejecución', latestExecution);
+                        
+                        // Actualizar métricas ML
+                        IBMQualityManager.updateMetrics();
+                    }
+                }
+
+                console.log('ML Dashboard: Integración con sistema reactivo activada');
+            } else {
+                console.log('ML Dashboard: Sistema reactivo no disponible, ejecutando en modo independiente');
+            }
+        });
     </script>
 </body>
 </html>

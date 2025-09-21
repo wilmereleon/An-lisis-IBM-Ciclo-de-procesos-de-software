@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Trazabilidad - IBM Quality Management</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%230043ce' d='M12 2h8v8h-8V2zm0 10h8v8h-8v-8zm0 10h8v8h-8v-8zM2 12h8v8H2v-8zm20 0h8v8h-8v-8z'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%230043ce' d='M12 2h8v8h-8V2zm0 10h8v8h-8v-8zm0 10h8v8h-8v-8zM2 12h8v8H2v-8zm20 0h8v8h-8v-8z'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="https://unpkg.com/carbon-components/css/carbon-components.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --ibm-blue: #0f62fe;
+            --ibm-blue-60: #0043ce;
+            --ibm-blue-10: #edf5ff;
+            --ibm-gray-100: #161616;
+            --ibm-gray-80: #393939;
+            --ibm-gray-10: #f4f4f4;
+            --ibm-green: #24a148;
+            --ibm-red: #da1e28;
+            --ibm-yellow: #f1c21b;
+            --ibm-orange: #ff832b;
+            --ibm-purple: #8a3ffc;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background-color: var(--ibm-gray-10);
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background: var(--ibm-blue-60);
+            color: white;
+            padding: 1rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1584px;
+            margin: 0 auto;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .header-title h1 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: white;
+        }
+
+        .watson-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .header-actions .bx--btn {
+            height: 40px;
+            min-width: 4rem;
+        }
+
+        .main-content {
+            max-width: 1584px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 0;
+            padding: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            text-align: center;
+            border-top: 3px solid var(--ibm-blue);
+            border: 1px solid #e0e0e0;
+            border-top: 3px solid var(--ibm-blue);
+        }
+
+        .stat-card.requirements { border-top-color: var(--ibm-purple); }
+        .stat-card.test-cases { border-top-color: var(--ibm-green); }
+        .stat-card.defects { border-top-color: var(--ibm-red); }
+        .stat-card.coverage { border-top-color: var(--ibm-yellow); }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--ibm-gray-100);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--ibm-gray-80);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-trend {
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+
+        .trend-up { color: var(--ibm-green); }
+        .trend-down { color: var(--ibm-red); }
+
+        .tabs {
+            background: white;
+            border-radius: 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+        .tab-list {
+            display: flex;
+            background: #f4f4f4;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 0.875rem 1rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 400;
+            font-size: 0.875rem;
+            color: var(--ibm-gray-100);
+            transition: all 0.11s ease;
+            border-bottom: 2px solid transparent;
+            border-right: 1px solid #e0e0e0;
+        }
+
+        .tab-button:last-child {
+            border-right: none;
+        }
+
+        .tab-button.active {
+            background: white;
+            color: var(--ibm-blue);
+            border-bottom-color: var(--ibm-blue);
+            font-weight: 600;
+        }
+
+        .tab-button:hover:not(.active) {
+            background: #e8e8e8;
+            color: var(--ibm-blue);
+        }
+
+        .tab-content {
+            padding: 1.5rem;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .traceability-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .control-group label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--ibm-gray-100);
+        }
+
+        .matrix-container {
+            background: white;
+            border-radius: 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .matrix-table th {
+            background: var(--ibm-gray-100);
+            color: white;
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 400;
+            font-size: 0.75rem;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-right: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .matrix-table th:first-child {
+            background: var(--ibm-blue);
+            position: sticky;
+            left: 0;
+            z-index: 11;
+        }
+
+        .matrix-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e0e0e0;
+            border-right: 1px solid #e0e0e0;
+        }
+
+        .matrix-table td:first-child {
+            background: var(--ibm-blue-10);
+            font-weight: 600;
+            position: sticky;
+            left: 0;
+            z-index: 9;
+        }
+
+        .trace-link {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 2px;
+        }
+
+        .trace-link.linked {
+            background: var(--ibm-green);
+            color: white;
+        }
+
+        .trace-link.partial {
+            background: var(--ibm-yellow);
+            color: white;
+        }
+
+        .trace-link.failed {
+            background: var(--ibm-red);
+            color: white;
+        }
+
+        .trace-link.empty {
+            background: var(--ibm-gray-10);
+            color: var(--ibm-gray-80);
+            border: 1px solid #e0e0e0;
+        }
+
+        .trace-link:hover {
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .requirement-item,
+        .testcase-item,
+        .defect-item {
+            background: white;
+            border-radius: 0;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            border-left: 3px solid var(--ibm-blue);
+            border: 1px solid #e0e0e0;
+            border-left: 3px solid var(--ibm-blue);
+        }
+
+        .requirement-item { border-left-color: var(--ibm-purple); }
+        .testcase-item { border-left-color: var(--ibm-green); }
+        .defect-item { border-left-color: var(--ibm-red); }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .item-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--ibm-gray-100);
+        }
+
+        .item-id {
+            font-family: 'IBM Plex Mono', monospace;
+            background: var(--ibm-gray-10);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
+        .item-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-approved { background: rgba(36, 161, 72, 0.1); color: var(--ibm-green); }
+        .status-passed { background: rgba(36, 161, 72, 0.1); color: var(--ibm-green); }
+        .status-failed { background: rgba(218, 30, 40, 0.1); color: var(--ibm-red); }
+        .status-blocked { background: rgba(241, 194, 27, 0.1); color: var(--ibm-yellow); }
+        .status-open { background: rgba(218, 30, 40, 0.1); color: var(--ibm-red); }
+        .status-resolved { background: rgba(36, 161, 72, 0.1); color: var(--ibm-green); }
+
+        .item-description {
+            color: var(--ibm-gray-80);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .item-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .link-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .link-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--ibm-gray-80);
+            text-transform: uppercase;
+        }
+
+        .link-items {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .link-item {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            background: var(--ibm-blue-10);
+            color: var(--ibm-blue);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .link-item:hover {
+            background: var(--ibm-blue);
+            color: white;
+        }
+
+        .coverage-chart {
+            background: white;
+            border-radius: 0;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            margin-bottom: 1.5rem;
+            border: 1px solid #e0e0e0;
+        }
+
+        .chart-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--ibm-gray-100);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .coverage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .coverage-metric {
+            text-align: center;
+        }
+
+        .coverage-circle {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+        }
+
+        .circle-bg,
+        .circle-fill {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .circle-bg {
+            background: var(--ibm-gray-10);
+        }
+
+        .circle-fill {
+            background: conic-gradient(var(--ibm-green) 0deg, var(--ibm-green) 270deg, var(--ibm-gray-10) 270deg);
+            mask: radial-gradient(circle at center, transparent 50px, black 50px);
+        }
+
+        .circle-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--ibm-gray-100);
+        }
+
+        .metric-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--ibm-gray-100);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--ibm-gray-100);
+            margin: 0;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .impact-analysis {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .impact-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: var(--ibm-gray-10);
+            border-radius: 8px;
+            gap: 1rem;
+        }
+
+        .impact-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .impact-high { background: rgba(218, 30, 40, 0.1); color: var(--ibm-red); }
+        .impact-medium { background: rgba(241, 194, 27, 0.1); color: var(--ibm-yellow); }
+        .impact-low { background: rgba(36, 161, 72, 0.1); color: var(--ibm-green); }
+
+        .impact-details {
+            flex: 1;
+        }
+
+        .impact-title {
+            font-weight: 600;
+            color: var(--ibm-gray-100);
+            margin-bottom: 0.25rem;
+        }
+
+        .impact-description {
+            color: var(--ibm-gray-80);
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-content { padding: 1rem; }
+            .stats-overview { grid-template-columns: repeat(2, 1fr); }
+            .coverage-grid { grid-template-columns: 1fr; }
+            .traceability-controls { flex-direction: column; align-items: stretch; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-title">
+                <div class="watson-icon">
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M26,28H6a2,2,0,0,1-2-2V6A2,2,0,0,1,6,4H16V6H6V26H26V16h2V26A2,2,0,0,1,26,28Z"/>
+                        <path d="M21,2a5.006,5.006,0,0,0-5,5v6a5,5,0,0,0,10,0V7A5.006,5.006,0,0,0,21,2Zm3,11a3,3,0,0,1-6,0V7a3,3,0,0,1,6,0Z"/>
+                    </svg>
+                </div>
+                <h1>Sistema de Trazabilidad</h1>
+            </div>
+            <div class="header-actions">
+                <button class="bx--btn bx--btn--secondary" onclick="generateReport()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M25,5H7A2,2,0,0,0,5,7V25a2,2,0,0,0,2,2H25a2,2,0,0,0,2-2V7A2,2,0,0,0,25,5ZM7,7H25V25H7Z"/>
+                        <path d="M9,9h6v2H9Zm0,4h8v2H9Zm0,4h10v2H9Z"/>
+                    </svg>
+                    Generar Reporte
+                </button>
+                <button class="bx--btn bx--btn--primary" onclick="addTraceability()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M17,15V8H15v7H8v2h7v7h2V17h7V15Z"/>
+                    </svg>
+                    Nueva Trazabilidad
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Stats Overview -->
+        <section class="stats-overview">
+            <div class="stat-card requirements">
+                <div class="stat-value">47</div>
+                <div class="stat-label">Requisitos Totales</div>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-arrow-up"></i> +3 nuevos
+                </div>
+            </div>
+
+            <div class="stat-card test-cases">
+                <div class="stat-value">128</div>
+                <div class="stat-label">Casos de Prueba</div>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-arrow-up"></i> +8 nuevos
+                </div>
+            </div>
+
+            <div class="stat-card defects">
+                <div class="stat-value">15</div>
+                <div class="stat-label">Defectos Abiertos</div>
+                <div class="stat-trend trend-down">
+                    <i class="fas fa-arrow-down"></i> -5 resueltos
+                </div>
+            </div>
+
+            <div class="stat-card coverage">
+                <div class="stat-value">87%</div>
+                <div class="stat-label">Cobertura de Pruebas</div>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-arrow-up"></i> +2.5%
+                </div>
+            </div>
+        </section>
+
+        <!-- Tabs Section -->
+        <section class="tabs">
+            <div class="tab-list">
+                <button class="tab-button active" onclick="switchTab('matrix')">
+                    <i class="fas fa-table"></i> Matriz de Trazabilidad
+                </button>
+                <button class="tab-button" onclick="switchTab('requirements')">
+                    <i class="fas fa-list-alt"></i> Requisitos
+                </button>
+                <button class="tab-button" onclick="switchTab('testcases')">
+                    <i class="fas fa-vial"></i> Casos de Prueba
+                </button>
+                <button class="tab-button" onclick="switchTab('defects')">
+                    <i class="fas fa-bug"></i> Defectos
+                </button>
+                <button class="tab-button" onclick="switchTab('coverage')">
+                    <i class="fas fa-chart-pie"></i> Cobertura
+                </button>
+            </div>
+
+            <!-- Matrix Tab -->
+            <div id="matrix" class="tab-content active">
+                <div class="traceability-controls">
+                    <div class="control-group">
+                        <label for="moduleFilter">Módulo</label>
+                        <select id="moduleFilter" class="bx--select-input">
+                            <option value="all">Todos los módulos</option>
+                            <option value="auth">Autenticación</option>
+                            <option value="user">Gestión de Usuarios</option>
+                            <option value="reporting">Reportes</option>
+                            <option value="api">API Management</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="priorityFilter">Prioridad</label>
+                        <select id="priorityFilter" class="bx--select-input">
+                            <option value="all">Todas las prioridades</option>
+                            <option value="high">Alta</option>
+                            <option value="medium">Media</option>
+                            <option value="low">Baja</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="statusFilter">Estado</label>
+                        <select id="statusFilter" class="bx--select-input">
+                            <option value="all">Todos los estados</option>
+                            <option value="approved">Aprobado</option>
+                            <option value="in-progress">En Progreso</option>
+                            <option value="blocked">Bloqueado</option>
+                        </select>
+                    </div>
+                    <button class="bx--btn bx--btn--secondary" onclick="applyFilters()" style="margin-top: 1.75rem;">
+                        Aplicar Filtros
+                    </button>
+                </div>
+
+                <div class="matrix-container">
+                    <table class="matrix-table">
+                        <thead>
+                            <tr>
+                                <th>Requisito</th>
+                                <th>TC-AUTH-001</th>
+                                <th>TC-AUTH-002</th>
+                                <th>TC-USER-001</th>
+                                <th>TC-USER-002</th>
+                                <th>TC-RPT-001</th>
+                                <th>TC-RPT-002</th>
+                                <th>TC-API-001</th>
+                                <th>TC-API-002</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>REQ-AUTH-001</td>
+                                <td><span class="trace-link linked" onclick="showTraceDetails('REQ-AUTH-001', 'TC-AUTH-001')">✓</span></td>
+                                <td><span class="trace-link linked" onclick="showTraceDetails('REQ-AUTH-001', 'TC-AUTH-002')">✓</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>REQ-AUTH-002</td>
+                                <td><span class="trace-link partial" onclick="showTraceDetails('REQ-AUTH-002', 'TC-AUTH-001')">⚠</span></td>
+                                <td><span class="trace-link linked" onclick="showTraceDetails('REQ-AUTH-002', 'TC-AUTH-002')">✓</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>REQ-USER-001</td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link linked" onclick="showTraceDetails('REQ-USER-001', 'TC-USER-001')">✓</span></td>
+                                <td><span class="trace-link linked" onclick="showTraceDetails('REQ-USER-001', 'TC-USER-002')">✓</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>REQ-USER-002</td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link failed" onclick="showTraceDetails('REQ-USER-002', 'TC-USER-001')">✗</span></td>
+                                <td><span class="trace-link linked" onclick="showTraceDetails('REQ-USER-002', 'TC-USER-002')">✓</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>REQ-RPT-001</td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link linked" onclick="showTraceDetails('REQ-RPT-001', 'TC-RPT-001')">✓</span></td>
+                                <td><span class="trace-link linked" onclick="showTraceDetails('REQ-RPT-001', 'TC-RPT-002')">✓</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>REQ-API-001</td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link empty">-</span></td>
+                                <td><span class="trace-link linked" onclick="showTraceDetails('REQ-API-001', 'TC-API-001')">✓</span></td>
+                                <td><span class="trace-link partial" onclick="showTraceDetails('REQ-API-001', 'TC-API-002')">⚠</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Requirements Tab -->
+            <div id="requirements" class="tab-content">
+                <div class="requirement-item">
+                    <div class="item-header">
+                        <div>
+                            <span class="item-id">REQ-AUTH-001</span>
+                            <h3 class="item-title">Autenticación de Usuario</h3>
+                        </div>
+                        <span class="item-status status-approved">Aprobado</span>
+                    </div>
+                    <p class="item-description">
+                        El sistema debe permitir la autenticación de usuarios mediante email y contraseña, 
+                        implementando medidas de seguridad como bloqueo de cuenta después de 3 intentos fallidos.
+                    </p>
+                    <div class="item-links">
+                        <div class="link-group">
+                            <span class="link-label">Casos de Prueba</span>
+                            <div class="link-items">
+                                <span class="link-item" onclick="navigateToItem('TC-AUTH-001')">TC-AUTH-001</span>
+                                <span class="link-item" onclick="navigateToItem('TC-AUTH-002')">TC-AUTH-002</span>
+                            </div>
+                        </div>
+                        <div class="link-group">
+                            <span class="link-label">Defectos</span>
+                            <div class="link-items">
+                                <span class="link-item" onclick="navigateToItem('DEF-001')">DEF-001</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="requirement-item">
+                    <div class="item-header">
+                        <div>
+                            <span class="item-id">REQ-USER-001</span>
+                            <h3 class="item-title">Gestión de Perfiles de Usuario</h3>
+                        </div>
+                        <span class="item-status status-approved">Aprobado</span>
+                    </div>
+                    <p class="item-description">
+                        Los usuarios deben poder crear, editar y eliminar sus perfiles, incluyendo información 
+                        personal, preferencias y configuraciones de notificación.
+                    </p>
+                    <div class="item-links">
+                        <div class="link-group">
+                            <span class="link-label">Casos de Prueba</span>
+                            <div class="link-items">
+                                <span class="link-item" onclick="navigateToItem('TC-USER-001')">TC-USER-001</span>
+                                <span class="link-item" onclick="navigateToItem('TC-USER-002')">TC-USER-002</span>
+                            </div>
+                        </div>
+                        <div class="link-group">
+                            <span class="link-label">Defectos</span>
+                            <div class="link-items">
+                                <span class="link-item" onclick="navigateToItem('DEF-003')">DEF-003</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="requirement-item">
+                    <div class="item-header">
+                        <div>
+                            <span class="item-id">REQ-RPT-001</span>
+                            <h3 class="item-title">Generación de Reportes</h3>
+                        </div>
+                        <span class="item-status status-approved">Aprobado</span>
+                    </div>
+                    <p class="item-description">
+                        El sistema debe permitir generar reportes personalizables en formatos PDF y Excel, 
+                        con filtros por fecha, usuario y categorías.
+                    </p>
+                    <div class="item-links">
+                        <div class="link-group">
+                            <span class="link-label">Casos de Prueba</span>
+                            <div class="link-items">
+                                <span class="link-item" onclick="navigateToItem('TC-RPT-001')">TC-RPT-001</span>
+                                <span class="link-item" onclick="navigateToItem('TC-RPT-002')">TC-RPT-002</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Cases Tab -->
+            <div id="testcases" class="tab-content">
+                <div class="testcase-item">
+                    <div class="item-header">
+                        <div>
+                            <span class="item-id">TC-AUTH-001</span>
+                            <h3 class="item-title">Login Exitoso con Credenciales Válidas</h3>
+                        </div>
+                        <span class="item-status status-passed">Pasó</span>
+                    </div>
+                    <p class="item-description">
+                        Verificar que un usuario puede iniciar sesión exitosamente utilizando email y contraseña válidos.
+                    </p>
+                    <div class="item-links">
+                        <div class="link-group">
+                            <span class="link-label">Requisitos</span>
+                            <div class="link-items">
+                                <span class="link-item" onclick="navigateToItem('REQ-AUTH-001')">REQ-AUTH-001</span>
+                            </div>
+                        </div>
+                        <div class="link-group">
+                            <span class="link-label">Últimas Ejecuciones</span>
+                            <div class="link-items">
+                                <span class="link-item">2024-03-15: Pasó</span>
+                                <span class="link-item">2024-03-14: Pasó</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testcase-item">
+                    <div class="item-header">
+                        <div>
+                            <span class="item-id">TC-AUTH-002</span>
+                            <h3 class="item-title">Login Fallido con Credenciales Inválidas</h3>
+                        </div>
+                        <span class="item-status status-failed">Falló</span>
+                    </div>
+                    <p class="item-description">
+                        Verificar que el sistema rechaza apropiadamente intentos de login con credenciales inválidas.
+                    </p>
+                    <div class="item-links">
+                        <div class="link-group">
+                            <span class="link-label">Requisitos</span>
+                            <div class="link-items">
+                                <span class="link-item" onclick="navigateToItem('REQ-AUTH-001')">REQ-AUTH-001</span>
+                                <span class="link-item" onclick="navigateToItem('REQ-AUTH-002')">REQ-AUTH-002</span>
+                            </div>
+                        </div>
+                        <div class="link-group">
+                            <span class="link-label">Defectos Relacionados</span>
+                            <div class="link-items">
+                                <span class="link-item" onclick="navigateToItem('DEF-002')">DEF-002</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testcase-item">
+                    <div class="item-header">
+                        <div>
+                            <span class="item-id">TC-USER-001</span>
+                            <h3 class="item-title">Creación de Perfil de Usuario</h3>
+                        </div>
+                        <span class="item-status status-passed">Pasó</span>
+                    </div>
+                    <p class="item-description">
+                        Verificar que un usuario puede crear un nuevo perfil con información personal válida.
+                    </p>
+                    <div class="item-links">
+                        <div class="link-group">
+                            <span class="link-label">Requisitos</span>
+                            <div class="link-items">
+                                <span class="link-item" onclick="navigateToItem('REQ-USER-001')">REQ-USER-001</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Defects Tab -->
+            <div id="defects" class="tab-content">
+                <div class="defect-item">
+                    <div class="item-header">
+                        <div>
+                            <span class="item-id">DEF-001</span>
+                            <h3 class="item-title">Error en Validación de Email</h3>
+                        </div>
+                        <span class="item-status status-open">Abierto</span>
+                    </div>
+                    <p class="item-description">
+                        El sistema acepta emails con formato inválido durante el registro de usuario.
+                    </p>
+                    <div class="item-links">
+                        <div class="link-group">
+                            <span class="link-label">Requisitos Afectados</span>
+                            <div class="link-items">
+                                <span class="link-item" onclick="navigateToItem('REQ-AUTH-001')">REQ-AUTH-001</span>
+                            </div>
+                        </div>
+                        <div class="link-group">
+                            <span class="link-label">Casos de Prueba</span>
+                            <div class="link-items">
+                                <span class="link-item" onclick="navigateToItem('TC-AUTH-001')">TC-AUTH-001</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="defect-item">
+                    <div class="item-header">
+                        <div>
+                            <span class="item-id">DEF-002</span>
+                            <h3 class="item-title">Mensaje de Error Incorrecto</h3>
+                        </div>
+                        <span class="item-status status-resolved">Resuelto</span>
+                    </div>
+                    <p class="item-description">
+                        El mensaje de error mostrado cuando las credenciales son incorrectas no es específico.
+                    </p>
+                    <div class="item-links">
+                        <div class="link-group">
+                            <span class="link-label">Casos de Prueba</span>
+                            <div class="link-items">
+                                <span class="link-item" onclick="navigateToItem('TC-AUTH-002')">TC-AUTH-002</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coverage Tab -->
+            <div id="coverage" class="tab-content">
+                <div class="coverage-chart">
+                    <h3 class="chart-title">Análisis de Cobertura de Pruebas</h3>
+                    <div class="coverage-grid">
+                        <div class="coverage-metric">
+                            <div class="coverage-circle">
+                                <div class="circle-bg"></div>
+                                <div class="circle-fill" style="background: conic-gradient(var(--ibm-green) 0deg, var(--ibm-green) 312deg, var(--ibm-gray-10) 312deg);"></div>
+                                <div class="circle-text">87%</div>
+                            </div>
+                            <div class="metric-title">Cobertura General</div>
+                        </div>
+
+                        <div class="coverage-metric">
+                            <div class="coverage-circle">
+                                <div class="circle-bg"></div>
+                                <div class="circle-fill" style="background: conic-gradient(var(--ibm-green) 0deg, var(--ibm-green) 324deg, var(--ibm-gray-10) 324deg);"></div>
+                                <div class="circle-text">90%</div>
+                            </div>
+                            <div class="metric-title">Requisitos Cubiertos</div>
+                        </div>
+
+                        <div class="coverage-metric">
+                            <div class="coverage-circle">
+                                <div class="circle-bg"></div>
+                                <div class="circle-fill" style="background: conic-gradient(var(--ibm-yellow) 0deg, var(--ibm-yellow) 273deg, var(--ibm-gray-10) 273deg);"></div>
+                                <div class="circle-text">76%</div>
+                            </div>
+                            <div class="metric-title">Casos Ejecutados</div>
+                        </div>
+
+                        <div class="coverage-metric">
+                            <div class="coverage-circle">
+                                <div class="circle-bg"></div>
+                                <div class="circle-fill" style="background: conic-gradient(var(--ibm-green) 0deg, var(--ibm-green) 338deg, var(--ibm-gray-10) 338deg);"></div>
+                                <div class="circle-text">94%</div>
+                            </div>
+                            <div class="metric-title">Casos Pasaron</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Trace Details Modal -->
+    <div id="traceDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Detalles de Trazabilidad</h2>
+                <button class="bx--btn bx--btn--ghost" onclick="closeModal('traceDetailsModal')">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M24,9.4,22.6,8,16,14.6,9.4,8,8,9.4,14.6,16,8,22.6,9.4,24,16,17.4,22.6,24,24,22.6,17.4,16Z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="traceDetailsContent">
+                    <!-- Content will be populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Impact Analysis Modal -->
+    <div id="impactAnalysisModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Análisis de Impacto</h2>
+                <button class="bx--btn bx--btn--ghost" onclick="closeModal('impactAnalysisModal')">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M24,9.4,22.6,8,16,14.6,9.4,8,8,9.4,14.6,16,8,22.6,9.4,24,16,17.4,22.6,24,24,22.6,17.4,16Z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="impact-analysis">
+                    <div class="impact-item">
+                        <div class="impact-icon impact-high">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="impact-details">
+                            <div class="impact-title">5 Casos de Prueba Afectados</div>
+                            <div class="impact-description">Cambios en este requisito afectarán directamente 5 casos de prueba existentes</div>
+                        </div>
+                    </div>
+
+                    <div class="impact-item">
+                        <div class="impact-icon impact-medium">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="impact-details">
+                            <div class="impact-title">2 Días de Re-testing Estimados</div>
+                            <div class="impact-description">Se requerirá tiempo adicional para re-ejecutar las pruebas afectadas</div>
+                        </div>
+                    </div>
+
+                    <div class="impact-item">
+                        <div class="impact-icon impact-low">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="impact-details">
+                            <div class="impact-title">Automatización Disponible</div>
+                            <div class="impact-description">El 80% de las pruebas afectadas pueden ejecutarse automáticamente</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // IBM Quality Data Manager (Reactive System)
+        class IBMQualityDataManager {
+            constructor() {
+                this.observers = {};
+                this.traceabilityData = {
+                    requirements: [
+                        { id: 'REQ-AUTH-001', title: 'Autenticación de Usuario', status: 'approved', priority: 'high' },
+                        { id: 'REQ-USER-001', title: 'Gestión de Perfiles', status: 'approved', priority: 'medium' },
+                        { id: 'REQ-RPT-001', title: 'Generación de Reportes', status: 'approved', priority: 'low' }
+                    ],
+                    testCases: [
+                        { id: 'TC-AUTH-001', title: 'Login Exitoso', status: 'passed', linked: ['REQ-AUTH-001'] },
+                        { id: 'TC-AUTH-002', title: 'Login Fallido', status: 'failed', linked: ['REQ-AUTH-001', 'REQ-AUTH-002'] },
+                        { id: 'TC-USER-001', title: 'Crear Perfil', status: 'passed', linked: ['REQ-USER-001'] }
+                    ],
+                    defects: [
+                        { id: 'DEF-001', title: 'Error en Validación', status: 'open', linked: ['REQ-AUTH-001', 'TC-AUTH-001'] },
+                        { id: 'DEF-002', title: 'Mensaje Incorrecto', status: 'resolved', linked: ['TC-AUTH-002'] }
+                    ]
+                };
+            }
+
+            subscribe(event, callback) {
+                if (!this.observers[event]) {
+                    this.observers[event] = [];
+                }
+                this.observers[event].push(callback);
+            }
+
+            notify(event, data) {
+                if (this.observers[event]) {
+                    this.observers[event].forEach(callback => callback(data));
+                }
+            }
+
+            getTraceabilityData() {
+                return this.traceabilityData;
+            }
+
+            addTraceLink(fromId, toId) {
+                this.notify('traceLinkAdded', { from: fromId, to: toId });
+            }
+        }
+
+        // Initialize Data Manager
+        const dataManager = new IBMQualityDataManager();
+
+        // Tab functionality
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Traceability functions
+        function showTraceDetails(reqId, testId) {
+            const modal = document.getElementById('traceDetailsModal');
+            const content = document.getElementById('traceDetailsContent');
+            
+            content.innerHTML = `
+                <div style="margin-bottom: 1.5rem;">
+                    <h4>Trazabilidad: ${reqId} ↔ ${testId}</h4>
+                    <p>Detalles de la relación entre el requisito y el caso de prueba.</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div>
+                        <h5>Requisito: ${reqId}</h5>
+                        <p>Estado: <span class="item-status status-approved">Aprobado</span></p>
+                        <p>Última modificación: 2024-03-10</p>
+                        <p>Autor: Juan Pérez</p>
+                    </div>
+                    
+                    <div>
+                        <h5>Caso de Prueba: ${testId}</h5>
+                        <p>Estado: <span class="item-status status-passed">Pasó</span></p>
+                        <p>Última ejecución: 2024-03-15</p>
+                        <p>Ejecutado por: María García</p>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem;">
+                    <button class="bx--btn bx--btn--secondary" onclick="analyzeImpact('${reqId}')">
+                        <i class="fas fa-analytics"></i> Analizar Impacto
+                    </button>
+                </div>
+            `;
+            
+            modal.style.display = 'flex';
+        }
+
+        function applyFilters() {
+            const module = document.getElementById('moduleFilter').value;
+            const priority = document.getElementById('priorityFilter').value;
+            const status = document.getElementById('statusFilter').value;
+            
+            console.log('Aplicando filtros:', { module, priority, status });
+            showNotification('Filtros aplicados exitosamente', 'success');
+        }
+
+        function addTraceability() {
+            showNotification('Abriendo formulario para nueva trazabilidad...', 'success');
+        }
+
+        function generateReport() {
+            showNotification('Generando reporte de trazabilidad...', 'success');
+            
+            // Simulate report generation
+            setTimeout(() => {
+                showNotification('Reporte generado exitosamente', 'success');
+            }, 2000);
+        }
+
+        function navigateToItem(itemId) {
+            showNotification(`Navegando a ${itemId}...`, 'success');
+        }
+
+        function analyzeImpact(reqId) {
+            closeModal('traceDetailsModal');
+            document.getElementById('impactAnalysisModal').style.display = 'flex';
+        }
+
+        // Utility functions
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function showNotification(message, type = 'success') {
+            // Create notification element if it doesn't exist
+            let notification = document.getElementById('notification');
+            if (!notification) {
+                notification = document.createElement('div');
+                notification.id = 'notification';
+                notification.className = 'notification';
+                notification.innerHTML = '<span id="notificationMessage"></span>';
+                document.body.appendChild(notification);
+            }
+            
+            const messageElement = document.getElementById('notificationMessage');
+            
+            notification.className = `notification ${type}`;
+            messageElement.textContent = message;
+            notification.style.display = 'flex';
+
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 4000);
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Subscribe to data updates
+            dataManager.subscribe('traceLinkAdded', (data) => {
+                console.log('New trace link added:', data);
+                showNotification(`Trazabilidad agregada: ${data.from} → ${data.to}`, 'success');
+            });
+
+            console.log('Sistema de Trazabilidad iniciado');
+        });
+
+        // Add notification styles
+        const notificationStyles = `
+            .notification {
+                position: fixed;
+                top: 80px;
+                right: 20px;
+                background: white;
+                border-radius: 8px;
+                padding: 1rem 1.5rem;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+                z-index: 1001;
+                display: none;
+                align-items: center;
+                gap: 0.75rem;
+                border-left: 4px solid var(--ibm-green);
+            }
+            .notification.success { border-left-color: var(--ibm-green); }
+            .notification.error { border-left-color: var(--ibm-red); }
+            .notification.warning { border-left-color: var(--ibm-yellow); }
+        `;
+
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = notificationStyles;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html>

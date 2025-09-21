@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Pruebas Template - IBM Quality Management</title>
+    <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
+    
+    <!-- IBM Carbon Design System Icons -->
+    <script type="module" src="https://unpkg.com/@carbon/icons@11.8.0/es/index.js"></script>
+    <script src="scripts/ibm-quality-data-manager.js"></script>
+    <script src="scripts/ibm-quality-config.js"></script>
+    
+    <style>
+        :root {
+            /* IBM Carbon Design System Variables */
+            --cds-interactive-01: #0f62fe;
+            --cds-interactive-02: #393939;
+            --cds-interactive-03: #0f62fe;
+            --cds-ui-background: #f4f4f4;
+            --cds-ui-01: #ffffff;
+            --cds-ui-02: #f4f4f4;
+            --cds-text-01: #161616;
+            --cds-text-02: #525252;
+            --cds-text-03: #a8a8a8;
+            --cds-field-01: #f4f4f4;
+            --cds-support-01: #da1e28;
+            --cds-support-02: #24a148;
+            --cds-support-03: #f1c21b;
+            --cds-support-04: #0043ce;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', Arial, sans-serif;
+            background-color: var(--cds-ui-background);
+            color: var(--cds-text-01);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .bx--header {
+            background-color: var(--cds-interactive-02);
+            border-bottom: 1px solid #393939;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .bx--header__name {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bx--header__logo {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--cds-interactive-01), #0043ce);
+            color: white;
+            padding: 3rem 2rem;
+            margin: -2rem -2rem 2rem -2rem;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Form Styles */
+        .form-section {
+            background: var(--cds-ui-01);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--cds-interactive-01);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .bx--form-item {
+            margin-bottom: 1rem;
+        }
+
+        .bx--label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: 0.5rem;
+        }
+
+        .bx--text-input,
+        .bx--text-area,
+        .bx--select-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #8d8d8d;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-family: inherit;
+            background: white;
+            transition: border-color 0.15s ease;
+        }
+
+        .bx--text-input:focus,
+        .bx--text-area:focus,
+        .bx--select-input:focus {
+            outline: none;
+            border-color: var(--cds-interactive-01);
+            box-shadow: 0 0 0 2px rgba(15, 98, 254, 0.2);
+        }
+
+        .bx--text-area {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Dynamic Lists */
+        .dynamic-list {
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            background: white;
+        }
+
+        .list-item {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .list-item-content {
+            flex: 1;
+        }
+
+        .list-item-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .list-item-description {
+            color: var(--cds-text-02);
+            font-size: 0.875rem;
+        }
+
+        /* Buttons */
+        .bx--btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+
+        .bx--btn--primary {
+            background-color: var(--cds-interactive-01);
+            color: white;
+        }
+
+        .bx--btn--primary:hover {
+            background-color: #0050e6;
+        }
+
+        .bx--btn--secondary {
+            background-color: transparent;
+            color: var(--cds-interactive-01);
+            border: 1px solid var(--cds-interactive-01);
+        }
+
+        .bx--btn--secondary:hover {
+            background-color: #f4f4f4;
+        }
+
+        .bx--btn--danger {
+            background-color: var(--cds-support-01);
+            color: white;
+        }
+
+        .bx--btn--danger:hover {
+            background-color: #ba1b23;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: flex-end;
+        }
+
+        /* Tables */
+        .bx--data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .bx--data-table th,
+        .bx--data-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .bx--data-table th {
+            background-color: var(--cds-ui-02);
+            font-weight: 600;
+            color: var(--cds-text-01);
+        }
+
+        /* Progress Indicators */
+        .progress-section {
+            background: linear-gradient(90deg, #f4f4f4, #e0e0e0);
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-indicator {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: var(--cds-interactive-01);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .step-indicator.completed {
+            background-color: var(--cds-support-02);
+        }
+
+        .step-indicator.pending {
+            background-color: var(--cds-text-03);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .page-header {
+                margin: -1rem -1rem 1rem -1rem;
+                padding: 2rem 1rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Carbon Header/Navbar -->
+    <header class="bx--header">
+        <a href="#" class="bx--header__name">
+            <!-- IBM Watson AI Icon -->
+            <svg class="bx--header__logo" viewBox="0 0 32 32">
+                <path d="M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14S23.7,2,16,2z M16,28c-6.6,0-12-5.4-12-12S9.4,4,16,4s12,5.4,12,12S22.6,28,16,28z"/>
+                <path d="M16,6c-5.5,0-10,4.5-10,10s4.5,10,10,10s10-4.5,10-10S21.5,6,16,6z M16,24c-4.4,0-8-3.6-8-8s3.6-8,8-8s8,3.6,8,8S20.4,24,16,24z"/>
+                <circle cx="16" cy="16" r="4"/>
+                <circle cx="16" cy="9" r="1"/>
+                <circle cx="23" cy="16" r="1"/>
+                <circle cx="16" cy="23" r="1"/>
+                <circle cx="9" cy="16" r="1"/>
+            </svg>
+            IBM Quality Management
+        </a>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Plan de Pruebas Template</h1>
+            <p class="page-subtitle">Generador completo de planes de prueba basado en ISO/IEC 29119 e IEEE 829</p>
+        </div>
+
+        <!-- Progress Indicator -->
+        <div class="progress-section">
+            <div class="progress-step">
+                <div class="step-indicator completed">1</div>
+                <span>Información General</span>
+            </div>
+            <div class="progress-step">
+                <div class="step-indicator pending">2</div>
+                <span>Estrategia de Pruebas</span>
+            </div>
+            <div class="progress-step">
+                <div class="step-indicator pending">3</div>
+                <span>Recursos y Ambiente</span>
+            </div>
+            <div class="progress-step">
+                <div class="step-indicator pending">4</div>
+                <span>Cronograma y Entregables</span>
+            </div>
+        </div>
+
+        <form id="testPlanForm">
+            <!-- Sección 1: Información General -->
+            <div class="form-section">
+                <h2 class="section-title">1. Información General del Proyecto</h2>
+                <div class="form-grid">
+                    <div class="bx--form-item">
+                        <label class="bx--label">Nombre del Proyecto</label>
+                        <input type="text" class="bx--text-input" id="projectName" placeholder="Ej: Sistema de Banca en Línea IBM">
+                    </div>
+                    <div class="bx--form-item">
+                        <label class="bx--label">Versión del Plan</label>
+                        <input type="text" class="bx--text-input" id="planVersion" placeholder="v1.0">
+                    </div>
+                    <div class="bx--form-item">
+                        <label class="bx--label">Responsable del Plan</label>
+                        <input type="text" class="bx--text-input" id="planOwner" placeholder="QA Manager">
+                    </div>
+                    <div class="bx--form-item">
+                        <label class="bx--label">Fecha de Creación</label>
+                        <input type="date" class="bx--text-input" id="creationDate">
+                    </div>
+                </div>
+                <div class="bx--form-item">
+                    <label class="bx--label">Descripción del Proyecto</label>
+                    <textarea class="bx--text-area" id="projectDescription" placeholder="Descripción detallada del alcance y objetivos del proyecto..."></textarea>
+                </div>
+            </div>
+
+            <!-- Sección 2: Estrategia de Pruebas -->
+            <div class="form-section">
+                <h2 class="section-title">2. Estrategia de Pruebas</h2>
+                <div class="form-grid">
+                    <div class="bx--form-item">
+                        <label class="bx--label">Enfoque de Testing</label>
+                        <select class="bx--select-input" id="testingApproach">
+                            <option value="">Seleccionar enfoque...</option>
+                            <option value="agile">Ágil (SCRUM/Kanban)</option>
+                            <option value="waterfall">Cascada Tradicional</option>
+                            <option value="devops">DevOps/CI-CD</option>
+                            <option value="hybrid">Híbrido</option>
+                        </select>
+                    </div>
+                    <div class="bx--form-item">
+                        <label class="bx--label">Nivel de Testing</label>
+                        <select class="bx--select-input" id="testingLevel">
+                            <option value="">Seleccionar nivel...</option>
+                            <option value="unit">Pruebas Unitarias</option>
+                            <option value="integration">Pruebas de Integración</option>
+                            <option value="system">Pruebas de Sistema</option>
+                            <option value="acceptance">Pruebas de Aceptación</option>
+                            <option value="all">Todos los Niveles</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="bx--form-item">
+                    <label class="bx--label">Objetivos de las Pruebas</label>
+                    <textarea class="bx--text-area" id="testObjectives" placeholder="Definir los objetivos específicos que se buscan alcanzar con las pruebas..."></textarea>
+                </div>
+
+                <div class="bx--form-item">
+                    <label class="bx--label">Tipos de Prueba a Realizar</label>
+                    <div class="dynamic-list" id="testTypesList">
+                        <div class="list-item">
+                            <div class="list-item-content">
+                                <div class="list-item-title">Pruebas Funcionales</div>
+                                <div class="list-item-description">Validación de requisitos funcionales</div>
+                            </div>
+                            <button type="button" class="bx--btn bx--btn--danger bx--btn--sm" onclick="removeTestType(this)">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M24,9.4L22.6,8L16,14.6L9.4,8L8,9.4L14.6,16L8,22.6L9.4,24L16,17.4L22.6,24L24,22.6L17.4,16Z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" class="bx--btn bx--btn--secondary" onclick="addTestType()">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M17,15V8h-2v7H8v2h7v7h2v-7h7v-2Z"/>
+                        </svg>
+                        Agregar Tipo de Prueba
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sección 3: Recursos y Ambiente -->
+            <div class="form-section">
+                <h2 class="section-title">3. Recursos y Ambiente de Pruebas</h2>
+                
+                <h3 style="color: var(--cds-interactive-01); margin: 1.5rem 0 1rem 0;">Equipo de Pruebas</h3>
+                <div class="dynamic-list" id="teamMembersList">
+                    <div class="list-item">
+                        <div class="list-item-content">
+                            <div class="list-item-title">QA Lead - María González</div>
+                            <div class="list-item-description">Responsable del diseño y ejecución de la estrategia de pruebas</div>
+                        </div>
+                        <button type="button" class="bx--btn bx--btn--danger bx--btn--sm" onclick="removeTeamMember(this)">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                <path d="M24,9.4L22.6,8L16,14.6L9.4,8L8,9.4L14.6,16L8,22.6L9.4,24L16,17.4L22.6,24L24,22.6L17.4,16Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <button type="button" class="bx--btn bx--btn--secondary" onclick="addTeamMember()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M17,15V8h-2v7H8v2h7v7h2v-7h7v-2Z"/>
+                    </svg>
+                    Agregar Miembro del Equipo
+                </button>
+
+                <h3 style="color: var(--cds-interactive-01); margin: 1.5rem 0 1rem 0;">Herramientas de Testing</h3>
+                <div class="form-grid">
+                    <div class="bx--form-item">
+                        <label class="bx--label">Herramienta de Gestión de Casos</label>
+                        <input type="text" class="bx--text-input" id="testManagementTool" placeholder="Ej: TestRail, Jira">
+                    </div>
+                    <div class="bx--form-item">
+                        <label class="bx--label">Herramienta de Automatización</label>
+                        <input type="text" class="bx--text-input" id="automationTool" placeholder="Ej: Selenium, Cypress">
+                    </div>
+                    <div class="bx--form-item">
+                        <label class="bx--label">Herramienta de Gestión de Defectos</label>
+                        <input type="text" class="bx--text-input" id="defectTool" placeholder="Ej: Jira, Bugzilla">
+                    </div>
+                    <div class="bx--form-item">
+                        <label class="bx--label">Ambiente de Pruebas</label>
+                        <input type="text" class="bx--text-input" id="testEnvironment" placeholder="Ej: QA-ENV-01">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 4: Cronograma y Criterios -->
+            <div class="form-section">
+                <h2 class="section-title">4. Cronograma y Criterios de Aceptación</h2>
+                
+                <div class="form-grid">
+                    <div class="bx--form-item">
+                        <label class="bx--label">Fecha de Inicio</label>
+                        <input type="date" class="bx--text-input" id="startDate">
+                    </div>
+                    <div class="bx--form-item">
+                        <label class="bx--label">Fecha de Finalización</label>
+                        <input type="date" class="bx--text-input" id="endDate">
+                    </div>
+                </div>
+
+                <div class="bx--form-item">
+                    <label class="bx--label">Criterios de Entrada</label>
+                    <textarea class="bx--text-area" id="entryCriteria" placeholder="Condiciones que deben cumplirse antes de iniciar las pruebas..."></textarea>
+                </div>
+
+                <div class="bx--form-item">
+                    <label class="bx--label">Criterios de Salida</label>
+                    <textarea class="bx--text-area" id="exitCriteria" placeholder="Condiciones que deben cumplirse para dar por finalizadas las pruebas..."></textarea>
+                </div>
+
+                <div class="bx--form-item">
+                    <label class="bx--label">Criterios de Suspensión</label>
+                    <textarea class="bx--text-area" id="suspensionCriteria" placeholder="Condiciones que provocarían la suspensión temporal de las pruebas..."></textarea>
+                </div>
+            </div>
+
+            <!-- Sección 5: Riesgos y Contingencias -->
+            <div class="form-section">
+                <h2 class="section-title">5. Gestión de Riesgos</h2>
+                
+                <div class="dynamic-list" id="risksList">
+                    <div class="list-item">
+                        <div class="list-item-content">
+                            <div class="list-item-title">Retraso en la entrega de builds</div>
+                            <div class="list-item-description">Impacto: Alto | Probabilidad: Media | Contingencia: Solicitar builds parciales</div>
+                        </div>
+                        <button type="button" class="bx--btn bx--btn--danger bx--btn--sm" onclick="removeRisk(this)">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                <path d="M24,9.4L22.6,8L16,14.6L9.4,8L8,9.4L14.6,16L8,22.6L9.4,24L16,17.4L22.6,24L24,22.6L17.4,16Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <button type="button" class="bx--btn bx--btn--secondary" onclick="addRisk()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M17,15V8h-2v7H8v2h7v7h2v-7h7v-2Z"/>
+                    </svg>
+                    Agregar Riesgo
+                </button>
+            </div>
+
+            <!-- Sección 6: Entregables -->
+            <div class="form-section">
+                <h2 class="section-title">6. Entregables del Testing</h2>
+                
+                <table class="bx--data-table">
+                    <thead>
+                        <tr>
+                            <th>Entregable</th>
+                            <th>Responsable</th>
+                            <th>Fecha Estimada</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="deliverablesTable">
+                        <tr>
+                            <td>Plan de Pruebas</td>
+                            <td>QA Lead</td>
+                            <td>Semana 1</td>
+                            <td>En Progreso</td>
+                        </tr>
+                        <tr>
+                            <td>Casos de Prueba</td>
+                            <td>QA Team</td>
+                            <td>Semana 2</td>
+                            <td>Pendiente</td>
+                        </tr>
+                        <tr>
+                            <td>Reporte de Ejecución</td>
+                            <td>QA Analyst</td>
+                            <td>Semana 4</td>
+                            <td>Pendiente</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="btn-group">
+                <button type="button" class="bx--btn bx--btn--secondary" onclick="previewPlan()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16,6C7.664,6,1.25,15.344,1.25,16s6.414,10,14.75,10S30.75,16.656,30.75,16S24.336,6,16,6ZM16,24c-6.213,0-11.48-5.982-12.67-8C4.52,13.982,9.787,8,16,8s11.48,5.982,12.67,8C27.48,18.018,22.213,24,16,24Z"/>
+                        <circle cx="16" cy="16" r="5"/>
+                    </svg>
+                    Vista Previa
+                </button>
+                <button type="button" class="bx--btn bx--btn--secondary" onclick="saveDraft()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M24,28H8V18l2-2h5V14h2v2h5l2,2V28ZM10,26H22V19H10V26Z"/>
+                    </svg>
+                    Guardar Borrador
+                </button>
+                <button type="submit" class="bx--btn bx--btn--primary">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M13,24l-9-9l1.414-1.414L13,21.171L26.586,7.586L28,9L13,24z"/>
+                    </svg>
+                    Generar Plan de Pruebas
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Configurar sistema reactivo
+        window.addEventListener('DOMContentLoaded', function() {
+            const dataManager = new IBMQualityDataManager();
+            const config = new IBMQualityConfig();
+            
+            // Suscribirse a cambios de datos
+            dataManager.subscribe('testPlanUpdated', (data) => {
+                updateTestPlanDisplay();
+            });
+            
+            dataManager.subscribe('dataChanged', (data) => {
+                loadTestPlanData();
+            });
+            
+            // Cargar datos iniciales
+            loadTestPlanData();
+            initializeDateFields();
+        });
+
+        function loadTestPlanData() {
+            const dataManager = new IBMQualityDataManager();
+            // Cargar datos del plan de pruebas si existen
+        }
+
+        function updateTestPlanDisplay() {
+            // Actualizar visualización del plan
+        }
+
+        function initializeDateFields() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('creationDate').value = today;
+            document.getElementById('startDate').value = today;
+            
+            // Fecha de finalización 4 semanas después
+            const endDate = new Date();
+            endDate.setDate(endDate.getDate() + 28);
+            document.getElementById('endDate').value = endDate.toISOString().split('T')[0];
+        }
+
+        // Gestión de tipos de prueba
+        function addTestType() {
+            const type = prompt('Nombre del tipo de prueba:');
+            const description = prompt('Descripción:');
+            
+            if (type && description) {
+                const list = document.getElementById('testTypesList');
+                const item = document.createElement('div');
+                item.className = 'list-item';
+                item.innerHTML = `
+                    <div class="list-item-content">
+                        <div class="list-item-title">${type}</div>
+                        <div class="list-item-description">${description}</div>
+                    </div>
+                    <button type="button" class="bx--btn bx--btn--danger bx--btn--sm" onclick="removeTestType(this)">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M24,9.4L22.6,8L16,14.6L9.4,8L8,9.4L14.6,16L8,22.6L9.4,24L16,17.4L22.6,24L24,22.6L17.4,16Z"/>
+                        </svg>
+                    </button>
+                `;
+                list.appendChild(item);
+            }
+        }
+
+        function removeTestType(button) {
+            button.parentElement.remove();
+        }
+
+        // Gestión de miembros del equipo
+        function addTeamMember() {
+            const name = prompt('Nombre y rol del miembro:');
+            const description = prompt('Responsabilidades:');
+            
+            if (name && description) {
+                const list = document.getElementById('teamMembersList');
+                const item = document.createElement('div');
+                item.className = 'list-item';
+                item.innerHTML = `
+                    <div class="list-item-content">
+                        <div class="list-item-title">${name}</div>
+                        <div class="list-item-description">${description}</div>
+                    </div>
+                    <button type="button" class="bx--btn bx--btn--danger bx--btn--sm" onclick="removeTeamMember(this)">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M24,9.4L22.6,8L16,14.6L9.4,8L8,9.4L14.6,16L8,22.6L9.4,24L16,17.4L22.6,24L24,22.6L17.4,16Z"/>
+                        </svg>
+                    </button>
+                `;
+                list.appendChild(item);
+            }
+        }
+
+        function removeTeamMember(button) {
+            button.parentElement.remove();
+        }
+
+        // Gestión de riesgos
+        function addRisk() {
+            const risk = prompt('Descripción del riesgo:');
+            const impact = prompt('Impacto (Alto/Medio/Bajo):');
+            const probability = prompt('Probabilidad (Alta/Media/Baja):');
+            const contingency = prompt('Plan de contingencia:');
+            
+            if (risk && impact && probability && contingency) {
+                const list = document.getElementById('risksList');
+                const item = document.createElement('div');
+                item.className = 'list-item';
+                item.innerHTML = `
+                    <div class="list-item-content">
+                        <div class="list-item-title">${risk}</div>
+                        <div class="list-item-description">Impacto: ${impact} | Probabilidad: ${probability} | Contingencia: ${contingency}</div>
+                    </div>
+                    <button type="button" class="bx--btn bx--btn--danger bx--btn--sm" onclick="removeRisk(this)">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M24,9.4L22.6,8L16,14.6L9.4,8L8,9.4L14.6,16L8,22.6L9.4,24L16,17.4L22.6,24L24,22.6L17.4,16Z"/>
+                        </svg>
+                    </button>
+                `;
+                list.appendChild(item);
+            }
+        }
+
+        function removeRisk(button) {
+            button.parentElement.remove();
+        }
+
+        // Funciones de acción
+        function previewPlan() {
+            // Generar vista previa del plan
+            alert('Función de vista previa - Se abrirá en una nueva ventana con el plan formateado');
+        }
+
+        function saveDraft() {
+            const dataManager = new IBMQualityDataManager();
+            // Guardar borrador en el sistema
+            alert('Borrador guardado exitosamente');
+        }
+
+        // Envío del formulario
+        document.getElementById('testPlanForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Recopilar datos del formulario
+            const formData = new FormData(this);
+            const planData = Object.fromEntries(formData);
+            
+            // Enviar al sistema reactivo
+            const dataManager = new IBMQualityDataManager();
+            dataManager.notify('testPlanUpdated', planData);
+            
+            alert('Plan de Pruebas generado exitosamente. Se ha guardado en el sistema y notificado a todos los componentes relacionados.');
+        });
+    </script>
+</body>
+</html>

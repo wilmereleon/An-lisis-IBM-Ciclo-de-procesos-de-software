@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IBM Quality Management - Sistema Integrado</title>
+    
+    <!-- IBM favicon -->
+    <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
+    
+    <!-- IBM Carbon Design System CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/carbon-components@10.58.12/css/carbon-components.min.css">
+    
+    <!-- IBM Carbon Icons -->
+    <script type="module" src="https://unpkg.com/@carbon/icons@11.8.0/es/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@carbon/icons@11.8.0/lib/index.css">
+    
+    <!-- IBM Plex Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <!-- Sistema Reactivo -->
+    <script src="scripts/ibm-quality-data-manager.js"></script>
+    
+    <style>
+        :root {
+            /* IBM Carbon Design System Variables */
+            --cds-interactive-01: #0f62fe;
+            --cds-interactive-02: #393939;
+            --cds-interactive-03: #0f62fe;
+            --cds-interactive-04: #0f62fe;
+            --cds-ui-background: #ffffff;
+            --cds-ui-01: #f4f4f4;
+            --cds-ui-02: #ffffff;
+            --cds-ui-03: #e0e0e0;
+            --cds-ui-04: #8d8d8d;
+            --cds-ui-05: #161616;
+            --cds-text-01: #161616;
+            --cds-text-02: #525252;
+            --cds-text-03: #a8a8a8;
+            --cds-text-04: #ffffff;
+            --cds-text-05: #6f6f6f;
+            --cds-icon-01: #161616;
+            --cds-icon-02: #525252;
+            --cds-icon-03: #ffffff;
+            --cds-link-01: #0f62fe;
+            --cds-field-01: #f4f4f4;
+            --cds-field-02: #ffffff;
+            --cds-inverse-01: #ffffff;
+            --cds-inverse-02: #393939;
+            --cds-support-01: #da1e28;
+            --cds-support-02: #24a148;
+            --cds-support-03: #f1c21b;
+            --cds-support-04: #0043ce;
+            --cds-overlay-01: rgba(22, 22, 22, 0.5);
+            --cds-focus: #0f62fe;
+            --cds-hover-primary: #0353e9;
+            --cds-active-primary: #002d9c;
+            --cds-hover-primary-text: #004ccc;
+            --cds-hover-secondary: #4c4c4c;
+            --cds-active-secondary: #6f6f6f;
+            --cds-hover-tertiary: #0353e9;
+            --cds-active-tertiary: #002d9c;
+            --cds-hover-ui: #e5e5e5;
+            --cds-active-ui: #c6c6c6;
+            --cds-selected-ui: #e0e0e0;
+            --cds-hover-selected-ui: #cacaca;
+            --cds-inverse-hover-ui: #4c4c4c;
+            --cds-hover-danger: #ba1b23;
+            --cds-active-danger: #750e13;
+            --cds-hover-row: #e5e5e5;
+            --cds-visited-link: #8a3ffc;
+            --cds-disabled-01: #f4f4f4;
+            --cds-disabled-02: #c6c6c6;
+            --cds-disabled-03: #8d8d8d;
+            --cds-highlight: #d0e2ff;
+            --cds-skeleton-01: #e5e5e5;
+            --cds-skeleton-02: #c6c6c6;
+            --cds-brand-01: #0f62fe;
+            --cds-brand-02: #393939;
+            --cds-brand-03: #0f62fe;
+            --cds-active-01: #c6c6c6;
+            --cds-hover-field: #e5e5e5;
+            
+            /* IBM Carbon Spacing Scale */
+            --cds-spacing-01: 0.125rem;
+            --cds-spacing-02: 0.25rem;
+            --cds-spacing-03: 0.5rem;
+            --cds-spacing-04: 0.75rem;
+            --cds-spacing-05: 1rem;
+            --cds-spacing-06: 1.5rem;
+            --cds-spacing-07: 2rem;
+            --cds-spacing-08: 2.5rem;
+            --cds-spacing-09: 3rem;
+            --cds-spacing-10: 4rem;
+            --cds-spacing-11: 5rem;
+            --cds-spacing-12: 6rem;
+            --cds-spacing-13: 10rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.29;
+            letter-spacing: 0.16px;
+            background-color: var(--cds-ui-background);
+            color: var(--cds-text-01);
+            min-height: 100vh;
+        }
+
+        /* IBM Carbon Header/Navbar */
+        .bx--header {
+            background-color: var(--cds-ui-05);
+            border-bottom: 1px solid var(--cds-ui-03);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 var(--cds-spacing-05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 6000;
+        }
+
+        .bx--header__name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--cds-text-04);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 0 var(--cds-spacing-05);
+            border-left: 1px solid var(--cds-ui-04);
+            margin-left: var(--cds-spacing-05);
+        }
+
+        .bx--header__name:hover {
+            background-color: var(--cds-inverse-hover-ui);
+        }
+
+        .bx--header__logo {
+            width: 24px;
+            height: 24px;
+            margin-right: var(--cds-spacing-03);
+            fill: var(--cds-icon-03);
+        }
+
+        .bx--header-nav {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            margin-left: auto;
+        }
+
+        .bx--header-nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .bx--header-nav__item {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .bx--header-nav__link {
+            color: var(--cds-text-04);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            padding: 0 var(--cds-spacing-05);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            transition: background-color 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        }
+
+        .bx--header-nav__link:hover {
+            background-color: var(--cds-inverse-hover-ui);
+        }
+
+        .bx--header-nav__link--current {
+            background-color: var(--cds-inverse-02);
+            color: var(--cds-inverse-01);
+        }
+
+        .container {
+            max-width: 1584px;
+            margin: 0 auto;
+            padding: var(--cds-spacing-05);
+            padding-top: calc(48px + var(--cds-spacing-05));
+        }
+
+        /* Status Banner */
+        .status-banner {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-04);
+            margin-bottom: var(--cds-spacing-05);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--cds-support-02);
+        }
+
+        .status-dot.syncing {
+            background: var(--cds-support-03);
+            animation: pulse 1s infinite;
+        }
+
+        .status-dot.offline {
+            background: var(--cds-support-01);
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--cds-spacing-05);
+            margin-bottom: var(--cds-spacing-05);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: var(--cds-ui-01);
+            padding: var(--cds-spacing-05);
+            border-bottom: 1px solid var(--cds-ui-03);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--cds-text-01);
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+        }
+
+        .card-body {
+            padding: var(--cds-spacing-05);
+        }
+
+        /* Real-time Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--cds-spacing-04);
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: var(--cds-spacing-04);
+            background: var(--cds-ui-01);
+            border: 1px solid var(--cds-ui-03);
+            border-radius: 4px;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-02);
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--cds-text-02);
+            margin-bottom: var(--cds-spacing-02);
+        }
+
+        .metric-trend {
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .trend-up {
+            background: var(--cds-support-02);
+            color: var(--cds-text-04);
+        }
+
+        .trend-down {
+            background: var(--cds-support-01);
+            color: var(--cds-text-04);
+        }
+
+        .trend-stable {
+            background: var(--cds-support-03);
+            color: var(--cds-text-01);
+        }
+
+        /* Activity Feed */
+        .activity-feed {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .activity-item {
+            padding: var(--cds-spacing-03);
+            border-bottom: 1px solid var(--cds-ui-03);
+            display: flex;
+            gap: var(--cds-spacing-03);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-text {
+            font-size: 14px;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-01);
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: var(--cds-text-03);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: var(--cds-spacing-03);
+            margin-bottom: var(--cds-spacing-05);
+        }
+
+        .bx--btn {
+            height: 32px;
+            padding: 0 var(--cds-spacing-04);
+            border: none;
+            font-size: 14px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--cds-spacing-02);
+            border-radius: 0;
+        }
+
+        .bx--btn--primary {
+            background-color: var(--cds-interactive-01);
+            color: var(--cds-text-04);
+        }
+
+        .bx--btn--primary:hover {
+            background-color: var(--cds-hover-primary);
+        }
+
+        .bx--btn--secondary {
+            background-color: transparent;
+            color: var(--cds-interactive-01);
+            border: 1px solid var(--cds-interactive-01);
+        }
+
+        .bx--btn--secondary:hover {
+            background-color: var(--cds-hover-ui);
+        }
+
+        /* Responsive */
+        @media (max-width: 1056px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+        }
+
+        @media (max-width: 672px) {
+            .container {
+                padding: var(--cds-spacing-04);
+                padding-top: calc(48px + var(--cds-spacing-04));
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Carbon Header/Navbar -->
+    <header class="bx--header">
+        <a href="#" class="bx--header__name">
+            <!-- IBM Watson AI Icon -->
+            <svg class="bx--header__logo" viewBox="0 0 32 32">
+                <path d="M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14S23.7,2,16,2z M16,28c-6.6,0-12-5.4-12-12S9.4,4,16,4s12,5.4,12,12S22.6,28,16,28z"/>
+                <path d="M16,6c-5.5,0-10,4.5-10,10s4.5,10,10,10s10-4.5,10-10S21.5,6,16,6z M16,24c-4.4,0-8-3.6-8-8s3.6-8,8-8s8,3.6,8,8S20.4,24,16,24z"/>
+                <circle cx="16" cy="16" r="4"/>
+                <circle cx="16" cy="9" r="1"/>
+                <circle cx="23" cy="16" r="1"/>
+                <circle cx="16" cy="23" r="1"/>
+                <circle cx="9" cy="16" r="1"/>
+            </svg>
+            IBM Quality Management
+        </a>
+        
+        <nav class="bx--header-nav">
+            <ul>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link bx--header-nav__link--current">Dashboard</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="ml_quality_analytics_dashboard.html" class="bx--header-nav__link">Quality Analytics</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="calculadora_metricas_calidad_ibm.html" class="bx--header-nav__link">Métricas</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="analisis_riesgos_calidad_ibm.html" class="bx--header-nav__link">Riesgos</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="formulario_casos_prueba_ibm.html" class="bx--header-nav__link">Casos de Prueba</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Status Banner -->
+        <div class="status-banner">
+            <div class="status-indicator">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">Sistema sincronizado</span>
+            </div>
+            <div>
+                <span id="lastSync">Última sincronización: --</span>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button class="bx--btn bx--btn--primary" onclick="addSampleData()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                    <path d="M16,4A12,12,0,1,1,4,16,12,12,0,0,1,16,4m0-2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Z"/>
+                    <path d="M24,15H17V8H15v7H8v2h7v7h2V17h7Z"/>
+                </svg>
+                Agregar Datos de Prueba
+            </button>
+            
+            <button class="bx--btn bx--btn--secondary" onclick="simulateRisk()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                    <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2ZM14.9971,7h2.0029l-.1528,11H15.1499ZM16,25a1.5,1.5,0,1,1,1.5-1.5A1.5,1.5,0,0,1,16,25Z"/>
+                </svg>
+                Simular Riesgo
+            </button>
+            
+            <button class="bx--btn bx--btn--secondary" onclick="triggerSync()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                    <path d="M12,10H20V12H12ZM12,16H20v2H12ZM12,22H20v2H12ZM10,28H4V8H10ZM8,10H6V26H8Z"/>
+                </svg>
+                Sincronizar Ahora
+            </button>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="main-grid">
+            <!-- Real-time Metrics -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M4,20V12a8,8,0,0,1,16,0v8a8,8,0,0,1-16,0Zm2,0a6,6,0,0,0,12,0V12a6,6,0,0,0-12,0Z"/>
+                            <path d="M30,14V10a8,8,0,0,0-8-8V4a6,6,0,0,1,6,6v4a2,2,0,0,1-2,2H24V14h4A2,2,0,0,0,30,14Z"/>
+                        </svg>
+                        Métricas en Tiempo Real
+                    </h2>
+                    <span id="metricsUpdate" style="font-size: 12px; color: var(--cds-text-03);">--</span>
+                </div>
+                
+                <div class="card-body">
+                    <div class="metrics-grid" id="metricsGrid">
+                        <!-- Las métricas se cargarán dinámicamente -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity Feed -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12.0137,12.0137,0,0,1,16,28Z"/>
+                            <path d="M20.59,22,15,16.41V7h2v8.58l5,5Z"/>
+                        </svg>
+                        Actividad del Sistema
+                    </h2>
+                </div>
+                
+                <div class="card-body">
+                    <div class="activity-feed" id="activityFeed">
+                        <!-- Las actividades se cargarán dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="main-grid">
+            <!-- Quality Trends Chart -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M24,27v1H6V27l.8-.8L9.5,23.5,14,28l8.7-8.7L24,27ZM6,2H24V14H22V4H8V24H18v2H6V2Z"/>
+                            <path d="M26,16V14H20v2h4V28h2V16Z"/>
+                        </svg>
+                        Tendencias de Calidad
+                    </h2>
+                </div>
+                
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="qualityTrendsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Risk Distribution Chart -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2ZM14.9971,7h2.0029l-.1528,11H15.1499ZM16,25a1.5,1.5,0,1,1,1.5-1.5A1.5,1.5,0,0,1,16,25Z"/>
+                        </svg>
+                        Distribución de Riesgos
+                    </h2>
+                </div>
+                
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="riskDistributionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let qualityChart = null;
+        let riskChart = null;
+        let activityCount = 0;
+        
+        // Inicialización del sistema
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSystem();
+            setupEventListeners();
+            loadInitialData();
+            updateDisplay();
+        });
+
+        function initializeSystem() {
+            console.log('Inicializando sistema integrado IBM Quality Management...');
+            
+            // Verificar que el data manager esté disponible
+            if (typeof IBMQualityManager === 'undefined') {
+                console.error('IBM Quality Data Manager no está disponible');
+                return;
+            }
+            
+            // Configurar listeners del data manager
+            IBMQualityManager.subscribe('dataChanged', handleDataChange);
+            IBMQualityManager.subscribe('metricsUpdated', handleMetricsUpdate);
+            IBMQualityManager.subscribe('syncStarted', handleSyncStarted);
+            IBMQualityManager.subscribe('syncCompleted', handleSyncCompleted);
+            IBMQualityManager.subscribe('connectionChanged', handleConnectionChange);
+            
+            // Inicializar gráficos
+            initializeCharts();
+            
+            console.log('Sistema inicializado correctamente');
+        }
+
+        function setupEventListeners() {
+            // Actualizar display cada 5 segundos
+            setInterval(updateDisplay, 5000);
+        }
+
+        function loadInitialData() {
+            // Cargar datos de ejemplo si no existen
+            const testCases = IBMQualityManager.getTestCases();
+            if (testCases.length === 0) {
+                addSampleData();
+            }
+        }
+
+        function handleDataChange(event) {
+            addActivity(`${event.type} ${event.action}`, `Datos actualizados: ${event.type}`);
+            updateDisplay();
+        }
+
+        function handleMetricsUpdate(metrics) {
+            updateMetricsDisplay(metrics);
+            updateCharts();
+            addActivity('metrics update', 'Métricas actualizadas automáticamente');
+        }
+
+        function handleSyncStarted() {
+            updateSyncStatus('syncing', 'Sincronizando...');
+        }
+
+        function handleSyncCompleted(event) {
+            updateSyncStatus('synced', 'Sistema sincronizado');
+            document.getElementById('lastSync').textContent = 
+                `Última sincronización: ${new Date(event.timestamp).toLocaleTimeString()}`;
+        }
+
+        function handleConnectionChange(event) {
+            const status = event.online ? 'synced' : 'offline';
+            const text = event.online ? 'Conectado' : 'Sin conexión';
+            updateSyncStatus(status, text);
+        }
+
+        function updateSyncStatus(status, text) {
+            const dot = document.getElementById('statusDot');
+            const textEl = document.getElementById('statusText');
+            
+            dot.className = `status-dot ${status}`;
+            textEl.textContent = text;
+        }
+
+        function updateDisplay() {
+            const metrics = IBMQualityManager.getMetrics();
+            if (metrics && metrics.timestamp) {
+                updateMetricsDisplay(metrics);
+                updateCharts();
+                
+                document.getElementById('metricsUpdate').textContent = 
+                    `Actualizado: ${new Date(metrics.timestamp).toLocaleTimeString()}`;
+            }
+        }
+
+        function updateMetricsDisplay(metrics) {
+            const grid = document.getElementById('metricsGrid');
+            
+            if (!metrics.testMetrics) return;
+            
+            grid.innerHTML = `
+                <div class="metric-item">
+                    <div class="metric-value">${metrics.testMetrics.total || 0}</div>
+                    <div class="metric-label">Casos de Prueba</div>
+                    <div class="metric-trend trend-up">+${Math.floor(Math.random() * 5)}</div>
+                </div>
+                
+                <div class="metric-item">
+                    <div class="metric-value">${metrics.testMetrics.passRate || 0}%</div>
+                    <div class="metric-label">Tasa de Éxito</div>
+                    <div class="metric-trend ${getTrendClass(metrics.testMetrics.passRate)}">${getTrendText()}</div>
+                </div>
+                
+                <div class="metric-item">
+                    <div class="metric-value">${metrics.coverage?.line?.toFixed(1) || 0}%</div>
+                    <div class="metric-label">Cobertura</div>
+                    <div class="metric-trend trend-stable">Estable</div>
+                </div>
+                
+                <div class="metric-item">
+                    <div class="metric-value">${metrics.riskMetrics?.critical || 0}</div>
+                    <div class="metric-label">Riesgos Críticos</div>
+                    <div class="metric-trend ${metrics.riskMetrics?.critical > 2 ? 'trend-down' : 'trend-up'}">${metrics.riskMetrics?.critical > 2 ? 'Alto' : 'Bajo'}</div>
+                </div>
+                
+                <div class="metric-item">
+                    <div class="metric-value">${metrics.quality?.score || 0}</div>
+                    <div class="metric-label">Calidad General</div>
+                    <div class="metric-trend trend-${metrics.quality?.trend || 'stable'}">${getTrendText(metrics.quality?.trend)}</div>
+                </div>
+                
+                <div class="metric-item">
+                    <div class="metric-value">${metrics.defectMetrics?.density || 0}</div>
+                    <div class="metric-label">Densidad Defectos</div>
+                    <div class="metric-trend trend-down">Mejorando</div>
+                </div>
+            `;
+        }
+
+        function getTrendClass(value) {
+            if (value > 80) return 'trend-up';
+            if (value > 60) return 'trend-stable';
+            return 'trend-down';
+        }
+
+        function getTrendText(trend = null) {
+            if (trend) {
+                const trends = {
+                    'up': '↗ Subiendo',
+                    'down': '↘ Bajando',
+                    'stable': '→ Estable'
+                };
+                return trends[trend] || 'Estable';
+            }
+            return ['↗ Mejorando', '→ Estable', '↘ Revisando'][Math.floor(Math.random() * 3)];
+        }
+
+        function addActivity(type, description) {
+            const feed = document.getElementById('activityFeed');
+            const time = new Date().toLocaleTimeString();
+            
+            const activity = document.createElement('div');
+            activity.className = 'activity-item';
+            activity.innerHTML = `
+                <svg class="activity-icon" fill="currentColor" viewBox="0 0 32 32">
+                    <circle cx="16" cy="16" r="4"/>
+                    <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12.0137,12.0137,0,0,1,16,28Z"/>
+                </svg>
+                <div class="activity-content">
+                    <div class="activity-text">${description}</div>
+                    <div class="activity-time">${time}</div>
+                </div>
+            `;
+            
+            feed.insertBefore(activity, feed.firstChild);
+            
+            // Mantener solo los últimos 10 elementos
+            while (feed.children.length > 10) {
+                feed.removeChild(feed.lastChild);
+            }
+        }
+
+        function initializeCharts() {
+            initQualityTrendsChart();
+            initRiskDistributionChart();
+        }
+
+        function initQualityTrendsChart() {
+            const ctx = document.getElementById('qualityTrendsChart').getContext('2d');
+            
+            qualityChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+                    datasets: [{
+                        label: 'Calidad General',
+                        data: [85, 87, 84, 89, 92, 88, 91],
+                        borderColor: '#0f62fe',
+                        backgroundColor: 'rgba(15, 98, 254, 0.1)',
+                        tension: 0.4
+                    }, {
+                        label: 'Cobertura',
+                        data: [78, 82, 85, 87, 89, 91, 88],
+                        borderColor: '#24a148',
+                        backgroundColor: 'rgba(36, 161, 72, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 70,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        function initRiskDistributionChart() {
+            const ctx = document.getElementById('riskDistributionChart').getContext('2d');
+            
+            riskChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Bajo', 'Medio', 'Alto', 'Crítico'],
+                    datasets: [{
+                        data: [12, 8, 3, 1],
+                        backgroundColor: [
+                            '#24a148',
+                            '#f1c21b',
+                            '#ff832b',
+                            '#da1e28'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateCharts() {
+            const metrics = IBMQualityManager.getMetrics();
+            
+            if (qualityChart && metrics.quality) {
+                // Simular datos históricos
+                const newData = qualityChart.data.datasets[0].data.slice(1);
+                newData.push(parseFloat(metrics.quality.score) || 85);
+                qualityChart.data.datasets[0].data = newData;
+                
+                const coverageData = qualityChart.data.datasets[1].data.slice(1);
+                coverageData.push(metrics.coverage?.line || 85);
+                qualityChart.data.datasets[1].data = coverageData;
+                
+                qualityChart.update();
+            }
+            
+            if (riskChart && metrics.riskMetrics) {
+                const risks = IBMQualityManager.getRisks();
+                const riskCounts = {
+                    low: risks.filter(r => r.level === 'low').length,
+                    medium: risks.filter(r => r.level === 'medium').length,
+                    high: risks.filter(r => r.level === 'high').length,
+                    critical: risks.filter(r => r.level === 'critical').length
+                };
+                
+                riskChart.data.datasets[0].data = Object.values(riskCounts);
+                riskChart.update();
+            }
+        }
+
+        // Funciones de control
+        function addSampleData() {
+            // Agregar caso de prueba de ejemplo
+            IBMQualityManager.addTestCase({
+                name: `Prueba de integración ${Date.now()}`,
+                description: 'Verificación de conexión entre módulos',
+                priority: 'high',
+                status: 'active',
+                category: 'integration'
+            });
+            
+            // Agregar ejecución de prueba
+            IBMQualityManager.addTestExecution({
+                testCaseId: Date.now(),
+                status: ['passed', 'failed', 'blocked'][Math.floor(Math.random() * 3)],
+                duration: Math.floor(Math.random() * 5000) + 1000,
+                defects: Math.floor(Math.random() * 3)
+            });
+            
+            addActivity('data added', 'Datos de prueba agregados al sistema');
+        }
+
+        function simulateRisk() {
+            const riskNames = [
+                'Falta de recursos especializados',
+                'Retrasos en dependencias externas',
+                'Cambios de requerimientos',
+                'Problemas de infraestructura',
+                'Falta de documentación técnica'
+            ];
+            
+            const categories = ['technical', 'resource', 'process', 'external', 'quality'];
+            
+            IBMQualityManager.addRisk({
+                name: riskNames[Math.floor(Math.random() * riskNames.length)],
+                description: 'Riesgo simulado para demostración del sistema reactivo',
+                category: categories[Math.floor(Math.random() * categories.length)],
+                probability: Math.floor(Math.random() * 5) + 1,
+                impact: Math.floor(Math.random() * 5) + 1,
+                owner: 'Sistema',
+                mitigation: 'Plan de mitigación en desarrollo'
+            });
+            
+            addActivity('risk simulated', 'Nuevo riesgo simulado agregado');
+        }
+
+        function triggerSync() {
+            IBMQualityManager.syncData();
+            addActivity('manual sync', 'Sincronización manual iniciada');
+        }
+
+        // Inicializar actividades de ejemplo
+        setTimeout(() => {
+            addActivity('system start', 'Sistema de gestión de calidad iniciado');
+            addActivity('data loaded', 'Datos históricos cargados correctamente');
+        }, 1000);
+    </script>
+</body>
+</html>

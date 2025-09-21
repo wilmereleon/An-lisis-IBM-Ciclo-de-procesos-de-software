@@ -32,7 +32,8 @@
 14. [**[NUEVO] CRONOGRAMA DE IMPLEMENTACIÓN**](#14-cronograma-de-implementación)
 15. [Conclusiones y Recomendaciones](#15-conclusiones-y-recomendaciones)
 16. [**[NUEVO] ANEXOS: DASHBOARDS Y HERRAMIENTAS IMPLEMENTADAS**](#16-anexos-dashboards-y-herramientas-implementadas)
-17. [Referencias Bibliográficas](#17-referencias-bibliográficas)
+17. [**[NUEVO] MANUALES DE USO Y DOCUMENTACIÓN TÉCNICA**](#17-manuales-de-uso-y-documentación-técnica)
+18. [Referencias Bibliográficas](#18-referencias-bibliográficas)
 
 ---
 
@@ -5178,7 +5179,172 @@ Uso: Planificación estratégica (15 min en sprint planning)
 
 ---
 
-## 17. REFERENCIAS BIBLIOGRÁFICAS
+### 17. MANUALES DE USO Y DOCUMENTACIÓN TÉCNICA
+
+Esta sección documenta los manuales y guías técnicas desarrollados para el uso efectivo de todas las herramientas y plantillas implementadas en el proyecto.
+
+#### 17.1 Manual de Uso de Plantillas de Testing
+
+**Documento:** [`docs/manual-uso-plantillas-testing.md`](manual-uso-plantillas-testing.md)
+
+**Contenido del manual:**
+
+- **Introducción y arquitectura del sistema**: Visión general de todas las herramientas desarrolladas
+- **Herramientas de gestión**: 
+  - Gestión de Ambientes IBM
+  - Sistema de Trazabilidad IBM
+- **Plantillas de testing**: 
+  - Formularios de casos de prueba
+  - Generadores automáticos
+  - Templates de planes de prueba
+- **Dashboards y métricas**: 
+  - Dashboard de calidad
+  - Dashboard ejecutivo
+  - Dashboard de testing metrics
+- **Herramientas de análisis**:
+  - Calculadora de métricas
+  - Analizador de cobertura
+  - Análisis de riesgos
+- **Herramientas de gestión de procesos**:
+  - Sistema de gestión de defectos
+  - Matriz RACI
+  - Templates de automatización
+- **Reportes y documentación**:
+  - Reportes de ejecución
+  - ML Quality Analytics
+
+**Flujo de trabajo recomendado:**
+1. Planificación usando templates de planes de prueba
+2. Diseño con formularios y generadores de casos
+3. Configuración de ambientes y automatización
+4. Ejecución con trazabilidad y gestión de defectos
+5. Monitoreo con dashboards y métricas
+6. Análisis con herramientas de cobertura y riesgos
+7. Reporte con templates de documentación
+
+#### 17.2 Guía Técnica del Sistema de Métricas HTML
+
+**Documento:** [`docs/guia-sistema-metricas-html.md`](guia-sistema-metricas-html.md)
+
+**Contenido técnico especializado:**
+
+- **Arquitectura del sistema de métricas**: 
+  - Componentes principales y tecnologías
+  - Flujos de datos entre dashboards
+- **Dashboards principales**:
+  - Dashboard Ejecutivo (C-Level)
+  - Dashboard de Calidad (Managers/Leads)
+  - Dashboard de Testing (QA Teams)
+  - Dashboard Integrado (Vista 360°)
+- **Herramientas de cálculo**:
+  - Calculadora de métricas con fórmulas
+  - Analizador de cobertura con algoritmos
+  - Análisis de riesgos con matrices
+- **Métricas automatizadas**:
+  - Scripts Python para generación automática
+  - ML Analytics con predicciones
+  - Integración con herramientas externas
+- **Configuración y personalización**:
+  - Archivos de configuración
+  - Personalización de umbrales
+  - Configuración enterprise
+- **Integración con sistemas externos**:
+  - APIs de JIRA y Jenkins
+  - Sincronización automática de datos
+- **Guías específicas por rol**:
+  - Ejecutivos: KPIs estratégicos
+  - Managers de calidad: Métricas operacionales
+  - Equipos QA: Métricas de testing
+
+#### 17.3 Características Técnicas de las Herramientas
+
+**Tecnologías implementadas:**
+- **Frontend**: HTML5, CSS3 con IBM Carbon Design System
+- **Visualización**: Chart.js v3.9.1 para gráficos interactivos
+- **Datos**: JSON estructurado, localStorage para persistencia
+- **Estilos**: CSS Grid y Flexbox para layouts responsivos
+- **Interactividad**: JavaScript ES6+ vanilla
+- **Automatización**: Python para análisis y ML
+
+**Características de diseño:**
+- **IBM Carbon Design System**: Aplicación completa del sistema de diseño corporativo
+- **Responsive Design**: Adaptable a diferentes tamaños de pantalla
+- **Accesibilidad**: Cumplimiento de estándares WCAG
+- **Performance**: Optimizado para carga y renderizado rápido
+- **Modularity**: Componentes reutilizables y mantenibles
+
+#### 17.4 Estructura de Archivos de Documentación
+
+```
+docs/
+├── segunda-entrega-analisis-calidad-ibm.md    # Documento principal
+├── manual-uso-plantillas-testing.md           # Manual de usuario
+├── guia-sistema-metricas-html.md             # Guía técnica
+├── analisis-modelos-calidad-ibm.md           # Primera entrega
+└── sintesis-ejecutiva.md                     # Resumen ejecutivo
+```
+
+**Herramientas HTML implementadas:**
+- 16 herramientas funcionales completamente desarrolladas
+- Dashboards interactivos con métricas en tiempo real
+- Plantillas de documentación y formularios
+- Sistemas de gestión integrados
+- Herramientas de análisis predictivo
+
+#### 17.5 Instrucciones de Uso General
+
+**Requisitos del sistema:**
+- Navegador web moderno (Chrome 90+, Firefox 88+, Edge 90+, Safari 14+)
+- JavaScript habilitado
+- Resolución mínima: 1024x768 píxeles
+- Conexión a internet para actualizaciones (opcional)
+
+**Instalación y configuración:**
+1. **Descarga**: Obtener todos los archivos HTML del proyecto
+2. **Ubicación**: Colocar en carpeta accesible del sistema
+3. **Configuración**: Revisar archivo `config/enterprise_config.yaml`
+4. **Permisos**: Asegurar permisos de lectura/escritura para localStorage
+5. **Acceso**: Abrir archivos HTML directamente en navegador
+
+**Mantenimiento recomendado:**
+- **Backup de datos**: Exportar configuraciones semanalmente
+- **Actualización de umbrales**: Revisar trimestralmente
+- **Capacitación de usuarios**: Entrenar nuevos usuarios
+- **Monitoreo de performance**: Verificar tiempos de carga
+- **Actualización de navegadores**: Mantener navegadores actualizados
+
+#### 17.6 Soporte y Resolución de Problemas
+
+**Problemas comunes y soluciones:**
+
+1. **Los gráficos no se muestran**
+   - Verificar que Chart.js se carga correctamente
+   - Revisar consola del navegador para errores
+   - Validar formato de datos JSON
+
+2. **Datos no se guardan**
+   - Verificar que localStorage esté habilitado
+   - Comprobar permisos del navegador
+   - Revisar espacio disponible en localStorage
+
+3. **Estilos no aparecen correctamente**
+   - Usar navegador compatible con CSS3
+   - Verificar que CSS no esté bloqueado
+   - Comprobar resolución de pantalla mínima
+
+4. **Formularios no validan**
+   - Habilitar JavaScript en el navegador
+   - Verificar campos obligatorios completos
+   - Revisar formato de datos de entrada
+
+**Contacto para soporte:**
+- Equipo de desarrollo: Disponible para consultas técnicas
+- Documentación: Referirse a manuales específicos
+- Actualizaciones: Disponibles en repositorio del proyecto
+
+---
+
+## 18. REFERENCIAS BIBLIOGRÁFICAS
 
 ## 16. REFERENCIAS BIBLIOGRÁFICAS
 

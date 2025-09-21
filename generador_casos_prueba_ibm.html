@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Casos de Prueba - IBM Quality Management</title>
+    <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
+    
+    <!-- IBM Carbon Design System Icons -->
+    <script type="module" src="https://unpkg.com/@carbon/icons@11.8.0/es/index.js"></script>
+    <script src="scripts/ibm-quality-data-manager.js"></script>
+    <script src="scripts/ibm-quality-config.js"></script>
+    
+    <style>
+        :root {
+            /* IBM Carbon Design System Variables */
+            --cds-interactive-01: #0f62fe;
+            --cds-interactive-02: #393939;
+            --cds-interactive-03: #0f62fe;
+            --cds-ui-background: #f4f4f4;
+            --cds-ui-01: #ffffff;
+            --cds-ui-02: #f4f4f4;
+            --cds-text-01: #161616;
+            --cds-text-02: #525252;
+            --cds-text-03: #a8a8a8;
+            --cds-field-01: #f4f4f4;
+            --cds-support-01: #da1e28;
+            --cds-support-02: #24a148;
+            --cds-support-03: #f1c21b;
+            --cds-support-04: #0043ce;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', Arial, sans-serif;
+            background-color: var(--cds-ui-background);
+            color: var(--cds-text-01);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .bx--header {
+            background-color: var(--cds-interactive-02);
+            border-bottom: 1px solid #393939;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .bx--header__name {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bx--header__logo {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--cds-interactive-01), #0043ce);
+            color: white;
+            padding: 3rem 2rem;
+            margin: -2rem -2rem 2rem -2rem;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .content-area {
+            background: var(--cds-ui-01);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar {
+            background: var(--cds-ui-01);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+            position: sticky;
+            top: 80px;
+        }
+
+        /* Template Selection */
+        .template-selector {
+            background: var(--cds-ui-01);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .template-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: white;
+        }
+
+        .template-card:hover {
+            border-color: var(--cds-interactive-01);
+            box-shadow: 0 4px 12px rgba(15, 98, 254, 0.1);
+        }
+
+        .template-card.selected {
+            border-color: var(--cds-interactive-01);
+            background: rgba(15, 98, 254, 0.05);
+        }
+
+        .template-icon {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 1rem;
+            fill: var(--cds-interactive-01);
+        }
+
+        .template-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--cds-text-01);
+        }
+
+        .template-description {
+            font-size: 0.875rem;
+            color: var(--cds-text-02);
+        }
+
+        /* Form Styles */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--cds-interactive-01);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .bx--form-item {
+            margin-bottom: 1rem;
+        }
+
+        .bx--label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: 0.5rem;
+        }
+
+        .bx--text-input,
+        .bx--text-area,
+        .bx--select-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #8d8d8d;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-family: inherit;
+            background: white;
+            transition: border-color 0.15s ease;
+        }
+
+        .bx--text-input:focus,
+        .bx--text-area:focus,
+        .bx--select-input:focus {
+            outline: none;
+            border-color: var(--cds-interactive-01);
+            box-shadow: 0 0 0 2px rgba(15, 98, 254, 0.2);
+        }
+
+        .bx--text-area {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Steps */
+        .test-steps {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fafafa;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-item {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+            background: white;
+            margin-bottom: 1px;
+        }
+
+        .step-item:first-child {
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .step-item:last-child {
+            border-bottom: none;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .step-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .step-number {
+            background: var(--cds-interactive-01);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-left: 1rem;
+            flex: 1;
+        }
+
+        /* Buttons */
+        .bx--btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+
+        .bx--btn--primary {
+            background-color: var(--cds-interactive-01);
+            color: white;
+        }
+
+        .bx--btn--primary:hover {
+            background-color: #0050e6;
+        }
+
+        .bx--btn--secondary {
+            background-color: transparent;
+            color: var(--cds-interactive-01);
+            border: 1px solid var(--cds-interactive-01);
+        }
+
+        .bx--btn--secondary:hover {
+            background-color: #f4f4f4;
+        }
+
+        .bx--btn--danger {
+            background-color: var(--cds-support-01);
+            color: white;
+        }
+
+        .bx--btn--danger:hover {
+            background-color: #ba1b23;
+        }
+
+        .bx--btn--sm {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: flex-end;
+        }
+
+        /* Sidebar Styles */
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 0.75rem;
+            background: var(--cds-ui-02);
+            border-radius: 4px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--cds-interactive-01);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--cds-text-02);
+            margin-top: 0.25rem;
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        /* Generated Test Cases */
+        .test-case-preview {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            background: #fafafa;
+        }
+
+        .test-case-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .test-case-id {
+            font-weight: 600;
+            color: var(--cds-interactive-01);
+        }
+
+        .test-case-priority {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .priority-high {
+            background-color: var(--cds-support-01);
+            color: white;
+        }
+
+        .priority-medium {
+            background-color: var(--cds-support-03);
+            color: black;
+        }
+
+        .priority-low {
+            background-color: var(--cds-support-02);
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .sidebar {
+                position: static;
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .page-header {
+                margin: -1rem -1rem 1rem -1rem;
+                padding: 2rem 1rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .template-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Carbon Header/Navbar -->
+    <header class="bx--header">
+        <a href="#" class="bx--header__name">
+            <!-- IBM Watson AI Icon -->
+            <svg class="bx--header__logo" viewBox="0 0 32 32">
+                <path d="M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14S23.7,2,16,2z M16,28c-6.6,0-12-5.4-12-12S9.4,4,16,4s12,5.4,12,12S22.6,28,16,28z"/>
+                <path d="M16,6c-5.5,0-10,4.5-10,10s4.5,10,10,10s10-4.5,10-10S21.5,6,16,6z M16,24c-4.4,0-8-3.6-8-8s3.6-8,8-8s8,3.6,8,8S20.4,24,16,24z"/>
+                <circle cx="16" cy="16" r="4"/>
+                <circle cx="16" cy="9" r="1"/>
+                <circle cx="23" cy="16" r="1"/>
+                <circle cx="16" cy="23" r="1"/>
+                <circle cx="9" cy="16" r="1"/>
+            </svg>
+            IBM Quality Management
+        </a>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Generador de Casos de Prueba</h1>
+            <p class="page-subtitle">Creación automatizada de casos de prueba con plantillas especializadas</p>
+        </div>
+
+        <!-- Template Selection -->
+        <div class="template-selector">
+            <h2 class="section-title">Seleccionar Template de Caso de Prueba</h2>
+            <div class="template-grid">
+                <div class="template-card" onclick="selectTemplate('functional')">
+                    <svg class="template-icon" viewBox="0 0 32 32">
+                        <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,6H26V8H6ZM6,26V10H26V26Z"/>
+                        <path d="M10,14h6v2H10ZM10,18h8v2H10ZM10,22h4v2H10Z"/>
+                    </svg>
+                    <div class="template-title">Pruebas Funcionales</div>
+                    <div class="template-description">Para validar requisitos funcionales y comportamiento del sistema</div>
+                </div>
+                
+                <div class="template-card" onclick="selectTemplate('nonfunctional')">
+                    <svg class="template-icon" viewBox="0 0 32 32">
+                        <path d="M16,4A12,12,0,1,0,28,16,12.0119,12.0119,0,0,0,16,4Zm0,22A10,10,0,1,1,26,16,10.0111,10.0111,0,0,1,16,26Z"/>
+                        <path d="M16.5,8h-1v8.4146l6.3536,6.3536.7071-.7071L16.5,15.5859Z"/>
+                    </svg>
+                    <div class="template-title">Pruebas No Funcionales</div>
+                    <div class="template-description">Para rendimiento, seguridad, usabilidad y escalabilidad</div>
+                </div>
+
+                <div class="template-card" onclick="selectTemplate('regression')">
+                    <svg class="template-icon" viewBox="0 0 32 32">
+                        <path d="M26,14H22V6a2,2,0,0,0-2-2H12a2,2,0,0,0-2,2v8H6a2,2,0,0,0-2,2V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V16A2,2,0,0,0,26,14ZM12,6h8v8H12ZM6,16H26V26H6Z"/>
+                    </svg>
+                    <div class="template-title">Pruebas de Regresión</div>
+                    <div class="template-description">Para verificar que cambios no afecten funcionalidad existente</div>
+                </div>
+
+                <div class="template-card" onclick="selectTemplate('api')">
+                    <svg class="template-icon" viewBox="0 0 32 32">
+                        <path d="M24,9H8A2,2,0,0,0,6,11V21a2,2,0,0,0,2,2H24a2,2,0,0,0,2-2V11A2,2,0,0,0,24,9ZM8,11H24V21H8Z"/>
+                        <path d="M10,13h4v2H10ZM16,13h6v2H16ZM10,17h8v2H10Z"/>
+                    </svg>
+                    <div class="template-title">Pruebas de API</div>
+                    <div class="template-description">Para servicios REST, SOAP y microservicios</div>
+                </div>
+
+                <div class="template-card" onclick="selectTemplate('ui')">
+                    <svg class="template-icon" viewBox="0 0 32 32">
+                        <path d="M28,6H4A2,2,0,0,0,2,8V24a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V8A2,2,0,0,0,28,6ZM4,8H28v4H4ZM4,24V14H28V24Z"/>
+                        <path d="M6,16h4v2H6ZM12,16h4v2H12ZM6,20h6v2H6Z"/>
+                    </svg>
+                    <div class="template-title">Pruebas de UI</div>
+                    <div class="template-description">Para interfaces de usuario y experiencia del usuario</div>
+                </div>
+
+                <div class="template-card" onclick="selectTemplate('security')">
+                    <svg class="template-icon" viewBox="0 0 32 32">
+                        <path d="M21,2H11A2,2,0,0,0,9,4V28a2,2,0,0,0,2,2H21a2,2,0,0,0,2-2V4A2,2,0,0,0,21,2ZM11,4H21V28H11Z"/>
+                        <path d="M16,20a3,3,0,1,0-3-3A3,3,0,0,0,16,20Zm0-4a1,1,0,1,1-1,1A1,1,0,0,1,16,16Z"/>
+                        <path d="M14,22h4v2H14Z"/>
+                    </svg>
+                    <div class="template-title">Pruebas de Seguridad</div>
+                    <div class="template-description">Para autenticación, autorización y vulnerabilidades</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-layout">
+            <!-- Content Area -->
+            <div class="content-area">
+                <form id="testCaseForm">
+                    <!-- Basic Information -->
+                    <div class="section-title">Información Básica del Caso de Prueba</div>
+                    <div class="form-grid">
+                        <div class="bx--form-item">
+                            <label class="bx--label">ID del Caso de Prueba</label>
+                            <input type="text" class="bx--text-input" id="testCaseId" placeholder="TC-001">
+                        </div>
+                        <div class="bx--form-item">
+                            <label class="bx--label">Prioridad</label>
+                            <select class="bx--select-input" id="priority">
+                                <option value="high">Alta</option>
+                                <option value="medium" selected>Media</option>
+                                <option value="low">Baja</option>
+                            </select>
+                        </div>
+                        <div class="bx--form-item">
+                            <label class="bx--label">Módulo/Componente</label>
+                            <input type="text" class="bx--text-input" id="module" placeholder="Login, Dashboard, Payments...">
+                        </div>
+                        <div class="bx--form-item">
+                            <label class="bx--label">Autor</label>
+                            <input type="text" class="bx--text-input" id="author" placeholder="QA Analyst">
+                        </div>
+                    </div>
+
+                    <div class="bx--form-item">
+                        <label class="bx--label">Título del Caso de Prueba</label>
+                        <input type="text" class="bx--text-input" id="testTitle" placeholder="Validar login con credenciales válidas">
+                    </div>
+
+                    <div class="bx--form-item">
+                        <label class="bx--label">Descripción</label>
+                        <textarea class="bx--text-area" id="testDescription" placeholder="Descripción detallada del objetivo del caso de prueba..."></textarea>
+                    </div>
+
+                    <!-- Preconditions -->
+                    <div class="bx--form-item">
+                        <label class="bx--label">Precondiciones</label>
+                        <textarea class="bx--text-area" id="preconditions" placeholder="Condiciones que deben cumplirse antes de ejecutar el caso..."></textarea>
+                    </div>
+
+                    <!-- Test Steps -->
+                    <div class="section-title">Pasos de Ejecución</div>
+                    <div class="test-steps" id="testSteps">
+                        <div class="step-item">
+                            <div class="step-header">
+                                <div class="step-number">1</div>
+                                <div class="step-title">Paso 1</div>
+                                <button type="button" class="bx--btn bx--btn--danger bx--btn--sm" onclick="removeStep(this)">
+                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                        <path d="M24,9.4L22.6,8L16,14.6L9.4,8L8,9.4L14.6,16L8,22.6L9.4,24L16,17.4L22.6,24L24,22.6L17.4,16Z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="form-grid">
+                                <div class="bx--form-item">
+                                    <label class="bx--label">Acción</label>
+                                    <textarea class="bx--text-area step-action" placeholder="Descripción de la acción a realizar..."></textarea>
+                                </div>
+                                <div class="bx--form-item">
+                                    <label class="bx--label">Resultado Esperado</label>
+                                    <textarea class="bx--text-area step-expected" placeholder="Resultado esperado para esta acción..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="bx--btn bx--btn--secondary" onclick="addStep()" style="margin-top: 1rem;">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M17,15V8h-2v7H8v2h7v7h2v-7h7v-2Z"/>
+                        </svg>
+                        Agregar Paso
+                    </button>
+
+                    <!-- Post Conditions -->
+                    <div class="bx--form-item" style="margin-top: 2rem;">
+                        <label class="bx--label">Postcondiciones</label>
+                        <textarea class="bx--text-area" id="postconditions" placeholder="Estado del sistema después de la ejecución..."></textarea>
+                    </div>
+
+                    <!-- Test Data -->
+                    <div class="bx--form-item">
+                        <label class="bx--label">Datos de Prueba</label>
+                        <textarea class="bx--text-area" id="testData" placeholder="Datos necesarios para la ejecución del caso..."></textarea>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="btn-group">
+                        <button type="button" class="bx--btn bx--btn--secondary" onclick="previewTestCase()">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                <path d="M16,6C7.664,6,1.25,15.344,1.25,16s6.414,10,14.75,10S30.75,16.656,30.75,16S24.336,6,16,6ZM16,24c-6.213,0-11.48-5.982-12.67-8C4.52,13.982,9.787,8,16,8s11.48,5.982,12.67,8C27.48,18.018,22.213,24,16,24Z"/>
+                                <circle cx="16" cy="16" r="5"/>
+                            </svg>
+                            Vista Previa
+                        </button>
+                        <button type="button" class="bx--btn bx--btn--secondary" onclick="saveDraft()">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                <path d="M24,28H8V18l2-2h5V14h2v2h5l2,2V28ZM10,26H22V19H10V26Z"/>
+                            </svg>
+                            Guardar Borrador
+                        </button>
+                        <button type="submit" class="bx--btn bx--btn--primary">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                <path d="M13,24l-9-9l1.414-1.414L13,21.171L26.586,7.586L28,9L13,24z"/>
+                            </svg>
+                            Generar Caso de Prueba
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Estadísticas</div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalSteps">1</div>
+                            <div class="stat-label">Pasos</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="completionPercentage">25%</div>
+                            <div class="stat-label">Completo</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="estimatedTime">5</div>
+                            <div class="stat-label">Min Est.</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="templateType">-</div>
+                            <div class="stat-label">Tipo</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Acciones Rápidas</div>
+                    <div class="quick-actions">
+                        <button class="bx--btn bx--btn--secondary bx--btn--sm" onclick="loadTemplate('login')">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                <path d="M21,2H11A2,2,0,0,0,9,4V28a2,2,0,0,0,2,2H21a2,2,0,0,0,2-2V4A2,2,0,0,0,21,2ZM11,4H21V28H11Z"/>
+                            </svg>
+                            Template Login
+                        </button>
+                        <button class="bx--btn bx--btn--secondary bx--btn--sm" onclick="loadTemplate('crud')">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,6H26V26H6Z"/>
+                            </svg>
+                            Template CRUD
+                        </button>
+                        <button class="bx--btn bx--btn--secondary bx--btn--sm" onclick="loadTemplate('api')">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                <path d="M24,9H8A2,2,0,0,0,6,11V21a2,2,0,0,0,2,2H24a2,2,0,0,0,2-2V11A2,2,0,0,0,24,9ZM8,11H24V21H8Z"/>
+                            </svg>
+                            Template API
+                        </button>
+                        <button class="bx--btn bx--btn--secondary bx--btn--sm" onclick="importRequirements()">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                <path d="M26,24V6a2,2,0,0,0-2-2H8A2,2,0,0,0,6,6V24a2,2,0,0,0,2,2H24A2,2,0,0,0,26,24ZM8,6H24V24H8Z"/>
+                            </svg>
+                            Importar Requisitos
+                        </button>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Últimos Casos Generados</div>
+                    <div id="recentTestCases">
+                        <div style="padding: 1rem; text-align: center; color: var(--cds-text-03); font-size: 0.875rem;">
+                            No hay casos recientes
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview Modal -->
+        <div id="previewModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 2000;">
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2rem; border-radius: 8px; max-width: 800px; width: 90%; max-height: 80%; overflow-y: auto;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3>Vista Previa del Caso de Prueba</h3>
+                    <button class="bx--btn bx--btn--danger bx--btn--sm" onclick="closePreview()">Cerrar</button>
+                </div>
+                <div id="previewContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configurar sistema reactivo
+        window.addEventListener('DOMContentLoaded', function() {
+            const dataManager = new IBMQualityDataManager();
+            const config = new IBMQualityConfig();
+            
+            // Suscribirse a cambios de datos
+            dataManager.subscribe('testCaseGenerated', (data) => {
+                updateRecentTestCases();
+                updateStatistics();
+            });
+            
+            dataManager.subscribe('dataChanged', (data) => {
+                loadTestCaseData();
+            });
+            
+            // Cargar datos iniciales
+            loadTestCaseData();
+            updateStatistics();
+            generateTestCaseId();
+        });
+
+        let stepCounter = 1;
+        let selectedTemplate = null;
+
+        function selectTemplate(type) {
+            // Remove previous selection
+            document.querySelectorAll('.template-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Select new template
+            event.currentTarget.classList.add('selected');
+            selectedTemplate = type;
+            
+            // Update template type in sidebar
+            document.getElementById('templateType').textContent = type.charAt(0).toUpperCase() + type.slice(1);
+            
+            // Load template-specific fields
+            loadTemplateFields(type);
+        }
+
+        function loadTemplateFields(type) {
+            const templates = {
+                functional: {
+                    title: 'Validar funcionalidad de [Componente]',
+                    description: 'Verificar que el componente [X] funcione según los requisitos especificados',
+                    preconditions: 'Usuario autenticado en el sistema\nDatos de prueba configurados'
+                },
+                nonfunctional: {
+                    title: 'Verificar rendimiento de [Funcionalidad]',
+                    description: 'Evaluar los tiempos de respuesta y capacidad del sistema bajo condiciones específicas',
+                    preconditions: 'Ambiente de pruebas configurado\nHerramientas de monitoreo instaladas'
+                },
+                regression: {
+                    title: 'Regresión - Verificar [Funcionalidad Existente]',
+                    description: 'Confirmar que los cambios recientes no afectan la funcionalidad existente',
+                    preconditions: 'Build actualizado desplegado\nCasos de prueba base ejecutados'
+                },
+                api: {
+                    title: 'Validar API [Endpoint]',
+                    description: 'Verificar la respuesta correcta del endpoint de API bajo diferentes condiciones',
+                    preconditions: 'API endpoint disponible\nCredenciales de autenticación válidas'
+                },
+                ui: {
+                    title: 'Validar interfaz de [Pantalla/Componente]',
+                    description: 'Verificar la correcta visualización y funcionamiento de elementos de UI',
+                    preconditions: 'Aplicación desplegada\nNavegador compatible configurado'
+                },
+                security: {
+                    title: 'Verificar seguridad de [Funcionalidad]',
+                    description: 'Evaluar vulnerabilidades y mecanismos de seguridad del componente',
+                    preconditions: 'Herramientas de seguridad configuradas\nAcceso a logs del sistema'
+                }
+            };
+
+            const template = templates[type];
+            if (template) {
+                document.getElementById('testTitle').value = template.title;
+                document.getElementById('testDescription').value = template.description;
+                document.getElementById('preconditions').value = template.preconditions;
+            }
+        }
+
+        function addStep() {
+            stepCounter++;
+            const stepsContainer = document.getElementById('testSteps');
+            const newStep = document.createElement('div');
+            newStep.className = 'step-item';
+            newStep.innerHTML = `
+                <div class="step-header">
+                    <div class="step-number">${stepCounter}</div>
+                    <div class="step-title">Paso ${stepCounter}</div>
+                    <button type="button" class="bx--btn bx--btn--danger bx--btn--sm" onclick="removeStep(this)">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M24,9.4L22.6,8L16,14.6L9.4,8L8,9.4L14.6,16L8,22.6L9.4,24L16,17.4L22.6,24L24,22.6L17.4,16Z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="form-grid">
+                    <div class="bx--form-item">
+                        <label class="bx--label">Acción</label>
+                        <textarea class="bx--text-area step-action" placeholder="Descripción de la acción a realizar..."></textarea>
+                    </div>
+                    <div class="bx--form-item">
+                        <label class="bx--label">Resultado Esperado</label>
+                        <textarea class="bx--text-area step-expected" placeholder="Resultado esperado para esta acción..."></textarea>
+                    </div>
+                </div>
+            `;
+            stepsContainer.appendChild(newStep);
+            updateStatistics();
+        }
+
+        function removeStep(button) {
+            if (document.querySelectorAll('.step-item').length > 1) {
+                button.closest('.step-item').remove();
+                updateStepNumbers();
+                updateStatistics();
+            }
+        }
+
+        function updateStepNumbers() {
+            const steps = document.querySelectorAll('.step-item');
+            steps.forEach((step, index) => {
+                const stepNumber = step.querySelector('.step-number');
+                const stepTitle = step.querySelector('.step-title');
+                stepNumber.textContent = index + 1;
+                stepTitle.textContent = `Paso ${index + 1}`;
+            });
+            stepCounter = steps.length;
+        }
+
+        function updateStatistics() {
+            const steps = document.querySelectorAll('.step-item').length;
+            const filledFields = document.querySelectorAll('input[type="text"]:not(:placeholder-shown), textarea:not(:placeholder-shown)').length;
+            const totalFields = document.querySelectorAll('input[type="text"], textarea').length;
+            const completion = Math.round((filledFields / totalFields) * 100);
+            const estimatedTime = steps * 3; // 3 minutes per step
+
+            document.getElementById('totalSteps').textContent = steps;
+            document.getElementById('completionPercentage').textContent = completion + '%';
+            document.getElementById('estimatedTime').textContent = estimatedTime;
+        }
+
+        function generateTestCaseId() {
+            const prefix = selectedTemplate ? selectedTemplate.substring(0, 2).toUpperCase() : 'TC';
+            const timestamp = Date.now().toString().slice(-4);
+            document.getElementById('testCaseId').value = `${prefix}-${timestamp}`;
+        }
+
+        function loadTemplate(type) {
+            const templates = {
+                login: {
+                    title: 'Validar login con credenciales válidas',
+                    module: 'Autenticación',
+                    description: 'Verificar que un usuario puede autenticarse correctamente con credenciales válidas',
+                    preconditions: 'Usuario registrado en el sistema\nPágina de login accesible',
+                    steps: [
+                        { action: 'Navegar a la página de login', expected: 'Página de login se muestra correctamente' },
+                        { action: 'Ingresar usuario válido', expected: 'Campo de usuario acepta el valor' },
+                        { action: 'Ingresar contraseña válida', expected: 'Campo de contraseña acepta el valor' },
+                        { action: 'Hacer clic en "Iniciar Sesión"', expected: 'Usuario es redirigido al dashboard principal' }
+                    ],
+                    postconditions: 'Usuario autenticado en el sistema',
+                    testData: 'Usuario: test@ibm.com\nContraseña: Test123!'
+                },
+                crud: {
+                    title: 'Crear nuevo registro en [Entidad]',
+                    module: 'Gestión de Datos',
+                    description: 'Verificar la creación exitosa de un nuevo registro',
+                    preconditions: 'Usuario con permisos de escritura\nFormulario de creación accesible',
+                    steps: [
+                        { action: 'Navegar al formulario de creación', expected: 'Formulario se muestra con campos requeridos' },
+                        { action: 'Completar campos obligatorios', expected: 'Campos aceptan valores válidos' },
+                        { action: 'Hacer clic en "Guardar"', expected: 'Registro se crea exitosamente' },
+                        { action: 'Verificar en listado', expected: 'Nuevo registro aparece en la lista' }
+                    ],
+                    postconditions: 'Nuevo registro almacenado en base de datos',
+                    testData: 'Datos válidos según especificaciones del formulario'
+                },
+                api: {
+                    title: 'Validar endpoint GET /api/users',
+                    module: 'API REST',
+                    description: 'Verificar que el endpoint retorna la lista de usuarios correctamente',
+                    preconditions: 'API disponible\nToken de autenticación válido',
+                    steps: [
+                        { action: 'Enviar petición GET /api/users', expected: 'Status code 200' },
+                        { action: 'Verificar estructura de respuesta', expected: 'JSON con array de usuarios' },
+                        { action: 'Validar campos requeridos', expected: 'Cada usuario tiene id, nombre, email' },
+                        { action: 'Verificar performance', expected: 'Respuesta en menos de 2 segundos' }
+                    ],
+                    postconditions: 'Datos retornados sin modificaciones',
+                    testData: 'Authorization: Bearer [token]\nContent-Type: application/json'
+                }
+            };
+
+            const template = templates[type];
+            if (template) {
+                document.getElementById('testTitle').value = template.title;
+                document.getElementById('module').value = template.module;
+                document.getElementById('testDescription').value = template.description;
+                document.getElementById('preconditions').value = template.preconditions;
+                document.getElementById('postconditions').value = template.postconditions;
+                document.getElementById('testData').value = template.testData;
+
+                // Clear existing steps and add template steps
+                const stepsContainer = document.getElementById('testSteps');
+                stepsContainer.innerHTML = '';
+                stepCounter = 0;
+
+                template.steps.forEach(step => {
+                    addStep();
+                    const stepItems = document.querySelectorAll('.step-item');
+                    const lastStep = stepItems[stepItems.length - 1];
+                    lastStep.querySelector('.step-action').value = step.action;
+                    lastStep.querySelector('.step-expected').value = step.expected;
+                });
+
+                updateStatistics();
+            }
+        }
+
+        function previewTestCase() {
+            const testCase = gatherTestCaseData();
+            const previewContent = document.getElementById('previewContent');
+            
+            previewContent.innerHTML = `
+                <div class="test-case-preview">
+                    <div class="test-case-header">
+                        <div class="test-case-id">${testCase.id}</div>
+                        <div class="test-case-priority priority-${testCase.priority}">${testCase.priority}</div>
+                    </div>
+                    <h4>${testCase.title}</h4>
+                    <p><strong>Módulo:</strong> ${testCase.module}</p>
+                    <p><strong>Descripción:</strong> ${testCase.description}</p>
+                    <p><strong>Precondiciones:</strong> ${testCase.preconditions}</p>
+                    <div><strong>Pasos:</strong></div>
+                    <ol>
+                        ${testCase.steps.map(step => `<li><strong>Acción:</strong> ${step.action}<br><strong>Resultado Esperado:</strong> ${step.expected}</li>`).join('')}
+                    </ol>
+                    <p><strong>Postcondiciones:</strong> ${testCase.postconditions}</p>
+                    <p><strong>Datos de Prueba:</strong> ${testCase.testData}</p>
+                </div>
+            `;
+            
+            document.getElementById('previewModal').style.display = 'block';
+        }
+
+        function closePreview() {
+            document.getElementById('previewModal').style.display = 'none';
+        }
+
+        function gatherTestCaseData() {
+            const steps = Array.from(document.querySelectorAll('.step-item')).map(step => ({
+                action: step.querySelector('.step-action').value,
+                expected: step.querySelector('.step-expected').value
+            }));
+
+            return {
+                id: document.getElementById('testCaseId').value,
+                title: document.getElementById('testTitle').value,
+                module: document.getElementById('module').value,
+                priority: document.getElementById('priority').value,
+                author: document.getElementById('author').value,
+                description: document.getElementById('testDescription').value,
+                preconditions: document.getElementById('preconditions').value,
+                postconditions: document.getElementById('postconditions').value,
+                testData: document.getElementById('testData').value,
+                steps: steps,
+                template: selectedTemplate
+            };
+        }
+
+        function saveDraft() {
+            const testCase = gatherTestCaseData();
+            const dataManager = new IBMQualityDataManager();
+            
+            // Save to data manager
+            dataManager.setData('draftTestCase', testCase);
+            
+            alert('Borrador guardado exitosamente');
+        }
+
+        function loadTestCaseData() {
+            const dataManager = new IBMQualityDataManager();
+            // Load any existing draft
+        }
+
+        function updateRecentTestCases() {
+            // Update recent test cases list in sidebar
+        }
+
+        function importRequirements() {
+            alert('Función de importación de requisitos - Se conectaría con sistema de gestión de requisitos');
+        }
+
+        // Form submission
+        document.getElementById('testCaseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const testCase = gatherTestCaseData();
+            const dataManager = new IBMQualityDataManager();
+            
+            // Save test case
+            dataManager.notify('testCaseGenerated', testCase);
+            
+            alert('Caso de prueba generado exitosamente. Se ha integrado con el sistema de gestión de calidad.');
+            
+            // Reset form
+            this.reset();
+            generateTestCaseId();
+            updateStatistics();
+        });
+
+        // Real-time updates
+        document.addEventListener('input', updateStatistics);
+    </script>
+</body>
+</html>

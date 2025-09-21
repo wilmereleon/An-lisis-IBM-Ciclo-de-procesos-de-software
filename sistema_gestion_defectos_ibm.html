@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Defectos - IBM Quality Management</title>
+    <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
+    
+    <!-- IBM Carbon Design System Icons -->
+    <script type="module" src="https://unpkg.com/@carbon/icons@11.8.0/es/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="scripts/ibm-quality-data-manager.js"></script>
+    <script src="scripts/ibm-quality-config.js"></script>
+    
+    <style>
+        :root {
+            /* IBM Carbon Design System Variables */
+            --cds-interactive-01: #0f62fe;
+            --cds-interactive-02: #393939;
+            --cds-interactive-03: #0f62fe;
+            --cds-ui-background: #f4f4f4;
+            --cds-ui-01: #ffffff;
+            --cds-ui-02: #f4f4f4;
+            --cds-text-01: #161616;
+            --cds-text-02: #525252;
+            --cds-text-03: #a8a8a8;
+            --cds-field-01: #f4f4f4;
+            --cds-support-01: #da1e28;
+            --cds-support-02: #24a148;
+            --cds-support-03: #f1c21b;
+            --cds-support-04: #0043ce;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', Arial, sans-serif;
+            background-color: var(--cds-ui-background);
+            color: var(--cds-text-01);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .bx--header {
+            background-color: var(--cds-interactive-02);
+            border-bottom: 1px solid #393939;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .bx--header__name {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bx--header__logo {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--cds-interactive-01), #0043ce);
+            color: white;
+            padding: 3rem 2rem;
+            margin: -2rem -2rem 2rem -2rem;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            display: flex;
+            background: var(--cds-ui-01);
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 0;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-item {
+            flex: 1;
+            padding: 1rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            background: transparent;
+            border: none;
+            font-family: inherit;
+            font-size: 1rem;
+            color: var(--cds-text-02);
+        }
+
+        .tab-item.active {
+            color: var(--cds-interactive-01);
+            border-bottom-color: var(--cds-interactive-01);
+            background: var(--cds-ui-01);
+        }
+
+        .tab-item:hover:not(.active) {
+            background: var(--cds-ui-02);
+            color: var(--cds-text-01);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            background: var(--cds-ui-01);
+            border-radius: 0 0 8px 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--cds-interactive-01);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--cds-interactive-01);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            color: var(--cds-text-02);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-trend {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+
+        .trend-up {
+            color: var(--cds-support-02);
+        }
+
+        .trend-down {
+            color: var(--cds-support-01);
+        }
+
+        /* Form Styles */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--cds-interactive-01);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .bx--form-item {
+            margin-bottom: 1rem;
+        }
+
+        .bx--label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: 0.5rem;
+        }
+
+        .bx--text-input,
+        .bx--text-area,
+        .bx--select-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #8d8d8d;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-family: inherit;
+            background: white;
+            transition: border-color 0.15s ease;
+        }
+
+        .bx--text-input:focus,
+        .bx--text-area:focus,
+        .bx--select-input:focus {
+            outline: none;
+            border-color: var(--cds-interactive-01);
+            box-shadow: 0 0 0 2px rgba(15, 98, 254, 0.2);
+        }
+
+        .bx--text-area {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Defect Table */
+        .defects-table-container {
+            overflow-x: auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .bx--data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .bx--data-table th,
+        .bx--data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .bx--data-table th {
+            background-color: var(--cds-ui-02);
+            font-weight: 600;
+            color: var(--cds-text-01);
+            position: sticky;
+            top: 0;
+        }
+
+        .bx--data-table tbody tr:hover {
+            background-color: #f4f4f4;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-new {
+            background-color: var(--cds-support-04);
+            color: white;
+        }
+
+        .status-open {
+            background-color: var(--cds-support-03);
+            color: black;
+        }
+
+        .status-in-progress {
+            background-color: var(--cds-interactive-01);
+            color: white;
+        }
+
+        .status-resolved {
+            background-color: var(--cds-support-02);
+            color: white;
+        }
+
+        .status-closed {
+            background-color: var(--cds-text-03);
+            color: white;
+        }
+
+        /* Priority Badges */
+        .priority-critical {
+            background-color: var(--cds-support-01);
+            color: white;
+        }
+
+        .priority-high {
+            background-color: #ff832b;
+            color: white;
+        }
+
+        .priority-medium {
+            background-color: var(--cds-support-03);
+            color: black;
+        }
+
+        .priority-low {
+            background-color: var(--cds-support-02);
+            color: white;
+        }
+
+        /* Severity Badges */
+        .severity-blocker {
+            background-color: #000000;
+            color: white;
+        }
+
+        .severity-critical {
+            background-color: var(--cds-support-01);
+            color: white;
+        }
+
+        .severity-major {
+            background-color: #ff832b;
+            color: white;
+        }
+
+        .severity-minor {
+            background-color: var(--cds-support-03);
+            color: black;
+        }
+
+        .severity-trivial {
+            background-color: var(--cds-text-03);
+            color: white;
+        }
+
+        /* Buttons */
+        .bx--btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+
+        .bx--btn--primary {
+            background-color: var(--cds-interactive-01);
+            color: white;
+        }
+
+        .bx--btn--primary:hover {
+            background-color: #0050e6;
+        }
+
+        .bx--btn--secondary {
+            background-color: transparent;
+            color: var(--cds-interactive-01);
+            border: 1px solid var(--cds-interactive-01);
+        }
+
+        .bx--btn--secondary:hover {
+            background-color: #f4f4f4;
+        }
+
+        .bx--btn--danger {
+            background-color: var(--cds-support-01);
+            color: white;
+        }
+
+        .bx--btn--danger:hover {
+            background-color: #ba1b23;
+        }
+
+        .bx--btn--sm {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: flex-end;
+        }
+
+        /* Charts */
+        .chart-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: 1rem;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Filters */
+        .filters-bar {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+            align-items: end;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            min-width: 150px;
+        }
+
+        /* Actions */
+        .table-actions {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .page-header {
+                margin: -1rem -1rem 1rem -1rem;
+                padding: 2rem 1rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .tab-navigation {
+                flex-direction: column;
+            }
+
+            .filters-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                min-width: auto;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .table-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Carbon Header/Navbar -->
+    <header class="bx--header">
+        <a href="#" class="bx--header__name">
+            <!-- IBM Watson AI Icon -->
+            <svg class="bx--header__logo" viewBox="0 0 32 32">
+                <path d="M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14S23.7,2,16,2z M16,28c-6.6,0-12-5.4-12-12S9.4,4,16,4s12,5.4,12,12S22.6,28,16,28z"/>
+                <path d="M16,6c-5.5,0-10,4.5-10,10s4.5,10,10,10s10-4.5,10-10S21.5,6,16,6z M16,24c-4.4,0-8-3.6-8-8s3.6-8,8-8s8,3.6,8,8S20.4,24,16,24z"/>
+                <circle cx="16" cy="16" r="4"/>
+                <circle cx="16" cy="9" r="1"/>
+                <circle cx="23" cy="16" r="1"/>
+                <circle cx="16" cy="23" r="1"/>
+                <circle cx="9" cy="16" r="1"/>
+            </svg>
+            IBM Quality Management
+        </a>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Sistema de Gestión de Defectos</h1>
+            <p class="page-subtitle">Tracking completo del ciclo de vida de defectos con métricas en tiempo real</p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <button class="tab-item active" onclick="showTab('dashboard')">Dashboard</button>
+            <button class="tab-item" onclick="showTab('defects')">Gestión de Defectos</button>
+            <button class="tab-item" onclick="showTab('analytics')">Analíticas</button>
+            <button class="tab-item" onclick="showTab('reports')">Reportes</button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="dashboard-grid">
+                <div class="metric-card">
+                    <div class="metric-value" id="totalDefects">127</div>
+                    <div class="metric-label">Total Defectos</div>
+                    <div class="metric-trend trend-up">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,8l8,8H20v8H12V16H4Z"/>
+                        </svg>
+                        +8.5% vs mes anterior
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value" id="openDefects">45</div>
+                    <div class="metric-label">Defectos Abiertos</div>
+                    <div class="metric-trend trend-down">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,24L8,16h4V8h8v8h4Z"/>
+                        </svg>
+                        -12.3% vs semana anterior
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value" id="criticalDefects">8</div>
+                    <div class="metric-label">Defectos Críticos</div>
+                    <div class="metric-trend trend-down">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,24L8,16h4V8h8v8h4Z"/>
+                        </svg>
+                        -2 vs ayer
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value" id="resolutionTime">4.2</div>
+                    <div class="metric-label">Tiempo Promedio Resolución (días)</div>
+                    <div class="metric-trend trend-up">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,8l8,8H20v8H12V16H4Z"/>
+                        </svg>
+                        +0.5 días vs objetivo
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value" id="escapedDefects">3</div>
+                    <div class="metric-label">Defectos Escapados</div>
+                    <div class="metric-trend trend-up">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,8l8,8H20v8H12V16H4Z"/>
+                        </svg>
+                        +1 vs objetivo
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value" id="defectDensity">2.1</div>
+                    <div class="metric-label">Densidad de Defectos (por KLOC)</div>
+                    <div class="metric-trend trend-down">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,24L8,16h4V8h8v8h4Z"/>
+                        </svg>
+                        -0.3 vs release anterior
+                    </div>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">Tendencia de Defectos por Estado</div>
+                    <canvas id="defectTrendChart" width="400" height="200"></canvas>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Distribución por Severidad</div>
+                    <canvas id="severityChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Defects Management Tab -->
+        <div id="defects" class="tab-content">
+            <!-- New Defect Form -->
+            <div class="section-title">Reportar Nuevo Defecto</div>
+            <form id="defectForm" style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); margin-bottom: 2rem;">
+                <div class="form-grid">
+                    <div class="bx--form-item">
+                        <label class="bx--label">ID del Defecto</label>
+                        <input type="text" class="bx--text-input" id="defectId" readonly>
+                    </div>
+                    <div class="bx--form-item">
+                        <label class="bx--label">Prioridad</label>
+                        <select class="bx--select-input" id="priority" required>
+                            <option value="">Seleccionar prioridad...</option>
+                            <option value="critical">Crítica</option>
+                            <option value="high">Alta</option>
+                            <option value="medium">Media</option>
+                            <option value="low">Baja</option>
+                        </select>
+                    </div>
+                    <div class="bx--form-item">
+                        <label class="bx--label">Severidad</label>
+                        <select class="bx--select-input" id="severity" required>
+                            <option value="">Seleccionar severidad...</option>
+                            <option value="blocker">Blocker</option>
+                            <option value="critical">Crítica</option>
+                            <option value="major">Mayor</option>
+                            <option value="minor">Menor</option>
+                            <option value="trivial">Trivial</option>
+                        </select>
+                    </div>
+                    <div class="bx--form-item">
+                        <label class="bx--label">Módulo/Componente</label>
+                        <select class="bx--select-input" id="module" required>
+                            <option value="">Seleccionar módulo...</option>
+                            <option value="login">Autenticación</option>
+                            <option value="dashboard">Dashboard</option>
+                            <option value="payments">Pagos</option>
+                            <option value="reports">Reportes</option>
+                            <option value="api">API</option>
+                            <option value="ui">Interfaz de Usuario</option>
+                        </select>
+                    </div>
+                    <div class="bx--form-item">
+                        <label class="bx--label">Asignado a</label>
+                        <select class="bx--select-input" id="assignee">
+                            <option value="">Seleccionar desarrollador...</option>
+                            <option value="dev1">Juan Pérez - Frontend</option>
+                            <option value="dev2">María González - Backend</option>
+                            <option value="dev3">Carlos Ruiz - Full Stack</option>
+                            <option value="dev4">Ana Silva - DevOps</option>
+                        </select>
+                    </div>
+                    <div class="bx--form-item">
+                        <label class="bx--label">Reportado por</label>
+                        <input type="text" class="bx--text-input" id="reporter" placeholder="QA Tester">
+                    </div>
+                </div>
+
+                <div class="bx--form-item">
+                    <label class="bx--label">Título del Defecto</label>
+                    <input type="text" class="bx--text-input" id="defectTitle" placeholder="Descripción breve del defecto" required>
+                </div>
+
+                <div class="bx--form-item">
+                    <label class="bx--label">Descripción Detallada</label>
+                    <textarea class="bx--text-area" id="defectDescription" placeholder="Descripción completa del defecto, pasos para reproducir, comportamiento esperado vs actual..." required></textarea>
+                </div>
+
+                <div class="form-grid">
+                    <div class="bx--form-item">
+                        <label class="bx--label">Ambiente</label>
+                        <select class="bx--select-input" id="environment">
+                            <option value="development">Desarrollo</option>
+                            <option value="testing">Testing</option>
+                            <option value="staging">Staging</option>
+                            <option value="production">Producción</option>
+                        </select>
+                    </div>
+                    <div class="bx--form-item">
+                        <label class="bx--label">Versión</label>
+                        <input type="text" class="bx--text-input" id="version" placeholder="v1.2.3">
+                    </div>
+                    <div class="bx--form-item">
+                        <label class="bx--label">Navegador/OS</label>
+                        <input type="text" class="bx--text-input" id="browser" placeholder="Chrome 119 / Windows 11">
+                    </div>
+                    <div class="bx--form-item">
+                        <label class="bx--label">Caso de Prueba Relacionado</label>
+                        <input type="text" class="bx--text-input" id="testCase" placeholder="TC-001">
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="bx--btn bx--btn--secondary" onclick="clearForm()">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M12,12H20V20H12ZM8,8V24H24V8ZM8,6H24V26H8Z"/>
+                        </svg>
+                        Limpiar
+                    </button>
+                    <button type="submit" class="bx--btn bx--btn--primary">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M17,15V8h-2v7H8v2h7v7h2v-7h7v-2Z"/>
+                        </svg>
+                        Reportar Defecto
+                    </button>
+                </div>
+            </form>
+
+            <!-- Defects List -->
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <label class="bx--label">Estado</label>
+                    <select class="bx--select-input" id="statusFilter">
+                        <option value="">Todos los estados</option>
+                        <option value="new">Nuevo</option>
+                        <option value="open">Abierto</option>
+                        <option value="in-progress">En Progreso</option>
+                        <option value="resolved">Resuelto</option>
+                        <option value="closed">Cerrado</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="bx--label">Prioridad</label>
+                    <select class="bx--select-input" id="priorityFilter">
+                        <option value="">Todas las prioridades</option>
+                        <option value="critical">Crítica</option>
+                        <option value="high">Alta</option>
+                        <option value="medium">Media</option>
+                        <option value="low">Baja</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="bx--label">Asignado a</label>
+                    <select class="bx--select-input" id="assigneeFilter">
+                        <option value="">Todos los desarrolladores</option>
+                        <option value="dev1">Juan Pérez</option>
+                        <option value="dev2">María González</option>
+                        <option value="dev3">Carlos Ruiz</option>
+                        <option value="dev4">Ana Silva</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="bx--label">&nbsp;</label>
+                    <button class="bx--btn bx--btn--secondary" onclick="applyFilters()">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M28,6H4A2,2,0,0,0,2,8V24a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V8A2,2,0,0,0,28,6ZM4,8H28v4H4ZM4,24V14H28V24Z"/>
+                        </svg>
+                        Aplicar Filtros
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-actions">
+                <button class="bx--btn bx--btn--secondary bx--btn--sm" onclick="exportDefects()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M26,24V6a2,2,0,0,0-2-2H8A2,2,0,0,0,6,6V24a2,2,0,0,0,2,2H24A2,2,0,0,0,26,24ZM8,6H24V24H8Z"/>
+                    </svg>
+                    Exportar
+                </button>
+                <button class="bx--btn bx--btn--secondary bx--btn--sm" onclick="bulkActions()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2ZM16,28A12,12,0,1,1,28,16,12.0137,12.0137,0,0,1,16,28Z"/>
+                    </svg>
+                    Acciones en Lote
+                </button>
+            </div>
+
+            <div class="defects-table-container">
+                <table class="bx--data-table" id="defectsTable">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" onclick="toggleSelectAll()"></th>
+                            <th>ID</th>
+                            <th>Título</th>
+                            <th>Prioridad</th>
+                            <th>Severidad</th>
+                            <th>Estado</th>
+                            <th>Asignado a</th>
+                            <th>Fecha Creación</th>
+                            <th>Última Actualización</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="defectsTableBody">
+                        <!-- Dynamic content will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analytics" class="tab-content">
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">Defectos por Módulo</div>
+                    <canvas id="moduleChart" width="400" height="300"></canvas>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Tiempo de Resolución por Prioridad</div>
+                    <canvas id="resolutionTimeChart" width="400" height="300"></canvas>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Defectos Detectados vs Escapados</div>
+                    <canvas id="detectionChart" width="400" height="300"></canvas>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Tendencia de Calidad por Sprint</div>
+                    <canvas id="qualityTrendChart" width="400" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports Tab -->
+        <div id="reports" class="tab-content">
+            <div class="section-title">Generar Reportes</div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);">
+                    <h3 style="color: var(--cds-interactive-01); margin-bottom: 1rem;">Reporte de Estado de Defectos</h3>
+                    <p style="color: var(--cds-text-02); margin-bottom: 1.5rem;">Resumen completo del estado actual de todos los defectos</p>
+                    <button class="bx--btn bx--btn--primary">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M26,24V6a2,2,0,0,0-2-2H8A2,2,0,0,0,6,6V24a2,2,0,0,0,2,2H24A2,2,0,0,0,26,24ZM8,6H24V24H8Z"/>
+                        </svg>
+                        Generar Reporte
+                    </button>
+                </div>
+
+                <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);">
+                    <h3 style="color: var(--cds-interactive-01); margin-bottom: 1rem;">Métricas de Calidad</h3>
+                    <p style="color: var(--cds-text-02); margin-bottom: 1.5rem;">KPIs y métricas de calidad del software</p>
+                    <button class="bx--btn bx--btn--primary">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M26,24V6a2,2,0,0,0-2-2H8A2,2,0,0,0,6,6V24a2,2,0,0,0,2,2H24A2,2,0,0,0,26,24ZM8,6H24V24H8Z"/>
+                        </svg>
+                        Generar Reporte
+                    </button>
+                </div>
+
+                <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);">
+                    <h3 style="color: var(--cds-interactive-01); margin-bottom: 1rem;">Análisis de Tendencias</h3>
+                    <p style="color: var(--cds-text-02); margin-bottom: 1.5rem;">Tendencias históricas y proyecciones</p>
+                    <button class="bx--btn bx--btn--primary">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M26,24V6a2,2,0,0,0-2-2H8A2,2,0,0,0,6,6V24a2,2,0,0,0,2,2H24A2,2,0,0,0,26,24ZM8,6H24V24H8Z"/>
+                        </svg>
+                        Generar Reporte
+                    </button>
+                </div>
+
+                <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);">
+                    <h3 style="color: var(--cds-interactive-01); margin-bottom: 1rem;">Reporte por Desarrollador</h3>
+                    <p style="color: var(--cds-text-02); margin-bottom: 1.5rem;">Performance individual y carga de trabajo</p>
+                    <button class="bx--btn bx--btn--primary">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M26,24V6a2,2,0,0,0-2-2H8A2,2,0,0,0,6,6V24a2,2,0,0,0,2,2H24A2,2,0,0,0,26,24ZM8,6H24V24H8Z"/>
+                        </svg>
+                        Generar Reporte
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configurar sistema reactivo
+        window.addEventListener('DOMContentLoaded', function() {
+            const dataManager = new IBMQualityDataManager();
+            const config = new IBMQualityConfig();
+            
+            // Suscribirse a cambios de datos
+            dataManager.subscribe('defectUpdated', (data) => {
+                refreshDefectsList();
+                updateDashboardMetrics();
+                updateCharts();
+            });
+            
+            dataManager.subscribe('dataChanged', (data) => {
+                loadDefectsData();
+            });
+            
+            // Cargar datos iniciales
+            loadDefectsData();
+            generateDefectId();
+            initializeCharts();
+            loadDefectsList();
+        });
+
+        let defectCounter = 1;
+        let defects = [];
+
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-item').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function generateDefectId() {
+            const today = new Date();
+            const year = today.getFullYear().toString().slice(-2);
+            const month = (today.getMonth() + 1).toString().padStart(2, '0');
+            const sequence = defectCounter.toString().padStart(4, '0');
+            document.getElementById('defectId').value = `DEF-${year}${month}-${sequence}`;
+        }
+
+        function clearForm() {
+            document.getElementById('defectForm').reset();
+            generateDefectId();
+        }
+
+        function loadDefectsData() {
+            const dataManager = new IBMQualityDataManager();
+            defects = dataManager.getData('defects') || getSampleDefects();
+        }
+
+        function getSampleDefects() {
+            return [
+                {
+                    id: 'DEF-2409-0001',
+                    title: 'Login falló con credenciales válidas',
+                    priority: 'high',
+                    severity: 'major',
+                    status: 'open',
+                    assignee: 'dev1',
+                    reporter: 'QA Team',
+                    module: 'login',
+                    environment: 'testing',
+                    created: '2024-09-15',
+                    updated: '2024-09-20'
+                },
+                {
+                    id: 'DEF-2409-0002',
+                    title: 'Dashboard no carga métricas',
+                    priority: 'critical',
+                    severity: 'critical',
+                    status: 'in-progress',
+                    assignee: 'dev2',
+                    reporter: 'Product Owner',
+                    module: 'dashboard',
+                    environment: 'staging',
+                    created: '2024-09-18',
+                    updated: '2024-09-21'
+                },
+                {
+                    id: 'DEF-2409-0003',
+                    title: 'Error de validación en formulario de pagos',
+                    priority: 'medium',
+                    severity: 'minor',
+                    status: 'resolved',
+                    assignee: 'dev3',
+                    reporter: 'QA Analyst',
+                    module: 'payments',
+                    environment: 'testing',
+                    created: '2024-09-10',
+                    updated: '2024-09-19'
+                }
+            ];
+        }
+
+        function loadDefectsList() {
+            const tbody = document.getElementById('defectsTableBody');
+            tbody.innerHTML = '';
+
+            defects.forEach(defect => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><input type="checkbox" value="${defect.id}"></td>
+                    <td>${defect.id}</td>
+                    <td>${defect.title}</td>
+                    <td><span class="status-badge priority-${defect.priority}">${defect.priority}</span></td>
+                    <td><span class="status-badge severity-${defect.severity}">${defect.severity}</span></td>
+                    <td><span class="status-badge status-${defect.status}">${defect.status}</span></td>
+                    <td>${getAssigneeName(defect.assignee)}</td>
+                    <td>${defect.created}</td>
+                    <td>${defect.updated}</td>
+                    <td>
+                        <button class="bx--btn bx--btn--secondary bx--btn--sm" onclick="editDefect('${defect.id}')">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                <path d="M2,26H30v2H2ZM25.4,9c.8-.8.8-2,0-2.8l-3.6-3.6c-.8-.8-2-.8-2.8,0l-15,15V24h6.4ZM20.4,4L24,7.6l-3,3L17.4,7ZM6,22V18.4l9.4-9.4L19,12.6L9.6,22Z"/>
+                            </svg>
+                        </button>
+                        <button class="bx--btn bx--btn--danger bx--btn--sm" onclick="deleteDefect('${defect.id}')">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                <path d="M24,9.4L22.6,8L16,14.6L9.4,8L8,9.4L14.6,16L8,22.6L9.4,24L16,17.4L22.6,24L24,22.6L17.4,16Z"/>
+                            </svg>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function getAssigneeName(assigneeId) {
+            const assignees = {
+                'dev1': 'Juan Pérez',
+                'dev2': 'María González',
+                'dev3': 'Carlos Ruiz',
+                'dev4': 'Ana Silva'
+            };
+            return assignees[assigneeId] || 'No asignado';
+        }
+
+        function refreshDefectsList() {
+            loadDefectsList();
+        }
+
+        function updateDashboardMetrics() {
+            // Update dashboard metrics based on current defects data
+            const openDefects = defects.filter(d => ['new', 'open', 'in-progress'].includes(d.status)).length;
+            const criticalDefects = defects.filter(d => d.priority === 'critical').length;
+            
+            document.getElementById('totalDefects').textContent = defects.length;
+            document.getElementById('openDefects').textContent = openDefects;
+            document.getElementById('criticalDefects').textContent = criticalDefects;
+        }
+
+        function initializeCharts() {
+            createDefectTrendChart();
+            createSeverityChart();
+            createModuleChart();
+            createResolutionTimeChart();
+            createDetectionChart();
+            createQualityTrendChart();
+        }
+
+        function createDefectTrendChart() {
+            const ctx = document.getElementById('defectTrendChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'],
+                    datasets: [{
+                        label: 'Nuevos',
+                        data: [15, 22, 18, 25, 30, 28, 35, 32, 40],
+                        borderColor: '#0f62fe',
+                        tension: 0.4
+                    }, {
+                        label: 'Resueltos',
+                        data: [12, 20, 16, 23, 28, 30, 33, 35, 38],
+                        borderColor: '#24a148',
+                        tension: 0.4
+                    }, {
+                        label: 'Abiertos',
+                        data: [10, 12, 14, 16, 18, 16, 18, 15, 17],
+                        borderColor: '#da1e28',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function createSeverityChart() {
+            const ctx = document.getElementById('severityChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Blocker', 'Crítica', 'Mayor', 'Menor', 'Trivial'],
+                    datasets: [{
+                        data: [2, 8, 25, 45, 20],
+                        backgroundColor: ['#000000', '#da1e28', '#ff832b', '#f1c21b', '#8d8d8d']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function createModuleChart() {
+            const ctx = document.getElementById('moduleChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Login', 'Dashboard', 'Pagos', 'Reportes', 'API', 'UI'],
+                    datasets: [{
+                        label: 'Defectos',
+                        data: [15, 22, 18, 12, 8, 25],
+                        backgroundColor: '#0f62fe'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        function createResolutionTimeChart() {
+            const ctx = document.getElementById('resolutionTimeChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Crítica', 'Alta', 'Media', 'Baja'],
+                    datasets: [{
+                        label: 'Días promedio',
+                        data: [1.2, 2.8, 4.5, 7.2],
+                        backgroundColor: ['#da1e28', '#ff832b', '#f1c21b', '#24a148']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        function createDetectionChart() {
+            const ctx = document.getElementById('detectionChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Sprint 1', 'Sprint 2', 'Sprint 3', 'Sprint 4', 'Sprint 5', 'Sprint 6'],
+                    datasets: [{
+                        label: 'Detectados en Testing',
+                        data: [35, 42, 38, 45, 40, 48],
+                        borderColor: '#24a148',
+                        backgroundColor: '#24a148'
+                    }, {
+                        label: 'Escapados a Producción',
+                        data: [5, 3, 4, 2, 3, 1],
+                        borderColor: '#da1e28',
+                        backgroundColor: '#da1e28'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function createQualityTrendChart() {
+            const ctx = document.getElementById('qualityTrendChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Sprint 1', 'Sprint 2', 'Sprint 3', 'Sprint 4', 'Sprint 5', 'Sprint 6'],
+                    datasets: [{
+                        label: 'Índice de Calidad (%)',
+                        data: [78, 82, 85, 88, 91, 94],
+                        borderColor: '#0f62fe',
+                        backgroundColor: 'rgba(15, 98, 254, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 70,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateCharts() {
+            // Update charts with new data
+        }
+
+        function applyFilters() {
+            // Apply filters to defects list
+            loadDefectsList();
+        }
+
+        function toggleSelectAll() {
+            const checkboxes = document.querySelectorAll('#defectsTableBody input[type="checkbox"]');
+            const selectAll = event.target.checked;
+            checkboxes.forEach(cb => cb.checked = selectAll);
+        }
+
+        function editDefect(defectId) {
+            alert(`Editar defecto ${defectId} - Se abriría modal de edición`);
+        }
+
+        function deleteDefect(defectId) {
+            if (confirm(`¿Está seguro de eliminar el defecto ${defectId}?`)) {
+                defects = defects.filter(d => d.id !== defectId);
+                loadDefectsList();
+                updateDashboardMetrics();
+            }
+        }
+
+        function exportDefects() {
+            alert('Exportar defectos - Se generaría archivo Excel/CSV');
+        }
+
+        function bulkActions() {
+            alert('Acciones en lote - Se abriría modal con opciones');
+        }
+
+        // Form submission
+        document.getElementById('defectForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const defectData = Object.fromEntries(formData);
+            defectData.created = new Date().toISOString().split('T')[0];
+            defectData.updated = defectData.created;
+            defectData.status = 'new';
+            
+            defects.push(defectData);
+            defectCounter++;
+            
+            const dataManager = new IBMQualityDataManager();
+            dataManager.notify('defectUpdated', defectData);
+            
+            alert('Defecto reportado exitosamente');
+            clearForm();
+            loadDefectsList();
+            updateDashboardMetrics();
+        });
+    </script>
+</body>
+</html>

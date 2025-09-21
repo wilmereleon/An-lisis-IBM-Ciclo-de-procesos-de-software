@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador de Cobertura - IBM Quality Management</title>
+    <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
+    
+    <!-- IBM Carbon Design System Icons -->
+    <script type="module" src="https://unpkg.com/@carbon/icons@11.8.0/es/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="scripts/ibm-quality-data-manager.js"></script>
+    <script src="scripts/ibm-quality-config.js"></script>
+    
+    <style>
+        :root {
+            /* IBM Carbon Design System Variables */
+            --cds-interactive-01: #0f62fe;
+            --cds-interactive-02: #393939;
+            --cds-interactive-03: #0f62fe;
+            --cds-ui-background: #f4f4f4;
+            --cds-ui-01: #ffffff;
+            --cds-ui-02: #f4f4f4;
+            --cds-text-01: #161616;
+            --cds-text-02: #525252;
+            --cds-text-03: #a8a8a8;
+            --cds-field-01: #f4f4f4;
+            --cds-support-01: #da1e28;
+            --cds-support-02: #24a148;
+            --cds-support-03: #f1c21b;
+            --cds-support-04: #0043ce;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', Arial, sans-serif;
+            background-color: var(--cds-ui-background);
+            color: var(--cds-text-01);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .bx--header {
+            background-color: var(--cds-interactive-02);
+            border-bottom: 1px solid #393939;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .bx--header__name {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bx--header__logo {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--cds-interactive-01), #0043ce);
+            color: white;
+            padding: 3rem 2rem;
+            margin: -2rem -2rem 2rem -2rem;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            display: flex;
+            background: var(--cds-ui-01);
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 0;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-item {
+            flex: 1;
+            padding: 1rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            background: transparent;
+            border: none;
+            font-family: inherit;
+            font-size: 1rem;
+            color: var(--cds-text-02);
+        }
+
+        .tab-item.active {
+            color: var(--cds-interactive-01);
+            border-bottom-color: var(--cds-interactive-01);
+            background: var(--cds-ui-01);
+        }
+
+        .tab-item:hover:not(.active) {
+            background: var(--cds-ui-02);
+            color: var(--cds-text-01);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            background: var(--cds-ui-01);
+            border-radius: 0 0 8px 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Coverage Overview */
+        .coverage-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .coverage-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .coverage-card.excellent {
+            border-left: 4px solid var(--cds-support-02);
+        }
+
+        .coverage-card.good {
+            border-left: 4px solid var(--cds-support-03);
+        }
+
+        .coverage-card.poor {
+            border-left: 4px solid var(--cds-support-01);
+        }
+
+        .coverage-percentage {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+
+        .coverage-label {
+            color: var(--cds-text-02);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .coverage-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .coverage-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .coverage-fill.excellent {
+            background: var(--cds-support-02);
+        }
+
+        .coverage-fill.good {
+            background: var(--cds-support-03);
+        }
+
+        .coverage-fill.poor {
+            background: var(--cds-support-01);
+        }
+
+        .coverage-details {
+            font-size: 0.875rem;
+            color: var(--cds-text-02);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            text-align: left;
+        }
+
+        /* File Explorer */
+        .file-explorer {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .explorer-header {
+            background: var(--cds-ui-02);
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .explorer-title {
+            font-weight: 600;
+            color: var(--cds-text-01);
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .bx--text-input {
+            padding: 0.5rem;
+            border: 1px solid #8d8d8d;
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+
+        .file-tree {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .file-item {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #f4f4f4;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: background-color 0.15s ease;
+        }
+
+        .file-item:hover {
+            background: var(--cds-ui-02);
+        }
+
+        .file-item.selected {
+            background: rgba(15, 98, 254, 0.1);
+            border-left: 3px solid var(--cds-interactive-01);
+        }
+
+        .file-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        .file-info {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .file-name {
+            font-weight: 500;
+        }
+
+        .file-coverage {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .coverage-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .coverage-badge.excellent {
+            background: var(--cds-support-02);
+        }
+
+        .coverage-badge.good {
+            background: var(--cds-support-03);
+            color: black;
+        }
+
+        .coverage-badge.poor {
+            background: var(--cds-support-01);
+        }
+
+        /* Buttons */
+        .bx--btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+
+        .bx--btn--primary {
+            background-color: var(--cds-interactive-01);
+            color: white;
+        }
+
+        .bx--btn--primary:hover {
+            background-color: #0050e6;
+        }
+
+        .bx--btn--secondary {
+            background-color: transparent;
+            color: var(--cds-interactive-01);
+            border: 1px solid var(--cds-interactive-01);
+        }
+
+        .bx--btn--secondary:hover {
+            background-color: #f4f4f4;
+        }
+
+        .bx--btn--sm {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        /* Controls */
+        .controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .bx--select-input {
+            padding: 0.5rem;
+            border: 1px solid #8d8d8d;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            background: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .coverage-overview {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .page-header {
+                margin: -1rem -1rem 2rem -1rem;
+                padding: 2rem 1rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .tab-navigation {
+                flex-direction: column;
+            }
+
+            .controls-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .coverage-overview {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Carbon Header/Navbar -->
+    <header class="bx--header">
+        <a href="#" class="bx--header__name">
+            <!-- IBM Watson AI Icon -->
+            <svg class="bx--header__logo" viewBox="0 0 32 32">
+                <path d="M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14S23.7,2,16,2z M16,28c-6.6,0-12-5.4-12-12S9.4,4,16,4s12,5.4,12,12S22.6,28,16,28z"/>
+                <path d="M16,6c-5.5,0-10,4.5-10,10s4.5,10,10,10s10-4.5,10-10S21.5,6,16,6z M16,24c-4.4,0-8-3.6-8-8s3.6-8,8-8s8,3.6,8,8S20.4,24,16,24z"/>
+                <circle cx="16" cy="16" r="4"/>
+                <circle cx="16" cy="9" r="1"/>
+                <circle cx="23" cy="16" r="1"/>
+                <circle cx="16" cy="23" r="1"/>
+                <circle cx="9" cy="16" r="1"/>
+            </svg>
+            IBM Quality Management
+        </a>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Analizador de Cobertura</h1>
+            <p class="page-subtitle">Análisis detallado de cobertura de código con visualización avanzada y reportes ejecutivos</p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <button class="tab-item active" onclick="showTab('overview')">Resumen</button>
+            <button class="tab-item" onclick="showTab('files')">Archivos</button>
+            <button class="tab-item" onclick="showTab('visualization')">Visualización</button>
+            <button class="tab-item" onclick="showTab('reports')">Reportes</button>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <!-- Coverage Overview Cards -->
+            <div class="coverage-overview">
+                <div class="coverage-card excellent">
+                    <div class="coverage-percentage" style="color: var(--cds-support-02);">87.5%</div>
+                    <div class="coverage-label">Cobertura de Líneas</div>
+                    <div class="coverage-bar">
+                        <div class="coverage-fill excellent" style="width: 87.5%"></div>
+                    </div>
+                    <div class="coverage-details">
+                        <span>Cubiertas: 12,847</span>
+                        <span>Total: 14,685</span>
+                        <span>No cubiertas: 1,838</span>
+                        <span>Objetivo: 85%</span>
+                    </div>
+                </div>
+
+                <div class="coverage-card good">
+                    <div class="coverage-percentage" style="color: var(--cds-support-03);">78.2%</div>
+                    <div class="coverage-label">Cobertura de Ramas</div>
+                    <div class="coverage-bar">
+                        <div class="coverage-fill good" style="width: 78.2%"></div>
+                    </div>
+                    <div class="coverage-details">
+                        <span>Cubiertas: 3,521</span>
+                        <span>Total: 4,502</span>
+                        <span>No cubiertas: 981</span>
+                        <span>Objetivo: 80%</span>
+                    </div>
+                </div>
+
+                <div class="coverage-card excellent">
+                    <div class="coverage-percentage" style="color: var(--cds-support-02);">92.1%</div>
+                    <div class="coverage-label">Cobertura de Funciones</div>
+                    <div class="coverage-bar">
+                        <div class="coverage-fill excellent" style="width: 92.1%"></div>
+                    </div>
+                    <div class="coverage-details">
+                        <span>Cubiertas: 1,842</span>
+                        <span>Total: 2,000</span>
+                        <span>No cubiertas: 158</span>
+                        <span>Objetivo: 90%</span>
+                    </div>
+                </div>
+
+                <div class="coverage-card poor">
+                    <div class="coverage-percentage" style="color: var(--cds-support-01);">65.4%</div>
+                    <div class="coverage-label">Cobertura de Declaraciones</div>
+                    <div class="coverage-bar">
+                        <div class="coverage-fill poor" style="width: 65.4%"></div>
+                    </div>
+                    <div class="coverage-details">
+                        <span>Cubiertas: 8,912</span>
+                        <span>Total: 13,625</span>
+                        <span>No cubiertas: 4,713</span>
+                        <span>Objetivo: 75%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls-bar">
+                <div class="filter-controls">
+                    <select class="bx--select-input" id="projectFilter">
+                        <option value="all">Todos los Proyectos</option>
+                        <option value="frontend">Frontend</option>
+                        <option value="backend">Backend API</option>
+                        <option value="mobile">Mobile App</option>
+                        <option value="shared">Componentes Compartidos</option>
+                    </select>
+                    
+                    <select class="bx--select-input" id="thresholdFilter">
+                        <option value="all">Todos los Niveles</option>
+                        <option value="excellent">Excelente (≥85%)</option>
+                        <option value="good">Bueno (70-84%)</option>
+                        <option value="poor">Pobre (<70%)</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 1rem;">
+                    <button class="bx--btn bx--btn--secondary bx--btn--sm" onclick="refreshCoverage()">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M18,28A12,12,0,0,1,6,16H4A14,14,0,0,0,18,30Z"/>
+                            <path d="M28,16A12,12,0,0,1,16,28v2A14,14,0,0,0,30,16Z"/>
+                            <path d="M16,4A12,12,0,0,1,28,16h2A14,14,0,0,0,16,2Z"/>
+                            <path d="M4,16A12,12,0,0,1,16,4V2A14,14,0,0,0,2,16Z"/>
+                        </svg>
+                        Actualizar
+                    </button>
+                    <button class="bx--btn bx--btn--primary bx--btn--sm" onclick="generateReport()">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M26,24V6a2,2,0,0,0-2-2H8A2,2,0,0,0,6,6V24a2,2,0,0,0,2,2H24A2,2,0,0,0,26,24ZM8,6H24V24H8Z"/>
+                        </svg>
+                        Generar Reporte
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);">
+                    <h3 style="color: var(--cds-interactive-01); margin-bottom: 1rem;">Archivos con Cobertura Crítica</h3>
+                    <div style="font-size: 2rem; font-weight: 300; color: var(--cds-support-01); margin-bottom: 0.5rem;">23</div>
+                    <p style="color: var(--cds-text-02); font-size: 0.875rem;">Archivos con cobertura inferior al 50%</p>
+                </div>
+
+                <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);">
+                    <h3 style="color: var(--cds-interactive-01); margin-bottom: 1rem;">Mejora en Última Semana</h3>
+                    <div style="font-size: 2rem; font-weight: 300; color: var(--cds-support-02); margin-bottom: 0.5rem;">+3.2%</div>
+                    <p style="color: var(--cds-text-02); font-size: 0.875rem;">Incremento en cobertura general</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Files Tab -->
+        <div id="files" class="tab-content">
+            <div class="file-explorer">
+                <div class="explorer-header">
+                    <div class="explorer-title">Explorador de Archivos</div>
+                    <div class="search-box">
+                        <input type="text" class="bx--text-input" placeholder="Buscar archivos..." id="fileSearch">
+                        <button class="bx--btn bx--btn--secondary bx--btn--sm">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                <path d="M29,27.586l-7.552-7.552a11.018,11.018,0,1,0-1.414,1.414L27.586,29ZM4,13a9,9,0,1,1,9,9A9.01,9.01,0,0,1,4,13Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="file-tree" id="fileTree">
+                    <!-- Dynamic file tree will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Visualization Tab -->
+        <div id="visualization" class="tab-content">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 2rem;">
+                <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);">
+                    <h3 style="color: var(--cds-text-01); margin-bottom: 1.5rem;">Distribución de Cobertura</h3>
+                    <canvas id="coverageDistributionChart" width="400" height="300"></canvas>
+                </div>
+
+                <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);">
+                    <h3 style="color: var(--cds-text-01); margin-bottom: 1.5rem;">Tendencia Histórica</h3>
+                    <canvas id="coverageTrendChart" width="400" height="300"></canvas>
+                </div>
+
+                <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); grid-column: 1 / -1;">
+                    <h3 style="color: var(--cds-text-01); margin-bottom: 1.5rem;">Mapa de Calor de Cobertura</h3>
+                    <div id="coverageHeatmap" style="height: 400px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports Tab -->
+        <div id="reports" class="tab-content">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);">
+                    <h3 style="color: var(--cds-interactive-01); margin-bottom: 1rem;">Reporte Ejecutivo</h3>
+                    <p style="color: var(--cds-text-02); margin-bottom: 1.5rem;">Resumen completo de cobertura para stakeholders</p>
+                    <button class="bx--btn bx--btn--primary">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M26,24V6a2,2,0,0,0-2-2H8A2,2,0,0,0,6,6V24a2,2,0,0,0,2,2H24A2,2,0,0,0,26,24ZM8,6H24V24H8Z"/>
+                        </svg>
+                        Generar PDF
+                    </button>
+                </div>
+
+                <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);">
+                    <h3 style="color: var(--cds-interactive-01); margin-bottom: 1rem;">Reporte Técnico Detallado</h3>
+                    <p style="color: var(--cds-text-02); margin-bottom: 1.5rem;">Análisis línea por línea con recomendaciones</p>
+                    <button class="bx--btn bx--btn--primary">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M26,24V6a2,2,0,0,0-2-2H8A2,2,0,0,0,6,6V24a2,2,0,0,0,2,2H24A2,2,0,0,0,26,24ZM8,6H24V24H8Z"/>
+                        </svg>
+                        Generar HTML
+                    </button>
+                </div>
+
+                <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);">
+                    <h3 style="color: var(--cds-interactive-01); margin-bottom: 1rem;">Datos de Cobertura</h3>
+                    <p style="color: var(--cds-text-02); margin-bottom: 1.5rem;">Exportar datos en formato estructurado</p>
+                    <button class="bx--btn bx--btn--primary">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M26,24V6a2,2,0,0,0-2-2H8A2,2,0,0,0,6,6V24a2,2,0,0,0,2,2H24A2,2,0,0,0,26,24ZM8,6H24V24H8Z"/>
+                        </svg>
+                        Exportar JSON
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configure reactive system
+        window.addEventListener('DOMContentLoaded', function() {
+            const dataManager = new IBMQualityDataManager();
+            const config = new IBMQualityConfig();
+            
+            // Subscribe to data changes
+            dataManager.subscribe('coverageUpdated', (data) => {
+                refreshCoverageData();
+                updateCharts();
+            });
+            
+            // Load initial data
+            loadCoverageData();
+            initializeCharts();
+            loadFileTree();
+        });
+
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-item').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function loadCoverageData() {
+            // Load coverage data from reactive system
+            const dataManager = new IBMQualityDataManager();
+            const coverageData = dataManager.getData('coverage') || getSampleCoverageData();
+            
+            // Update coverage displays
+            updateCoverageOverview(coverageData);
+        }
+
+        function getSampleCoverageData() {
+            return {
+                lines: { covered: 12847, total: 14685, percentage: 87.5 },
+                branches: { covered: 3521, total: 4502, percentage: 78.2 },
+                functions: { covered: 1842, total: 2000, percentage: 92.1 },
+                statements: { covered: 8912, total: 13625, percentage: 65.4 }
+            };
+        }
+
+        function updateCoverageOverview(data) {
+            // Update overview cards with real data
+            // This would be implemented with actual reactive system data
+        }
+
+        function loadFileTree() {
+            const fileTree = document.getElementById('fileTree');
+            const sampleFiles = [
+                { name: 'src/components/auth/login.js', coverage: 95.2, type: 'excellent' },
+                { name: 'src/components/auth/register.js', coverage: 87.8, type: 'excellent' },
+                { name: 'src/services/api/userService.js', coverage: 72.1, type: 'good' },
+                { name: 'src/services/api/paymentService.js', coverage: 45.3, type: 'poor' },
+                { name: 'src/utils/validation.js', coverage: 89.7, type: 'excellent' },
+                { name: 'src/utils/formatting.js', coverage: 67.2, type: 'poor' },
+                { name: 'src/components/dashboard/metrics.js', coverage: 82.4, type: 'good' }
+            ];
+
+            fileTree.innerHTML = '';
+            sampleFiles.forEach(file => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <svg class="file-icon" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M25.7,9.3l-7-7A.9.9,0,0,0,18,2H8A2,2,0,0,0,6,4V28a2,2,0,0,0,2,2H24a2,2,0,0,0,2-2V10A.9.9,0,0,0,25.7,9.3ZM18,4.4,23.6,10H18ZM24,28H8V4h8v6a2,2,0,0,0,2,2h6Z"/>
+                    </svg>
+                    <div class="file-info">
+                        <div class="file-name">${file.name}</div>
+                        <div class="file-coverage">
+                            <span class="coverage-badge ${file.type}">${file.coverage}%</span>
+                        </div>
+                    </div>
+                `;
+                fileItem.addEventListener('click', () => selectFile(file));
+                fileTree.appendChild(fileItem);
+            });
+        }
+
+        function selectFile(file) {
+            // Remove previous selection
+            document.querySelectorAll('.file-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // Add selection to clicked item
+            event.currentTarget.classList.add('selected');
+            
+            // Load file details (would show detailed coverage info)
+            console.log('Selected file:', file.name);
+        }
+
+        function refreshCoverage() {
+            loadCoverageData();
+            updateCharts();
+            loadFileTree();
+            
+            // Visual feedback
+            const btn = event.target;
+            const original = btn.innerHTML;
+            btn.innerHTML = btn.innerHTML.replace('Actualizar', 'Actualizando...');
+            setTimeout(() => {
+                btn.innerHTML = original;
+            }, 1000);
+        }
+
+        function generateReport() {
+            alert('Generar reporte - Se abriría modal de configuración de reporte');
+        }
+
+        function initializeCharts() {
+            createCoverageDistributionChart();
+            createCoverageTrendChart();
+            createCoverageHeatmap();
+        }
+
+        function createCoverageDistributionChart() {
+            const ctx = document.getElementById('coverageDistributionChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Excelente (≥85%)', 'Bueno (70-84%)', 'Pobre (<70%)'],
+                    datasets: [{
+                        data: [65, 25, 10],
+                        backgroundColor: ['#24a148', '#f1c21b', '#da1e28'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function createCoverageTrendChart() {
+            const ctx = document.getElementById('coverageTrendChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'],
+                    datasets: [{
+                        label: 'Cobertura Global',
+                        data: [72, 75, 78, 82, 85, 83, 86, 87, 87.5],
+                        borderColor: '#0f62fe',
+                        backgroundColor: 'rgba(15, 98, 254, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Objetivo',
+                        data: [85, 85, 85, 85, 85, 85, 85, 85, 85],
+                        borderColor: '#24a148',
+                        borderDash: [5, 5],
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 60,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        function createCoverageHeatmap() {
+            // Simplified heatmap visualization
+            const container = document.getElementById('coverageHeatmap');
+            container.innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(20, 1fr); gap: 2px; height: 100%;">
+                    ${Array.from({length: 200}, (_, i) => {
+                        const coverage = Math.random() * 100;
+                        const color = coverage >= 85 ? '#24a148' : coverage >= 70 ? '#f1c21b' : '#da1e28';
+                        return `<div style="background: ${color}; height: 20px; border-radius: 2px;" title="Cobertura: ${coverage.toFixed(1)}%"></div>`;
+                    }).join('')}
+                </div>
+                <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 2rem; font-size: 0.875rem;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <div style="width: 16px; height: 16px; background: #24a148; border-radius: 2px;"></div>
+                        <span>≥85%</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <div style="width: 16px; height: 16px; background: #f1c21b; border-radius: 2px;"></div>
+                        <span>70-84%</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <div style="width: 16px; height: 16px; background: #da1e28; border-radius: 2px;"></div>
+                        <span><70%</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateCharts() {
+            // Update charts with new data
+            initializeCharts();
+        }
+
+        function refreshCoverageData() {
+            loadCoverageData();
+        }
+
+        // File search functionality
+        document.getElementById('fileSearch').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const fileItems = document.querySelectorAll('.file-item');
+            
+            fileItems.forEach(item => {
+                const fileName = item.querySelector('.file-name').textContent.toLowerCase();
+                if (fileName.includes(searchTerm)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Filter controls
+        document.getElementById('projectFilter').addEventListener('change', function() {
+            // Implement project filtering
+            loadFileTree();
+        });
+
+        document.getElementById('thresholdFilter').addEventListener('change', function() {
+            // Implement threshold filtering
+            loadFileTree();
+        });
+    </script>
+</body>
+</html>

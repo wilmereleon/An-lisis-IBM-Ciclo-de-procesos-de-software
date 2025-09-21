@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Testing Metrics - IBM Quality Management</title>
+    <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
+    
+    <!-- IBM Carbon Design System Icons -->
+    <script type="module" src="https://unpkg.com/@carbon/icons@11.8.0/es/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="scripts/ibm-quality-data-manager.js"></script>
+    <script src="scripts/ibm-quality-config.js"></script>
+    
+    <style>
+        :root {
+            /* IBM Carbon Design System Variables */
+            --cds-interactive-01: #0f62fe;
+            --cds-interactive-02: #393939;
+            --cds-interactive-03: #0f62fe;
+            --cds-ui-background: #f4f4f4;
+            --cds-ui-01: #ffffff;
+            --cds-ui-02: #f4f4f4;
+            --cds-text-01: #161616;
+            --cds-text-02: #525252;
+            --cds-text-03: #a8a8a8;
+            --cds-field-01: #f4f4f4;
+            --cds-support-01: #da1e28;
+            --cds-support-02: #24a148;
+            --cds-support-03: #f1c21b;
+            --cds-support-04: #0043ce;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', Arial, sans-serif;
+            background-color: var(--cds-ui-background);
+            color: var(--cds-text-01);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .bx--header {
+            background-color: var(--cds-interactive-02);
+            border-bottom: 1px solid #393939;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .bx--header__name {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bx--header__logo {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--cds-interactive-01), #0043ce);
+            color: white;
+            padding: 3rem 2rem;
+            margin: -2rem -2rem 2rem -2rem;
+            border-radius: 0 0 8px 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16 2L21 7L16 12L11 7L16 2Z' fill='white' fill-opacity='0.1'/%3E%3Cpath d='M2 16L7 11L12 16L7 21L2 16Z' fill='white' fill-opacity='0.1'/%3E%3Cpath d='M30 16L25 11L20 16L25 21L30 16Z' fill='white' fill-opacity='0.1'/%3E%3Cpath d='M16 30L11 25L16 20L21 25L16 30Z' fill='white' fill-opacity='0.1'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            opacity: 0.3;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Controls Bar */
+        .controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .time-range-selector {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .time-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--cds-interactive-01);
+            background: transparent;
+            color: var(--cds-interactive-01);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .time-btn.active,
+        .time-btn:hover {
+            background: var(--cds-interactive-01);
+            color: white;
+        }
+
+        .refresh-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .auto-refresh {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .auto-refresh input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* KPI Dashboard Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card.critical {
+            border-left: 4px solid var(--cds-support-01);
+        }
+
+        .kpi-card.warning {
+            border-left: 4px solid var(--cds-support-03);
+        }
+
+        .kpi-card.success {
+            border-left: 4px solid var(--cds-support-02);
+        }
+
+        .kpi-card.info {
+            border-left: 4px solid var(--cds-interactive-01);
+        }
+
+        .kpi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .kpi-title {
+            font-size: 0.875rem;
+            color: var(--cds-text-02);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .kpi-icon {
+            width: 24px;
+            height: 24px;
+            opacity: 0.6;
+        }
+
+        .kpi-value {
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--cds-text-01);
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .kpi-unit {
+            font-size: 1rem;
+            color: var(--cds-text-03);
+        }
+
+        .kpi-trend {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .trend-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .trend-up {
+            color: var(--cds-support-02);
+        }
+
+        .trend-down {
+            color: var(--cds-support-01);
+        }
+
+        .trend-neutral {
+            color: var(--cds-text-03);
+        }
+
+        .kpi-target {
+            font-size: 0.75rem;
+            color: var(--cds-text-03);
+            margin-top: 0.5rem;
+        }
+
+        /* Charts Section */
+        .charts-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--cds-interactive-01);
+        }
+
+        .section-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--cds-text-01);
+        }
+
+        .chart-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chart-btn {
+            padding: 0.25rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 4px;
+            color: var(--cds-text-02);
+            transition: all 0.15s ease;
+        }
+
+        .chart-btn:hover {
+            background: var(--cds-ui-02);
+            color: var(--cds-text-01);
+        }
+
+        /* Alerts Section */
+        .alerts-section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .alerts-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+            background: var(--cds-ui-02);
+        }
+
+        .alerts-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .alert-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f4f4f4;
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+            transition: background-color 0.15s ease;
+        }
+
+        .alert-item:hover {
+            background: var(--cds-ui-02);
+        }
+
+        .alert-item:last-child {
+            border-bottom: none;
+        }
+
+        .alert-icon {
+            width: 20px;
+            height: 20px;
+            margin-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .alert-icon.critical {
+            color: var(--cds-support-01);
+        }
+
+        .alert-icon.warning {
+            color: var(--cds-support-03);
+        }
+
+        .alert-icon.info {
+            color: var(--cds-interactive-01);
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: 0.25rem;
+        }
+
+        .alert-description {
+            font-size: 0.875rem;
+            color: var(--cds-text-02);
+            margin-bottom: 0.5rem;
+        }
+
+        .alert-meta {
+            font-size: 0.75rem;
+            color: var(--cds-text-03);
+        }
+
+        /* Buttons */
+        .bx--btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+
+        .bx--btn--primary {
+            background-color: var(--cds-interactive-01);
+            color: white;
+        }
+
+        .bx--btn--primary:hover {
+            background-color: #0050e6;
+        }
+
+        .bx--btn--secondary {
+            background-color: transparent;
+            color: var(--cds-interactive-01);
+            border: 1px solid var(--cds-interactive-01);
+        }
+
+        .bx--btn--secondary:hover {
+            background-color: #f4f4f4;
+        }
+
+        .bx--btn--sm {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        /* Progress Bars */
+        .progress-container {
+            margin-top: 1rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--cds-text-02);
+            margin-bottom: 0.25rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-fill.success {
+            background: var(--cds-support-02);
+        }
+
+        .progress-fill.warning {
+            background: var(--cds-support-03);
+        }
+
+        .progress-fill.critical {
+            background: var(--cds-support-01);
+        }
+
+        .progress-fill.info {
+            background: var(--cds-interactive-01);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .kpi-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .page-header {
+                margin: -1rem -1rem 2rem -1rem;
+                padding: 2rem 1rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .controls-bar {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            .time-range-selector {
+                order: 2;
+            }
+
+            .refresh-controls {
+                order: 1;
+                justify-content: space-between;
+            }
+
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            .kpi-value {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Carbon Header/Navbar -->
+    <header class="bx--header">
+        <a href="#" class="bx--header__name">
+            <!-- IBM Watson AI Icon -->
+            <svg class="bx--header__logo" viewBox="0 0 32 32">
+                <path d="M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14S23.7,2,16,2z M16,28c-6.6,0-12-5.4-12-12S9.4,4,16,4s12,5.4,12,12S22.6,28,16,28z"/>
+                <path d="M16,6c-5.5,0-10,4.5-10,10s4.5,10,10,10s10-4.5,10-10S21.5,6,16,6z M16,24c-4.4,0-8-3.6-8-8s3.6-8,8-8s8,3.6,8,8S20.4,24,16,24z"/>
+                <circle cx="16" cy="16" r="4"/>
+                <circle cx="16" cy="9" r="1"/>
+                <circle cx="23" cy="16" r="1"/>
+                <circle cx="16" cy="23" r="1"/>
+                <circle cx="9" cy="16" r="1"/>
+            </svg>
+            IBM Quality Management
+        </a>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Dashboard de Testing Metrics</h1>
+            <p class="page-subtitle">KPIs en tiempo real, tendencias y alertas automáticas para optimización continua</p>
+        </div>
+
+        <!-- Controls Bar -->
+        <div class="controls-bar">
+            <div class="time-range-selector">
+                <button class="time-btn" onclick="setTimeRange('1h')">1H</button>
+                <button class="time-btn" onclick="setTimeRange('24h')">24H</button>
+                <button class="time-btn active" onclick="setTimeRange('7d')">7D</button>
+                <button class="time-btn" onclick="setTimeRange('30d')">30D</button>
+                <button class="time-btn" onclick="setTimeRange('90d')">90D</button>
+            </div>
+
+            <div class="refresh-controls">
+                <div class="auto-refresh">
+                    <input type="checkbox" id="autoRefresh" checked>
+                    <label for="autoRefresh">Auto-refresh cada 30s</label>
+                </div>
+                <button class="bx--btn bx--btn--secondary bx--btn--sm" onclick="refreshDashboard()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M18,28A12,12,0,0,1,6,16H4A14,14,0,0,0,18,30Z"/>
+                        <path d="M28,16A12,12,0,0,1,16,28v2A14,14,0,0,0,30,16Z"/>
+                        <path d="M16,4A12,12,0,0,1,28,16h2A14,14,0,0,0,16,2Z"/>
+                        <path d="M4,16A12,12,0,0,1,16,4V2A14,14,0,0,0,2,16Z"/>
+                    </svg>
+                    Actualizar
+                </button>
+                <button class="bx--btn bx--btn--primary bx--btn--sm" onclick="exportDashboard()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M26,24V6a2,2,0,0,0-2-2H8A2,2,0,0,0,6,6V24a2,2,0,0,0,2,2H24A2,2,0,0,0,26,24ZM8,6H24V24H8Z"/>
+                    </svg>
+                    Exportar
+                </button>
+            </div>
+        </div>
+
+        <!-- KPI Grid -->
+        <div class="kpi-grid">
+            <!-- Test Execution Rate -->
+            <div class="kpi-card success">
+                <div class="kpi-header">
+                    <div class="kpi-title">Tasa de Ejecución de Pruebas</div>
+                    <svg class="kpi-icon" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M14,21.5l-5-5L10.5,15L14,18.5L21.5,11L23,12.5Z"/>
+                        <path d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12,12,0,0,1,16,28Z"/>
+                    </svg>
+                </div>
+                <div class="kpi-value">94.2<span class="kpi-unit">%</span></div>
+                <div class="kpi-trend">
+                    <div class="trend-indicator trend-up">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,8l8,8H20v8H12V16H4Z"/>
+                        </svg>
+                        +2.1%
+                    </div>
+                    <span>vs semana anterior</span>
+                </div>
+                <div class="kpi-target">Objetivo: 95%</div>
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Progreso al objetivo</span>
+                        <span>94.2%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill success" style="width: 94.2%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Coverage -->
+            <div class="kpi-card info">
+                <div class="kpi-header">
+                    <div class="kpi-title">Cobertura de Código</div>
+                    <svg class="kpi-icon" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M22,22H10V10H22ZM24,8H8A2,2,0,0,0,6,10V22a2,2,0,0,0,2,2H24a2,2,0,0,0,2-2V10A2,2,0,0,0,24,8Z"/>
+                        <path d="M12,12h8v8H12Z"/>
+                    </svg>
+                </div>
+                <div class="kpi-value">87.5<span class="kpi-unit">%</span></div>
+                <div class="kpi-trend">
+                    <div class="trend-indicator trend-up">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,8l8,8H20v8H12V16H4Z"/>
+                        </svg>
+                        +3.2%
+                    </div>
+                    <span>vs último release</span>
+                </div>
+                <div class="kpi-target">Objetivo: 90%</div>
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Progreso al objetivo</span>
+                        <span>87.5%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill info" style="width: 87.5%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Defect Detection Rate -->
+            <div class="kpi-card success">
+                <div class="kpi-header">
+                    <div class="kpi-title">Tasa de Detección de Defectos</div>
+                    <svg class="kpi-icon" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16,8l1.43,1.393L16,11.85l-1.43-2.457L16,8Zm1.85,7.7,2.48-1.43.93,1.61-2.48,1.43ZM20.4,20H11.6l4.4-7.6ZM16,2,8,26H24Z"/>
+                    </svg>
+                </div>
+                <div class="kpi-value">96.8<span class="kpi-unit">%</span></div>
+                <div class="kpi-trend">
+                    <div class="trend-indicator trend-up">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,8l8,8H20v8H12V16H4Z"/>
+                        </svg>
+                        +1.8%
+                    </div>
+                    <span>vs objetivo estándar</span>
+                </div>
+                <div class="kpi-target">Objetivo: 95%</div>
+            </div>
+
+            <!-- Mean Time to Resolution -->
+            <div class="kpi-card warning">
+                <div class="kpi-header">
+                    <div class="kpi-title">Tiempo Promedio de Resolución</div>
+                    <svg class="kpi-icon" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16,30A14,14,0,1,1,30,16,14.0158,14.0158,0,0,1,16,30ZM16,4A12,12,0,1,0,28,16,12.0137,12.0137,0,0,0,16,4Z"/>
+                        <path d="M20.59,22L15,16.41V7h2v8.58l5,5Z"/>
+                    </svg>
+                </div>
+                <div class="kpi-value">4.2<span class="kpi-unit">días</span></div>
+                <div class="kpi-trend">
+                    <div class="trend-indicator trend-down">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,24L8,16h4V8h8v8h4Z"/>
+                        </svg>
+                        +0.8 días
+                    </div>
+                    <span>vs mes anterior</span>
+                </div>
+                <div class="kpi-target">Objetivo: ≤3.5 días</div>
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Distancia del objetivo</span>
+                        <span>120%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill warning" style="width: 80%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Automation Rate -->
+            <div class="kpi-card info">
+                <div class="kpi-header">
+                    <div class="kpi-title">Tasa de Automatización</div>
+                    <svg class="kpi-icon" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M25,5H7A2,2,0,0,0,5,7V25a2,2,0,0,0,2,2H25a2,2,0,0,0,2-2V7A2,2,0,0,0,25,5ZM7,7H25V25H7Z"/>
+                        <path d="M9,9h6v2H9Zm0,4h8v2H9Zm0,4h4v2H9Z"/>
+                    </svg>
+                </div>
+                <div class="kpi-value">73.1<span class="kpi-unit">%</span></div>
+                <div class="kpi-trend">
+                    <div class="trend-indicator trend-up">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,8l8,8H20v8H12V16H4Z"/>
+                        </svg>
+                        +5.3%
+                    </div>
+                    <span>vs trimestre anterior</span>
+                </div>
+                <div class="kpi-target">Objetivo: 80%</div>
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Progreso al objetivo</span>
+                        <span>73.1%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill info" style="width: 73.1%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Escaped Defects -->
+            <div class="kpi-card critical">
+                <div class="kpi-header">
+                    <div class="kpi-title">Defectos Escapados</div>
+                    <svg class="kpi-icon" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16,2C8.2,2,2,8.2,2,16s6.2,14,14,14s14-6.2,14-14S23.8,2,16,2z M15,23V9h2v14H15z"/>
+                        <circle cx="16" cy="26" r="1.5"/>
+                    </svg>
+                </div>
+                <div class="kpi-value">3<span class="kpi-unit">defectos</span></div>
+                <div class="kpi-trend">
+                    <div class="trend-indicator trend-down">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,24L8,16h4V8h8v8h4Z"/>
+                        </svg>
+                        +1
+                    </div>
+                    <span>vs sprint anterior</span>
+                </div>
+                <div class="kpi-target">Objetivo: ≤2 por sprint</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="section-header">
+                <h2 class="section-title">Análisis de Tendencias</h2>
+                <div class="section-actions">
+                    <button class="bx--btn bx--btn--secondary bx--btn--sm" onclick="configureCharts()">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M27,16.76c0-.25,0-.5,0-.76s0-.51,0-.76l1.92-1.68A2,2,0,0,0,29.3,11L27,7A2,2,0,0,0,24.76,6L22.62,6.82a12.1,12.1,0,0,0-1.31-.75L21,4a2,2,0,0,0-2-2H13a2,2,0,0,0-2,2l-.3,2.05A12.1,12.1,0,0,0,9.38,6.8L7.24,6A2,2,0,0,0,5,7L2.7,11a2,2,0,0,0,.41,2.51L5,15.24c0,.25,0,.5,0,.76s0,.51,0,.76L3.11,18.45A2,2,0,0,0,2.7,21L5,25a2,2,0,0,0,2.24,1l2.14-.82a12.1,12.1,0,0,0,1.31.75L11,28a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2l.3-2.05A12.1,12.1,0,0,0,22.62,25.2L24.76,26A2,2,0,0,0,27,25l2.3-4a2,2,0,0,0-.41-2.51ZM25.21,24l-2.14-.82-1.07.61A10.07,10.07,0,0,1,20.78,24.8L19.67,25H12.33l-1.11-.2A10.07,10.07,0,0,1,10,23.79l-1.07-.61L6.79,24,4.21,20.24l1.5-1.31L5.64,18A10.07,10.07,0,0,1,5.64,14l.07-.93L4.21,11.76,6.79,8l2.14.82,1.07-.61A10.07,10.07,0,0,1,11.22,7.2L12.33,7h7.34l1.11.2A10.07,10.07,0,0,1,22,8.21l1.07.61L25.21,8l2.58,3.76-1.5,1.31L26.36,14a10.07,10.07,0,0,1,0,4l-.07.93,1.5,1.31ZM16,11a5,5,0,1,0,5,5A5,5,0,0,0,16,11Zm0,8a3,3,0,1,1,3-3A3,3,0,0,1,16,19Z"/>
+                        </svg>
+                        Configurar
+                    </button>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <!-- Test Execution Trends -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="chart-title">Tendencia de Ejecución de Pruebas</div>
+                        <div class="chart-actions">
+                            <button class="chart-btn" onclick="toggleChartType('testExecution')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M4,20H8V12H4Zm6,0h4V6H10ZM16,20h4V14H16Zm6,0h4V8H22ZM2,22H30v2H2Z"/>
+                                </svg>
+                            </button>
+                            <button class="chart-btn" onclick="exportChart('testExecution')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M26,24V6a2,2,0,0,0-2-2H8A2,2,0,0,0,6,6V24a2,2,0,0,0,2,2H24A2,2,0,0,0,26,24ZM8,6H24V24H8Z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <canvas id="testExecutionChart" width="400" height="300"></canvas>
+                </div>
+
+                <!-- Quality Metrics Radar -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="chart-title">Radar de Métricas de Calidad</div>
+                        <div class="chart-actions">
+                            <button class="chart-btn" onclick="toggleChartType('qualityRadar')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M16,2,19.5,12h10L22,18.5,25.5,30,16,25,6.5,30,10,18.5,2.5,12h10Z"/>
+                                </svg>
+                            </button>
+                            <button class="chart-btn" onclick="exportChart('qualityRadar')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M26,24V6a2,2,0,0,0-2-2H8A2,2,0,0,0,6,6V24a2,2,0,0,0,2,2H24A2,2,0,0,0,26,24ZM8,6H24V24H8Z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <canvas id="qualityRadarChart" width="400" height="300"></canvas>
+                </div>
+
+                <!-- Defect Discovery Rate -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="chart-title">Tasa de Descubrimiento de Defectos</div>
+                        <div class="chart-actions">
+                            <button class="chart-btn" onclick="toggleChartType('defectDiscovery')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M4,20H8V12H4Zm6,0h4V6H10ZM16,20h4V14H16Zm6,0h4V8H22ZM2,22H30v2H2Z"/>
+                                </svg>
+                            </button>
+                            <button class="chart-btn" onclick="exportChart('defectDiscovery')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M26,24V6a2,2,0,0,0-2-2H8A2,2,0,0,0,6,6V24a2,2,0,0,0,2,2H24A2,2,0,0,0,26,24ZM8,6H24V24H8Z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <canvas id="defectDiscoveryChart" width="400" height="300"></canvas>
+                </div>
+
+                <!-- Automation Progress -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="chart-title">Progreso de Automatización</div>
+                        <div class="chart-actions">
+                            <button class="chart-btn" onclick="toggleChartType('automation')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M4,20H8V12H4Zm6,0h4V6H10ZM16,20h4V14H16Zm6,0h4V8H22ZM2,22H30v2H2Z"/>
+                                </svg>
+                            </button>
+                            <button class="chart-btn" onclick="exportChart('automation')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M26,24V6a2,2,0,0,0-2-2H8A2,2,0,0,0,6,6V24a2,2,0,0,0,2,2H24A2,2,0,0,0,26,24ZM8,6H24V24H8Z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <canvas id="automationChart" width="400" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alerts Section -->
+        <div class="alerts-section">
+            <div class="alerts-header">
+                <h2 class="section-title">Alertas y Notificaciones</h2>
+            </div>
+            <div class="alerts-list" id="alertsList">
+                <!-- Dynamic alerts will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize reactive system
+        window.addEventListener('DOMContentLoaded', function() {
+            const dataManager = new IBMQualityDataManager();
+            const config = new IBMQualityConfig();
+            
+            // Subscribe to data changes
+            dataManager.subscribe('metricsUpdated', (data) => {
+                updateKPIs();
+                updateCharts();
+            });
+            
+            dataManager.subscribe('alertGenerated', (alert) => {
+                addAlert(alert);
+            });
+            
+            // Load initial data
+            loadDashboardData();
+            initializeCharts();
+            loadAlerts();
+            
+            // Setup auto-refresh
+            setupAutoRefresh();
+        });
+
+        let currentTimeRange = '7d';
+        let autoRefreshInterval;
+        let charts = {};
+
+        function setTimeRange(range) {
+            currentTimeRange = range;
+            
+            // Update button states
+            document.querySelectorAll('.time-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Refresh data
+            refreshDashboard();
+        }
+
+        function setupAutoRefresh() {
+            const checkbox = document.getElementById('autoRefresh');
+            
+            function toggleAutoRefresh() {
+                if (checkbox.checked) {
+                    autoRefreshInterval = setInterval(refreshDashboard, 30000);
+                } else {
+                    clearInterval(autoRefreshInterval);
+                }
+            }
+            
+            checkbox.addEventListener('change', toggleAutoRefresh);
+            
+            // Start auto-refresh if enabled
+            if (checkbox.checked) {
+                toggleAutoRefresh();
+            }
+        }
+
+        function refreshDashboard() {
+            updateKPIs();
+            updateCharts();
+            loadAlerts();
+            
+            // Show visual feedback
+            const refreshBtn = document.querySelector('.controls-bar .bx--btn--secondary');
+            const originalText = refreshBtn.innerHTML;
+            refreshBtn.innerHTML = '<svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32" style="animation: spin 1s linear infinite;"><path d="M18,28A12,12,0,0,1,6,16H4A14,14,0,0,0,18,30Z"/><path d="M28,16A12,12,0,0,1,16,28v2A14,14,0,0,0,30,16Z"/><path d="M16,4A12,12,0,0,1,28,16h2A14,14,0,0,0,16,2Z"/><path d="M4,16A12,12,0,0,1,16,4V2A14,14,0,0,0,2,16Z"/></svg> Actualizando...';
+            
+            setTimeout(() => {
+                refreshBtn.innerHTML = originalText;
+            }, 1000);
+        }
+
+        function loadDashboardData() {
+            // Load KPI data from reactive system
+            updateKPIs();
+        }
+
+        function updateKPIs() {
+            // Simulate dynamic KPI updates
+            const kpis = {
+                testExecution: {
+                    value: (92 + Math.random() * 6).toFixed(1),
+                    trend: Math.random() > 0.5 ? 'up' : 'down',
+                    trendValue: (Math.random() * 4).toFixed(1)
+                },
+                coverage: {
+                    value: (85 + Math.random() * 8).toFixed(1),
+                    trend: 'up',
+                    trendValue: (Math.random() * 3).toFixed(1)
+                },
+                defectDetection: {
+                    value: (94 + Math.random() * 4).toFixed(1),
+                    trend: 'up',
+                    trendValue: (Math.random() * 2).toFixed(1)
+                },
+                resolutionTime: {
+                    value: (3.5 + Math.random() * 1.5).toFixed(1),
+                    trend: Math.random() > 0.3 ? 'down' : 'up',
+                    trendValue: (Math.random() * 1).toFixed(1)
+                },
+                automation: {
+                    value: (70 + Math.random() * 10).toFixed(1),
+                    trend: 'up',
+                    trendValue: (Math.random() * 5).toFixed(1)
+                },
+                escapedDefects: {
+                    value: Math.floor(Math.random() * 5),
+                    trend: Math.random() > 0.6 ? 'down' : 'up',
+                    trendValue: Math.floor(Math.random() * 3)
+                }
+            };
+
+            // Update KPI displays
+            // This would normally get data from the reactive system
+        }
+
+        function initializeCharts() {
+            createTestExecutionChart();
+            createQualityRadarChart();
+            createDefectDiscoveryChart();
+            createAutomationChart();
+        }
+
+        function createTestExecutionChart() {
+            const ctx = document.getElementById('testExecutionChart').getContext('2d');
+            charts.testExecution = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+                    datasets: [{
+                        label: 'Pruebas Ejecutadas',
+                        data: [240, 280, 320, 380, 420, 350, 300],
+                        borderColor: '#0f62fe',
+                        backgroundColor: 'rgba(15, 98, 254, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Pruebas Exitosas',
+                        data: [225, 268, 310, 365, 395, 335, 285],
+                        borderColor: '#24a148',
+                        backgroundColor: 'rgba(36, 161, 72, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Pruebas Fallidas',
+                        data: [15, 12, 10, 15, 25, 15, 15],
+                        borderColor: '#da1e28',
+                        backgroundColor: 'rgba(218, 30, 40, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function createQualityRadarChart() {
+            const ctx = document.getElementById('qualityRadarChart').getContext('2d');
+            charts.qualityRadar = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Cobertura', 'Automatización', 'Performance', 'Seguridad', 'Usabilidad', 'Mantenibilidad'],
+                    datasets: [{
+                        label: 'Actual',
+                        data: [87, 73, 82, 91, 78, 85],
+                        borderColor: '#0f62fe',
+                        backgroundColor: 'rgba(15, 98, 254, 0.2)',
+                        pointBackgroundColor: '#0f62fe'
+                    }, {
+                        label: 'Objetivo',
+                        data: [90, 80, 85, 95, 85, 90],
+                        borderColor: '#24a148',
+                        backgroundColor: 'rgba(36, 161, 72, 0.1)',
+                        pointBackgroundColor: '#24a148'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        function createDefectDiscoveryChart() {
+            const ctx = document.getElementById('defectDiscoveryChart').getContext('2d');
+            charts.defectDiscovery = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Sprint 1', 'Sprint 2', 'Sprint 3', 'Sprint 4', 'Sprint 5', 'Sprint 6'],
+                    datasets: [{
+                        label: 'Defectos Encontrados',
+                        data: [45, 38, 52, 41, 48, 35],
+                        backgroundColor: '#0f62fe'
+                    }, {
+                        label: 'Defectos Resueltos',
+                        data: [42, 40, 48, 43, 45, 38],
+                        backgroundColor: '#24a148'
+                    }, {
+                        label: 'Defectos Escapados',
+                        data: [3, 2, 4, 1, 3, 2],
+                        backgroundColor: '#da1e28'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function createAutomationChart() {
+            const ctx = document.getElementById('automationChart').getContext('2d');
+            charts.automation = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Automatizadas', 'Manuales', 'En Desarrollo'],
+                    datasets: [{
+                        data: [73.1, 21.5, 5.4],
+                        backgroundColor: ['#24a148', '#da1e28', '#f1c21b'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateCharts() {
+            Object.values(charts).forEach(chart => {
+                // Update chart data - this would normally come from reactive system
+                chart.update();
+            });
+        }
+
+        function loadAlerts() {
+            const alertsList = document.getElementById('alertsList');
+            const alerts = [
+                {
+                    type: 'critical',
+                    title: 'Defectos Escapados Exceden Objetivo',
+                    description: 'Se han detectado 3 defectos escapados en el último sprint, superando el objetivo de 2.',
+                    time: 'Hace 15 minutos'
+                },
+                {
+                    type: 'warning',
+                    title: 'Tiempo de Resolución Elevado',
+                    description: 'El tiempo promedio de resolución ha aumentado a 4.2 días, por encima del objetivo de 3.5 días.',
+                    time: 'Hace 1 hora'
+                },
+                {
+                    type: 'info',
+                    title: 'Nueva Versión de Framework de Testing',
+                    description: 'Disponible actualización del framework de automatización con mejoras de performance.',
+                    time: 'Hace 2 horas'
+                },
+                {
+                    type: 'warning',
+                    title: 'Cobertura de Código Decreció',
+                    description: 'La cobertura del módulo de pagos bajó del 92% al 87% en el último commit.',
+                    time: 'Hace 3 horas'
+                }
+            ];
+
+            alertsList.innerHTML = '';
+            alerts.forEach(alert => {
+                const alertElement = document.createElement('div');
+                alertElement.className = 'alert-item';
+                alertElement.innerHTML = `
+                    <svg class="alert-icon ${alert.type}" fill="currentColor" viewBox="0 0 32 32">
+                        ${getAlertIcon(alert.type)}
+                    </svg>
+                    <div class="alert-content">
+                        <div class="alert-title">${alert.title}</div>
+                        <div class="alert-description">${alert.description}</div>
+                        <div class="alert-meta">${alert.time}</div>
+                    </div>
+                `;
+                alertsList.appendChild(alertElement);
+            });
+        }
+
+        function getAlertIcon(type) {
+            const icons = {
+                critical: '<path d="M16,2C8.2,2,2,8.2,2,16s6.2,14,14,14s14-6.2,14-14S23.8,2,16,2z M15,23V9h2v14H15z"/><circle cx="16" cy="26" r="1.5"/>',
+                warning: '<path d="M16,2,30,28H2ZM16,10v8h2V10ZM16,22v2h2V22Z"/>',
+                info: '<path d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm0,6a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,16,8Zm4,16.125H12v-2.25h2.875V16.375H12v-2.25h4.125a1.125,1.125,0,0,1,1.125,1.125v6.375H20Z"/>'
+            };
+            return icons[type] || icons.info;
+        }
+
+        function addAlert(alert) {
+            // Add new alert to the list
+            loadAlerts();
+        }
+
+        function toggleChartType(chartId) {
+            // Toggle between different chart types
+            const chart = charts[chartId];
+            if (chart) {
+                // Implement chart type toggling logic
+                alert(`Cambiar tipo de gráfico para ${chartId}`);
+            }
+        }
+
+        function exportChart(chartId) {
+            // Export chart as image
+            const chart = charts[chartId];
+            if (chart) {
+                const link = document.createElement('a');
+                link.download = `${chartId}-chart.png`;
+                link.href = chart.toBase64Image();
+                link.click();
+            }
+        }
+
+        function exportDashboard() {
+            alert('Exportar dashboard - Se generaría PDF completo del dashboard');
+        }
+
+        function configureCharts() {
+            alert('Configurar gráficos - Se abriría modal de configuración');
+        }
+
+        // Add custom CSS for animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

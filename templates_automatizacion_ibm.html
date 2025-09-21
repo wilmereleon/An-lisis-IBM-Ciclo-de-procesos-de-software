@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Templates de Automatización - IBM Quality Management</title>
+    <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
+    
+    <!-- IBM Carbon Design System Icons -->
+    <script type="module" src="https://unpkg.com/@carbon/icons@11.8.0/es/index.js"></script>
+    <script src="scripts/ibm-quality-data-manager.js"></script>
+    <script src="scripts/ibm-quality-config.js"></script>
+    
+    <style>
+        :root {
+            /* IBM Carbon Design System Variables */
+            --cds-interactive-01: #0f62fe;
+            --cds-interactive-02: #393939;
+            --cds-interactive-03: #0f62fe;
+            --cds-ui-background: #f4f4f4;
+            --cds-ui-01: #ffffff;
+            --cds-ui-02: #f4f4f4;
+            --cds-text-01: #161616;
+            --cds-text-02: #525252;
+            --cds-text-03: #a8a8a8;
+            --cds-field-01: #f4f4f4;
+            --cds-support-01: #da1e28;
+            --cds-support-02: #24a148;
+            --cds-support-03: #f1c21b;
+            --cds-support-04: #0043ce;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', Arial, sans-serif;
+            background-color: var(--cds-ui-background);
+            color: var(--cds-text-01);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .bx--header {
+            background-color: var(--cds-interactive-02);
+            border-bottom: 1px solid #393939;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .bx--header__name {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bx--header__logo {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--cds-interactive-01), #0043ce);
+            color: white;
+            padding: 3rem 2rem;
+            margin: -2rem -2rem 2rem -2rem;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            display: flex;
+            background: var(--cds-ui-01);
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 0;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-item {
+            flex: 1;
+            padding: 1rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            background: transparent;
+            border: none;
+            font-family: inherit;
+            font-size: 1rem;
+            color: var(--cds-text-02);
+        }
+
+        .tab-item.active {
+            color: var(--cds-interactive-01);
+            border-bottom-color: var(--cds-interactive-01);
+            background: var(--cds-ui-01);
+        }
+
+        .tab-item:hover:not(.active) {
+            background: var(--cds-ui-02);
+            color: var(--cds-text-01);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            background: var(--cds-ui-01);
+            border-radius: 0 0 8px 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Template Cards */
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .template-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .template-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .template-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, #f4f4f4, #e0e0e0);
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .template-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1rem;
+            color: var(--cds-interactive-01);
+        }
+
+        .template-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: 0.5rem;
+        }
+
+        .template-description {
+            color: var(--cds-text-02);
+            font-size: 0.875rem;
+            line-height: 1.4;
+        }
+
+        .template-body {
+            padding: 2rem;
+        }
+
+        .template-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .template-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+            color: var(--cds-text-02);
+        }
+
+        .template-features li::before {
+            content: '✓';
+            color: var(--cds-support-02);
+            font-weight: bold;
+            width: 16px;
+        }
+
+        .template-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .code-preview {
+            background: #f8f8f8;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+        }
+
+        .code-preview code {
+            background: none;
+            padding: 0;
+            color: var(--cds-text-01);
+        }
+
+        /* Buttons */
+        .bx--btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+
+        .bx--btn--primary {
+            background-color: var(--cds-interactive-01);
+            color: white;
+        }
+
+        .bx--btn--primary:hover {
+            background-color: #0050e6;
+        }
+
+        .bx--btn--secondary {
+            background-color: transparent;
+            color: var(--cds-interactive-01);
+            border: 1px solid var(--cds-interactive-01);
+        }
+
+        .bx--btn--secondary:hover {
+            background-color: #f4f4f4;
+        }
+
+        .bx--btn--sm {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        /* Form Elements */
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--cds-interactive-01);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .bx--form-item {
+            margin-bottom: 1rem;
+        }
+
+        .bx--label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: 0.5rem;
+        }
+
+        .bx--text-input,
+        .bx--text-area,
+        .bx--select-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #8d8d8d;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-family: inherit;
+            background: white;
+            transition: border-color 0.15s ease;
+        }
+
+        .bx--text-input:focus,
+        .bx--text-area:focus,
+        .bx--select-input:focus {
+            outline: none;
+            border-color: var(--cds-interactive-01);
+            box-shadow: 0 0 0 2px rgba(15, 98, 254, 0.2);
+        }
+
+        .bx--text-area {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .template-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .page-header {
+                margin: -1rem -1rem 2rem -1rem;
+                padding: 2rem 1rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .tab-navigation {
+                flex-direction: column;
+            }
+
+            .template-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .template-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Carbon Header/Navbar -->
+    <header class="bx--header">
+        <a href="#" class="bx--header__name">
+            <!-- IBM Watson AI Icon -->
+            <svg class="bx--header__logo" viewBox="0 0 32 32">
+                <path d="M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14S23.7,2,16,2z M16,28c-6.6,0-12-5.4-12-12S9.4,4,16,4s12,5.4,12,12S22.6,28,16,28z"/>
+                <path d="M16,6c-5.5,0-10,4.5-10,10s4.5,10,10,10s10-4.5,10-10S21.5,6,16,6z M16,24c-4.4,0-8-3.6-8-8s3.6-8,8-8s8,3.6,8,8S20.4,24,16,24z"/>
+                <circle cx="16" cy="16" r="4"/>
+                <circle cx="16" cy="9" r="1"/>
+                <circle cx="23" cy="16" r="1"/>
+                <circle cx="16" cy="23" r="1"/>
+                <circle cx="9" cy="16" r="1"/>
+            </svg>
+            IBM Quality Management
+        </a>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Templates de Automatización</h1>
+            <p class="page-subtitle">Frameworks completos para Selenium WebDriver, API Testing y Load Testing</p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <button class="tab-item active" onclick="showTab('selenium')">Selenium WebDriver</button>
+            <button class="tab-item" onclick="showTab('api')">API Testing</button>
+            <button class="tab-item" onclick="showTab('load')">Load Testing</button>
+            <button class="tab-item" onclick="showTab('generator')">Generador</button>
+        </div>
+
+        <!-- Selenium Tab -->
+        <div id="selenium" class="tab-content active">
+            <div class="template-grid">
+                <!-- Page Object Model Template -->
+                <div class="template-card">
+                    <div class="template-header">
+                        <svg class="template-icon" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,6H26V26H6Z"/>
+                            <path d="M8,8h8v2H8Zm0,4h12v2H8Zm0,4h6v2H8Z"/>
+                        </svg>
+                        <div class="template-title">Page Object Model</div>
+                        <div class="template-description">Estructura de automatización usando el patrón Page Object Model para mantenibilidad y reutilización</div>
+                    </div>
+                    <div class="template-body">
+                        <ul class="template-features">
+                            <li>Separación de lógica de pruebas y elementos de página</li>
+                            <li>Configuración de WebDriver multi-browser</li>
+                            <li>Manejo de waits explícitos e implícitos</li>
+                            <li>Captura automática de screenshots en errores</li>
+                            <li>Reporting con ExtentReports</li>
+                            <li>Integración con TestNG/JUnit</li>
+                        </ul>
+
+                        <div class="code-preview">
+                            <code>
+// Ejemplo de Page Object
+public class LoginPage {
+    private WebDriver driver;
+    
+    @FindBy(id = "username")
+    private WebElement usernameField;
+    
+    @FindBy(id = "password") 
+    private WebElement passwordField;
+    
+    @FindBy(xpath = "//button[@type='submit']")
+    private WebElement loginButton;
+    
+    public LoginPage(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+    }
+    
+    public void login(String username, String password) {
+        usernameField.sendKeys(username);
+        passwordField.sendKeys(password);
+        loginButton.click();
+    }
+}
+                            </code>
+                        </div>
+
+                        <div class="template-actions">
+                            <button class="bx--btn bx--btn--primary" onclick="generateSeleniumTemplate('pom')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M25,27.2H7V4.8H19L25,10.8ZM9,25.2H23V12.4L18.6,8H9Z"/>
+                                </svg>
+                                Generar Template
+                            </button>
+                            <button class="bx--btn bx--btn--secondary" onclick="previewTemplate('pom')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M30.94,15.66A16.69,16.69,0,0,0,16,5,16.69,16.69,0,0,0,1.06,15.66a1,1,0,0,0,0,.68A16.69,16.69,0,0,0,16,27,16.69,16.69,0,0,0,30.94,16.34A1,1,0,0,0,30.94,15.66ZM16,25c-7.18,0-13.17-4.77-15.06-9C2.83,11.77,8.82,7,16,7s13.17,4.77,15.06,9C29.17,20.23,23.18,25,16,25Z"/>
+                                    <circle cx="16" cy="16" r="5"/>
+                                </svg>
+                                Vista Previa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data-Driven Testing Template -->
+                <div class="template-card">
+                    <div class="template-header">
+                        <svg class="template-icon" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M28,6H4A2,2,0,0,0,2,8V24a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V8A2,2,0,0,0,28,6ZM4,8H28v4H4ZM4,24V14H28V24Z"/>
+                            <path d="M8,16h4v2H8Zm6,0h4v2H14Zm6,0h4v2H20ZM8,20h4v2H8Zm6,0h4v2H14Z"/>
+                        </svg>
+                        <div class="template-title">Data-Driven Testing</div>
+                        <div class="template-description">Framework para pruebas parametrizadas usando CSV, Excel y JSON como fuentes de datos</div>
+                    </div>
+                    <div class="template-body">
+                        <ul class="template-features">
+                            <li>Lectura de datos desde múltiples fuentes</li>
+                            <li>Parametrización automática de pruebas</li>
+                            <li>Validación de datos de entrada</li>
+                            <li>Reportes por dataset ejecutado</li>
+                            <li>Manejo de datos sensibles encriptados</li>
+                            <li>Configuración flexible de datasets</li>
+                        </ul>
+
+                        <div class="code-preview">
+                            <code>
+@Test(dataProvider = "loginData")
+public void testLogin(String username, String password, String expectedResult) {
+    LoginPage loginPage = new LoginPage(driver);
+    loginPage.login(username, password);
+    
+    if(expectedResult.equals("success")) {
+        Assert.assertTrue(loginPage.isLoginSuccessful());
+    } else {
+        Assert.assertTrue(loginPage.hasErrorMessage());
+    }
+}
+
+@DataProvider(name = "loginData")
+public Object[][] getLoginData() {
+    return DataReader.readExcelData("testdata/login.xlsx", "LoginTests");
+}
+                            </code>
+                        </div>
+
+                        <div class="template-actions">
+                            <button class="bx--btn bx--btn--primary" onclick="generateSeleniumTemplate('ddt')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M25,27.2H7V4.8H19L25,10.8ZM9,25.2H23V12.4L18.6,8H9Z"/>
+                                </svg>
+                                Generar Template
+                            </button>
+                            <button class="bx--btn bx--btn--secondary" onclick="previewTemplate('ddt')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M30.94,15.66A16.69,16.69,0,0,0,16,5,16.69,16.69,0,0,0,1.06,15.66a1,1,0,0,0,0,.68A16.69,16.69,0,0,0,16,27,16.69,16.69,0,0,0,30.94,16.34A1,1,0,0,0,30.94,15.66ZM16,25c-7.18,0-13.17-4.77-15.06-9C2.83,11.77,8.82,7,16,7s13.17,4.77,15.06,9C29.17,20.23,23.18,25,16,25Z"/>
+                                    <circle cx="16" cy="16" r="5"/>
+                                </svg>
+                                Vista Previa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hybrid Framework Template -->
+                <div class="template-card">
+                    <div class="template-header">
+                        <svg class="template-icon" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12,12,0,0,1,16,28Z"/>
+                            <path d="M16,8a8,8,0,1,0,8,8A8,8,0,0,0,16,8Zm0,14a6,6,0,1,1,6-6A6,6,0,0,1,16,22Z"/>
+                            <circle cx="16" cy="16" r="2"/>
+                        </svg>
+                        <div class="template-title">Hybrid Framework</div>
+                        <div class="template-description">Framework híbrido combinando keyword-driven, data-driven y modular testing</div>
+                    </div>
+                    <div class="template-body">
+                        <ul class="template-features">
+                            <li>Combinación de múltiples patrones de diseño</li>
+                            <li>Librería de keywords reutilizables</li>
+                            <li>Configuración centralizada</li>
+                            <li>Ejecución en paralelo con TestNG</li>
+                            <li>Integración con CI/CD pipelines</li>
+                            <li>Reporting avanzado con Allure</li>
+                        </ul>
+
+                        <div class="code-preview">
+                            <code>
+// Keywords Library
+public class WebKeywords {
+    public static void navigateToUrl(String url) {
+        DriverManager.getDriver().get(url);
+        Reporter.log("Navigated to: " + url);
+    }
+    
+    public static void clickElement(String locator) {
+        WebElement element = ElementUtils.findElement(locator);
+        element.click();
+        Reporter.log("Clicked element: " + locator);
+    }
+    
+    public static void enterText(String locator, String text) {
+        WebElement element = ElementUtils.findElement(locator);
+        element.sendKeys(text);
+        Reporter.log("Entered text: " + text);
+    }
+}
+                            </code>
+                        </div>
+
+                        <div class="template-actions">
+                            <button class="bx--btn bx--btn--primary" onclick="generateSeleniumTemplate('hybrid')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M25,27.2H7V4.8H19L25,10.8ZM9,25.2H23V12.4L18.6,8H9Z"/>
+                                </svg>
+                                Generar Template
+                            </button>
+                            <button class="bx--btn bx--btn--secondary" onclick="previewTemplate('hybrid')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M30.94,15.66A16.69,16.69,0,0,0,16,5A16.69,16.69,0,0,0,1.06,15.66a1,1,0,0,0,0,.68A16.69,16.69,0,0,0,16,27,16.69,16.69,0,0,0,30.94,16.34A1,1,0,0,0,30.94,15.66ZM16,25c-7.18,0-13.17-4.77-15.06-9C2.83,11.77,8.82,7,16,7s13.17,4.77,15.06,9C29.17,20.23,23.18,25,16,25Z"/>
+                                    <circle cx="16" cy="16" r="5"/>
+                                </svg>
+                                Vista Previa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Testing Tab -->
+        <div id="api" class="tab-content">
+            <div class="template-grid">
+                <!-- REST API Testing Template -->
+                <div class="template-card">
+                    <div class="template-header">
+                        <svg class="template-icon" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M24,9H8A2,2,0,0,0,6,11V21a2,2,0,0,0,2,2H24a2,2,0,0,0,2-2V11A2,2,0,0,0,24,9ZM8,11H24V21H8Z"/>
+                            <path d="M10,13h4v2H10Zm6,0h6v2H16ZM10,17h8v2H10Z"/>
+                        </svg>
+                        <div class="template-title">REST API Testing</div>
+                        <div class="template-description">Framework completo para testing de APIs REST con validación de contratos y datos</div>
+                    </div>
+                    <div class="template-body">
+                        <ul class="template-features">
+                            <li>Validación de status codes y response times</li>
+                            <li>Verificación de esquemas JSON con JSON Schema</li>
+                            <li>Autenticación OAuth 2.0 y API Keys</li>
+                            <li>Data-driven testing con múltiples datasets</li>
+                            <li>Reportes detallados con Allure</li>
+                            <li>Integración con Newman y Postman</li>
+                        </ul>
+
+                        <div class="code-preview">
+                            <code>
+@Test
+public void testGetUserAPI() {
+    Response response = given()
+        .header("Authorization", "Bearer " + token)
+        .pathParam("userId", "123")
+    .when()
+        .get("/api/users/{userId}")
+    .then()
+        .statusCode(200)
+        .time(lessThan(2000L))
+        .body("id", equalTo(123))
+        .body("name", notNullValue())
+        .body("email", matchesPattern(EMAIL_REGEX))
+        .extract().response();
+    
+    // Validate JSON Schema
+    response.then().assertThat()
+        .body(matchesJsonSchemaInClasspath("schemas/user-schema.json"));
+}
+                            </code>
+                        </div>
+
+                        <div class="template-actions">
+                            <button class="bx--btn bx--btn--primary" onclick="generateAPITemplate('rest')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M25,27.2H7V4.8H19L25,10.8ZM9,25.2H23V12.4L18.6,8H9Z"/>
+                                </svg>
+                                Generar Template
+                            </button>
+                            <button class="bx--btn bx--btn--secondary" onclick="previewTemplate('rest-api')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M30.94,15.66A16.69,16.69,0,0,0,16,5A16.69,16.69,0,0,0,1.06,15.66a1,1,0,0,0,0,.68A16.69,16.69,0,0,0,16,27,16.69,16.69,0,0,0,30.94,16.34A1,1,0,0,0,30.94,15.66ZM16,25c-7.18,0-13.17-4.77-15.06-9C2.83,11.77,8.82,7,16,7s13.17,4.77,15.06,9C29.17,20.23,23.18,25,16,25Z"/>
+                                    <circle cx="16" cy="16" r="5"/>
+                                </svg>
+                                Vista Previa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GraphQL Testing Template -->
+                <div class="template-card">
+                    <div class="template-header">
+                        <svg class="template-icon" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,2L30,9v14L16,30L2,23V9Zm0,4L6,11v10l10,5L26,21V11Z"/>
+                            <path d="M16,8l6,3v6l-6,3L10,17V11Z"/>
+                            <circle cx="16" cy="16" r="2"/>
+                        </svg>
+                        <div class="template-title">GraphQL Testing</div>
+                        <div class="template-description">Testing especializado para APIs GraphQL con validación de queries, mutations y subscriptions</div>
+                    </div>
+                    <div class="template-body">
+                        <ul class="template-features">
+                            <li>Validación de queries y mutations GraphQL</li>
+                            <li>Testing de subscriptions en tiempo real</li>
+                            <li>Validación de schema GraphQL</li>
+                            <li>Manejo de variables y fragmentos</li>
+                            <li>Testing de autorizaciones por campo</li>
+                            <li>Análisis de performance de queries</li>
+                        </ul>
+
+                        <div class="code-preview">
+                            <code>
+@Test
+public void testGraphQLQuery() {
+    String query = """
+        query GetUser($id: ID!) {
+            user(id: $id) {
+                id
+                name
+                email
+                posts {
+                    title
+                    content
+                }
+            }
+        }
+        """;
+    
+    Response response = given()
+        .contentType("application/json")
+        .body(GraphQLQuery.builder()
+            .query(query)
+            .variables(Map.of("id", "123"))
+            .build())
+    .when()
+        .post("/graphql")
+    .then()
+        .statusCode(200)
+        .body("data.user.id", equalTo("123"))
+        .body("errors", nullValue())
+        .extract().response();
+}
+                            </code>
+                        </div>
+
+                        <div class="template-actions">
+                            <button class="bx--btn bx--btn--primary" onclick="generateAPITemplate('graphql')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M25,27.2H7V4.8H19L25,10.8ZM9,25.2H23V12.4L18.6,8H9Z"/>
+                                </svg>
+                                Generar Template
+                            </button>
+                            <button class="bx--btn bx--btn--secondary" onclick="previewTemplate('graphql')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M30.94,15.66A16.69,16.69,0,0,0,16,5A16.69,16.69,0,0,0,1.06,15.66a1,1,0,0,0,0,.68A16.69,16.69,0,0,0,16,27,16.69,16.69,0,0,0,30.94,16.34A1,1,0,0,0,30.94,15.66ZM16,25c-7.18,0-13.17-4.77-15.06-9C2.83,11.77,8.82,7,16,7s13.17,4.77,15.06,9C29.17,20.23,23.18,25,16,25Z"/>
+                                    <circle cx="16" cy="16" r="5"/>
+                                </svg>
+                                Vista Previa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contract Testing Template -->
+                <div class="template-card">
+                    <div class="template-header">
+                        <svg class="template-icon" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M25,5H7A2,2,0,0,0,5,7V25a2,2,0,0,0,2,2H25a2,2,0,0,0,2-2V7A2,2,0,0,0,25,5ZM7,7H25V25H7Z"/>
+                            <path d="M9,9h6v2H9Zm0,4h8v2H9Zm0,4h10v2H9Zm0,4h6v2H9Z"/>
+                            <path d="M21,11l2,2-2,2"/>
+                            <path d="M19,15l-2,2,2,2"/>
+                        </svg>
+                        <div class="template-title">Contract Testing</div>
+                        <div class="template-description">Pruebas de contratos con Pact para garantizar compatibilidad entre servicios</div>
+                    </div>
+                    <div class="template-body">
+                        <ul class="template-features">
+                            <li>Consumer-driven contract testing</li>
+                            <li>Pact broker integration</li>
+                            <li>Provider verification automática</li>
+                            <li>Versionado de contratos</li>
+                            <li>CI/CD pipeline integration</li>
+                            <li>Documentación automática de APIs</li>
+                        </ul>
+
+                        <div class="code-preview">
+                            <code>
+@ExtendWith(PactConsumerTestExt.class)
+class UserServiceContractTest {
+    
+    @Pact(consumer = "UserConsumer")
+    public RequestResponsePact createPact(PactDslWithProvider builder) {
+        return builder
+            .given("user exists")
+            .uponReceiving("a request for user details")
+            .path("/api/users/123")
+            .method("GET")
+            .willRespondWith()
+            .status(200)
+            .headers(Map.of("Content-Type", "application/json"))
+            .body(newJsonBody(body -> {
+                body.stringType("id", "123");
+                body.stringType("name", "John Doe");
+                body.stringType("email", "john@example.com");
+            }).build())
+            .toPact();
+    }
+}
+                            </code>
+                        </div>
+
+                        <div class="template-actions">
+                            <button class="bx--btn bx--btn--primary" onclick="generateAPITemplate('contract')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M25,27.2H7V4.8H19L25,10.8ZM9,25.2H23V12.4L18.6,8H9Z"/>
+                                </svg>
+                                Generar Template
+                            </button>
+                            <button class="bx--btn bx--btn--secondary" onclick="previewTemplate('contract')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M30.94,15.66A16.69,16.69,0,0,0,16,5A16.69,16.69,0,0,0,1.06,15.66a1,1,0,0,0,0,.68A16.69,16.69,0,0,0,16,27,16.69,16.69,0,0,0,30.94,16.34A1,1,0,0,0,30.94,15.66ZM16,25c-7.18,0-13.17-4.77-15.06-9C2.83,11.77,8.82,7,16,7s13.17,4.77,15.06,9C29.17,20.23,23.18,25,16,25Z"/>
+                                    <circle cx="16" cy="16" r="5"/>
+                                </svg>
+                                Vista Previa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Load Testing Tab -->
+        <div id="load" class="tab-content">
+            <div class="template-grid">
+                <!-- JMeter Template -->
+                <div class="template-card">
+                    <div class="template-header">
+                        <svg class="template-icon" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14S23.7,2,16,2z M16,28c-6.6,0-12-5.4-12-12S9.4,4,16,4s12,5.4,12,12S22.6,28,16,28z"/>
+                            <path d="M16,8v8l5.7,3.3l-1,1.7L14,17V8H16z"/>
+                        </svg>
+                        <div class="template-title">JMeter Performance Testing</div>
+                        <div class="template-description">Templates de JMeter para pruebas de carga, estrés y volumen con reportes avanzados</div>
+                    </div>
+                    <div class="template-body">
+                        <ul class="template-features">
+                            <li>Test plans parametrizados y reutilizables</li>
+                            <li>Escenarios de carga realistas</li>
+                            <li>Monitoreo de recursos del servidor</li>
+                            <li>Reportes HTML dashboard</li>
+                            <li>Integración con CI/CD pipelines</li>
+                            <li>Distribución de carga multi-nodo</li>
+                        </ul>
+
+                        <div class="code-preview">
+                            <code>
+<!-- JMeter Test Plan Structure -->
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="API Load Test">
+      <elementProp name="TestPlan.arguments" elementType="Arguments"/>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Load Test Users">
+        <stringProp name="ThreadGroup.num_threads">${__P(users,100)}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${__P(ramp,60)}</stringProp>
+        <stringProp name="ThreadGroup.duration">${__P(duration,300)}</stringProp>
+      </ThreadGroup>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
+                            </code>
+                        </div>
+
+                        <div class="template-actions">
+                            <button class="bx--btn bx--btn--primary" onclick="generateLoadTemplate('jmeter')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M25,27.2H7V4.8H19L25,10.8ZM9,25.2H23V12.4L18.6,8H9Z"/>
+                                </svg>
+                                Generar Template
+                            </button>
+                            <button class="bx--btn bx--btn--secondary" onclick="previewTemplate('jmeter')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M30.94,15.66A16.69,16.69,0,0,0,16,5A16.69,16.69,0,0,0,1.06,15.66a1,1,0,0,0,0,.68A16.69,16.69,0,0,0,16,27,16.69,16.69,0,0,0,30.94,16.34A1,1,0,0,0,30.94,15.66ZM16,25c-7.18,0-13.17-4.77-15.06-9C2.83,11.77,8.82,7,16,7s13.17,4.77,15.06,9C29.17,20.23,23.18,25,16,25Z"/>
+                                    <circle cx="16" cy="16" r="5"/>
+                                </svg>
+                                Vista Previa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- K6 Template -->
+                <div class="template-card">
+                    <div class="template-header">
+                        <svg class="template-icon" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,30A14,14,0,1,1,30,16,14,14,0,0,1,16,30ZM16,4A12,12,0,1,0,28,16,12,12,0,0,0,16,4Z"/>
+                            <path d="M22.5,16A6.5,6.5,0,1,1,16,9.5,6.5,6.5,0,0,1,22.5,16Z"/>
+                            <circle cx="16" cy="16" r="3"/>
+                        </svg>
+                        <div class="template-title">K6 Cloud-Native Testing</div>
+                        <div class="template-description">Scripts K6 para testing de performance moderno con JavaScript y métricas cloud</div>
+                    </div>
+                    <div class="template-body">
+                        <ul class="template-features">
+                            <li>Scripts en JavaScript ES6+</li>
+                            <li>Métricas personalizadas y thresholds</li>
+                            <li>Escenarios avanzados de carga</li>
+                            <li>Integración con Grafana y InfluxDB</li>
+                            <li>Testing en Kubernetes</li>
+                            <li>Cloud testing con K6 Cloud</li>
+                        </ul>
+
+                        <div class="code-preview">
+                            <code>
+import http from 'k6/http';
+import { check, sleep } from 'k6';
+import { Rate } from 'k6/metrics';
+
+const errorRate = new Rate('errors');
+
+export let options = {
+  stages: [
+    { duration: '2m', target: 100 }, // Ramp up
+    { duration: '5m', target: 100 }, // Stay at 100 users
+    { duration: '2m', target: 200 }, // Ramp up to 200
+    { duration: '5m', target: 200 }, // Stay at 200
+    { duration: '2m', target: 0 },   // Ramp down
+  ],
+  thresholds: {
+    http_req_duration: ['p(95)<500'],
+    errors: ['rate<0.1'],
+  },
+};
+
+export default function() {
+  const response = http.get('https://api.example.com/users');
+  
+  const result = check(response, {
+    'status is 200': (r) => r.status === 200,
+    'response time < 500ms': (r) => r.timings.duration < 500,
+  });
+  
+  errorRate.add(!result);
+  sleep(1);
+}
+                            </code>
+                        </div>
+
+                        <div class="template-actions">
+                            <button class="bx--btn bx--btn--primary" onclick="generateLoadTemplate('k6')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M25,27.2H7V4.8H19L25,10.8ZM9,25.2H23V12.4L18.6,8H9Z"/>
+                                </svg>
+                                Generar Template
+                            </button>
+                            <button class="bx--btn bx--btn--secondary" onclick="previewTemplate('k6')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M30.94,15.66A16.69,16.69,0,0,0,16,5A16.69,16.69,0,0,0,1.06,15.66a1,1,0,0,0,0,.68A16.69,16.69,0,0,0,16,27,16.69,16.69,0,0,0,30.94,16.34A1,1,0,0,0,30.94,15.66ZM16,25c-7.18,0-13.17-4.77-15.06-9C2.83,11.77,8.82,7,16,7s13.17,4.77,15.06,9C29.17,20.23,23.18,25,16,25Z"/>
+                                    <circle cx="16" cy="16" r="5"/>
+                                </svg>
+                                Vista Previa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gatling Template -->
+                <div class="template-card">
+                    <div class="template-header">
+                        <svg class="template-icon" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M8,24a8,8,0,0,1,8-8V8a16,16,0,0,0-16,16Z"/>
+                            <path d="M16,16a8,8,0,0,1,8,8H32A16,16,0,0,0,16,8Z"/>
+                            <circle cx="16" cy="24" r="4"/>
+                        </svg>
+                        <div class="template-title">Gatling High-Performance</div>
+                        <div class="template-description">Templates Gatling para pruebas de alta concurrencia con reportes detallados</div>
+                    </div>
+                    <div class="template-body">
+                        <ul class="template-features">
+                            <li>Scala DSL para escenarios complejos</li>
+                            <li>Simulaciones de alta concurrencia</li>
+                            <li>Reportes HTML interactivos</li>
+                            <li>Integración con Maven/SBT</li>
+                            <li>Monitoreo en tiempo real</li>
+                            <li>Distribución de carga enterprise</li>
+                        </ul>
+
+                        <div class="code-preview">
+                            <code>
+class BasicSimulation extends Simulation {
+  
+  val httpProtocol = http
+    .baseUrl("https://api.example.com")
+    .acceptHeader("application/json")
+    .contentTypeHeader("application/json")
+  
+  val scn = scenario("API Load Test")
+    .exec(
+      http("Get Users")
+        .get("/api/users")
+        .check(status.is(200))
+        .check(responseTimeInMillis.lt(500))
+    )
+    .pause(1)
+    .exec(
+      http("Create User")
+        .post("/api/users")
+        .body(StringBody("""{"name":"Test User","email":"test@example.com"}"""))
+        .check(status.is(201))
+    )
+  
+  setUp(
+    scn.inject(
+      rampUsers(100) during (60 seconds),
+      constantUsersPerSec(50) during (300 seconds)
+    )
+  ).protocols(httpProtocol)
+   .assertions(
+     global.responseTime.max.lt(1000),
+     global.successfulRequests.percent.gt(95)
+   )
+}
+                            </code>
+                        </div>
+
+                        <div class="template-actions">
+                            <button class="bx--btn bx--btn--primary" onclick="generateLoadTemplate('gatling')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M25,27.2H7V4.8H19L25,10.8ZM9,25.2H23V12.4L18.6,8H9Z"/>
+                                </svg>
+                                Generar Template
+                            </button>
+                            <button class="bx--btn bx--btn--secondary" onclick="previewTemplate('gatling')">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M30.94,15.66A16.69,16.69,0,0,0,16,5A16.69,16.69,0,0,0,1.06,15.66a1,1,0,0,0,0,.68A16.69,16.69,0,0,0,16,27,16.69,16.69,0,0,0,30.94,16.34A1,1,0,0,0,30.94,15.66ZM16,25c-7.18,0-13.17-4.77-15.06-9C2.83,11.77,8.82,7,16,7s13.17,4.77,15.06,9C29.17,20.23,23.18,25,16,25Z"/>
+                                    <circle cx="16" cy="16" r="5"/>
+                                </svg>
+                                Vista Previa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="generator" class="tab-content">
+            <div class="form-section">
+                <div class="section-title">Configuración del Proyecto</div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                    <div class="bx--form-item">
+                        <label class="bx--label">Nombre del Proyecto</label>
+                        <input type="text" class="bx--text-input" id="projectName" placeholder="MiProyectoAutomatizacion">
+                    </div>
+                    
+                    <div class="bx--form-item">
+                        <label class="bx--label">Framework de Testing</label>
+                        <select class="bx--select-input" id="testFramework">
+                            <option value="testng">TestNG</option>
+                            <option value="junit">JUnit</option>
+                            <option value="cucumber">Cucumber</option>
+                        </select>
+                    </div>
+                    
+                    <div class="bx--form-item">
+                        <label class="bx--label">Lenguaje de Programación</label>
+                        <select class="bx--select-input" id="language">
+                            <option value="java">Java</option>
+                            <option value="python">Python</option>
+                            <option value="csharp">C#</option>
+                            <option value="javascript">JavaScript</option>
+                        </select>
+                    </div>
+                    
+                    <div class="bx--form-item">
+                        <label class="bx--label">Patrón de Diseño</label>
+                        <select class="bx--select-input" id="designPattern">
+                            <option value="pom">Page Object Model</option>
+                            <option value="ddt">Data-Driven Testing</option>
+                            <option value="hybrid">Hybrid Framework</option>
+                            <option value="keyword">Keyword-Driven</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="bx--form-item">
+                    <label class="bx--label">URL Base de la Aplicación</label>
+                    <input type="text" class="bx--text-input" id="baseUrl" placeholder="https://mi-aplicacion.com">
+                </div>
+                
+                <div class="bx--form-item">
+                    <label class="bx--label">Navegadores a Soportar</label>
+                    <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" checked> Chrome
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" checked> Firefox
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox"> Safari
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox"> Edge
+                        </label>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button class="bx--btn bx--btn--primary" onclick="generateProject()">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M25,27.2H7V4.8H19L25,10.8ZM9,25.2H23V12.4L18.6,8H9Z"/>
+                        </svg>
+                        Generar Proyecto
+                    </button>
+                    <button class="bx--btn bx--btn--secondary" onclick="previewProject()">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M30.94,15.66A16.69,16.69,0,0,0,16,5A16.69,16.69,0,0,0,1.06,15.66a1,1,0,0,0,0,.68A16.69,16.69,0,0,0,16,27,16.69,16.69,0,0,0,30.94,16.34A1,1,0,0,0,30.94,15.66ZM16,25c-7.18,0-13.17-4.77-15.06-9C2.83,11.77,8.82,7,16,7s13.17,4.77,15.06,9C29.17,20.23,23.18,25,16,25Z"/>
+                            <circle cx="16" cy="16" r="5"/>
+                        </svg>
+                        Vista Previa
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configure reactive system
+        window.addEventListener('DOMContentLoaded', function() {
+            const dataManager = new IBMQualityDataManager();
+            const config = new IBMQualityConfig();
+            
+            // Subscribe to template generation events
+            dataManager.subscribe('templateGenerated', (data) => {
+                handleTemplateGeneration(data);
+            });
+        });
+
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-item').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function generateSeleniumTemplate(templateType) {
+            const templates = {
+                pom: {
+                    name: 'Page Object Model Framework',
+                    files: [
+                        'src/main/java/pages/BasePage.java',
+                        'src/main/java/pages/LoginPage.java',
+                        'src/main/java/utils/WebDriverManager.java',
+                        'src/main/java/utils/ConfigReader.java',
+                        'src/test/java/tests/BaseTest.java',
+                        'src/test/java/tests/LoginTest.java',
+                        'src/test/resources/config.properties',
+                        'pom.xml'
+                    ]
+                },
+                ddt: {
+                    name: 'Data-Driven Testing Framework',
+                    files: [
+                        'src/main/java/utils/DataReader.java',
+                        'src/main/java/utils/ExcelUtils.java',
+                        'src/test/java/tests/DataDrivenTest.java',
+                        'src/test/resources/testdata/login.xlsx',
+                        'src/test/resources/testdata/users.csv'
+                    ]
+                },
+                hybrid: {
+                    name: 'Hybrid Testing Framework',
+                    files: [
+                        'src/main/java/keywords/WebKeywords.java',
+                        'src/main/java/keywords/APIKeywords.java',
+                        'src/main/java/engine/TestEngine.java',
+                        'src/test/resources/keywords/login_keywords.xlsx'
+                    ]
+                }
+            };
+
+            const template = templates[templateType];
+            alert(`Generando ${template.name}...\n\nArchivos a crear:\n${template.files.join('\n')}`);
+            
+            // Trigger reactive system update
+            const dataManager = new IBMQualityDataManager();
+            dataManager.notify('templateGenerated', {
+                type: templateType,
+                name: template.name,
+                files: template.files
+            });
+        }
+
+        function previewTemplate(templateType) {
+            alert(`Vista previa del template ${templateType} - Se abriría modal con código de ejemplo`);
+        }
+
+        function generateProject() {
+            const projectName = document.getElementById('projectName').value;
+            const framework = document.getElementById('testFramework').value;
+            const language = document.getElementById('language').value;
+            const pattern = document.getElementById('designPattern').value;
+            
+            if (!projectName) {
+                alert('Por favor ingrese el nombre del proyecto');
+                return;
+            }
+            
+            alert(`Generando proyecto:\nNombre: ${projectName}\nFramework: ${framework}\nLenguaje: ${language}\nPatrón: ${pattern}`);
+        }
+
+        function previewProject() {
+            alert('Vista previa del proyecto - Se mostraría estructura de archivos');
+        }
+
+        // API Testing Template Generation
+        function generateAPITemplate(type) {
+            const templates = {
+                rest: {
+                    name: 'REST API Testing Framework',
+                    description: 'Framework completo para testing de APIs REST',
+                    files: [
+                        'src/test/java/api/BaseAPITest.java',
+                        'src/test/java/api/UserAPITest.java',
+                        'src/test/java/api/AuthAPITest.java',
+                        'src/test/resources/schemas/user-schema.json',
+                        'src/test/resources/data/test-data.json',
+                        'pom.xml',
+                        'testng.xml'
+                    ],
+                    dependencies: ['rest-assured', 'testng', 'json-schema-validator', 'allure-testng']
+                },
+                graphql: {
+                    name: 'GraphQL Testing Framework',
+                    description: 'Framework especializado para APIs GraphQL',
+                    files: [
+                        'src/test/java/graphql/BaseGraphQLTest.java',
+                        'src/test/java/graphql/QueryTest.java',
+                        'src/test/java/graphql/MutationTest.java',
+                        'src/test/resources/queries/user-queries.graphql',
+                        'src/test/resources/mutations/user-mutations.graphql',
+                        'pom.xml'
+                    ],
+                    dependencies: ['graphql-java-tools', 'rest-assured', 'testng']
+                },
+                contract: {
+                    name: 'Contract Testing Framework',
+                    description: 'Framework de contract testing con Pact',
+                    files: [
+                        'src/test/java/contract/UserServiceContractTest.java',
+                        'src/test/java/contract/OrderServiceContractTest.java',
+                        'src/main/java/pact/PactConfiguration.java',
+                        'pact-broker.yml',
+                        'pom.xml'
+                    ],
+                    dependencies: ['pact-jvm-junit5', 'pact-jvm-provider-junit5', 'spring-boot-test']
+                }
+            };
+
+            const template = templates[type];
+            if (!template) return;
+
+            alert(`Generando ${template.name}...\n\nArchivos a crear:\n${template.files.join('\n')}\n\nDependencias:\n${template.dependencies.join('\n')}`);
+            
+            // Trigger reactive system update
+            const dataManager = new IBMQualityDataManager();
+            dataManager.notify('templateGenerated', {
+                type: type,
+                name: template.name,
+                files: template.files,
+                dependencies: template.dependencies
+            });
+        }
+
+        // Load Testing Template Generation
+        function generateLoadTemplate(type) {
+            const templates = {
+                jmeter: {
+                    name: 'JMeter Performance Testing Suite',
+                    description: 'Suite completa de pruebas de performance con JMeter',
+                    files: [
+                        'test-plans/load-test.jmx',
+                        'test-plans/stress-test.jmx',
+                        'test-plans/spike-test.jmx',
+                        'scripts/run-tests.sh',
+                        'scripts/generate-reports.sh',
+                        'data/test-data.csv',
+                        'properties/test.properties'
+                    ],
+                    dependencies: ['jmeter', 'jmeter-plugins-manager', 'cmdrunner']
+                },
+                k6: {
+                    name: 'K6 Cloud-Native Testing Suite',
+                    description: 'Scripts K6 para testing moderno de performance',
+                    files: [
+                        'scripts/load-test.js',
+                        'scripts/stress-test.js',
+                        'scripts/spike-test.js',
+                        'scripts/utils/helpers.js',
+                        'data/users.json',
+                        'docker-compose.yml',
+                        'package.json'
+                    ],
+                    dependencies: ['k6', 'k6-reporter', 'influxdb', 'grafana']
+                },
+                gatling: {
+                    name: 'Gatling High-Performance Testing',
+                    description: 'Framework Gatling para alta concurrencia',
+                    files: [
+                        'src/test/scala/simulations/BasicSimulation.scala',
+                        'src/test/scala/simulations/StressSimulation.scala',
+                        'src/test/scala/config/Configuration.scala',
+                        'src/test/resources/data/users.csv',
+                        'pom.xml',
+                        'gatling.conf'
+                    ],
+                    dependencies: ['gatling-charts-highcharts', 'gatling-test-framework', 'scala-library']
+                }
+            };
+
+            const template = templates[type];
+            if (!template) return;
+
+            alert(`Generando ${template.name}...\n\nArchivos a crear:\n${template.files.join('\n')}\n\nDependencias:\n${template.dependencies.join('\n')}`);
+            
+            // Trigger reactive system update
+            const dataManager = new IBMQualityDataManager();
+            dataManager.notify('templateGenerated', {
+                type: type,
+                name: template.name,
+                files: template.files,
+                dependencies: template.dependencies
+            });
+        }
+
+        function handleTemplateGeneration(data) {
+            console.log('Template generado:', data);
+            // Here would be the logic to actually generate and download the template files
+        }
+    </script>
+</body>
+</html>
