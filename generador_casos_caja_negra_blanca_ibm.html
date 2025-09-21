@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Casos de Prueba Caja Negra/Blanca - IBM Quality Management</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%230043ce' d='M12 2h8v8h-8V2zm0 10h8v8h-8v-8zm0 10h8v8h-8v-8zM2 12h8v8H2v-8zm20 0h8v8h-8v-8z'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%230043ce' d='M12 2h8v8h-8V2zm0 10h8v8h-8v-8zm0 10h8v8h-8v-8zM2 12h8v8H2v-8zm20 0h8v8h-8v-8z'/%3E%3C/svg%3E">
+    <style>
+        :root {
+            --ibm-blue: #0043ce;
+            --ibm-blue-hover: #0039b8;
+            --ibm-gray-10: #f4f4f4;
+            --ibm-gray-20: #e0e0e0;
+            --ibm-gray-50: #8d8d8d;
+            --ibm-gray-70: #525252;
+            --ibm-gray-90: #262626;
+            --ibm-gray-100: #161616;
+            --ibm-green: #198038;
+            --ibm-red: #da1e28;
+            --ibm-orange: #ff832b;
+            --ibm-purple: #8a3ffc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--ibm-gray-10);
+            color: var(--ibm-gray-100);
+            line-height: 1.5;
+        }
+
+        .header {
+            background: var(--ibm-blue);
+            color: white;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .header p {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            margin-top: 0.25rem;
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 0;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            border: 1px solid var(--ibm-gray-20);
+        }
+
+        .card-header {
+            border-bottom: 1px solid var(--ibm-gray-20);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--ibm-gray-100);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-description {
+            font-size: 0.875rem;
+            color: var(--ibm-gray-70);
+            margin-top: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: var(--ibm-gray-100);
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--ibm-gray-50);
+            border-radius: 0;
+            font-size: 0.875rem;
+            background: white;
+            color: var(--ibm-gray-100);
+            transition: border-color 0.15s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: 2px solid var(--ibm-blue);
+            outline-offset: -2px;
+            border-color: var(--ibm-blue);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 0;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            gap: 0.5rem;
+            min-width: 0;
+        }
+
+        .btn-primary {
+            background: var(--ibm-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--ibm-blue-hover);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--ibm-blue);
+            border: 1px solid var(--ibm-blue);
+        }
+
+        .btn-secondary:hover {
+            background: var(--ibm-blue);
+            color: white;
+        }
+
+        .btn-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .technique-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .technique-card {
+            background: var(--ibm-gray-10);
+            border: 1px solid var(--ibm-gray-20);
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .technique-card:hover {
+            border-color: var(--ibm-blue);
+            background: #f0f7ff;
+        }
+
+        .technique-card.selected {
+            border-color: var(--ibm-blue);
+            background: #e8f4fd;
+            box-shadow: 0 0 0 1px var(--ibm-blue);
+        }
+
+        .technique-title {
+            font-weight: 600;
+            color: var(--ibm-gray-100);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .technique-description {
+            font-size: 0.75rem;
+            color: var(--ibm-gray-70);
+            line-height: 1.4;
+        }
+
+        .generated-cases {
+            background: var(--ibm-gray-10);
+            border: 1px solid var(--ibm-gray-20);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .case-item {
+            background: white;
+            border: 1px solid var(--ibm-gray-20);
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .case-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .case-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .case-id {
+            font-weight: 600;
+            color: var(--ibm-blue);
+            font-size: 0.875rem;
+        }
+
+        .case-type {
+            background: var(--ibm-gray-20);
+            color: var(--ibm-gray-70);
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .case-content {
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--ibm-gray-20);
+            margin-bottom: 1.5rem;
+        }
+
+        .tab {
+            padding: 0.75rem 1rem;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--ibm-gray-70);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .tab.active {
+            color: var(--ibm-blue);
+            border-bottom-color: var(--ibm-blue);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid var(--ibm-gray-20);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--ibm-blue);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--ibm-gray-70);
+            margin-top: 0.25rem;
+        }
+
+        .technique-details {
+            background: #f0f7ff;
+            border: 1px solid var(--ibm-blue);
+            padding: 1rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .technique-details.show {
+            display: block;
+        }
+
+        .coverage-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .coverage-high { background: var(--ibm-green); }
+        .coverage-medium { background: var(--ibm-orange); }
+        .coverage-low { background: var(--ibm-red); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🧪 Generador de Casos de Prueba: Caja Negra y Caja Blanca</h1>
+        <p>IBM Quality Management System - Diseño de Testing Estructurado y Funcional</p>
+    </header>
+
+    <div class="main-container">
+        <!-- Panel Izquierdo: Configuración -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">
+                    ⚙️ Configuración de Pruebas
+                </h2>
+                <p class="card-description">Configure los parámetros para generar casos de prueba específicos</p>
+            </div>
+
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('blackbox')">Caja Negra</button>
+                <button class="tab" onclick="switchTab('whitebox')">Caja Blanca</button>
+                <button class="tab" onclick="switchTab('hybrid')">Híbrido</button>
+            </div>
+
+            <!-- Configuración Caja Negra -->
+            <div id="blackbox" class="tab-content active">
+                <div class="form-group">
+                    <label class="form-label">Funcionalidad a Probar</label>
+                    <input type="text" class="form-input" id="functionality" placeholder="Ej: Login de usuario, Transferencia bancaria">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Requisitos Funcionales</label>
+                    <textarea class="form-textarea" id="requirements" placeholder="Especifique los requisitos que debe cumplir la funcionalidad"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Técnicas de Caja Negra</label>
+                    <div class="technique-grid" id="blackboxTechniques">
+                        <div class="technique-card" data-technique="equivalence" onclick="selectTechnique(this)">
+                            <div class="technique-title">Partición Equivalente</div>
+                            <div class="technique-description">Divide entradas en clases equivalentes válidas e inválidas</div>
+                        </div>
+                        <div class="technique-card" data-technique="boundary" onclick="selectTechnique(this)">
+                            <div class="technique-title">Análisis Límite</div>
+                            <div class="technique-description">Prueba valores en los límites de rangos válidos</div>
+                        </div>
+                        <div class="technique-card" data-technique="decision" onclick="selectTechnique(this)">
+                            <div class="technique-title">Tabla Decisión</div>
+                            <div class="technique-description">Combina condiciones para determinar acciones</div>
+                        </div>
+                        <div class="technique-card" data-technique="state" onclick="selectTechnique(this)">
+                            <div class="technique-title">Transición Estados</div>
+                            <div class="technique-description">Verifica cambios de estado del sistema</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Configuración Caja Blanca -->
+            <div id="whitebox" class="tab-content">
+                <div class="form-group">
+                    <label class="form-label">Código/Módulo a Analizar</label>
+                    <input type="text" class="form-input" id="module" placeholder="Ej: AuthenticationService, PaymentProcessor">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Estructura del Código</label>
+                    <textarea class="form-textarea" id="codeStructure" placeholder="Describa la estructura: métodos, condicionales, loops, etc."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Técnicas de Caja Blanca</label>
+                    <div class="technique-grid" id="whiteboxTechniques">
+                        <div class="technique-card" data-technique="statement" onclick="selectTechnique(this)">
+                            <div class="technique-title">Cobertura Sentencias</div>
+                            <div class="technique-description">Ejecuta cada línea de código al menos una vez</div>
+                        </div>
+                        <div class="technique-card" data-technique="branch" onclick="selectTechnique(this)">
+                            <div class="technique-title">Cobertura Ramas</div>
+                            <div class="technique-description">Ejecuta todas las ramas condicionales</div>
+                        </div>
+                        <div class="technique-card" data-technique="path" onclick="selectTechnique(this)">
+                            <div class="technique-title">Cobertura Caminos</div>
+                            <div class="technique-description">Ejecuta todos los caminos posibles</div>
+                        </div>
+                        <div class="technique-card" data-technique="condition" onclick="selectTechnique(this)">
+                            <div class="technique-title">Cobertura Condiciones</div>
+                            <div class="technique-description">Evalúa todas las condiciones booleanas</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Configuración Híbrido -->
+            <div id="hybrid" class="tab-content">
+                <div class="form-group">
+                    <label class="form-label">Componente Integral</label>
+                    <input type="text" class="form-input" id="component" placeholder="Ej: Sistema de Autenticación Completo">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Estrategia de Testing</label>
+                    <select class="form-select" id="strategy">
+                        <option value="functional-first">Funcional Primero (Caja Negra → Caja Blanca)</option>
+                        <option value="structural-first">Estructural Primero (Caja Blanca → Caja Negra)</option>
+                        <option value="parallel">Paralelo (Ambos simultáneamente)</option>
+                        <option value="risk-based">Basado en Riesgos</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Nivel de Cobertura Objetivo</label>
+                    <select class="form-select" id="coverage">
+                        <option value="basic">Básico (70-80%)</option>
+                        <option value="standard">Estándar (80-90%)</option>
+                        <option value="comprehensive">Comprehensivo (90-95%)</option>
+                        <option value="critical">Crítico (95-100%)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="btn-actions">
+                <button class="btn btn-primary" onclick="generateTestCases()">
+                    ⚡ Generar Casos de Prueba
+                </button>
+                <button class="btn btn-secondary" onclick="clearAll()">
+                    🗑️ Limpiar Todo
+                </button>
+            </div>
+        </div>
+
+        <!-- Panel Derecho: Resultados -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">
+                    📋 Casos de Prueba Generados
+                </h2>
+                <p class="card-description">Casos de prueba automatizados basados en las técnicas seleccionadas</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalCases">0</div>
+                    <div class="stat-label">Total Casos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="blackboxCount">0</div>
+                    <div class="stat-label">Caja Negra</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="whiteboxCount">0</div>
+                    <div class="stat-label">Caja Blanca</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="coveragePercent">0%</div>
+                    <div class="stat-label">Cobertura Est.</div>
+                </div>
+            </div>
+
+            <div class="generated-cases" id="testCasesContainer">
+                <div style="text-align: center; color: var(--ibm-gray-50); padding: 2rem;">
+                    🔄 Configure los parámetros y genere casos de prueba para ver los resultados aquí
+                </div>
+            </div>
+
+            <div class="btn-actions">
+                <button class="btn btn-secondary" onclick="exportTestCases('excel')">
+                    📊 Exportar Excel
+                </button>
+                <button class="btn btn-secondary" onclick="exportTestCases('json')">
+                    📄 Exportar JSON
+                </button>
+                <button class="btn btn-secondary" onclick="exportTestCases('pdf')">
+                    📑 Exportar PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedTechniques = [];
+        let generatedCases = [];
+        let currentTab = 'blackbox';
+
+        function switchTab(tab) {
+            // Update tab buttons
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
+            
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+            
+            currentTab = tab;
+            selectedTechniques = [];
+            updateTechniqueSelection();
+        }
+
+        function selectTechnique(element) {
+            const technique = element.dataset.technique;
+            
+            if (element.classList.contains('selected')) {
+                element.classList.remove('selected');
+                selectedTechniques = selectedTechniques.filter(t => t !== technique);
+            } else {
+                element.classList.add('selected');
+                selectedTechniques.push(technique);
+            }
+        }
+
+        function updateTechniqueSelection() {
+            document.querySelectorAll('.technique-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+        }
+
+        function generateTestCases() {
+            if (selectedTechniques.length === 0) {
+                alert('Por favor seleccione al menos una técnica de testing');
+                return;
+            }
+
+            generatedCases = [];
+            let caseId = 1;
+
+            if (currentTab === 'blackbox') {
+                const functionality = document.getElementById('functionality').value || 'Funcionalidad No Especificada';
+                const requirements = document.getElementById('requirements').value || 'Requisitos no definidos';
+                
+                selectedTechniques.forEach(technique => {
+                    const cases = generateBlackboxCases(technique, functionality, requirements, caseId);
+                    generatedCases = generatedCases.concat(cases);
+                    caseId += cases.length;
+                });
+            } else if (currentTab === 'whitebox') {
+                const module = document.getElementById('module').value || 'Módulo No Especificado';
+                const structure = document.getElementById('codeStructure').value || 'Estructura no definida';
+                
+                selectedTechniques.forEach(technique => {
+                    const cases = generateWhiteboxCases(technique, module, structure, caseId);
+                    generatedCases = generatedCases.concat(cases);
+                    caseId += cases.length;
+                });
+            } else if (currentTab === 'hybrid') {
+                const component = document.getElementById('component').value || 'Componente No Especificado';
+                const strategy = document.getElementById('strategy').value;
+                
+                // Generate hybrid cases combining both approaches
+                const hybridCases = generateHybridCases(component, strategy, caseId);
+                generatedCases = generatedCases.concat(hybridCases);
+            }
+
+            displayTestCases();
+            updateStatistics();
+        }
+
+        function generateBlackboxCases(technique, functionality, requirements, startId) {
+            const cases = [];
+            
+            switch(technique) {
+                case 'equivalence':
+                    cases.push({
+                        id: `TC-BB-${startId}`,
+                        type: 'Caja Negra - Partición Equivalente',
+                        title: `Clase Válida - ${functionality}`,
+                        description: `Verificar comportamiento con datos válidos para ${functionality}`,
+                        steps: [
+                            'Preparar datos de entrada válidos según especificación',
+                            'Ejecutar la funcionalidad con los datos preparados',
+                            'Verificar que el resultado cumple con los requisitos',
+                            'Validar que no se generan errores o excepciones'
+                        ],
+                        expectedResult: 'La funcionalidad debe ejecutarse correctamente y producir el resultado esperado',
+                        priority: 'Alto',
+                        coverage: 'functional'
+                    });
+                    
+                    cases.push({
+                        id: `TC-BB-${startId + 1}`,
+                        type: 'Caja Negra - Partición Equivalente',
+                        title: `Clase Inválida - ${functionality}`,
+                        description: `Verificar manejo de errores con datos inválidos para ${functionality}`,
+                        steps: [
+                            'Preparar datos de entrada inválidos',
+                            'Ejecutar la funcionalidad con los datos inválidos',
+                            'Verificar que se detecta y maneja el error apropiadamente',
+                            'Validar mensaje de error apropiado'
+                        ],
+                        expectedResult: 'El sistema debe rechazar los datos inválidos y mostrar mensaje de error apropiado',
+                        priority: 'Alto',
+                        coverage: 'error-handling'
+                    });
+                    break;
+                    
+                case 'boundary':
+                    cases.push({
+                        id: `TC-BB-${startId}`,
+                        type: 'Caja Negra - Análisis Límite',
+                        title: `Valores Límite Válidos - ${functionality}`,
+                        description: `Probar con valores en los límites válidos de ${functionality}`,
+                        steps: [
+                            'Identificar valores límite mínimos y máximos válidos',
+                            'Ejecutar casos con valor mínimo válido',
+                            'Ejecutar casos con valor máximo válido',
+                            'Verificar comportamiento correcto en ambos límites'
+                        ],
+                        expectedResult: 'Los valores límite válidos deben ser procesados correctamente',
+                        priority: 'Alto',
+                        coverage: 'boundary'
+                    });
+                    
+                    cases.push({
+                        id: `TC-BB-${startId + 1}`,
+                        type: 'Caja Negra - Análisis Límite',
+                        title: `Valores Límite Inválidos - ${functionality}`,
+                        description: `Probar con valores fuera de los límites válidos de ${functionality}`,
+                        steps: [
+                            'Identificar valores justo fuera de los límites válidos',
+                            'Ejecutar casos con valor menor al mínimo',
+                            'Ejecutar casos con valor mayor al máximo',
+                            'Verificar manejo apropiado de valores fuera de rango'
+                        ],
+                        expectedResult: 'Los valores fuera de límites deben ser rechazados con mensaje apropiado',
+                        priority: 'Medio',
+                        coverage: 'boundary-error'
+                    });
+                    break;
+                    
+                case 'decision':
+                    cases.push({
+                        id: `TC-BB-${startId}`,
+                        type: 'Caja Negra - Tabla Decisión',
+                        title: `Combinaciones de Condiciones - ${functionality}`,
+                        description: `Probar diferentes combinaciones de condiciones para ${functionality}`,
+                        steps: [
+                            'Identificar todas las condiciones de entrada',
+                            'Crear matriz de combinaciones posibles',
+                            'Ejecutar cada combinación sistemáticamente',
+                            'Verificar que cada combinación produce el resultado esperado'
+                        ],
+                        expectedResult: 'Cada combinación de condiciones debe producir el comportamiento definido en la tabla de decisión',
+                        priority: 'Alto',
+                        coverage: 'decision-table'
+                    });
+                    break;
+                    
+                case 'state':
+                    cases.push({
+                        id: `TC-BB-${startId}`,
+                        type: 'Caja Negra - Transición Estados',
+                        title: `Transiciones de Estado - ${functionality}`,
+                        description: `Verificar transiciones válidas de estado en ${functionality}`,
+                        steps: [
+                            'Identificar estados posibles del sistema',
+                            'Determinar transiciones válidas entre estados',
+                            'Ejecutar secuencias que causan transiciones',
+                            'Verificar que el estado final es el esperado'
+                        ],
+                        expectedResult: 'Todas las transiciones válidas deben ejecutarse correctamente y alcanzar el estado esperado',
+                        priority: 'Alto',
+                        coverage: 'state-transition'
+                    });
+                    break;
+            }
+            
+            return cases;
+        }
+
+        function generateWhiteboxCases(technique, module, structure, startId) {
+            const cases = [];
+            
+            switch(technique) {
+                case 'statement':
+                    cases.push({
+                        id: `TC-WB-${startId}`,
+                        type: 'Caja Blanca - Cobertura Sentencias',
+                        title: `Cobertura 100% Sentencias - ${module}`,
+                        description: `Ejecutar cada línea de código en ${module}`,
+                        steps: [
+                            'Analizar código fuente para identificar todas las sentencias',
+                            'Diseñar datos de prueba para ejecutar cada sentencia',
+                            'Ejecutar casos de prueba con instrumentación de cobertura',
+                            'Verificar que se alcanza 100% cobertura de sentencias'
+                        ],
+                        expectedResult: 'Todas las sentencias del módulo deben ser ejecutadas al menos una vez',
+                        priority: 'Alto',
+                        coverage: 'statement'
+                    });
+                    break;
+                    
+                case 'branch':
+                    cases.push({
+                        id: `TC-WB-${startId}`,
+                        type: 'Caja Blanca - Cobertura Ramas',
+                        title: `Cobertura Ramas Verdaderas - ${module}`,
+                        description: `Ejecutar todas las ramas verdaderas en ${module}`,
+                        steps: [
+                            'Identificar todas las condiciones if/else, switch, loops',
+                            'Diseñar casos para ejecutar rama verdadera de cada condición',
+                            'Ejecutar casos con datos que satisfagan condiciones',
+                            'Verificar cobertura de ramas verdaderas'
+                        ],
+                        expectedResult: 'Todas las ramas verdaderas deben ser ejecutadas',
+                        priority: 'Alto',
+                        coverage: 'branch-true'
+                    });
+                    
+                    cases.push({
+                        id: `TC-WB-${startId + 1}`,
+                        type: 'Caja Blanca - Cobertura Ramas',
+                        title: `Cobertura Ramas Falsas - ${module}`,
+                        description: `Ejecutar todas las ramas falsas en ${module}`,
+                        steps: [
+                            'Identificar todas las condiciones if/else, switch, loops',
+                            'Diseñar casos para ejecutar rama falsa de cada condición',
+                            'Ejecutar casos con datos que no satisfagan condiciones',
+                            'Verificar cobertura de ramas falsas'
+                        ],
+                        expectedResult: 'Todas las ramas falsas deben ser ejecutadas',
+                        priority: 'Alto',
+                        coverage: 'branch-false'
+                    });
+                    break;
+                    
+                case 'path':
+                    cases.push({
+                        id: `TC-WB-${startId}`,
+                        type: 'Caja Blanca - Cobertura Caminos',
+                        title: `Caminos Independientes - ${module}`,
+                        description: `Ejecutar todos los caminos linealmente independientes en ${module}`,
+                        steps: [
+                            'Construir grafo de flujo de control del módulo',
+                            'Calcular complejidad ciclomática (V(G) = E - N + 2)',
+                            'Identificar V(G) caminos linealmente independientes',
+                            'Diseñar casos de prueba para cada camino independiente'
+                        ],
+                        expectedResult: 'Todos los caminos independientes deben ser cubiertos',
+                        priority: 'Medio',
+                        coverage: 'path'
+                    });
+                    break;
+                    
+                case 'condition':
+                    cases.push({
+                        id: `TC-WB-${startId}`,
+                        type: 'Caja Blanca - Cobertura Condiciones',
+                        title: `Condiciones Booleanas - ${module}`,
+                        description: `Evaluar todas las condiciones booleanas en ${module}`,
+                        steps: [
+                            'Identificar todas las expresiones booleanas complejas',
+                            'Descomponer en condiciones atómicas',
+                            'Diseñar casos para que cada condición sea True y False',
+                            'Verificar comportamiento con cada combinación'
+                        ],
+                        expectedResult: 'Cada condición booleana debe evaluarse tanto como verdadera como falsa',
+                        priority: 'Medio',
+                        coverage: 'condition'
+                    });
+                    break;
+            }
+            
+            return cases;
+        }
+
+        function generateHybridCases(component, strategy, startId) {
+            const cases = [];
+            
+            // Generate basic hybrid case based on strategy
+            cases.push({
+                id: `TC-HY-${startId}`,
+                type: 'Híbrido - Estrategia Integrada',
+                title: `Testing Integral - ${component}`,
+                description: `Aplicar estrategia ${strategy} para testing completo de ${component}`,
+                steps: [
+                    'Fase 1: Análisis de requisitos funcionales (Caja Negra)',
+                    'Fase 2: Análisis de estructura de código (Caja Blanca)',
+                    'Fase 3: Integración de casos de ambos enfoques',
+                    'Fase 4: Ejecución secuencial según estrategia seleccionada',
+                    'Fase 5: Análisis de cobertura funcional y estructural'
+                ],
+                expectedResult: 'Cobertura completa tanto funcional como estructural del componente',
+                priority: 'Crítico',
+                coverage: 'hybrid'
+            });
+            
+            return cases;
+        }
+
+        function displayTestCases() {
+            const container = document.getElementById('testCasesContainer');
+            
+            if (generatedCases.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: var(--ibm-gray-50); padding: 2rem;">No hay casos de prueba generados</div>';
+                return;
+            }
+            
+            let html = '';
+            generatedCases.forEach(testCase => {
+                const coverageClass = getCoverageClass(testCase.coverage);
+                html += `
+                    <div class="case-item">
+                        <div class="case-header">
+                            <span class="case-id">${testCase.id}</span>
+                            <span class="case-type">${testCase.type}</span>
+                        </div>
+                        <div class="case-content">
+                            <h4 style="margin-bottom: 0.5rem; color: var(--ibm-gray-100);">
+                                <span class="coverage-indicator ${coverageClass}"></span>
+                                ${testCase.title}
+                            </h4>
+                            <p style="margin-bottom: 1rem; color: var(--ibm-gray-70);">${testCase.description}</p>
+                            
+                            <div style="margin-bottom: 1rem;">
+                                <strong>Pasos de Ejecución:</strong>
+                                <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                                    ${testCase.steps.map(step => `<li style="margin-bottom: 0.25rem;">${step}</li>`).join('')}
+                                </ol>
+                            </div>
+                            
+                            <div style="background: var(--ibm-gray-10); padding: 0.75rem; margin-top: 1rem;">
+                                <strong>Resultado Esperado:</strong> ${testCase.expectedResult}
+                            </div>
+                            
+                            <div style="margin-top: 0.75rem; font-size: 0.875rem; color: var(--ibm-gray-70);">
+                                <strong>Prioridad:</strong> ${testCase.priority} | 
+                                <strong>Cobertura:</strong> ${testCase.coverage}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function getCoverageClass(coverage) {
+            const highCoverage = ['functional', 'statement', 'branch-true', 'branch-false', 'hybrid'];
+            const mediumCoverage = ['boundary', 'decision-table', 'path', 'condition'];
+            
+            if (highCoverage.includes(coverage)) return 'coverage-high';
+            if (mediumCoverage.includes(coverage)) return 'coverage-medium';
+            return 'coverage-low';
+        }
+
+        function updateStatistics() {
+            document.getElementById('totalCases').textContent = generatedCases.length;
+            
+            const blackboxCases = generatedCases.filter(c => c.type.includes('Caja Negra')).length;
+            const whiteboxCases = generatedCases.filter(c => c.type.includes('Caja Blanca')).length;
+            
+            document.getElementById('blackboxCount').textContent = blackboxCases;
+            document.getElementById('whiteboxCount').textContent = whiteboxCases;
+            
+            // Enviar métricas al sistema reactivo IBM Quality Data Manager
+            updateQualityMetrics();
+            
+            // Calculate estimated coverage based on techniques used
+            let coverage = 0;
+            if (selectedTechniques.includes('statement')) coverage += 25;
+            if (selectedTechniques.includes('branch')) coverage += 25;
+            if (selectedTechniques.includes('equivalence')) coverage += 20;
+            if (selectedTechniques.includes('boundary')) coverage += 15;
+            if (selectedTechniques.includes('path')) coverage += 10;
+            if (selectedTechniques.includes('condition')) coverage += 10;
+            if (selectedTechniques.includes('decision')) coverage += 15;
+            if (selectedTechniques.includes('state')) coverage += 15;
+            
+            coverage = Math.min(coverage, 100);
+            document.getElementById('coveragePercent').textContent = coverage + '%';
+        }
+
+        function clearAll() {
+            document.querySelectorAll('.form-input, .form-textarea, .form-select').forEach(element => {
+                element.value = '';
+            });
+            
+            selectedTechniques = [];
+            generatedCases = [];
+            updateTechniqueSelection();
+            
+            document.getElementById('testCasesContainer').innerHTML = 
+                '<div style="text-align: center; color: var(--ibm-gray-50); padding: 2rem;">🔄 Configure los parámetros y genere casos de prueba para ver los resultados aquí</div>';
+            
+            updateStatistics();
+        }
+
+        function exportTestCases(format) {
+            if (generatedCases.length === 0) {
+                alert('No hay casos de prueba para exportar');
+                return;
+            }
+            
+            let content, filename, mimeType;
+            
+            switch(format) {
+                case 'json':
+                    content = JSON.stringify(generatedCases, null, 2);
+                    filename = 'test-cases-caja-negra-blanca.json';
+                    mimeType = 'application/json';
+                    break;
+                    
+                case 'excel':
+                    // Simulate CSV for Excel compatibility
+                    let csv = 'ID,Tipo,Título,Descripción,Pasos,Resultado Esperado,Prioridad,Cobertura\n';
+                    generatedCases.forEach(tc => {
+                        const steps = tc.steps.join('; ');
+                        csv += `"${tc.id}","${tc.type}","${tc.title}","${tc.description}","${steps}","${tc.expectedResult}","${tc.priority}","${tc.coverage}"\n`;
+                    });
+                    content = csv;
+                    filename = 'test-cases-caja-negra-blanca.csv';
+                    mimeType = 'text/csv';
+                    break;
+                    
+                case 'pdf':
+                    alert('Exportación PDF en desarrollo. Use JSON o Excel por ahora.');
+                    return;
+            }
+            
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Sistema de Métricas para integración con Dashboard IBM
+        function updateQualityMetrics() {
+            const metrics = {
+                tool: 'Generador Casos Caja Negra/Blanca',
+                timestamp: new Date().toISOString(),
+                data: {
+                    totalCases: generatedCases.length,
+                    blackboxCases: generatedCases.filter(c => c.type.includes('Caja Negra')).length,
+                    whiteboxCases: generatedCases.filter(c => c.type.includes('Caja Blanca')).length,
+                    hybridCases: generatedCases.filter(c => c.type.includes('Híbrido')).length,
+                    coverageDistribution: getCoverageDistribution(),
+                    priorityDistribution: getPriorityDistribution(),
+                    qualityScore: calculateQualityScore(),
+                    recommendations: generateRecommendations()
+                }
+            };
+            
+            // Enviar métricas al sistema reactivo si está disponible
+            if (typeof window.IBMQualityDataManager !== 'undefined') {
+                window.IBMQualityDataManager.updateMetrics('test-case-generator', metrics);
+            }
+            
+            // Almacenar en localStorage para persistencia
+            const allMetrics = JSON.parse(localStorage.getItem('ibm-quality-metrics') || '{}');
+            allMetrics.testCaseGenerator = metrics;
+            localStorage.setItem('ibm-quality-metrics', JSON.stringify(allMetrics));
+        }
+
+        function getCoverageDistribution() {
+            const distribution = {};
+            generatedCases.forEach(tc => {
+                distribution[tc.coverage] = (distribution[tc.coverage] || 0) + 1;
+            });
+            return distribution;
+        }
+
+        function getPriorityDistribution() {
+            const distribution = {};
+            generatedCases.forEach(tc => {
+                distribution[tc.priority] = (distribution[tc.priority] || 0) + 1;
+            });
+            return distribution;
+        }
+
+        function calculateQualityScore() {
+            if (generatedCases.length === 0) return 0;
+            
+            const criticalCases = generatedCases.filter(c => c.priority === 'Crítico').length;
+            const highCoverageCases = generatedCases.filter(c => 
+                ['functional', 'statement', 'branch-true', 'branch-false', 'hybrid'].includes(c.coverage)
+            ).length;
+            
+            const coverageScore = (highCoverageCases / generatedCases.length) * 50;
+            const priorityScore = (criticalCases / generatedCases.length) * 30;
+            const volumeScore = Math.min(generatedCases.length / 10, 1) * 20;
+            
+            return Math.round(coverageScore + priorityScore + volumeScore);
+        }
+
+        function generateRecommendations() {
+            const recommendations = [];
+            
+            if (generatedCases.length < 5) {
+                recommendations.push('Generar más casos de prueba para mejor cobertura');
+            }
+            
+            const blackboxCases = generatedCases.filter(c => c.type.includes('Caja Negra')).length;
+            const whiteboxCases = generatedCases.filter(c => c.type.includes('Caja Blanca')).length;
+            
+            if (blackboxCases === 0) {
+                recommendations.push('Incluir casos de caja negra para testing funcional');
+            }
+            
+            if (whiteboxCases === 0) {
+                recommendations.push('Incluir casos de caja blanca para testing estructural');
+            }
+            
+            const criticalCases = generatedCases.filter(c => c.priority === 'Crítico').length;
+            if (criticalCases === 0) {
+                recommendations.push('Incluir casos críticos para funciones esenciales');
+            }
+            
+            return recommendations;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStatistics();
+        });
+    </script>
+</body>
+</html>

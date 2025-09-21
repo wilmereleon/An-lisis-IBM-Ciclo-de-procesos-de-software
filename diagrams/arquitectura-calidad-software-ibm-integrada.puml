@@ -1,0 +1,113 @@
+@startuml arquitectura-calidad-software-ibm-integrada
+
+skinparam backgroundColor #f8f9fa
+skinparam defaultFontSize 9
+skinparam nodesep 10
+skinparam ranksep 15
+skinparam direction top to bottom
+
+title ARQUITECTURA INTEGRADA DE CALIDAD DE SOFTWARE IBM\nModelos CMMI/TMMi con Herramientas Enterprise
+
+' === STAKEHOLDERS Y MOTIVACIONES ===
+
+rectangle "STAKEHOLDERS & MOTIVATIONS" #f5f5f5 {
+    actor "CEO IBM\nColombia" as ceo
+    actor "Quality\nManager" as qm  
+    actor "Banking\nCustomers" as customers
+    
+    rectangle "CMMI Level 4\n99.9% Reliability" as quality_goal #lightblue
+    rectangle "Reduce TTM 30%\nDefects <0.1%" as efficiency_goal #lightblue
+    
+    rectangle "Banking\nRegulations" as compliance_driver #orange
+    rectangle "Market\nCompetition" as competition_driver #orange
+    
+    ceo --> quality_goal
+    qm --> efficiency_goal
+    compliance_driver --> quality_goal
+    competition_driver --> efficiency_goal
+}
+
+' === CAPAS DE ARQUITECTURA ===
+
+package "STRATEGY & GOVERNANCE" #e3f2fd {
+    rectangle "EA Framework\nTOGAF 9.2" as ea_framework #bbdefb
+    rectangle "Enterprise\nArchitect" as enterprise_architect #90caf9
+    enterprise_architect --> ea_framework : "Manages"
+}
+
+package "BUSINESS PROCESSES" #f3e5f5 {
+    rectangle "CMMI Level 3-4\nProcesses" as cmmi_process #ce93d8
+    rectangle "TMMi Level 3-4\nProcesses" as tmmi_process #ba68c8
+    rectangle "Quality Management\nService" as quality_service #ab47bc
+    
+    quality_service --> cmmi_process : "Contains"
+    quality_service --> tmmi_process : "Contains"
+    ea_framework --> cmmi_process : "Guides"
+}
+
+package "APPLICATION COMPONENTS" #e8f5e8 {
+    rectangle "Executive Dashboard\n**16 HTML Tools**" as dashboard_platform #a5d6a7
+    rectangle "Testing Management\nPlatform" as testing_platform #81c784
+    rectangle "Environment\nManagement" as env_management #66bb6a
+    rectangle "Traceability Matrix\nSystem" as traceability_system #4caf50
+    rectangle "ML Quality\nAnalytics" as ml_analytics #2e7d32
+    
+    testing_platform --> tmmi_process : "Implements"
+    env_management --> cmmi_process : "Supports"
+    testing_platform --> traceability_system : "Feeds data"
+    ml_analytics --> dashboard_platform : "Insights"
+}
+
+package "TECHNOLOGY INFRASTRUCTURE" #fff3e0 {
+    rectangle "Enterprise\nService Bus" as integration_service #ffcc02
+    rectangle "CI/CD Pipeline\nService" as cicd_service #ffb300
+    rectangle "Quality Data\nWarehouse" as data_warehouse #ff8f00
+    rectangle "Test Artifacts\nRepository" as test_repository #ff6f00
+    
+    integration_service --> dashboard_platform : "Integrates"
+    cicd_service --> testing_platform : "Automates"
+    testing_platform --> test_repository : "Stores"
+    dashboard_platform --> data_warehouse : "Archives"
+}
+
+' === HERRAMIENTAS IMPLEMENTADAS ===
+
+note bottom of dashboard_platform
+**Dashboard Suite (4 herramientas)**
+• Dashboard Ejecutivo IBM
+• Dashboard de Calidad
+• Dashboard Testing Metrics  
+• Dashboard Integrado
+end note
+
+note bottom of testing_platform
+**Testing Tools (5 herramientas)**
+• Formulario Casos Prueba
+• Generador Casos Prueba
+• Plan de Pruebas Template
+• Sistema Gestión Defectos
+• Gestión de Ambientes
+end note
+
+note bottom of ml_analytics
+**Analytics Tools (7 herramientas)**
+• Calculadora Métricas Calidad
+• Analizador Cobertura
+• Análisis Riesgos
+• ML Quality Analytics
+• Matriz RACI
+• Templates Automatización
+• Reportes Ejecución
+end note
+
+' === LEYENDA COMPACTA ===
+
+legend bottom
+**Arquitectura Vertical por Capas IBM:**
+🔵 **Strategy**: Governance y marcos empresariales (TOGAF)
+🟣 **Business**: Procesos CMMI/TMMi Level 3-4
+🟢 **Application**: 16 herramientas HTML implementadas
+🟠 **Technology**: Infraestructura e integración enterprise
+endlegend
+
+@enduml

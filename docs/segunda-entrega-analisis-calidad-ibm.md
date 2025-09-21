@@ -5179,6 +5179,96 @@ Uso: Planificación estratégica (15 min en sprint planning)
 
 ---
 
+### 16.6 Arquitectura Integrada de Calidad de Software IBM
+
+Como parte fundamental de la implementación estratégica, se ha desarrollado un **diagrama ArchiMate** que representa la arquitectura integrada completa del sistema de calidad de software IBM, mostrando la interconexión entre stakeholders, procesos, herramientas y tecnología.
+
+#### 16.6.1 Diagrama Arquitectónico Empresarial
+
+![Arquitectura Integrada de Calidad de Software IBM](../diagrams/arquitectura-calidad-software-ibm-integrada.png)
+
+**Especificaciones del diagrama:**
+- **Estándar**: Notación PlantUML con principios ArchiMate
+- **Orientación**: Vertical (optimizado para documentos tamaño carta)
+- **Capas arquitectónicas**: 4 niveles jerárquicos bien definidos
+- **Herramientas representadas**: 16 componentes HTML implementados
+
+#### 16.6.2 Capas de la Arquitectura Integrada
+
+**🔵 STRATEGY & GOVERNANCE**
+- Enterprise Architecture Framework (TOGAF 9.2)
+- Roles de Enterprise Architect
+- Governance y marcos estratégicos
+
+**🟣 BUSINESS PROCESSES**  
+- CMMI Level 3-4 Process Management
+- TMMi Level 3-4 Test Process Management
+- Quality Management Service (ISO/IEC 25010)
+
+**🟢 APPLICATION COMPONENTS**
+- Executive Dashboard Platform (16 herramientas HTML)
+- Testing Management Platform
+- Environment Management System
+- Traceability Matrix System
+- ML Quality Analytics Engine
+
+**🟠 TECHNOLOGY INFRASTRUCTURE**
+- Enterprise Service Bus Integration
+- CI/CD Pipeline Services
+- Quality Data Warehouse
+- Test Artifacts Repository
+
+#### 16.6.3 Stakeholders y Motivaciones Mapeados
+
+El diagrama incluye la representación completa de:
+- **CEO IBM Colombia**: Objetivos estratégicos (CMMI Level 4, 99.9% Reliability)
+- **Quality Manager**: Metas de eficiencia (Reducir TTM 30%, Defectos <0.1%)
+- **Banking Customers**: Drivers de calidad y seguridad
+- **Regulatory Drivers**: Cumplimiento bancario y competencia de mercado
+
+#### 16.6.4 Flujos de Datos y Relaciones
+
+La arquitectura muestra **relaciones bidireccionales** entre:
+- Strategy → Business: Frameworks guían procesos
+- Business → Application: Procesos implementados en herramientas
+- Application → Technology: Componentes soportados por infraestructura
+- Feedback loops: Métricas retroalimentan estrategia
+
+#### 16.6.5 Herramientas Implementadas por Categoría
+
+**Dashboard Suite (4 herramientas):**
+- Dashboard Ejecutivo IBM
+- Dashboard de Calidad  
+- Dashboard Testing Metrics
+- Dashboard Integrado
+
+**Testing Tools (5 herramientas):**
+- Formulario Casos Prueba
+- Generador Casos Prueba
+- Plan de Pruebas Template
+- Sistema Gestión Defectos
+- Gestión de Ambientes
+
+**Analytics Tools (7 herramientas):**
+- Calculadora Métricas Calidad
+- Analizador Cobertura
+- Análisis Riesgos
+- ML Quality Analytics
+- Matriz RACI
+- Templates Automatización
+- Reportes Ejecución
+
+#### 16.6.6 Valor Arquitectónico del Diagrama
+
+Este diagrama ArchiMate proporciona:
+- **Vista holística** del ecosistema de calidad IBM
+- **Trazabilidad completa** desde motivaciones hasta implementación
+- **Justificación arquitectónica** para las 16 herramientas desarrolladas
+- **Roadmap visual** para futuras expansiones
+- **Comunicación ejecutiva** del value proposition integral
+
+---
+
 ### 17. MANUALES DE USO Y DOCUMENTACIÓN TÉCNICA
 
 Esta sección documenta los manuales y guías técnicas desarrollados para el uso efectivo de todas las herramientas y plantillas implementadas en el proyecto.

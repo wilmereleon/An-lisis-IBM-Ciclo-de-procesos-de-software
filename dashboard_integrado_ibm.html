@@ -477,6 +477,9 @@
                 <li class="bx--header-nav__item">
                     <a href="formulario_casos_prueba_ibm.html" class="bx--header-nav__link">Casos de Prueba</a>
                 </li>
+                <li class="bx--header-nav__item">
+                    <a href="generador_casos_caja_negra_blanca_ibm.html" class="bx--header-nav__link">Caja Negra/Blanca</a>
+                </li>
             </ul>
         </nav>
     </header>
@@ -701,6 +704,9 @@
             
             if (!metrics.testMetrics) return;
             
+            // Obtener métricas del generador de casos de caja negra/blanca
+            const testCaseGeneratorMetrics = JSON.parse(localStorage.getItem('ibm-quality-metrics') || '{}').testCaseGenerator;
+            
             grid.innerHTML = `
                 <div class="metric-item">
                     <div class="metric-value">${metrics.testMetrics.total || 0}</div>
@@ -709,9 +715,21 @@
                 </div>
                 
                 <div class="metric-item">
+                    <div class="metric-value">${testCaseGeneratorMetrics?.data?.totalCases || 0}</div>
+                    <div class="metric-label">Casos Caja N/B</div>
+                    <div class="metric-trend trend-up">Generados</div>
+                </div>
+                
+                <div class="metric-item">
                     <div class="metric-value">${metrics.testMetrics.passRate || 0}%</div>
                     <div class="metric-label">Tasa de Éxito</div>
                     <div class="metric-trend ${getTrendClass(metrics.testMetrics.passRate)}">${getTrendText()}</div>
+                </div>
+                
+                <div class="metric-item">
+                    <div class="metric-value">${testCaseGeneratorMetrics?.data?.qualityScore || 0}</div>
+                    <div class="metric-label">Score Calidad CN/B</div>
+                    <div class="metric-trend trend-stable">Score</div>
                 </div>
                 
                 <div class="metric-item">
@@ -934,8 +952,57 @@
         }
 
         function triggerSync() {
+            // Sincronizar métricas del generador de casos de caja negra/blanca
+            const testCaseGeneratorMetrics = JSON.parse(localStorage.getItem('ibm-quality-metrics') || '{}').testCaseGenerator;
+            
+            if (testCaseGeneratorMetrics) {
+                addActivity('sync completed', `Sincronizado Generador C.N/B: ${testCaseGeneratorMetrics.data.totalCases} casos generados`);
+                
+                // Actualizar métricas locales con datos del generador
+                const metrics = IBMQualityManager.getMetrics();
+                metrics.testCaseGenerator = testCaseGeneratorMetrics;
+                
+                // Forzar actualización de métricas en dashboard
+                updateMetricsDisplay(metrics);
+                
+                // Mostrar notificación de éxito
+                showNotification('Sincronización completada', `Integradas métricas del Generador de Casos: ${testCaseGeneratorMetrics.data.totalCases} casos, Score: ${testCaseGeneratorMetrics.data.qualityScore}`);
+            } else {
+                addActivity('sync failed', 'No hay métricas disponibles del Generador de Casos C.N/B');
+                showNotification('Sin datos', 'No se encontraron métricas del Generador de Casos Caja Negra/Blanca');
+            }
+            
             IBMQualityManager.syncData();
             addActivity('manual sync', 'Sincronización manual iniciada');
+        }
+        
+        function showNotification(title, message) {
+            // Crear notificación temporal
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--cds-interactive-01);
+                color: white;
+                padding: 1rem;
+                border-radius: 4px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 1000;
+                max-width: 300px;
+                font-family: 'IBM Plex Sans', sans-serif;
+            `;
+            notification.innerHTML = `
+                <h4 style="margin: 0 0 0.5rem 0; font-size: 0.875rem;">${title}</h4>
+                <p style="margin: 0; font-size: 0.75rem; opacity: 0.9;">${message}</p>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto-remover después de 3 segundos
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 3000);
         }
 
         // Inicializar actividades de ejemplo
