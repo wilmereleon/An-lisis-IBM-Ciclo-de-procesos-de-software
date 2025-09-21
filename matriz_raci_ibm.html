@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matriz RACI - IBM Quality Management</title>
+    
+    <!-- IBM favicon -->
+    <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
+    
+    <!-- IBM Carbon Design System CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/carbon-components@10.58.12/css/carbon-components.min.css">
+    
+    <!-- IBM Carbon Icons -->
+    <script type="module" src="https://unpkg.com/@carbon/icons@11.8.0/es/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@carbon/icons@11.8.0/lib/index.css">
+    
+    <!-- IBM Plex Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* IBM Carbon Design System Variables */
+            --cds-interactive-01: #0f62fe;
+            --cds-interactive-02: #393939;
+            --cds-interactive-03: #0f62fe;
+            --cds-interactive-04: #0f62fe;
+            --cds-ui-background: #ffffff;
+            --cds-ui-01: #f4f4f4;
+            --cds-ui-02: #ffffff;
+            --cds-ui-03: #e0e0e0;
+            --cds-ui-04: #8d8d8d;
+            --cds-ui-05: #161616;
+            --cds-text-01: #161616;
+            --cds-text-02: #525252;
+            --cds-text-03: #a8a8a8;
+            --cds-text-04: #ffffff;
+            --cds-text-05: #6f6f6f;
+            --cds-icon-01: #161616;
+            --cds-icon-02: #525252;
+            --cds-icon-03: #ffffff;
+            --cds-link-01: #0f62fe;
+            --cds-field-01: #f4f4f4;
+            --cds-field-02: #ffffff;
+            --cds-inverse-01: #ffffff;
+            --cds-inverse-02: #393939;
+            --cds-support-01: #da1e28;
+            --cds-support-02: #24a148;
+            --cds-support-03: #f1c21b;
+            --cds-support-04: #0043ce;
+            --cds-overlay-01: rgba(22, 22, 22, 0.5);
+            --cds-focus: #0f62fe;
+            --cds-hover-primary: #0353e9;
+            --cds-active-primary: #002d9c;
+            --cds-hover-primary-text: #004ccc;
+            --cds-hover-secondary: #4c4c4c;
+            --cds-active-secondary: #6f6f6f;
+            --cds-hover-tertiary: #0353e9;
+            --cds-active-tertiary: #002d9c;
+            --cds-hover-ui: #e5e5e5;
+            --cds-active-ui: #c6c6c6;
+            --cds-selected-ui: #e0e0e0;
+            --cds-hover-selected-ui: #cacaca;
+            --cds-inverse-hover-ui: #4c4c4c;
+            --cds-hover-danger: #ba1b23;
+            --cds-active-danger: #750e13;
+            --cds-hover-row: #e5e5e5;
+            --cds-visited-link: #8a3ffc;
+            --cds-disabled-01: #f4f4f4;
+            --cds-disabled-02: #c6c6c6;
+            --cds-disabled-03: #8d8d8d;
+            --cds-highlight: #d0e2ff;
+            --cds-skeleton-01: #e5e5e5;
+            --cds-skeleton-02: #c6c6c6;
+            --cds-brand-01: #0f62fe;
+            --cds-brand-02: #393939;
+            --cds-brand-03: #0f62fe;
+            --cds-active-01: #c6c6c6;
+            --cds-hover-field: #e5e5e5;
+            
+            /* IBM Carbon Spacing Scale */
+            --cds-spacing-01: 0.125rem;
+            --cds-spacing-02: 0.25rem;
+            --cds-spacing-03: 0.5rem;
+            --cds-spacing-04: 0.75rem;
+            --cds-spacing-05: 1rem;
+            --cds-spacing-06: 1.5rem;
+            --cds-spacing-07: 2rem;
+            --cds-spacing-08: 2.5rem;
+            --cds-spacing-09: 3rem;
+            --cds-spacing-10: 4rem;
+            --cds-spacing-11: 5rem;
+            --cds-spacing-12: 6rem;
+            --cds-spacing-13: 10rem;
+            
+            /* IBM Carbon Typography Scale */
+            --cds-productive-heading-01: 0.875rem;
+            --cds-productive-heading-02: 1rem;
+            --cds-productive-heading-03: 1.25rem;
+            --cds-productive-heading-04: 1.75rem;
+            --cds-productive-heading-05: 2rem;
+            --cds-productive-heading-06: 2.625rem;
+            --cds-productive-heading-07: 3.375rem;
+            
+            --cds-body-compact-01: 0.875rem;
+            --cds-body-compact-02: 1rem;
+            --cds-body-short-01: 0.875rem;
+            --cds-body-short-02: 1rem;
+            --cds-body-long-01: 0.875rem;
+            --cds-body-long-02: 1rem;
+            
+            --cds-caption-01: 0.75rem;
+            --cds-caption-02: 0.875rem;
+            --cds-label-01: 0.75rem;
+            --cds-label-02: 0.875rem;
+            --cds-helper-text-01: 0.75rem;
+            --cds-helper-text-02: 0.875rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.29;
+            letter-spacing: 0.16px;
+            background-color: var(--cds-ui-background);
+            color: var(--cds-text-01);
+            min-height: 100vh;
+        }
+
+        /* IBM Carbon Header/Navbar */
+        .bx--header {
+            background-color: var(--cds-ui-05);
+            border-bottom: 1px solid var(--cds-ui-03);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 var(--cds-spacing-05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 6000;
+        }
+
+        .bx--header__name {
+            font-size: var(--cds-body-short-02);
+            font-weight: 600;
+            color: var(--cds-text-04);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 0 var(--cds-spacing-05);
+            border-left: 1px solid var(--cds-ui-04);
+            margin-left: var(--cds-spacing-05);
+        }
+
+        .bx--header__name:hover {
+            background-color: var(--cds-inverse-hover-ui);
+        }
+
+        .bx--header__logo {
+            width: 20px;
+            height: 20px;
+            margin-right: var(--cds-spacing-03);
+            fill: var(--cds-icon-03);
+        }
+
+        .bx--header-nav {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            margin-left: auto;
+        }
+
+        .bx--header-nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .bx--header-nav__item {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .bx--header-nav__link {
+            color: var(--cds-text-04);
+            text-decoration: none;
+            font-size: var(--cds-body-short-01);
+            font-weight: 400;
+            padding: 0 var(--cds-spacing-05);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            transition: background-color 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        }
+
+        .bx--header-nav__link:hover {
+            background-color: var(--cds-inverse-hover-ui);
+        }
+
+        .bx--header-nav__link--current {
+            background-color: var(--cds-inverse-02);
+            color: var(--cds-inverse-01);
+        }
+
+        .container {
+            max-width: 1584px;
+            margin: 0 auto;
+            padding: var(--cds-spacing-05);
+            padding-top: calc(48px + var(--cds-spacing-05));
+        }
+
+        /* Header Section */
+        .matrix-header {
+            background: var(--cds-ui-02);
+            padding: var(--cds-spacing-06);
+            margin-bottom: var(--cds-spacing-05);
+            border: 1px solid var(--cds-ui-03);
+        }
+
+        .matrix-header h1 {
+            font-size: var(--cds-productive-heading-05);
+            font-weight: 400;
+            margin-bottom: var(--cds-spacing-03);
+            color: var(--cds-text-01);
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+        }
+
+        .matrix-header .subtitle {
+            font-size: var(--cds-body-long-01);
+            color: var(--cds-text-02);
+            margin-bottom: var(--cds-spacing-05);
+        }
+
+        .matrix-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--cds-spacing-05);
+        }
+
+        .info-card {
+            background: var(--cds-ui-01);
+            padding: var(--cds-spacing-04);
+            border: 1px solid var(--cds-ui-03);
+        }
+
+        .info-label {
+            font-size: var(--cds-label-01);
+            color: var(--cds-text-02);
+            margin-bottom: var(--cds-spacing-02);
+        }
+
+        .info-value {
+            font-size: var(--cds-body-short-02);
+            color: var(--cds-text-01);
+            font-weight: 600;
+        }
+
+        /* RACI Legend */
+        .raci-legend {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-05);
+            margin-bottom: var(--cds-spacing-05);
+        }
+
+        .legend-title {
+            font-size: var(--cds-productive-heading-02);
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-04);
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+        }
+
+        .legend-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--cds-spacing-04);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+        }
+
+        .raci-badge {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: var(--cds-label-01);
+            border-radius: 4px;
+        }
+
+        .raci-r { background: var(--cds-support-01); color: var(--cds-text-04); }
+        .raci-a { background: var(--cds-support-03); color: var(--cds-text-01); }
+        .raci-c { background: var(--cds-interactive-01); color: var(--cds-text-04); }
+        .raci-i { background: var(--cds-support-02); color: var(--cds-text-04); }
+
+        .legend-description {
+            font-size: var(--cds-body-short-01);
+            color: var(--cds-text-01);
+        }
+
+        /* Controls */
+        .matrix-controls {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-05);
+            margin-bottom: var(--cds-spacing-05);
+            display: flex;
+            gap: var(--cds-spacing-05);
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+        }
+
+        .bx--btn {
+            height: 40px;
+            padding: 0 var(--cds-spacing-04);
+            border: none;
+            font-size: var(--cds-body-short-01);
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--cds-spacing-02);
+        }
+
+        .bx--btn--primary {
+            background-color: var(--cds-interactive-01);
+            color: var(--cds-text-04);
+        }
+
+        .bx--btn--primary:hover {
+            background-color: var(--cds-hover-primary);
+        }
+
+        .bx--btn--secondary {
+            background-color: transparent;
+            color: var(--cds-interactive-01);
+            border: 1px solid var(--cds-interactive-01);
+        }
+
+        .bx--btn--secondary:hover {
+            background-color: var(--cds-hover-ui);
+        }
+
+        .bx--btn--tertiary {
+            background-color: transparent;
+            color: var(--cds-interactive-01);
+            border: 1px solid transparent;
+        }
+
+        .bx--btn--tertiary:hover {
+            background-color: var(--cds-hover-ui);
+        }
+
+        .bx--select {
+            position: relative;
+            min-width: 200px;
+        }
+
+        .bx--select-input {
+            width: 100%;
+            height: 40px;
+            padding: 0 var(--cds-spacing-04);
+            border: none;
+            border-bottom: 1px solid var(--cds-ui-04);
+            background-color: var(--cds-field-01);
+            color: var(--cds-text-01);
+            font-size: var(--cds-body-short-01);
+            font-family: inherit;
+            appearance: none;
+            cursor: pointer;
+            padding-right: var(--cds-spacing-07);
+        }
+
+        .bx--select__arrow {
+            position: absolute;
+            right: var(--cds-spacing-04);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            fill: var(--cds-icon-01);
+            pointer-events: none;
+        }
+
+        /* RACI Matrix Table */
+        .matrix-container {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            overflow-x: auto;
+        }
+
+        .raci-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: var(--cds-body-short-01);
+        }
+
+        .raci-table th,
+        .raci-table td {
+            padding: var(--cds-spacing-04);
+            border: 1px solid var(--cds-ui-03);
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .raci-table th {
+            background: var(--cds-ui-01);
+            font-weight: 600;
+            color: var(--cds-text-01);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .raci-table th.task-header {
+            text-align: left;
+            min-width: 250px;
+            max-width: 350px;
+            background: var(--cds-ui-01);
+            position: sticky;
+            left: 0;
+            z-index: 101;
+        }
+
+        .raci-table td.task-cell {
+            text-align: left;
+            font-weight: 600;
+            background: var(--cds-ui-01);
+            position: sticky;
+            left: 0;
+            z-index: 99;
+            min-width: 250px;
+            max-width: 350px;
+            word-wrap: break-word;
+        }
+
+        .raci-cell {
+            width: 120px;
+            height: 60px;
+            position: relative;
+            cursor: pointer;
+            transition: all 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        }
+
+        .raci-cell:hover {
+            background-color: var(--cds-hover-ui);
+        }
+
+        .raci-cell.selected {
+            font-weight: 600;
+        }
+
+        .raci-cell.selected.r { background-color: var(--cds-support-01); color: var(--cds-text-04); }
+        .raci-cell.selected.a { background-color: var(--cds-support-03); color: var(--cds-text-01); }
+        .raci-cell.selected.c { background-color: var(--cds-interactive-01); color: var(--cds-text-04); }
+        .raci-cell.selected.i { background-color: var(--cds-support-02); color: var(--cds-text-04); }
+
+        /* Task Categories */
+        .task-category {
+            font-weight: 600;
+            color: var(--cds-text-01);
+            background: var(--cds-ui-03);
+        }
+
+        .task-category td {
+            background: var(--cds-ui-03);
+            color: var(--cds-text-01);
+            font-weight: 600;
+        }
+
+        /* Editable Tasks */
+        .editable-task {
+            border: none;
+            background: transparent;
+            width: 100%;
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            padding: 0;
+        }
+
+        .editable-task:focus {
+            outline: 2px solid var(--cds-focus);
+            outline-offset: -2px;
+        }
+
+        /* Statistics */
+        .matrix-stats {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-05);
+            margin-top: var(--cds-spacing-05);
+        }
+
+        .stats-title {
+            font-size: var(--cds-productive-heading-02);
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-04);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--cds-spacing-04);
+        }
+
+        .stat-item {
+            background: var(--cds-ui-01);
+            padding: var(--cds-spacing-04);
+            border: 1px solid var(--cds-ui-03);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: var(--cds-productive-heading-03);
+            font-weight: 400;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-02);
+        }
+
+        .stat-label {
+            font-size: var(--cds-label-01);
+            color: var(--cds-text-02);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1056px) {
+            .matrix-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .control-group {
+                justify-content: space-between;
+            }
+        }
+
+        @media (max-width: 672px) {
+            .container {
+                padding: var(--cds-spacing-04);
+                padding-top: calc(48px + var(--cds-spacing-04));
+            }
+
+            .matrix-info,
+            .legend-items,
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Carbon Header/Navbar -->
+    <header class="bx--header">
+        <a href="#" class="bx--header__name">
+            <svg class="bx--header__logo" viewBox="0 0 32 32">
+                <path d="M8.24 25.14L7 24l4.05-4.24.39.4-.47.47L8.52 23l1.36-1.37-.41-.41 4.36-4.59L14 17l-5.79 6.14H8.2zm-5.92-8.12L3.73 15.6l4.2-4.44.4.4-.47.48L5.41 14.4l1.38-1.38-.41-.41L10.55 8.4l.17.37-5.79 6.14H2.3z"/>
+                <path d="M27.12 8h-6.23l-3.7 3.9 3.7 3.9h6.23L32 12l-4.88-4zM22.12 14l2.57-2.7L26.88 14h-4.76zm5.76-4L26.12 8h-2.5l1.26 2z"/>
+            </svg>
+            IBM Quality Management
+        </a>
+        
+        <nav class="bx--header-nav">
+            <ul>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Dashboard</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Casos de Prueba</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link bx--header-nav__link--current">Matriz RACI</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Reports</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="matrix-header">
+            <h1>
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 32 32">
+                    <path d="M6,6V26H26V6ZM24,24H8V8H24Z"/>
+                    <path d="M10,12h6v2H10ZM18,12h4v2H18ZM10,16h6v2H10ZM18,16h4v2H18ZM10,20h6v2H10ZM18,20h4v2H18Z"/>
+                </svg>
+                Matriz RACI - Análisis de Calidad IBM
+            </h1>
+            <div class="subtitle">Matriz de Responsabilidades para Gestión de Calidad de Software</div>
+            
+            <div class="matrix-info">
+                <div class="info-card">
+                    <div class="info-label">Proyecto</div>
+                    <div class="info-value">IBM Quality Management System</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Última Actualización</div>
+                    <div class="info-value" id="lastUpdate">21/12/2024</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Total Actividades</div>
+                    <div class="info-value" id="totalTasks">32</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Roles Definidos</div>
+                    <div class="info-value" id="totalRoles">7</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Estado</div>
+                    <div class="info-value">En Revisión</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RACI Legend -->
+        <div class="raci-legend">
+            <div class="legend-title">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                    <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12.0137,12.0137,0,0,1,16,28Z"/>
+                    <path d="M15,8h2v11H15ZM16,24a1.5,1.5,0,1,0-1.5-1.5A1.5,1.5,0,0,0,16,24Z"/>
+                </svg>
+                Leyenda RACI
+            </div>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <div class="raci-badge raci-r">R</div>
+                    <div class="legend-description"><strong>Responsable:</strong> Ejecuta la actividad</div>
+                </div>
+                <div class="legend-item">
+                    <div class="raci-badge raci-a">A</div>
+                    <div class="legend-description"><strong>Accountable:</strong> Rinde cuentas del resultado</div>
+                </div>
+                <div class="legend-item">
+                    <div class="raci-badge raci-c">C</div>
+                    <div class="legend-description"><strong>Consultado:</strong> Su opinión es requerida</div>
+                </div>
+                <div class="legend-item">
+                    <div class="raci-badge raci-i">I</div>
+                    <div class="legend-description"><strong>Informado:</strong> Debe ser notificado del resultado</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Matrix Controls -->
+        <div class="matrix-controls">
+            <div class="control-group">
+                <button class="bx--btn bx--btn--primary" onclick="addTask()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M17,15V8H15v7H8v2h7v7h2V17h7V15Z"/>
+                    </svg>
+                    Agregar Actividad
+                </button>
+                <button class="bx--btn bx--btn--secondary" onclick="addRole()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16,8a5,5,0,1,0,5,5A5,5,0,0,0,16,8Z"/>
+                        <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2ZM10,24.377c.663-1.823,3.2-2.377,6-2.377s5.337.554,6,2.377a11.9493,11.9493,0,0,1-12,0Z"/>
+                    </svg>
+                    Agregar Rol
+                </button>
+            </div>
+            
+            <div class="control-group">
+                <div class="bx--select">
+                    <select class="bx--select-input" id="filterRole">
+                        <option value="">Filtrar por rol...</option>
+                        <option value="project-manager">Project Manager</option>
+                        <option value="qa-lead">QA Lead</option>
+                        <option value="developer">Developer</option>
+                        <option value="business-analyst">Business Analyst</option>
+                    </select>
+                    <svg class="bx--select__arrow" viewBox="0 0 10 5">
+                        <path d="M0 0l5 4.998L10 0z" fill-rule="evenodd"></path>
+                    </svg>
+                </div>
+                
+                <button class="bx--btn bx--btn--tertiary" onclick="exportMatrix()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M24,28H8V18l2-2h5V14h2v2h5l2,2V28ZM10,26H22V19H10V26Z"/>
+                    </svg>
+                    Exportar
+                </button>
+                
+                <button class="bx--btn bx--btn--tertiary" onclick="clearMatrix()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M24,9.4L22.6,8L16,14.6L9.4,8L8,9.4l6.6,6.6L8,22.6L9.4,24l6.6-6.6l6.6,6.6l1.4-1.4L17.4,16Z"/>
+                    </svg>
+                    Limpiar Selecciones
+                </button>
+            </div>
+        </div>
+
+        <!-- RACI Matrix Table -->
+        <div class="matrix-container">
+            <table class="raci-table" id="raciMatrix">
+                <thead>
+                    <tr>
+                        <th class="task-header">Actividades / Responsabilidades</th>
+                        <th>Project Manager</th>
+                        <th>QA Lead</th>
+                        <th>QA Analyst</th>
+                        <th>Developer</th>
+                        <th>Business Analyst</th>
+                        <th>DevOps Engineer</th>
+                        <th>Stakeholder</th>
+                    </tr>
+                </thead>
+                <tbody id="matrixBody">
+                    <!-- Planning Phase -->
+                    <tr class="task-category">
+                        <td colspan="8"><strong>FASE 1: PLANIFICACIÓN</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="task-cell">
+                            <input type="text" class="editable-task" value="Definición de estrategia de calidad">
+                        </td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                    </tr>
+                    <tr>
+                        <td class="task-cell">
+                            <input type="text" class="editable-task" value="Elaboración del plan de pruebas">
+                        </td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                    </tr>
+                    <tr>
+                        <td class="task-cell">
+                            <input type="text" class="editable-task" value="Definición de criterios de entrada y salida">
+                        </td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                    </tr>
+                    
+                    <!-- Design Phase -->
+                    <tr class="task-category">
+                        <td colspan="8"><strong>FASE 2: DISEÑO DE PRUEBAS</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="task-cell">
+                            <input type="text" class="editable-task" value="Diseño de casos de prueba">
+                        </td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                    </tr>
+                    <tr>
+                        <td class="task-cell">
+                            <input type="text" class="editable-task" value="Revisión y aprobación de casos de prueba">
+                        </td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                    </tr>
+                    <tr>
+                        <td class="task-cell">
+                            <input type="text" class="editable-task" value="Preparación de datos de prueba">
+                        </td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                    </tr>
+                    
+                    <!-- Execution Phase -->
+                    <tr class="task-category">
+                        <td colspan="8"><strong>FASE 3: EJECUCIÓN DE PRUEBAS</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="task-cell">
+                            <input type="text" class="editable-task" value="Ejecución de pruebas funcionales">
+                        </td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                    </tr>
+                    <tr>
+                        <td class="task-cell">
+                            <input type="text" class="editable-task" value="Reporte y seguimiento de defectos">
+                        </td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                    </tr>
+                    <tr>
+                        <td class="task-cell">
+                            <input type="text" class="editable-task" value="Pruebas de regresión">
+                        </td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                    </tr>
+                    
+                    <!-- Closure Phase -->
+                    <tr class="task-category">
+                        <td colspan="8"><strong>FASE 4: CIERRE Y ENTREGA</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="task-cell">
+                            <input type="text" class="editable-task" value="Generación de reportes de calidad">
+                        </td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                    </tr>
+                    <tr>
+                        <td class="task-cell">
+                            <input type="text" class="editable-task" value="Entrega de artefactos de prueba">
+                        </td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                    </tr>
+                    <tr>
+                        <td class="task-cell">
+                            <input type="text" class="editable-task" value="Retrospectiva y lecciones aprendidas">
+                        </td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                        <td class="raci-cell" onclick="toggleRaci(this)"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Matrix Statistics -->
+        <div class="matrix-stats">
+            <div class="stats-title">Estadísticas de la Matriz</div>
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-item">
+                    <div class="stat-value" id="responsibleCount">0</div>
+                    <div class="stat-label">Responsables Asignados</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="accountableCount">0</div>
+                    <div class="stat-label">Accountables Definidos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="consultedCount">0</div>
+                    <div class="stat-label">Consultados</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="informedCount">0</div>
+                    <div class="stat-label">Informados</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="completionPercentage">0%</div>
+                    <div class="stat-label">Completitud de Matriz</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const raciStates = ['', 'R', 'A', 'C', 'I'];
+        let currentStateIndex = 0;
+
+        // Toggle RACI assignment
+        function toggleRaci(cell) {
+            // Clear other selections in the same row for A (Accountable) - only one per task
+            if (cell.textContent === 'A' || currentStateIndex === 2) {
+                const row = cell.parentElement;
+                const accountableCells = row.querySelectorAll('.raci-cell.selected.a');
+                accountableCells.forEach(ac => {
+                    if (ac !== cell) {
+                        ac.textContent = '';
+                        ac.className = 'raci-cell';
+                    }
+                });
+            }
+
+            // Cycle through RACI states
+            currentStateIndex = (raciStates.indexOf(cell.textContent) + 1) % raciStates.length;
+            const newState = raciStates[currentStateIndex];
+            
+            cell.textContent = newState;
+            cell.className = 'raci-cell';
+            
+            if (newState) {
+                cell.classList.add('selected', newState.toLowerCase());
+            }
+
+            updateStatistics();
+        }
+
+        // Add new task row
+        function addTask() {
+            const tbody = document.getElementById('matrixBody');
+            const newRow = document.createElement('tr');
+            const roleCount = document.querySelector('.raci-table thead tr').children.length - 1;
+            
+            newRow.innerHTML = `
+                <td class="task-cell">
+                    <input type="text" class="editable-task" placeholder="Nueva actividad..." value="">
+                </td>
+                ${Array(roleCount).fill().map(() => '<td class="raci-cell" onclick="toggleRaci(this)"></td>').join('')}
+            `;
+            
+            tbody.appendChild(newRow);
+            updateTaskCount();
+            
+            // Focus on the new task input
+            newRow.querySelector('.editable-task').focus();
+        }
+
+        // Add new role column
+        function addRole() {
+            const roleName = prompt('Ingrese el nombre del nuevo rol:');
+            if (!roleName) return;
+
+            // Add to header
+            const headerRow = document.querySelector('.raci-table thead tr');
+            const newHeader = document.createElement('th');
+            newHeader.textContent = roleName;
+            headerRow.appendChild(newHeader);
+
+            // Add cells to all existing rows
+            const bodyRows = document.querySelectorAll('.raci-table tbody tr:not(.task-category)');
+            bodyRows.forEach(row => {
+                const newCell = document.createElement('td');
+                newCell.className = 'raci-cell';
+                newCell.onclick = () => toggleRaci(newCell);
+                row.appendChild(newCell);
+            });
+
+            updateRoleCount();
+        }
+
+        // Clear all RACI assignments
+        function clearMatrix() {
+            if (confirm('¿Está seguro de que desea limpiar todas las asignaciones RACI?')) {
+                const raciCells = document.querySelectorAll('.raci-cell');
+                raciCells.forEach(cell => {
+                    cell.textContent = '';
+                    cell.className = 'raci-cell';
+                });
+                updateStatistics();
+            }
+        }
+
+        // Export matrix to CSV
+        function exportMatrix() {
+            const table = document.querySelector('.raci-table');
+            let csv = [];
+            
+            // Headers
+            const headers = Array.from(table.querySelectorAll('thead th')).map(th => th.textContent);
+            csv.push(headers.join(','));
+            
+            // Data rows
+            const rows = table.querySelectorAll('tbody tr:not(.task-category)');
+            rows.forEach(row => {
+                const cols = Array.from(row.children).map(td => {
+                    if (td.classList.contains('task-cell')) {
+                        return `"${td.querySelector('.editable-task').value}"`;
+                    }
+                    return td.textContent || '';
+                });
+                csv.push(cols.join(','));
+            });
+            
+            // Download CSV
+            const csvContent = csv.join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'matriz_raci_ibm.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Update statistics
+        function updateStatistics() {
+            const raciCells = document.querySelectorAll('.raci-cell.selected');
+            const totalCells = document.querySelectorAll('.raci-cell').length;
+            
+            const counts = {
+                r: 0, a: 0, c: 0, i: 0
+            };
+            
+            raciCells.forEach(cell => {
+                const type = cell.textContent.toLowerCase();
+                if (counts.hasOwnProperty(type)) {
+                    counts[type]++;
+                }
+            });
+            
+            document.getElementById('responsibleCount').textContent = counts.r;
+            document.getElementById('accountableCount').textContent = counts.a;
+            document.getElementById('consultedCount').textContent = counts.c;
+            document.getElementById('informedCount').textContent = counts.i;
+            
+            const completionPercentage = totalCells > 0 ? Math.round((raciCells.length / totalCells) * 100) : 0;
+            document.getElementById('completionPercentage').textContent = completionPercentage + '%';
+        }
+
+        // Update task count
+        function updateTaskCount() {
+            const taskRows = document.querySelectorAll('.raci-table tbody tr:not(.task-category)');
+            document.getElementById('totalTasks').textContent = taskRows.length;
+        }
+
+        // Update role count
+        function updateRoleCount() {
+            const roleHeaders = document.querySelectorAll('.raci-table thead th:not(.task-header)');
+            document.getElementById('totalRoles').textContent = roleHeaders.length;
+        }
+
+        // Filter by role
+        document.getElementById('filterRole').addEventListener('change', function() {
+            const selectedRole = this.value;
+            const table = document.querySelector('.raci-table');
+            const headers = Array.from(table.querySelectorAll('thead th'));
+            
+            if (!selectedRole) {
+                // Show all columns
+                headers.forEach((header, index) => {
+                    header.style.display = '';
+                    const bodyRows = table.querySelectorAll('tbody tr');
+                    bodyRows.forEach(row => {
+                        if (row.children[index]) {
+                            row.children[index].style.display = '';
+                        }
+                    });
+                });
+            } else {
+                // Hide unselected columns
+                headers.forEach((header, index) => {
+                    if (index === 0 || header.textContent.toLowerCase().includes(selectedRole)) {
+                        header.style.display = '';
+                        const bodyRows = table.querySelectorAll('tbody tr');
+                        bodyRows.forEach(row => {
+                            if (row.children[index]) {
+                                row.children[index].style.display = '';
+                            }
+                        });
+                    } else {
+                        header.style.display = 'none';
+                        const bodyRows = table.querySelectorAll('tbody tr');
+                        bodyRows.forEach(row => {
+                            if (row.children[index]) {
+                                row.children[index].style.display = 'none';
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        // Initialize with sample data
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update counts
+            updateTaskCount();
+            updateRoleCount();
+            updateStatistics();
+            
+            // Update last modified date
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleDateString('es-CO');
+
+            // Add some sample RACI assignments
+            setTimeout(() => {
+                const sampleAssignments = [
+                    [1, 1, 'A'], // Project Manager - Accountable for strategy
+                    [1, 2, 'R'], // QA Lead - Responsible for strategy
+                    [1, 7, 'I'], // Stakeholder - Informed
+                    [2, 2, 'A'], // QA Lead - Accountable for test plan
+                    [2, 3, 'R'], // QA Analyst - Responsible for test plan
+                    [2, 1, 'C'], // Project Manager - Consulted
+                ];
+
+                sampleAssignments.forEach(([rowIndex, colIndex, raci]) => {
+                    const rows = document.querySelectorAll('.raci-table tbody tr:not(.task-category)');
+                    if (rows[rowIndex] && rows[rowIndex].children[colIndex]) {
+                        const cell = rows[rowIndex].children[colIndex];
+                        cell.textContent = raci;
+                        cell.classList.add('selected', raci.toLowerCase());
+                    }
+                });
+
+                updateStatistics();
+            }, 500);
+        });
+
+        // Save task edits
+        document.addEventListener('change', function(e) {
+            if (e.target.classList.contains('editable-task')) {
+                console.log('Task updated:', e.target.value);
+                // Here you could save to localStorage or send to server
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey) {
+                switch(e.key) {
+                    case 's':
+                        e.preventDefault();
+                        console.log('Matrix saved');
+                        alert('Matriz guardada localmente');
+                        break;
+                    case 'e':
+                        e.preventDefault();
+                        exportMatrix();
+                        break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

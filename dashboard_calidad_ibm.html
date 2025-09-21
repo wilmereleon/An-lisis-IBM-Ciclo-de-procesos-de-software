@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Calidad - IBM</title>
+    
+    <!-- IBM Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
+    
+    <!-- IBM Carbon Design System -->
+    <link rel="stylesheet" href="https://unpkg.com/carbon-components/css/carbon-components.min.css">
+    
+    <!-- IBM Plex Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* IBM Carbon Design System Variables */
+        :root {
+            --cds-interactive-01: #0f62fe;
+            --cds-interactive-02: #393939;
+            --cds-interactive-03: #0f62fe;
+            --cds-interactive-04: #0f62fe;
+            --cds-ui-background: #ffffff;
+            --cds-ui-01: #f4f4f4;
+            --cds-ui-02: #ffffff;
+            --cds-ui-03: #e0e0e0;
+            --cds-ui-04: #8d8d8d;
+            --cds-ui-05: #161616;
+            --cds-text-01: #161616;
+            --cds-text-02: #525252;
+            --cds-text-03: #a8a8a8;
+            --cds-text-04: #ffffff;
+            --cds-text-05: #6f6f6f;
+            --cds-icon-01: #161616;
+            --cds-icon-02: #525252;
+            --cds-icon-03: #ffffff;
+            --cds-link-01: #0f62fe;
+            --cds-field-01: #f4f4f4;
+            --cds-field-02: #ffffff;
+            --cds-inverse-01: #ffffff;
+            --cds-inverse-02: #393939;
+            --cds-support-01: #da1e28;
+            --cds-support-02: #24a148;
+            --cds-support-03: #f1c21b;
+            --cds-support-04: #0043ce;
+            --cds-overlay-01: rgba(22, 22, 22, 0.5);
+            --cds-focus: #0f62fe;
+            --cds-hover-primary: #0353e9;
+            --cds-active-primary: #002d9c;
+            --cds-hover-primary-text: #004ccc;
+            --cds-hover-secondary: #4c4c4c;
+            --cds-active-secondary: #6f6f6f;
+            --cds-hover-tertiary: #0353e9;
+            --cds-active-tertiary: #002d9c;
+            --cds-hover-ui: #e5e5e5;
+            --cds-active-ui: #c6c6c6;
+            --cds-selected-ui: #e0e0e0;
+            --cds-hover-selected-ui: #cacaca;
+            --cds-inverse-hover-ui: #4c4c4c;
+            --cds-hover-danger: #ba1b23;
+            --cds-active-danger: #750e13;
+            --cds-hover-row: #e5e5e5;
+            --cds-visited-link: #8a3ffc;
+            --cds-disabled-01: #f4f4f4;
+            --cds-disabled-02: #c6c6c6;
+            --cds-disabled-03: #8d8d8d;
+            --cds-highlight: #d0e2ff;
+            --cds-skeleton-01: #e5e5e5;
+            --cds-skeleton-02: #c6c6c6;
+            --cds-brand-01: #0f62fe;
+            --cds-brand-02: #393939;
+            --cds-brand-03: #0f62fe;
+            --cds-active-01: #c6c6c6;
+            --cds-hover-field: #e5e5e5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.29;
+            letter-spacing: 0.16px;
+            background-color: var(--cds-ui-01);
+            color: var(--cds-text-01);
+        }
+
+        /* IBM Carbon Typography Scale */
+        .bx--type-caption-01 {
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 1.34;
+            letter-spacing: 0.32px;
+        }
+
+        .bx--type-label-01 {
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 1.34;
+            letter-spacing: 0.32px;
+        }
+
+        .bx--type-helper-text-01 {
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 1.34;
+            letter-spacing: 0.32px;
+        }
+
+        .bx--type-body-short-01 {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.29;
+            letter-spacing: 0.16px;
+        }
+
+        .bx--type-body-long-01 {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.43;
+            letter-spacing: 0.16px;
+        }
+
+        .bx--type-body-short-02 {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.375;
+            letter-spacing: 0;
+        }
+
+        .bx--type-body-long-02 {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.5;
+            letter-spacing: 0;
+        }
+
+        .bx--type-code-01 {
+            font-family: 'IBM Plex Mono', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', Courier, monospace;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 1.34;
+            letter-spacing: 0.32px;
+        }
+
+        .bx--type-code-02 {
+            font-family: 'IBM Plex Mono', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', Courier, monospace;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.43;
+            letter-spacing: 0.32px;
+        }
+
+        .bx--type-heading-01 {
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.29;
+            letter-spacing: 0.16px;
+        }
+
+        .bx--type-heading-02 {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.375;
+            letter-spacing: 0;
+        }
+
+        .bx--type-heading-03 {
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 1.4;
+            letter-spacing: 0;
+        }
+
+        .bx--type-heading-04 {
+            font-size: 28px;
+            font-weight: 400;
+            line-height: 1.29;
+            letter-spacing: 0;
+        }
+
+        .bx--type-heading-05 {
+            font-size: 32px;
+            font-weight: 300;
+            line-height: 1.25;
+            letter-spacing: 0;
+        }
+
+        .bx--type-heading-06 {
+            font-size: 42px;
+            font-weight: 300;
+            line-height: 1.19;
+            letter-spacing: 0;
+        }
+
+        .bx--type-heading-07 {
+            font-size: 54px;
+            font-weight: 300;
+            line-height: 1.19;
+            letter-spacing: 0;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(90deg, #001141 0%, #0f62fe 100%);
+            padding: 1rem 2rem;
+            color: var(--cds-text-04);
+            box-shadow: 0 2px 6px var(--cds-overlay-01);
+        }
+
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .ibm-logo {
+            background: var(--cds-ui-02);
+            color: var(--cds-brand-01);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .header-title {
+            font-size: 28px;
+            font-weight: 400;
+            margin: 0;
+        }
+
+        .header-status {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 16px;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 42px;
+            font-weight: 300;
+            line-height: 1.19;
+            margin-bottom: 1rem;
+            color: var(--cds-text-01);
+        }
+
+        .page-subtitle {
+            font-size: 16px;
+            color: var(--cds-text-02);
+            margin-bottom: 2rem;
+        }
+
+        .timestamp {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 14px;
+            color: var(--cds-text-02);
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--cds-support-02);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .metric-card {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: 1.5rem;
+            border-radius: 0;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.15s ease;
+        }
+
+        .metric-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .metric-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin: 0;
+        }
+
+        .metric-status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 2px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-success {
+            background: var(--cds-support-02);
+            color: var(--cds-text-04);
+        }
+
+        .status-warning {
+            background: var(--cds-support-03);
+            color: var(--cds-text-01);
+        }
+
+        .status-error {
+            background: var(--cds-support-01);
+            color: var(--cds-text-04);
+        }
+
+        .status-info {
+            background: var(--cds-support-04);
+            color: var(--cds-text-04);
+        }
+
+        .metric-value {
+            font-size: 48px;
+            font-weight: 300;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .metric-value.success {
+            color: var(--cds-support-02);
+        }
+
+        .metric-value.warning {
+            color: var(--cds-support-03);
+        }
+
+        .metric-value.error {
+            color: var(--cds-support-01);
+        }
+
+        .metric-value.info {
+            color: var(--cds-support-04);
+        }
+
+        .metric-description {
+            font-size: 14px;
+            color: var(--cds-text-02);
+            line-height: 1.43;
+        }
+
+        .metric-target {
+            font-size: 12px;
+            color: var(--cds-text-03);
+            margin-top: 0.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--cds-ui-03);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            background: var(--cds-ui-02);
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            font-size: 12px;
+            color: var(--cds-text-03);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <div class="ibm-logo">IBM</div>
+                <h1 class="header-title">Dashboard de Calidad</h1>
+            </div>
+            <div class="header-status">
+                Entorno de Producción • Datos en Tiempo Real
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h2 class="page-title">Métricas de Calidad de Software</h2>
+            <p class="page-subtitle">Monitoreo en tiempo real de indicadores clave de calidad y rendimiento</p>
+            <div class="timestamp">
+                <span class="status-indicator"></span>
+                Última actualización: 21 de septiembre de 2025 - 14:25:30
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <!-- Densidad de Defectos -->
+            <div class="metric-card">
+                <div class="metric-header">
+                    <h3 class="metric-title">Densidad de Defectos</h3>
+                    <span class="metric-status status-success">Óptimo</span>
+                </div>
+                <div class="metric-value success">1.42</div>
+                <div class="metric-description">
+                    Defectos por cada 1000 líneas de código
+                </div>
+                <div class="metric-target">
+                    Objetivo: < 2.5 defectos/KLOC
+                </div>
+            </div>
+
+            <!-- Cobertura de Código -->
+            <div class="metric-card">
+                <div class="metric-header">
+                    <h3 class="metric-title">Cobertura de Código</h3>
+                    <span class="metric-status status-success">Excelente</span>
+                </div>
+                <div class="metric-value success">94.7%</div>
+                <div class="metric-description">
+                    Porcentaje de código cubierto por pruebas automatizadas
+                </div>
+                <div class="metric-target">
+                    Objetivo: > 85%
+                </div>
+            </div>
+
+            <!-- Tasa de Éxito de Pipeline -->
+            <div class="metric-card">
+                <div class="metric-header">
+                    <h3 class="metric-title">Éxito de Pipeline CI/CD</h3>
+                    <span class="metric-status status-warning">Atención</span>
+                </div>
+                <div class="metric-value warning">92.1%</div>
+                <div class="metric-description">
+                    Porcentaje de ejecuciones exitosas del pipeline de despliegue
+                </div>
+                <div class="metric-target">
+                    Objetivo: > 95%
+                </div>
+            </div>
+
+            <!-- Tiempo de Resolución -->
+            <div class="metric-card">
+                <div class="metric-header">
+                    <h3 class="metric-title">Tiempo de Resolución</h3>
+                    <span class="metric-status status-info">Normal</span>
+                </div>
+                <div class="metric-value info">4.2</div>
+                <div class="metric-description">
+                    Días promedio para resolver defectos críticos
+                </div>
+                <div class="metric-target">
+                    Objetivo: < 5 días
+                </div>
+            </div>
+
+            <!-- Disponibilidad del Sistema -->
+            <div class="metric-card">
+                <div class="metric-header">
+                    <h3 class="metric-title">Disponibilidad</h3>
+                    <span class="metric-status status-success">Excelente</span>
+                </div>
+                <div class="metric-value success">99.87%</div>
+                <div class="metric-description">
+                    Tiempo de actividad del sistema en los últimos 30 días
+                </div>
+                <div class="metric-target">
+                    Objetivo: > 99.5%
+                </div>
+            </div>
+
+            <!-- Satisfacción del Usuario -->
+            <div class="metric-card">
+                <div class="metric-header">
+                    <h3 class="metric-title">Satisfacción de Usuario</h3>
+                    <span class="metric-status status-success">Excelente</span>
+                </div>
+                <div class="metric-value success">4.6/5</div>
+                <div class="metric-description">
+                    Puntuación promedio de satisfacción basada en feedback
+                </div>
+                <div class="metric-target">
+                    Objetivo: > 4.0/5
+                </div>
+            </div>
+
+            <!-- Velocidad de Despliegue -->
+            <div class="metric-card">
+                <div class="metric-header">
+                    <h3 class="metric-title">Frecuencia de Despliegue</h3>
+                    <span class="metric-status status-success">Óptimo</span>
+                </div>
+                <div class="metric-value success">2.8</div>
+                <div class="metric-description">
+                    Despliegues promedio por día
+                </div>
+                <div class="metric-target">
+                    Objetivo: > 2.0 despliegues/día
+                </div>
+            </div>
+
+            <!-- Deuda Técnica -->
+            <div class="metric-card">
+                <div class="metric-header">
+                    <h3 class="metric-title">Deuda Técnica</h3>
+                    <span class="metric-status status-warning">Moderada</span>
+                </div>
+                <div class="metric-value warning">12.3%</div>
+                <div class="metric-description">
+                    Porcentaje de código que requiere refactorización
+                </div>
+                <div class="metric-target">
+                    Objetivo: < 10%
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            IBM Quality Intelligence Platform v3.2 | 
+            Fuentes de datos: SonarQube • Jenkins • Jira • Azure DevOps • 
+            Motor de análisis: Watson AI • 
+            Actualización automática cada 5 minutos
+        </div>
+    </footer>
+
+    <script>
+        // Simulación de actualización automática
+        setInterval(function() {
+            const timestamp = document.querySelector('.timestamp');
+            const now = new Date();
+            const formattedTime = now.toLocaleString('es-ES', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            // Actualizar solo la parte del tiempo, manteniendo el texto
+            const timestampText = timestamp.innerHTML;
+            const newTimestamp = timestampText.replace(
+                /Última actualización: .+$/,
+                `Última actualización: ${formattedTime}`
+            );
+            timestamp.innerHTML = newTimestamp;
+            
+            console.log('Dashboard actualizado:', formattedTime);
+        }, 300000); // 5 minutos
+    </script>
+</body>
+</html>

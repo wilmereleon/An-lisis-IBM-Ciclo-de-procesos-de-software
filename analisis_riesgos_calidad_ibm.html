@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Riesgos de Calidad - IBM Quality Management</title>
+    
+    <!-- IBM favicon -->
+    <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
+    
+    <!-- IBM Carbon Design System CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/carbon-components@10.58.12/css/carbon-components.min.css">
+    
+    <!-- IBM Carbon Icons -->
+    <script type="module" src="https://unpkg.com/@carbon/icons@11.8.0/es/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@carbon/icons@11.8.0/lib/index.css">
+    
+    <!-- IBM Plex Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <style>
+        :root {
+            /* IBM Carbon Design System Variables */
+            --cds-interactive-01: #0f62fe;
+            --cds-interactive-02: #393939;
+            --cds-interactive-03: #0f62fe;
+            --cds-interactive-04: #0f62fe;
+            --cds-ui-background: #ffffff;
+            --cds-ui-01: #f4f4f4;
+            --cds-ui-02: #ffffff;
+            --cds-ui-03: #e0e0e0;
+            --cds-ui-04: #8d8d8d;
+            --cds-ui-05: #161616;
+            --cds-text-01: #161616;
+            --cds-text-02: #525252;
+            --cds-text-03: #a8a8a8;
+            --cds-text-04: #ffffff;
+            --cds-text-05: #6f6f6f;
+            --cds-icon-01: #161616;
+            --cds-icon-02: #525252;
+            --cds-icon-03: #ffffff;
+            --cds-link-01: #0f62fe;
+            --cds-field-01: #f4f4f4;
+            --cds-field-02: #ffffff;
+            --cds-inverse-01: #ffffff;
+            --cds-inverse-02: #393939;
+            --cds-support-01: #da1e28;
+            --cds-support-02: #24a148;
+            --cds-support-03: #f1c21b;
+            --cds-support-04: #0043ce;
+            --cds-overlay-01: rgba(22, 22, 22, 0.5);
+            --cds-focus: #0f62fe;
+            --cds-hover-primary: #0353e9;
+            --cds-active-primary: #002d9c;
+            --cds-hover-primary-text: #004ccc;
+            --cds-hover-secondary: #4c4c4c;
+            --cds-active-secondary: #6f6f6f;
+            --cds-hover-tertiary: #0353e9;
+            --cds-active-tertiary: #002d9c;
+            --cds-hover-ui: #e5e5e5;
+            --cds-active-ui: #c6c6c6;
+            --cds-selected-ui: #e0e0e0;
+            --cds-hover-selected-ui: #cacaca;
+            --cds-inverse-hover-ui: #4c4c4c;
+            --cds-hover-danger: #ba1b23;
+            --cds-active-danger: #750e13;
+            --cds-hover-row: #e5e5e5;
+            --cds-visited-link: #8a3ffc;
+            --cds-disabled-01: #f4f4f4;
+            --cds-disabled-02: #c6c6c6;
+            --cds-disabled-03: #8d8d8d;
+            --cds-highlight: #d0e2ff;
+            --cds-skeleton-01: #e5e5e5;
+            --cds-skeleton-02: #c6c6c6;
+            --cds-brand-01: #0f62fe;
+            --cds-brand-02: #393939;
+            --cds-brand-03: #0f62fe;
+            --cds-active-01: #c6c6c6;
+            --cds-hover-field: #e5e5e5;
+            
+            /* IBM Carbon Spacing Scale */
+            --cds-spacing-01: 0.125rem;
+            --cds-spacing-02: 0.25rem;
+            --cds-spacing-03: 0.5rem;
+            --cds-spacing-04: 0.75rem;
+            --cds-spacing-05: 1rem;
+            --cds-spacing-06: 1.5rem;
+            --cds-spacing-07: 2rem;
+            --cds-spacing-08: 2.5rem;
+            --cds-spacing-09: 3rem;
+            --cds-spacing-10: 4rem;
+            --cds-spacing-11: 5rem;
+            --cds-spacing-12: 6rem;
+            --cds-spacing-13: 10rem;
+            
+            /* IBM Carbon Typography Scale */
+            --cds-productive-heading-01: 0.875rem;
+            --cds-productive-heading-02: 1rem;
+            --cds-productive-heading-03: 1.25rem;
+            --cds-productive-heading-04: 1.75rem;
+            --cds-productive-heading-05: 2rem;
+            --cds-productive-heading-06: 2.625rem;
+            --cds-productive-heading-07: 3.375rem;
+            
+            --cds-body-compact-01: 0.875rem;
+            --cds-body-compact-02: 1rem;
+            --cds-body-short-01: 0.875rem;
+            --cds-body-short-02: 1rem;
+            --cds-body-long-01: 0.875rem;
+            --cds-body-long-02: 1rem;
+            
+            --cds-caption-01: 0.75rem;
+            --cds-caption-02: 0.875rem;
+            --cds-label-01: 0.75rem;
+            --cds-label-02: 0.875rem;
+            --cds-helper-text-01: 0.75rem;
+            --cds-helper-text-02: 0.875rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.29;
+            letter-spacing: 0.16px;
+            background-color: var(--cds-ui-background);
+            color: var(--cds-text-01);
+            min-height: 100vh;
+        }
+
+        /* IBM Carbon Header/Navbar */
+        .bx--header {
+            background-color: var(--cds-ui-05);
+            border-bottom: 1px solid var(--cds-ui-03);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 var(--cds-spacing-05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 6000;
+        }
+
+        .bx--header__name {
+            font-size: var(--cds-body-short-02);
+            font-weight: 600;
+            color: var(--cds-text-04);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 0 var(--cds-spacing-05);
+            border-left: 1px solid var(--cds-ui-04);
+            margin-left: var(--cds-spacing-05);
+        }
+
+        .bx--header__name:hover {
+            background-color: var(--cds-inverse-hover-ui);
+        }
+
+        .bx--header__logo {
+            width: 20px;
+            height: 20px;
+            margin-right: var(--cds-spacing-03);
+            fill: var(--cds-icon-03);
+        }
+
+        .bx--header-nav {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            margin-left: auto;
+        }
+
+        .bx--header-nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .bx--header-nav__item {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .bx--header-nav__link {
+            color: var(--cds-text-04);
+            text-decoration: none;
+            font-size: var(--cds-body-short-01);
+            font-weight: 400;
+            padding: 0 var(--cds-spacing-05);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            transition: background-color 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        }
+
+        .bx--header-nav__link:hover {
+            background-color: var(--cds-inverse-hover-ui);
+        }
+
+        .bx--header-nav__link--current {
+            background-color: var(--cds-inverse-02);
+            color: var(--cds-inverse-01);
+        }
+
+        .container {
+            max-width: 1584px;
+            margin: 0 auto;
+            padding: var(--cds-spacing-05);
+            padding-top: calc(48px + var(--cds-spacing-05));
+        }
+
+        /* Risk Analysis Header */
+        .risk-header {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-06);
+            margin-bottom: var(--cds-spacing-05);
+            border-radius: 4px;
+        }
+
+        .risk-header h1 {
+            font-size: var(--cds-productive-heading-05);
+            font-weight: 400;
+            margin-bottom: var(--cds-spacing-03);
+            color: var(--cds-text-01);
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+        }
+
+        .risk-subtitle {
+            font-size: var(--cds-body-long-01);
+            color: var(--cds-text-02);
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--cds-spacing-05);
+            margin-bottom: var(--cds-spacing-05);
+        }
+
+        /* Risk Input Form */
+        .risk-form {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-06);
+            border-radius: 4px;
+            height: fit-content;
+        }
+
+        .form-title {
+            font-size: var(--cds-productive-heading-02);
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-05);
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+        }
+
+        .form-group {
+            margin-bottom: var(--cds-spacing-05);
+        }
+
+        .bx--label {
+            font-size: var(--cds-label-02);
+            font-weight: 400;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-02);
+            display: block;
+        }
+
+        .bx--text-input,
+        .bx--select-input,
+        .bx--text-area {
+            width: 100%;
+            padding: 0 var(--cds-spacing-04);
+            border: none;
+            border-bottom: 1px solid var(--cds-ui-04);
+            background-color: var(--cds-field-01);
+            color: var(--cds-text-01);
+            font-size: var(--cds-body-short-01);
+            font-family: inherit;
+            transition: border-color 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        }
+
+        .bx--text-input {
+            height: 40px;
+        }
+
+        .bx--select-input {
+            height: 40px;
+        }
+
+        .bx--text-area {
+            min-height: 80px;
+            padding: var(--cds-spacing-03) var(--cds-spacing-04);
+            resize: vertical;
+        }
+
+        .bx--text-input:focus,
+        .bx--select-input:focus,
+        .bx--text-area:focus {
+            outline: 2px solid var(--cds-focus);
+            outline-offset: -2px;
+            border-color: var(--cds-focus);
+        }
+
+        .bx--helper-text {
+            font-size: var(--cds-helper-text-01);
+            color: var(--cds-text-02);
+            margin-top: var(--cds-spacing-02);
+        }
+
+        .bx--btn {
+            height: 48px;
+            padding: 0 var(--cds-spacing-05);
+            border: none;
+            font-size: var(--cds-body-short-02);
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+            border-radius: 0;
+            width: 100%;
+            justify-content: center;
+            margin-bottom: var(--cds-spacing-04);
+        }
+
+        .bx--btn--primary {
+            background-color: var(--cds-interactive-01);
+            color: var(--cds-text-04);
+        }
+
+        .bx--btn--primary:hover {
+            background-color: var(--cds-hover-primary);
+        }
+
+        .bx--btn--secondary {
+            background-color: transparent;
+            color: var(--cds-interactive-01);
+            border: 1px solid var(--cds-interactive-01);
+        }
+
+        .bx--btn--secondary:hover {
+            background-color: var(--cds-hover-ui);
+        }
+
+        /* Risk Matrix */
+        .risk-matrix {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-06);
+            border-radius: 4px;
+        }
+
+        .matrix-container {
+            display: grid;
+            grid-template-columns: 50px repeat(5, 1fr);
+            grid-template-rows: 50px repeat(5, 1fr);
+            gap: 2px;
+            margin: var(--cds-spacing-05) 0;
+            background: var(--cds-ui-04);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .matrix-label {
+            background: var(--cds-ui-05);
+            color: var(--cds-text-04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--cds-caption-01);
+            font-weight: 600;
+        }
+
+        .matrix-cell {
+            background: var(--cds-ui-01);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px;
+            cursor: pointer;
+            transition: all 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+            position: relative;
+            font-size: var(--cds-caption-01);
+        }
+
+        .matrix-cell:hover {
+            opacity: 0.8;
+            transform: scale(1.02);
+        }
+
+        .matrix-cell.risk-low { background-color: #24a148; color: var(--cds-text-04); }
+        .matrix-cell.risk-medium { background-color: #f1c21b; color: var(--cds-text-01); }
+        .matrix-cell.risk-high { background-color: #ff832b; color: var(--cds-text-04); }
+        .matrix-cell.risk-critical { background-color: #da1e28; color: var(--cds-text-04); }
+
+        .risk-item {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            bottom: 2px;
+            background: rgba(22, 22, 22, 0.9);
+            color: var(--cds-text-04);
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--cds-caption-01);
+            font-weight: 600;
+            text-align: center;
+            padding: 2px;
+            line-height: 1.2;
+        }
+
+        /* Risk List */
+        .risk-list {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            border-radius: 4px;
+            margin-top: var(--cds-spacing-05);
+        }
+
+        .risk-list-header {
+            background: var(--cds-ui-01);
+            padding: var(--cds-spacing-05);
+            border-bottom: 1px solid var(--cds-ui-03);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .risk-list-body {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .risk-item-card {
+            padding: var(--cds-spacing-04);
+            border-bottom: 1px solid var(--cds-ui-03);
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-04);
+        }
+
+        .risk-item-card:last-child {
+            border-bottom: none;
+        }
+
+        .risk-level-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .risk-item-content {
+            flex: 1;
+        }
+
+        .risk-item-title {
+            font-size: var(--cds-body-short-02);
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-01);
+        }
+
+        .risk-item-description {
+            font-size: var(--cds-body-short-01);
+            color: var(--cds-text-02);
+            margin-bottom: var(--cds-spacing-02);
+        }
+
+        .risk-item-meta {
+            font-size: var(--cds-caption-01);
+            color: var(--cds-text-03);
+            display: flex;
+            gap: var(--cds-spacing-04);
+        }
+
+        .risk-actions {
+            display: flex;
+            gap: var(--cds-spacing-02);
+        }
+
+        .risk-action-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: var(--cds-ui-01);
+            color: var(--cds-icon-01);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        }
+
+        .risk-action-btn:hover {
+            background: var(--cds-hover-ui);
+        }
+
+        /* Statistics */
+        .risk-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--cds-spacing-04);
+            margin: var(--cds-spacing-05) 0;
+        }
+
+        .stat-card {
+            background: var(--cds-ui-01);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-04);
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: var(--cds-productive-heading-03);
+            font-weight: 400;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-02);
+        }
+
+        .stat-label {
+            font-size: var(--cds-body-short-01);
+            color: var(--cds-text-02);
+        }
+
+        /* Charts */
+        .charts-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--cds-spacing-05);
+            margin-top: var(--cds-spacing-05);
+        }
+
+        .chart-container {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-05);
+            border-radius: 4px;
+            height: 400px;
+        }
+
+        .chart-title {
+            font-size: var(--cds-productive-heading-02);
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-04);
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1056px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 672px) {
+            .container {
+                padding: var(--cds-spacing-04);
+                padding-top: calc(48px + var(--cds-spacing-04));
+            }
+
+            .matrix-container {
+                grid-template-columns: 40px repeat(5, 1fr);
+                grid-template-rows: 40px repeat(5, 1fr);
+            }
+
+            .matrix-cell {
+                min-height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Carbon Header/Navbar -->
+    <header class="bx--header">
+        <a href="#" class="bx--header__name">
+            <svg class="bx--header__logo" viewBox="0 0 32 32">
+                <path d="M8.24 25.14L7 24l4.05-4.24.39.4-.47.47L8.52 23l1.36-1.37-.41-.41 4.36-4.59L14 17l-5.79 6.14H8.2zm-5.92-8.12L3.73 15.6l4.2-4.44.4.4-.47.48L5.41 14.4l1.38-1.38-.41-.41L10.55 8.4l.17.37-5.79 6.14H2.3z"/>
+                <path d="M27.12 8h-6.23l-3.7 3.9 3.7 3.9h6.23L32 12l-4.88-4zM22.12 14l2.57-2.7L26.88 14h-4.76zm5.76-4L26.12 8h-2.5l1.26 2z"/>
+            </svg>
+            IBM Quality Management
+        </a>
+        
+        <nav class="bx--header-nav">
+            <ul>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Dashboard</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Quality Analytics</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Calculadora Métricas</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link bx--header-nav__link--current">Análisis de Riesgos</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Reportes</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Risk Analysis Header -->
+        <div class="risk-header">
+            <h1>
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 32 32">
+                    <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2ZM14.9971,7h2.0029l-.1528,11H15.1499ZM16,25a1.5,1.5,0,1,1,1.5-1.5A1.5,1.5,0,0,1,16,25Z"/>
+                </svg>
+                Análisis de Riesgos de Calidad
+            </h1>
+            <div class="risk-subtitle">
+                Herramienta para identificar, evaluar y gestionar riesgos en procesos de calidad de software según metodologías IBM
+            </div>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="main-layout">
+            <!-- Risk Input Form -->
+            <div class="risk-form">
+                <div class="form-title">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"/>
+                        <path d="M8,10h8v2H8ZM8,14h10v2H8ZM8,18h6v2H8ZM8,22h4v2H8ZM18,10h6v2H18ZM20,14h4v2H20ZM18,18h6v2H18ZM20,22h4v2H20Z"/>
+                    </svg>
+                    Registrar Nuevo Riesgo
+                </div>
+                
+                <form id="riskForm">
+                    <div class="form-group">
+                        <label class="bx--label" for="riskName">Nombre del Riesgo</label>
+                        <input class="bx--text-input" type="text" id="riskName" required>
+                        <div class="bx--helper-text">Título descriptivo del riesgo identificado</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="bx--label" for="riskDescription">Descripción</label>
+                        <textarea class="bx--text-area" id="riskDescription" required></textarea>
+                        <div class="bx--helper-text">Descripción detallada del riesgo y su contexto</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="bx--label" for="riskCategory">Categoría</label>
+                        <select class="bx--select-input" id="riskCategory" required>
+                            <option value="">Seleccione una categoría</option>
+                            <option value="technical">Técnico</option>
+                            <option value="process">Proceso</option>
+                            <option value="resource">Recursos</option>
+                            <option value="schedule">Cronograma</option>
+                            <option value="quality">Calidad</option>
+                            <option value="external">Externo</option>
+                        </select>
+                        <div class="bx--helper-text">Tipo de riesgo según clasificación IBM</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="bx--label" for="probability">Probabilidad (1-5)</label>
+                        <select class="bx--select-input" id="probability" required>
+                            <option value="">Seleccione probabilidad</option>
+                            <option value="1">1 - Muy Baja (< 10%)</option>
+                            <option value="2">2 - Baja (10-30%)</option>
+                            <option value="3">3 - Media (30-50%)</option>
+                            <option value="4">4 - Alta (50-70%)</option>
+                            <option value="5">5 - Muy Alta (> 70%)</option>
+                        </select>
+                        <div class="bx--helper-text">Probabilidad de ocurrencia del riesgo</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="bx--label" for="impact">Impacto (1-5)</label>
+                        <select class="bx--select-input" id="impact" required>
+                            <option value="">Seleccione impacto</option>
+                            <option value="1">1 - Muy Bajo</option>
+                            <option value="2">2 - Bajo</option>
+                            <option value="3">3 - Medio</option>
+                            <option value="4">4 - Alto</option>
+                            <option value="5">5 - Muy Alto</option>
+                        </select>
+                        <div class="bx--helper-text">Impacto en caso de materialización</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="bx--label" for="mitigation">Plan de Mitigación</label>
+                        <textarea class="bx--text-area" id="mitigation"></textarea>
+                        <div class="bx--helper-text">Acciones preventivas y correctivas propuestas</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="bx--label" for="owner">Responsable</label>
+                        <input class="bx--text-input" type="text" id="owner">
+                        <div class="bx--helper-text">Persona responsable de gestionar el riesgo</div>
+                    </div>
+                    
+                    <button type="submit" class="bx--btn bx--btn--primary">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,4A12,12,0,1,1,4,16,12,12,0,0,1,16,4m0-2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Z"/>
+                            <path d="M24,15H17V8H15v7H8v2h7v7h2V17h7Z"/>
+                        </svg>
+                        Agregar Riesgo
+                    </button>
+                    
+                    <button type="button" class="bx--btn bx--btn--secondary" onclick="loadSampleRisk()">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"/>
+                            <path d="M8,18h6v2H8ZM16,18h8v2H16ZM8,14h4v2H8ZM14,14h10v2H14ZM8,10h8v2H8ZM18,10h6v2H18Z"/>
+                        </svg>
+                        Cargar Ejemplo
+                    </button>
+                </form>
+            </div>
+
+            <!-- Risk Matrix -->
+            <div class="risk-matrix">
+                <div class="form-title">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M4,4H28a2,2,0,0,1,2,2V26a2,2,0,0,1-2,2H4a2,2,0,0,1-2-2V6A2,2,0,0,1,4,4ZM4,6V26H28V6Z"/>
+                        <path d="M6,8H26v2H6ZM6,12H26v2H6ZM6,16H26v2H6ZM6,20H26v2H6ZM6,24H26v2H6Z"/>
+                    </svg>
+                    Matriz de Riesgos
+                </div>
+                
+                <div class="matrix-container" id="riskMatrix">
+                    <!-- Matrix will be generated by JavaScript -->
+                </div>
+                
+                <div class="risk-stats" id="riskStats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalRisks">0</div>
+                        <div class="stat-label">Total de Riesgos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="criticalRisks">0</div>
+                        <div class="stat-label">Riesgos Críticos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="averageRisk">0.0</div>
+                        <div class="stat-label">Riesgo Promedio</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Risk List -->
+        <div class="risk-list">
+            <div class="risk-list-header">
+                <div class="form-title">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M10,6H22V8H10ZM10,12H22v2H10ZM10,18H22v2H10ZM10,24H22v2H10ZM6,8A2,2,0,1,1,8,6,2,2,0,0,1,6,8ZM6,14a2,2,0,1,1,2-2A2,2,0,0,1,6,14ZM6,20a2,2,0,1,1,2-2A2,2,0,0,1,6,20ZM6,26a2,2,0,1,1,2-2A2,2,0,0,1,6,26Z"/>
+                    </svg>
+                    Registro de Riesgos
+                </div>
+                <button class="bx--btn bx--btn--secondary" onclick="exportRisks()" style="width: auto;">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M26,24v4H6V24H4v4a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V24Z"/>
+                        <path d="M26,14l-1.41-1.41L17,20.17V2H15V20.17l-7.59-7.58L6,14l10,10Z"/>
+                    </svg>
+                    Exportar
+                </button>
+            </div>
+            
+            <div class="risk-list-body" id="riskListBody">
+                <div class="risk-item-card">
+                    <div class="risk-item-content">
+                        <div class="risk-item-title">No hay riesgos registrados</div>
+                        <div class="risk-item-description">Agregue riesgos utilizando el formulario para comenzar el análisis</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-container">
+                <div class="chart-title">Distribución por Categoría</div>
+                <canvas id="categoryChart"></canvas>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Nivel de Riesgo</div>
+                <canvas id="riskLevelChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let risks = [];
+        let categoryChart = null;
+        let riskLevelChart = null;
+
+        // Risk categories with colors
+        const riskCategories = {
+            'technical': { name: 'Técnico', color: '#0f62fe' },
+            'process': { name: 'Proceso', color: '#24a148' },
+            'resource': { name: 'Recursos', color: '#f1c21b' },
+            'schedule': { name: 'Cronograma', color: '#ff832b' },
+            'quality': { name: 'Calidad', color: '#da1e28' },
+            'external': { name: 'Externo', color: '#8a3ffc' }
+        };
+
+        // Risk level calculations
+        function calculateRiskLevel(probability, impact) {
+            const score = probability * impact;
+            if (score >= 20) return 'critical';
+            if (score >= 15) return 'high';
+            if (score >= 8) return 'medium';
+            return 'low';
+        }
+
+        function getRiskLevelName(level) {
+            const levels = {
+                'low': 'Bajo',
+                'medium': 'Medio',
+                'high': 'Alto',
+                'critical': 'Crítico'
+            };
+            return levels[level] || 'Desconocido';
+        }
+
+        function getRiskLevelColor(level) {
+            const colors = {
+                'low': '#24a148',
+                'medium': '#f1c21b',
+                'high': '#ff832b',
+                'critical': '#da1e28'
+            };
+            return colors[level] || '#8d8d8d';
+        }
+
+        // Initialize risk matrix
+        function initRiskMatrix() {
+            const matrix = document.getElementById('riskMatrix');
+            matrix.innerHTML = '';
+            
+            // Create matrix structure
+            const cells = [];
+            
+            // Corner cell
+            cells.push('<div class="matrix-label"></div>');
+            
+            // Impact headers (columns)
+            for (let i = 1; i <= 5; i++) {
+                cells.push(`<div class="matrix-label">Impacto ${i}</div>`);
+            }
+            
+            // Probability rows
+            for (let prob = 5; prob >= 1; prob--) {
+                // Probability header
+                cells.push(`<div class="matrix-label">Prob ${prob}</div>`);
+                
+                // Impact cells
+                for (let imp = 1; imp <= 5; imp++) {
+                    const score = prob * imp;
+                    let level = 'low';
+                    if (score >= 20) level = 'critical';
+                    else if (score >= 15) level = 'high';
+                    else if (score >= 8) level = 'medium';
+                    
+                    cells.push(`
+                        <div class="matrix-cell risk-${level}" 
+                             data-probability="${prob}" 
+                             data-impact="${imp}"
+                             title="Probabilidad: ${prob}, Impacto: ${imp}, Puntuación: ${score}">
+                            <span>${score}</span>
+                        </div>
+                    `);
+                }
+            }
+            
+            matrix.innerHTML = cells.join('');
+            updateRiskMatrix();
+        }
+
+        // Update risk matrix with current risks
+        function updateRiskMatrix() {
+            const cells = document.querySelectorAll('.matrix-cell');
+            
+            // Clear existing risk items
+            cells.forEach(cell => {
+                const existing = cell.querySelector('.risk-item');
+                if (existing) existing.remove();
+            });
+            
+            // Add risks to matrix
+            risks.forEach((risk, index) => {
+                const cell = document.querySelector(
+                    `.matrix-cell[data-probability="${risk.probability}"][data-impact="${risk.impact}"]`
+                );
+                
+                if (cell) {
+                    const riskDiv = document.createElement('div');
+                    riskDiv.className = 'risk-item';
+                    riskDiv.textContent = risk.name.length > 15 ? 
+                        risk.name.substring(0, 12) + '...' : risk.name;
+                    riskDiv.title = risk.name;
+                    cell.appendChild(riskDiv);
+                }
+            });
+        }
+
+        // Form submission
+        document.getElementById('riskForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const risk = {
+                id: Date.now(),
+                name: document.getElementById('riskName').value,
+                description: document.getElementById('riskDescription').value,
+                category: document.getElementById('riskCategory').value,
+                probability: parseInt(document.getElementById('probability').value),
+                impact: parseInt(document.getElementById('impact').value),
+                mitigation: document.getElementById('mitigation').value,
+                owner: document.getElementById('owner').value,
+                createdAt: new Date().toISOString(),
+                status: 'active'
+            };
+            
+            risk.level = calculateRiskLevel(risk.probability, risk.impact);
+            risk.score = risk.probability * risk.impact;
+            
+            risks.push(risk);
+            updateDisplay();
+            
+            // Reset form
+            this.reset();
+            
+            // Show success message
+            alert('Riesgo agregado exitosamente');
+        });
+
+        // Update all displays
+        function updateDisplay() {
+            updateRiskMatrix();
+            updateRiskList();
+            updateStatistics();
+            updateCharts();
+        }
+
+        // Update risk list
+        function updateRiskList() {
+            const listBody = document.getElementById('riskListBody');
+            
+            if (risks.length === 0) {
+                listBody.innerHTML = `
+                    <div class="risk-item-card">
+                        <div class="risk-item-content">
+                            <div class="risk-item-title">No hay riesgos registrados</div>
+                            <div class="risk-item-description">Agregue riesgos utilizando el formulario para comenzar el análisis</div>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Sort risks by score (highest first)
+            const sortedRisks = [...risks].sort((a, b) => b.score - a.score);
+            
+            listBody.innerHTML = sortedRisks.map(risk => `
+                <div class="risk-item-card">
+                    <div class="risk-level-indicator" style="background-color: ${getRiskLevelColor(risk.level)}"></div>
+                    <div class="risk-item-content">
+                        <div class="risk-item-title">${risk.name}</div>
+                        <div class="risk-item-description">${risk.description}</div>
+                        <div class="risk-item-meta">
+                            <span>Categoría: ${riskCategories[risk.category]?.name || risk.category}</span>
+                            <span>Probabilidad: ${risk.probability}</span>
+                            <span>Impacto: ${risk.impact}</span>
+                            <span>Puntuación: ${risk.score}</span>
+                            <span>Nivel: ${getRiskLevelName(risk.level)}</span>
+                            ${risk.owner ? `<span>Responsable: ${risk.owner}</span>` : ''}
+                        </div>
+                    </div>
+                    <div class="risk-actions">
+                        <button class="risk-action-btn" onclick="editRisk(${risk.id})" title="Editar">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                <path d="M2,26H30v2H2Z"/>
+                                <path d="M25.4,9c.8-.8.8-2,0-2.8l-3.6-3.6c-.8-.8-2-.8-2.8,0l-15,15V24h6.4L25.4,9ZM20.4,4L24,7.6l-3,3L17.4,7L20.4,4ZM6,22V18.4l9.6-9.6L19.6,13L10,22.6H6Z"/>
+                            </svg>
+                        </button>
+                        <button class="risk-action-btn" onclick="deleteRisk(${risk.id})" title="Eliminar">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                                <path d="M24,9.4L22.6,8L16,14.6L9.4,8L8,9.4l6.6,6.6L8,22.6L9.4,24l6.6-6.6l6.6,6.6l1.4-1.4L17.4,16Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Update statistics
+        function updateStatistics() {
+            const total = risks.length;
+            const critical = risks.filter(r => r.level === 'critical').length;
+            const averageScore = total > 0 ? 
+                risks.reduce((sum, r) => sum + r.score, 0) / total : 0;
+            
+            document.getElementById('totalRisks').textContent = total;
+            document.getElementById('criticalRisks').textContent = critical;
+            document.getElementById('averageRisk').textContent = averageScore.toFixed(1);
+        }
+
+        // Update charts
+        function updateCharts() {
+            updateCategoryChart();
+            updateRiskLevelChart();
+        }
+
+        function updateCategoryChart() {
+            const ctx = document.getElementById('categoryChart').getContext('2d');
+            
+            if (categoryChart) {
+                categoryChart.destroy();
+            }
+            
+            const categoryCounts = {};
+            Object.keys(riskCategories).forEach(cat => {
+                categoryCounts[cat] = risks.filter(r => r.category === cat).length;
+            });
+            
+            const labels = Object.keys(categoryCounts).map(cat => riskCategories[cat].name);
+            const data = Object.values(categoryCounts);
+            const colors = Object.keys(categoryCounts).map(cat => riskCategories[cat].color);
+            
+            categoryChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colors
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateRiskLevelChart() {
+            const ctx = document.getElementById('riskLevelChart').getContext('2d');
+            
+            if (riskLevelChart) {
+                riskLevelChart.destroy();
+            }
+            
+            const levelCounts = {
+                'low': risks.filter(r => r.level === 'low').length,
+                'medium': risks.filter(r => r.level === 'medium').length,
+                'high': risks.filter(r => r.level === 'high').length,
+                'critical': risks.filter(r => r.level === 'critical').length
+            };
+            
+            riskLevelChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Bajo', 'Medio', 'Alto', 'Crítico'],
+                    datasets: [{
+                        label: 'Número de Riesgos',
+                        data: Object.values(levelCounts),
+                        backgroundColor: [
+                            '#24a148',
+                            '#f1c21b', 
+                            '#ff832b',
+                            '#da1e28'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Load sample risk data
+        function loadSampleRisk() {
+            document.getElementById('riskName').value = 'Falta de cobertura en pruebas de integración';
+            document.getElementById('riskDescription').value = 'Las pruebas de integración no cubren todos los módulos críticos del sistema, lo que puede resultar en defectos no detectados en producción';
+            document.getElementById('riskCategory').value = 'quality';
+            document.getElementById('probability').value = '3';
+            document.getElementById('impact').value = '4';
+            document.getElementById('mitigation').value = 'Implementar suite de pruebas de integración automatizadas para todos los módulos críticos. Establecer criterios de aceptación mínimos de cobertura.';
+            document.getElementById('owner').value = 'Líder de QA';
+        }
+
+        // Delete risk
+        function deleteRisk(id) {
+            if (confirm('¿Está seguro de que desea eliminar este riesgo?')) {
+                risks = risks.filter(r => r.id !== id);
+                updateDisplay();
+            }
+        }
+
+        // Export risks to CSV
+        function exportRisks() {
+            if (risks.length === 0) {
+                alert('No hay riesgos para exportar');
+                return;
+            }
+            
+            const headers = [
+                'ID', 'Nombre', 'Descripción', 'Categoría', 'Probabilidad', 
+                'Impacto', 'Puntuación', 'Nivel', 'Mitigación', 'Responsable', 
+                'Fecha Creación'
+            ];
+            
+            const csvContent = [
+                headers.join(','),
+                ...risks.map(risk => [
+                    risk.id,
+                    `"${risk.name}"`,
+                    `"${risk.description}"`,
+                    riskCategories[risk.category]?.name || risk.category,
+                    risk.probability,
+                    risk.impact,
+                    risk.score,
+                    getRiskLevelName(risk.level),
+                    `"${risk.mitigation || ''}"`,
+                    `"${risk.owner || ''}"`,
+                    new Date(risk.createdAt).toLocaleDateString()
+                ].join(','))
+            ].join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `riesgos_calidad_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', function() {
+            initRiskMatrix();
+            updateDisplay();
+            
+            // Load sample data for demonstration
+            const sampleRisks = [
+                {
+                    id: 1,
+                    name: 'Retrasos en entrega por falta de recursos',
+                    description: 'Insuficiente personal especializado para completar las pruebas en tiempo',
+                    category: 'resource',
+                    probability: 3,
+                    impact: 4,
+                    mitigation: 'Contratar personal temporal especializado',
+                    owner: 'Project Manager',
+                    createdAt: new Date().toISOString(),
+                    status: 'active'
+                },
+                {
+                    id: 2,
+                    name: 'Fallos en ambiente de producción',
+                    description: 'Configuración de ambiente diferente a desarrollo puede causar fallos',
+                    category: 'technical',
+                    probability: 2,
+                    impact: 5,
+                    mitigation: 'Implementar ambiente de pre-producción idéntico',
+                    owner: 'DevOps Engineer',
+                    createdAt: new Date().toISOString(),
+                    status: 'active'
+                }
+            ];
+            
+            sampleRisks.forEach(risk => {
+                risk.level = calculateRiskLevel(risk.probability, risk.impact);
+                risk.score = risk.probability * risk.impact;
+                risks.push(risk);
+            });
+            
+            updateDisplay();
+            
+            console.log('Análisis de riesgos inicializado correctamente');
+        });
+    </script>
+</body>
+</html>

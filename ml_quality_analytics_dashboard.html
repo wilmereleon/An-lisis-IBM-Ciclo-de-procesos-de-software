@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Quality Analytics Dashboard - IBM Colombia</title>
+    
+    <!-- IBM Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
+    
+    <!-- IBM Carbon Design System CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/carbon-components@10.58.12/css/carbon-components.min.css">
+    
+    <!-- IBM Carbon Icons -->
+    <script type="module" src="https://unpkg.com/@carbon/icons@11.8.0/es/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@carbon/icons@11.8.0/lib/index.css">
+    
+    <!-- IBM Plex Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js for advanced visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    
+    <style>
+        :root {
+            /* IBM Carbon Design System Variables */
+            --cds-interactive-01: #0f62fe;
+            --cds-interactive-02: #393939;
+            --cds-interactive-03: #0f62fe;
+            --cds-interactive-04: #0f62fe;
+            --cds-ui-background: #ffffff;
+            --cds-ui-01: #f4f4f4;
+            --cds-ui-02: #ffffff;
+            --cds-ui-03: #e0e0e0;
+            --cds-ui-04: #8d8d8d;
+            --cds-ui-05: #161616;
+            --cds-text-01: #161616;
+            --cds-text-02: #525252;
+            --cds-text-03: #a8a8a8;
+            --cds-text-04: #ffffff;
+            --cds-text-05: #6f6f6f;
+            --cds-icon-01: #161616;
+            --cds-icon-02: #525252;
+            --cds-icon-03: #ffffff;
+            --cds-link-01: #0f62fe;
+            --cds-field-01: #f4f4f4;
+            --cds-field-02: #ffffff;
+            --cds-inverse-01: #ffffff;
+            --cds-inverse-02: #393939;
+            --cds-support-01: #da1e28;
+            --cds-support-02: #24a148;
+            --cds-support-03: #f1c21b;
+            --cds-support-04: #0043ce;
+            --cds-overlay-01: rgba(22, 22, 22, 0.5);
+            --cds-focus: #0f62fe;
+            --cds-hover-primary: #0353e9;
+            --cds-active-primary: #002d9c;
+            --cds-hover-primary-text: #004ccc;
+            --cds-hover-secondary: #4c4c4c;
+            --cds-active-secondary: #6f6f6f;
+            --cds-hover-tertiary: #0353e9;
+            --cds-active-tertiary: #002d9c;
+            --cds-hover-ui: #e5e5e5;
+            --cds-active-ui: #c6c6c6;
+            --cds-selected-ui: #e0e0e0;
+            --cds-hover-selected-ui: #cacaca;
+            --cds-inverse-hover-ui: #4c4c4c;
+            --cds-hover-danger: #ba1b23;
+            --cds-active-danger: #750e13;
+            --cds-hover-row: #e5e5e5;
+            --cds-visited-link: #8a3ffc;
+            --cds-disabled-01: #f4f4f4;
+            --cds-disabled-02: #c6c6c6;
+            --cds-disabled-03: #8d8d8d;
+            --cds-highlight: #d0e2ff;
+            --cds-skeleton-01: #e5e5e5;
+            --cds-skeleton-02: #c6c6c6;
+            --cds-brand-01: #0f62fe;
+            --cds-brand-02: #393939;
+            --cds-brand-03: #0f62fe;
+            --cds-active-01: #c6c6c6;
+            --cds-hover-field: #e5e5e5;
+            
+            /* IBM Carbon Legacy Colors for compatibility */
+            --carbon-blue-10: #edf5ff;
+            --carbon-blue-20: #d0e2ff;
+            --carbon-blue-30: #a6c8ff;
+            --carbon-blue-40: #78a9ff;
+            --carbon-blue-50: #4589ff;
+            --carbon-blue-60: #0f62fe;
+            --carbon-blue-70: #0043ce;
+            --carbon-blue-80: #002d9c;
+            --carbon-blue-90: #001d6c;
+            --carbon-blue-100: #001141;
+            
+            --carbon-green-10: #defbe6;
+            --carbon-green-20: #a7f0ba;
+            --carbon-green-30: #6fdc8c;
+            --carbon-green-40: #42be65;
+            --carbon-green-50: #24a148;
+            --carbon-green-60: #198038;
+            --carbon-green-70: #0e6027;
+            --carbon-green-80: #044317;
+            --carbon-green-90: #022d0d;
+            
+            --carbon-red-10: #fff1f1;
+            --carbon-red-20: #ffd7d9;
+            --carbon-red-30: #ffb3b8;
+            --carbon-red-40: #ff8389;
+            --carbon-red-50: #fa4d56;
+            --carbon-red-60: #da1e28;
+            --carbon-red-70: #a2191f;
+            --carbon-red-80: #750e13;
+            --carbon-red-90: #520408;
+            
+            --carbon-yellow-10: #fcf4d6;
+            --carbon-yellow-20: #fddc69;
+            --carbon-yellow-30: #f1c21b;
+            --carbon-yellow-40: #d2a106;
+            --carbon-yellow-50: #b28600;
+            
+            --carbon-gray-10: #f4f4f4;
+            --carbon-gray-20: #e0e0e0;
+            --carbon-gray-30: #c6c6c6;
+            --carbon-gray-40: #a8a8a8;
+            --carbon-gray-50: #8d8d8d;
+            --carbon-gray-60: #6f6f6f;
+            --carbon-gray-70: #525252;
+            --carbon-gray-80: #393939;
+            --carbon-gray-90: #262626;
+            --carbon-gray-100: #161616;
+            
+            --carbon-white: #ffffff;
+            
+            /* IBM Carbon Spacing Scale */
+            --cds-spacing-01: 0.125rem;
+            --cds-spacing-02: 0.25rem;
+            --cds-spacing-03: 0.5rem;
+            --cds-spacing-04: 0.75rem;
+            --cds-spacing-05: 1rem;
+            --cds-spacing-06: 1.5rem;
+            --cds-spacing-07: 2rem;
+            --cds-spacing-08: 2.5rem;
+            --cds-spacing-09: 3rem;
+            --cds-spacing-10: 4rem;
+            --cds-spacing-11: 5rem;
+            --cds-spacing-12: 6rem;
+            --cds-spacing-13: 10rem;
+            
+            /* IBM Carbon Typography Scale */
+            --cds-productive-heading-01: 0.875rem;
+            --cds-productive-heading-02: 1rem;
+            --cds-productive-heading-03: 1.25rem;
+            --cds-productive-heading-04: 1.75rem;
+            --cds-productive-heading-05: 2rem;
+            --cds-productive-heading-06: 2.625rem;
+            --cds-productive-heading-07: 3.375rem;
+            
+            --cds-body-compact-01: 0.875rem;
+            --cds-body-compact-02: 1rem;
+            --cds-body-short-01: 0.875rem;
+            --cds-body-short-02: 1rem;
+            --cds-body-long-01: 0.875rem;
+            --cds-body-long-02: 1rem;
+            
+            --cds-caption-01: 0.75rem;
+            --cds-caption-02: 0.875rem;
+            --cds-label-01: 0.75rem;
+            --cds-label-02: 0.875rem;
+            --cds-helper-text-01: 0.75rem;
+            --cds-helper-text-02: 0.875rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.29;
+            letter-spacing: 0.16px;
+            background-color: var(--cds-ui-background);
+            color: var(--cds-text-01);
+            min-height: 100vh;
+        }
+
+        /* IBM Carbon Header/Navbar */
+        .bx--header {
+            background-color: var(--cds-ui-05);
+            border-bottom: 1px solid var(--cds-ui-03);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 var(--cds-spacing-05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 6000;
+        }
+
+        .bx--header__name {
+            font-size: var(--cds-body-short-02);
+            font-weight: 600;
+            color: var(--cds-text-04);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 0 var(--cds-spacing-05);
+            border-left: 1px solid var(--cds-ui-04);
+            margin-left: var(--cds-spacing-05);
+        }
+
+        .bx--header__name:hover {
+            background-color: var(--cds-inverse-hover-ui);
+        }
+
+        .bx--header__logo {
+            width: 20px;
+            height: 20px;
+            margin-right: var(--cds-spacing-03);
+            fill: var(--cds-icon-03);
+        }
+
+        .bx--header-nav {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            margin-left: auto;
+        }
+
+        .bx--header-nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .bx--header-nav__item {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .bx--header-nav__link {
+            color: var(--cds-text-04);
+            text-decoration: none;
+            font-size: var(--cds-body-short-01);
+            font-weight: 400;
+            padding: 0 var(--cds-spacing-05);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            transition: background-color 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        }
+
+        .bx--header-nav__link:hover {
+            background-color: var(--cds-inverse-hover-ui);
+        }
+
+        .bx--header-nav__link--current {
+            background-color: var(--cds-inverse-02);
+            color: var(--cds-inverse-01);
+        }
+
+        .bx--header__global {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            margin-left: var(--cds-spacing-03);
+        }
+
+        .bx--header__action {
+            background: transparent;
+            border: none;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        }
+
+        .bx--header__action:hover {
+            background-color: var(--cds-inverse-hover-ui);
+        }
+
+        .bx--header__action svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--cds-icon-03);
+        }
+
+        .dashboard-container {
+            max-width: 1584px;
+            margin: 0 auto;
+            padding: var(--cds-spacing-05);
+            padding-top: calc(48px + var(--cds-spacing-05));
+        }
+
+        /* Header Section */
+        .dashboard-header {
+            background: var(--cds-ui-02);
+            padding: var(--cds-spacing-06);
+            margin-bottom: var(--cds-spacing-07);
+        }
+
+        .dashboard-header h1 {
+            font-size: var(--cds-productive-heading-05);
+            font-weight: 400;
+            margin-bottom: var(--cds-spacing-03);
+            color: var(--cds-text-01);
+            line-height: 1.25;
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+        }
+
+        .dashboard-header .subtitle {
+            font-size: var(--cds-body-long-01);
+            color: var(--cds-text-02);
+            font-weight: 400;
+            margin: 0 0 var(--cds-spacing-05) 0;
+        }
+
+        .last-updated {
+            font-size: var(--cds-label-01);
+            color: var(--cds-text-03);
+            background: var(--cds-ui-03);
+            padding: var(--cds-spacing-03) var(--cds-spacing-04);
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--cds-spacing-02);
+        }
+
+        /* Status Indicators */
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--cds-spacing-05);
+            margin-bottom: var(--cds-spacing-07);
+        }
+
+        .status-card {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-05);
+            transition: all 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        }
+
+        .status-card:hover {
+            box-shadow: 0 2px 6px var(--cds-shadow);
+        }
+
+        .status-card h3 {
+            font-size: var(--cds-productive-heading-02);
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-05);
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+            line-height: 1.25;
+        }
+
+        .status-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .status-value {
+            font-size: var(--cds-productive-heading-04);
+            font-weight: 400;
+            margin: var(--cds-spacing-04) 0;
+            color: var(--cds-text-01);
+        }
+
+        .status-description {
+            font-size: var(--cds-body-short-01);
+            color: var(--cds-text-02);
+            margin-bottom: var(--cds-spacing-04);
+            line-height: 1.4;
+        }
+
+        .status-trend {
+            font-size: var(--cds-label-01);
+            font-weight: 400;
+            padding: var(--cds-spacing-02) var(--cds-spacing-03);
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--cds-spacing-02);
+        }
+
+        .trend-up { 
+            background: var(--cds-support-02); 
+            color: var(--cds-text-04);
+        }
+        .trend-down { 
+            background: var(--cds-support-01); 
+            color: var(--cds-text-04);
+        }
+        .trend-stable { 
+            background: var(--cds-ui-04); 
+            color: var(--cds-text-04);
+        }
+
+        /* ML Model Performance */
+        .ml-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--cds-spacing-05);
+            margin-bottom: var(--cds-spacing-07);
+        }
+
+        .ml-models-card {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-05);
+        }
+
+        .ml-models-card h3 {
+            font-size: var(--cds-productive-heading-03);
+            font-weight: 600;
+            margin-bottom: var(--cds-spacing-05);
+            color: var(--cds-text-01);
+            padding-bottom: var(--cds-spacing-03);
+            border-bottom: 1px solid var(--cds-ui-03);
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+        }
+
+        .ml-model-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--cds-spacing-04) 0;
+            border-bottom: 1px solid var(--cds-ui-03);
+        }
+
+        .ml-model-item:last-child {
+            border-bottom: none;
+        }
+
+        .model-info {
+            flex: 1;
+        }
+
+        .model-name {
+            font-size: var(--cds-body-short-02);
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-02);
+        }
+
+        .model-description {
+            font-size: var(--cds-label-01);
+            color: var(--cds-text-02);
+            line-height: 1.3;
+        }
+
+        .model-accuracy {
+            text-align: right;
+        }
+
+        .accuracy-value {
+            font-size: var(--cds-productive-heading-02);
+            font-weight: 400;
+            color: var(--cds-support-02);
+        }
+
+        .accuracy-label {
+            font-size: var(--cds-label-01);
+            color: var(--cds-text-03);
+        }
+
+        /* Predictions Section */
+        .predictions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--cds-spacing-05);
+            margin-bottom: var(--cds-spacing-07);
+        }
+
+        .prediction-card {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-05);
+        }
+
+        .prediction-card.warning {
+            border-left: 4px solid var(--cds-support-03);
+        }
+
+        .prediction-card.critical {
+            border-left: 4px solid var(--cds-support-01);
+        }
+
+        .prediction-card.good {
+            border-left: 4px solid var(--cds-support-02);
+        }
+
+        .prediction-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--cds-spacing-05);
+        }
+
+        .prediction-title {
+            font-size: var(--cds-productive-heading-01);
+            font-weight: 600;
+            color: var(--cds-text-01);
+        }
+
+        .prediction-time {
+            font-size: var(--cds-label-01);
+            color: var(--cds-text-03);
+            background: var(--cds-ui-03);
+            padding: var(--cds-spacing-02) var(--cds-spacing-03);
+            border-radius: 4px;
+        }
+
+        .prediction-values {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--cds-spacing-04);
+        }
+
+        .current-value,
+        .predicted-value {
+            text-align: center;
+            flex: 1;
+        }
+
+        .value-label {
+            font-size: var(--cds-label-01);
+            color: var(--cds-text-02);
+            margin-bottom: var(--cds-spacing-02);
+        }
+
+        .value-number {
+            font-size: var(--cds-productive-heading-03);
+            font-weight: 400;
+        }
+
+        .current-value .value-number { color: var(--cds-text-01); }
+        .predicted-value .value-number { color: var(--cds-interactive-01); }
+
+        .prediction-change {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: var(--cds-spacing-04) 0;
+            gap: var(--cds-spacing-02);
+        }
+
+        .change-arrow {
+            font-size: 16px;
+        }
+
+        .change-percentage {
+            font-size: var(--cds-body-short-01);
+            font-weight: 600;
+        }
+
+        .change-positive { color: var(--cds-support-02); }
+        .change-negative { color: var(--cds-support-01); }
+        .change-neutral { color: var(--cds-text-02); }
+
+        .confidence-bar {
+            margin-top: var(--cds-spacing-04);
+        }
+
+        .confidence-label {
+            font-size: var(--cds-label-01);
+            color: var(--cds-text-02);
+            margin-bottom: var(--cds-spacing-02);
+        }
+
+        .confidence-progress {
+            width: 100%;
+            height: 4px;
+            background: var(--cds-ui-03);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: var(--cds-interactive-01);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        /* Risk Assessment */
+        .risk-section {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-05);
+            margin-bottom: var(--cds-spacing-07);
+        }
+
+        .risk-section h3 {
+            font-size: var(--cds-productive-heading-03);
+            font-weight: 600;
+            margin-bottom: var(--cds-spacing-05);
+            color: var(--cds-text-01);
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+            padding-bottom: var(--cds-spacing-03);
+            border-bottom: 1px solid var(--cds-ui-03);
+        }
+
+        .risk-score {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--cds-spacing-06);
+        }
+
+        .risk-gauge {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--cds-support-02) 0deg 90deg,
+                var(--cds-support-03) 90deg 180deg,
+                var(--cds-support-01) 180deg 270deg,
+                var(--cds-ui-03) 270deg 360deg
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .risk-gauge::before {
+            content: '';
+            width: 70px;
+            height: 70px;
+            background: var(--cds-ui-02);
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .risk-value {
+            font-size: var(--cds-productive-heading-04);
+            font-weight: 400;
+            color: var(--cds-text-01);
+            z-index: 2;
+        }
+
+        .risk-insights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--cds-spacing-04);
+        }
+
+        .risk-insight {
+            padding: var(--cds-spacing-04);
+            background: var(--cds-ui-01);
+            border: 1px solid var(--cds-ui-03);
+        }
+
+        .insight-title {
+            font-size: var(--cds-body-short-01);
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-03);
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-02);
+        }
+
+        .insight-description {
+            font-size: var(--cds-body-short-01);
+            color: var(--cds-text-02);
+            line-height: 1.4;
+        }
+
+        /* Charts Section */
+        .charts-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--cds-spacing-05);
+            margin-bottom: var(--cds-spacing-07);
+        }
+
+        .chart-card {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-05);
+        }
+
+        .chart-card h4 {
+            font-size: var(--cds-productive-heading-02);
+            font-weight: 600;
+            margin-bottom: var(--cds-spacing-05);
+            color: var(--cds-text-01);
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-02);
+        }
+
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+
+        /* Footer */
+        .dashboard-footer {
+            text-align: center;
+            padding: var(--cds-spacing-05);
+            background: var(--cds-ui-03);
+            border: 1px solid var(--cds-ui-04);
+            margin-top: var(--cds-spacing-07);
+        }
+
+        .footer-text {
+            font-size: var(--cds-label-01);
+            color: var(--cds-text-02);
+            line-height: 1.4;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1056px) {
+            .dashboard-container {
+                padding: var(--cds-spacing-04);
+                padding-top: calc(48px + var(--cds-spacing-04));
+            }
+            
+            .ml-section,
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 672px) {
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .predictions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bx--header__name {
+                padding: 0 var(--cds-spacing-03);
+                margin-left: var(--cds-spacing-03);
+            }
+
+            .bx--header-nav {
+                display: none;
+            }
+        }
+
+        /* Animation for auto-refresh */
+        .refresh-indicator {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Loading states */
+        .loading {
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Carbon Header/Navbar -->
+    <header class="bx--header">
+        <a href="#" class="bx--header__name">
+            <svg class="bx--header__logo" viewBox="0 0 32 32">
+                <path d="M8.24 25.14L7 24l4.05-4.24.39.4-.47.47L8.52 23l1.36-1.37-.41-.41 4.36-4.59L14 17l-5.79 6.14H8.2zm-5.92-8.12L3.73 15.6l4.2-4.44.4.4-.47.48L5.41 14.4l1.38-1.38-.41-.41L10.55 8.4l.17.37-5.79 6.14H2.3z"/>
+                <path d="M27.12 8h-6.23l-3.7 3.9 3.7 3.9h6.23L32 12l-4.88-4zM22.12 14l2.57-2.7L26.88 14h-4.76zm5.76-4L26.12 8h-2.5l1.26 2z"/>
+            </svg>
+            IBM Quality Analytics
+        </a>
+        
+        <nav class="bx--header-nav">
+            <ul>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link bx--header-nav__link--current">Dashboard</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Analytics</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Reports</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Settings</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="bx--header__global">
+            <button class="bx--header__action" aria-label="Notifications">
+                <svg viewBox="0 0 32 32">
+                    <path d="M28,16c0,7.18-5.82,13-13,13S2,23.18,2,16S7.82,3,15,3S28,8.82,28,16z"/>
+                    <path d="M15,9.5A1.5,1.5,0,1,1,13.5,8A1.5,1.5,0,0,1,15,9.5ZM13.5,13v6h3V13Z"/>
+                </svg>
+            </button>
+            <button class="bx--header__action" aria-label="User menu">
+                <svg viewBox="0 0 32 32">
+                    <path d="M16,8a5,5,0,1,0,5,5A5,5,0,0,0,16,8Z"/>
+                    <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2ZM10,24.377c.663-1.823,3.2-2.377,6-2.377s5.337.554,6,2.377a11.9493,11.9493,0,0,1-12,0Z"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <h1>
+                <svg class="status-icon" fill="currentColor" viewBox="0 0 32 32">
+                    <path d="M30,15H17V2a13,13,0,0,0-13,13v2H2v2H4v2a13,13,0,0,0,13,13h2V32h2V30h2A13,13,0,0,0,30,17V15ZM6,15a11,11,0,0,1,9-10.9V15H6ZM21,28H17V17h9.9A11,11,0,0,1,21,28Z"/>
+                </svg>
+                ML Quality Analytics Dashboard
+            </h1>
+            <div class="subtitle">IBM Colombia - Machine Learning para Predicción de Calidad de Software</div>
+            <div class="last-updated" id="lastUpdated">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                    <path d="M22.45,21A10.87,10.87,0,0,0,25,14,11,11,0,0,0,3,14a10.87,10.87,0,0,0,2.55,7H8V19H5.29A8.89,8.89,0,0,1,4,14a9,9,0,0,1,18,0,8.89,8.89,0,0,1-1.29,5H24V19H22.45ZM16,7.5A1.5,1.5,0,1,1,14.5,6,1.5,1.5,0,0,1,16,7.5Zm-1.5,3V17h3V10.5Z"/>
+                </svg>
+                <span class="refresh-indicator">Cargando...</span>
+            </div>
+        </div>
+
+        <!-- Status Overview -->
+        <div class="status-grid">
+            <div class="status-card">
+                <h3>
+                    <svg class="status-icon" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26ZM8,8H24v2H8Zm0,4H24v2H8Zm0,4H18v2H8Z"/>
+                    </svg>
+                    Modelos Activos
+                </h3>
+                <div class="status-value">4 / 4</div>
+                <div class="status-description">
+                    Random Forest, Isolation Forest, Prophet, Risk Engine
+                </div>
+                <span class="status-trend trend-up">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16,4l12,24H4Z"/>
+                    </svg>
+                    Todos operativos
+                </span>
+            </div>
+
+            <div class="status-card">
+                <h3>
+                    <svg class="status-icon" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M4,20V12H6v8Zm4-4V14H10v2Zm4,2V13h2v5Zm4,0V11h2v7Zm4-2V15h2v2Zm4,4V10h2V20Zm6,2H2V20H30Z"/>
+                    </svg>
+                    Predicciones 24H
+                </h3>
+                <div class="status-value">12 métricas</div>
+                <div class="status-description">
+                    Horizonte de predicción con intervalos de confianza
+                </div>
+                <span class="status-trend trend-up">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16,4l12,24H4Z"/>
+                    </svg>
+                    87.4% precisión promedio
+                </span>
+            </div>
+
+            <div class="status-card">
+                <h3>
+                    <svg class="status-icon" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12.0137,12.0137,0,0,1,16,28Z"/>
+                        <path d="M15,8h2v11H15ZM16,24a1.5,1.5,0,1,0-1.5-1.5A1.5,1.5,0,0,0,16,24Z"/>
+                    </svg>
+                    Riesgos Detectados
+                </h3>
+                <div class="status-value">2 BAJO</div>
+                <div class="status-description">
+                    Score de riesgo general: 25 (threshold: 75)
+                </div>
+                <span class="status-trend trend-stable">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <circle cx="16" cy="16" r="2"/>
+                    </svg>
+                    Sin riesgos críticos
+                </span>
+            </div>
+
+            <div class="status-card">
+                <h3>
+                    <svg class="status-icon" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2Zm7.7,21.3L22.3,24.7,16,18.4,9.7,24.7,8.3,23.3,14.6,17,8.3,10.7,9.7,9.3,16,15.6l6.3-6.3,1.4,1.4L17.4,17Z"/>
+                        <path d="M13.8,22.2l-1.6-1.6L16,16.8l3.8,3.8-1.6,1.6L16,20Z"/>
+                    </svg>
+                    Precisión Global
+                </h3>
+                <div class="status-value">88.4%</div>
+                <div class="status-description">
+                    Promedio ponderado de todos los algoritmos ML
+                </div>
+                <span class="status-trend trend-up">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16,4l12,24H4Z"/>
+                    </svg>
+                    +2.1% vs. mes anterior
+                </span>
+            </div>
+        </div>
+
+        <!-- ML Models Performance -->
+        <div class="ml-section">
+            <div class="ml-models-card">
+                <h3>
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26ZM8,8H24v2H8Zm0,4H24v2H8Zm0,4H18v2H8Z"/>
+                    </svg>
+                    Rendimiento de Algoritmos ML
+                </h3>
+                
+                <div class="ml-model-item">
+                    <div class="model-info">
+                        <div class="model-name">Random Forest Regressor</div>
+                        <div class="model-description">Predicción de valores numéricos de métricas</div>
+                    </div>
+                    <div class="model-accuracy">
+                        <div class="accuracy-value">87.4%</div>
+                        <div class="accuracy-label">Precisión</div>
+                    </div>
+                </div>
+
+                <div class="ml-model-item">
+                    <div class="model-info">
+                        <div class="model-name">Isolation Forest</div>
+                        <div class="model-description">Detección automática de anomalías</div>
+                    </div>
+                    <div class="model-accuracy">
+                        <div class="accuracy-value">92.0%</div>
+                        <div class="accuracy-label">Precisión</div>
+                    </div>
+                </div>
+
+                <div class="ml-model-item">
+                    <div class="model-info">
+                        <div class="model-name">Prophet</div>
+                        <div class="model-description">Análisis de series temporales y tendencias</div>
+                    </div>
+                    <div class="model-accuracy">
+                        <div class="accuracy-value">85.2%</div>
+                        <div class="accuracy-label">Precisión</div>
+                    </div>
+                </div>
+
+                <div class="ml-model-item">
+                    <div class="model-info">
+                        <div class="model-name">Risk Scoring Engine</div>
+                        <div class="model-description">Evaluación integral de riesgo compuesto</div>
+                    </div>
+                    <div class="model-accuracy">
+                        <div class="accuracy-value">89.1%</div>
+                        <div class="accuracy-label">Precisión</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ml-models-card">
+                <h3>
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M4,20V12H6v8Zm4-4V14H10v2Zm4,2V13h2v5Zm4,0V11h2v7Zm4-2V15h2v2Zm4,4V10h2V20Zm6,2H2V20H30Z"/>
+                    </svg>
+                    Datos de Entrenamiento
+                </h3>
+                
+                <div class="ml-model-item">
+                    <div class="model-info">
+                        <div class="model-name">Dataset Histórico</div>
+                        <div class="model-description">Métricas históricas de calidad (6 meses)</div>
+                    </div>
+                    <div class="model-accuracy">
+                        <div class="accuracy-value">2,161</div>
+                        <div class="accuracy-label">Samples</div>
+                    </div>
+                </div>
+
+                <div class="ml-model-item">
+                    <div class="model-info">
+                        <div class="model-name">Features Utilizados</div>
+                        <div class="model-description">Variables predictivas por métrica</div>
+                    </div>
+                    <div class="model-accuracy">
+                        <div class="accuracy-value">45</div>
+                        <div class="accuracy-label">Features</div>
+                    </div>
+                </div>
+
+                <div class="ml-model-item">
+                    <div class="model-info">
+                        <div class="model-name">Validación Cruzada</div>
+                        <div class="model-description">K-fold validation (k=5)</div>
+                    </div>
+                    <div class="model-accuracy">
+                        <div class="accuracy-value">5</div>
+                        <div class="accuracy-label">Folds</div>
+                    </div>
+                </div>
+
+                <div class="ml-model-item">
+                    <div class="model-info">
+                        <div class="model-name">Última Actualización</div>
+                        <div class="model-description">Reentrenamiento automático semanal</div>
+                    </div>
+                    <div class="model-accuracy">
+                        <div class="accuracy-value">2</div>
+                        <div class="accuracy-label">Días</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Predictions for Next 24 Hours -->
+        <div class="predictions-grid">
+            <div class="prediction-card good">
+                <div class="prediction-header">
+                    <div class="prediction-title">Defect Density</div>
+                    <div class="prediction-time">Próximas 24h</div>
+                </div>
+                <div class="prediction-values">
+                    <div class="current-value">
+                        <div class="value-label">Actual</div>
+                        <div class="value-number">1.85</div>
+                    </div>
+                    <div class="predicted-value">
+                        <div class="value-label">Predicción</div>
+                        <div class="value-number">1.94</div>
+                    </div>
+                </div>
+                <div class="prediction-change">
+                    <span class="change-arrow change-positive">↗</span>
+                    <span class="change-percentage change-positive">+4.7%</span>
+                </div>
+                <div class="confidence-bar">
+                    <div class="confidence-label">Confianza: 87.4%</div>
+                    <div class="confidence-progress">
+                        <div class="confidence-fill" style="width: 87.4%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prediction-card warning">
+                <div class="prediction-header">
+                    <div class="prediction-title">Pipeline Success Rate</div>
+                    <div class="prediction-time">Próximas 24h</div>
+                </div>
+                <div class="prediction-values">
+                    <div class="current-value">
+                        <div class="value-label">Actual</div>
+                        <div class="value-number">97.97%</div>
+                    </div>
+                    <div class="predicted-value">
+                        <div class="value-label">Predicción</div>
+                        <div class="value-number">96.61%</div>
+                    </div>
+                </div>
+                <div class="prediction-change">
+                    <span class="change-arrow change-negative">↘</span>
+                    <span class="change-percentage change-negative">-1.4%</span>
+                </div>
+                <div class="confidence-bar">
+                    <div class="confidence-label">Confianza: 92.0%</div>
+                    <div class="confidence-progress">
+                        <div class="confidence-fill" style="width: 92.0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prediction-card good">
+                <div class="prediction-header">
+                    <div class="prediction-title">Lead Time</div>
+                    <div class="prediction-time">Próximas 24h</div>
+                </div>
+                <div class="prediction-values">
+                    <div class="current-value">
+                        <div class="value-label">Actual</div>
+                        <div class="value-number">4.87 días</div>
+                    </div>
+                    <div class="predicted-value">
+                        <div class="value-label">Predicción</div>
+                        <div class="value-number">4.97 días</div>
+                    </div>
+                </div>
+                <div class="prediction-change">
+                    <span class="change-arrow change-positive">↗</span>
+                    <span class="change-percentage change-positive">+2.1%</span>
+                </div>
+                <div class="confidence-bar">
+                    <div class="confidence-label">Confianza: 85.2%</div>
+                    <div class="confidence-progress">
+                        <div class="confidence-fill" style="width: 85.2%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prediction-card warning">
+                <div class="prediction-header">
+                    <div class="prediction-title">Customer Satisfaction</div>
+                    <div class="prediction-time">Próximas 24h</div>
+                </div>
+                <div class="prediction-values">
+                    <div class="current-value">
+                        <div class="value-label">Actual</div>
+                        <div class="value-number">4.21/5.0</div>
+                    </div>
+                    <div class="predicted-value">
+                        <div class="value-label">Predicción</div>
+                        <div class="value-number">4.17/5.0</div>
+                    </div>
+                </div>
+                <div class="prediction-change">
+                    <span class="change-arrow change-negative">↘</span>
+                    <span class="change-percentage change-negative">-0.8%</span>
+                </div>
+                <div class="confidence-bar">
+                    <div class="confidence-label">Confianza: 89.1%</div>
+                    <div class="confidence-progress">
+                        <div class="confidence-fill" style="width: 89.1%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Risk Assessment -->
+        <div class="risk-section">
+            <h3>
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                    <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12.0137,12.0137,0,0,1,16,28Z"/>
+                    <path d="M15,8h2v11H15ZM16,24a1.5,1.5,0,1,0-1.5-1.5A1.5,1.5,0,0,0,16,24Z"/>
+                </svg>
+                Análisis de Riesgo Inteligente
+            </h3>
+            
+            <div class="risk-score">
+                <div class="risk-gauge">
+                    <div class="risk-value">25</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <div style="font-size: 1.125rem; font-weight: 600; color: var(--cds-support-02);">
+                    BAJO RIESGO
+                </div>
+                <div style="font-size: 0.875rem; color: var(--cds-text-02);">
+                    Score general: 25 / 100 (threshold crítico: 75)
+                </div>
+            </div>
+
+            <div class="risk-insights">
+                <div class="risk-insight">
+                    <div class="insight-title">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2Zm7.7,21.3L22.3,24.7,16,18.4,9.7,24.7,8.3,23.3,14.6,17,8.3,10.7,9.7,9.3,16,15.6l6.3-6.3,1.4,1.4L17.4,17Z"/>
+                        </svg>
+                        Tendencias Positivas
+                    </div>
+                    <div class="insight-description">
+                        Pipeline success rate se mantiene estable por encima del 97%. 
+                        Automatización de testing continúa en tendencia alcista.
+                    </div>
+                </div>
+                
+                <div class="risk-insight">
+                    <div class="insight-title">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12.0137,12.0137,0,0,1,16,28Z"/>
+                            <path d="M15,8h2v11H15ZM16,24a1.5,1.5,0,1,0-1.5-1.5A1.5,1.5,0,0,0,16,24Z"/>
+                        </svg>
+                        Área de Atención
+                    </div>
+                    <div class="insight-description">
+                        Customer satisfaction muestra ligera tendencia descendente. 
+                        Monitorear feedback de usuarios en próximas 48 horas.
+                    </div>
+                </div>
+                
+                <div class="risk-insight">
+                    <div class="insight-title">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M4,20V12H6v8Zm4-4V14H10v2Zm4,2V13h2v5Zm4,0V11h2v7Zm4-2V15h2v2Zm4,4V10h2V20Zm6,2H2V20H30Z"/>
+                        </svg>
+                        Métricas Estables
+                    </div>
+                    <div class="insight-description">
+                        Defect density y lead time dentro de rangos esperados. 
+                        No se detectan anomalías estadísticamente significativas.
+                    </div>
+                </div>
+                
+                <div class="risk-insight">
+                    <div class="insight-title">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M30,15H17V2a13,13,0,0,0-13,13v2H2v2H4v2a13,13,0,0,0,13,13h2V32h2V30h2A13,13,0,0,0,30,17V15ZM6,15a11,11,0,0,1,9-10.9V15H6ZM21,28H17V17h9.9A11,11,0,0,1,21,28Z"/>
+                        </svg>
+                        Predicción ML
+                    </div>
+                    <div class="insight-description">
+                        Modelos ML predicen estabilidad general para próximas 24h. 
+                        Confianza promedio: 88.4% en todas las predicciones.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-card">
+                <h4>
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M4,20V12H6v8Zm4-4V14H10v2Zm4,2V13h2v5Zm4,0V11h2v7Zm4-2V15h2v2Zm4,4V10h2V20Zm6,2H2V20H30Z"/>
+                    </svg>
+                    Tendencias de Precisión ML (30 días)
+                </h4>
+                <div class="chart-container">
+                    <canvas id="accuracyTrendChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-card">
+                <h4>
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2Zm7.7,21.3L22.3,24.7,16,18.4,9.7,24.7,8.3,23.3,14.6,17,8.3,10.7,9.7,9.3,16,15.6l6.3-6.3,1.4,1.4L17.4,17Z"/>
+                    </svg>
+                    Distribución de Confianza por Modelo
+                </h4>
+                <div class="chart-container">
+                    <canvas id="confidenceDistributionChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="dashboard-footer">
+            <div class="footer-text">
+                IBM Quality Analytics ML Dashboard v2.1 | 
+                Modelos actualizados automáticamente cada 7 días | 
+                Datos históricos: 6 meses | 
+                Próxima actualización: <span id="nextUpdate"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTimestamp();
+            initializeCharts();
+            
+            // Auto-refresh every 30 seconds
+            setInterval(function() {
+                updateTimestamp();
+                updatePredictions();
+            }, 30000);
+        });
+
+        function updateTimestamp() {
+            const now = new Date();
+            const timestamp = now.toLocaleString('es-CO', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            document.getElementById('lastUpdated').innerHTML = 
+                `<svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                    <path d="M22.45,21A10.87,10.87,0,0,0,25,14,11,11,0,0,0,3,14a10.87,10.87,0,0,0,2.55,7H8V19H5.29A8.89,8.89,0,0,1,4,14a9,9,0,0,1,18,0,8.89,8.89,0,0,1-1.29,5H24V19H22.45ZM16,7.5A1.5,1.5,0,1,1,14.5,6,1.5,1.5,0,0,1,16,7.5Zm-1.5,3V17h3V10.5Z"/>
+                </svg>
+                <span class="refresh-indicator">Última actualización: ${timestamp}</span>`;
+            
+            // Calculate next update time (7 days from now)
+            const nextUpdate = new Date(now.getTime() + (7 * 24 * 60 * 60 * 1000));
+            document.getElementById('nextUpdate').textContent = 
+                nextUpdate.toLocaleDateString('es-CO');
+        }
+
+        function updatePredictions() {
+            // Simulate slight variations in predictions (demo purposes)
+            const metrics = [
+                { id: 'defect-density', variance: 0.02 },
+                { id: 'pipeline-success', variance: 0.5 },
+                { id: 'lead-time', variance: 0.1 },
+                { id: 'customer-satisfaction', variance: 0.05 }
+            ];
+
+            // Add subtle loading effect
+            document.querySelectorAll('.prediction-card').forEach(card => {
+                card.classList.add('loading');
+                setTimeout(() => card.classList.remove('loading'), 1000);
+            });
+        }
+
+        function initializeCharts() {
+            // Accuracy Trend Chart
+            const accuracyCtx = document.getElementById('accuracyTrendChart').getContext('2d');
+            const accuracyChart = new Chart(accuracyCtx, {
+                type: 'line',
+                data: {
+                    labels: generateDates(30),
+                    datasets: [{
+                        label: 'Random Forest',
+                        data: generateAccuracyData(30, 87.4),
+                        borderColor: '#0f62fe',
+                        backgroundColor: 'rgba(15, 98, 254, 0.1)',
+                        tension: 0.4,
+                        fill: false
+                    }, {
+                        label: 'Isolation Forest',
+                        data: generateAccuracyData(30, 92.0),
+                        borderColor: '#24a148',
+                        backgroundColor: 'rgba(36, 161, 72, 0.1)',
+                        tension: 0.4,
+                        fill: false
+                    }, {
+                        label: 'Prophet',
+                        data: generateAccuracyData(30, 85.2),
+                        borderColor: '#f1c21b',
+                        backgroundColor: 'rgba(241, 194, 27, 0.1)',
+                        tension: 0.4,
+                        fill: false
+                    }, {
+                        label: 'Risk Engine',
+                        data: generateAccuracyData(30, 89.1),
+                        borderColor: '#da1e28',
+                        backgroundColor: 'rgba(218, 30, 40, 0.1)',
+                        tension: 0.4,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 75,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Precisión (%)',
+                                font: { family: 'IBM Plex Sans' }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Fecha',
+                                font: { family: 'IBM Plex Sans' }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                font: { family: 'IBM Plex Sans' }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Confidence Distribution Chart
+            const confidenceCtx = document.getElementById('confidenceDistributionChart').getContext('2d');
+            const confidenceChart = new Chart(confidenceCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['Precisión', 'Recall', 'F1-Score', 'Especificidad', 'AUC-ROC', 'Estabilidad'],
+                    datasets: [{
+                        label: 'Random Forest',
+                        data: [87.4, 85.2, 86.3, 88.1, 89.5, 84.7],
+                        borderColor: '#0f62fe',
+                        backgroundColor: 'rgba(15, 98, 254, 0.2)',
+                        pointBackgroundColor: '#0f62fe'
+                    }, {
+                        label: 'Isolation Forest',
+                        data: [92.0, 89.3, 90.6, 93.2, 91.8, 87.4],
+                        borderColor: '#24a148',
+                        backgroundColor: 'rgba(36, 161, 72, 0.2)',
+                        pointBackgroundColor: '#24a148'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                font: { family: 'IBM Plex Sans' }
+                            },
+                            pointLabels: {
+                                font: { family: 'IBM Plex Sans' }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                font: { family: 'IBM Plex Sans' }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function generateDates(days) {
+            const dates = [];
+            for (let i = days - 1; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                dates.push(date.toLocaleDateString('es-CO', { month: 'short', day: 'numeric' }));
+            }
+            return dates;
+        }
+
+        function generateAccuracyData(days, baseValue) {
+            const data = [];
+            for (let i = 0; i < days; i++) {
+                // Add some realistic variation
+                const variation = (Math.random() - 0.5) * 4; // ±2% variation
+                data.push(Math.max(75, Math.min(100, baseValue + variation)));
+            }
+            return data;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Métricas de Calidad - IBM Quality Management</title>
+    
+    <!-- IBM favicon -->
+    <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
+    
+    <!-- IBM Carbon Design System CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/carbon-components@10.58.12/css/carbon-components.min.css">
+    
+    <!-- IBM Carbon Icons -->
+    <script type="module" src="https://unpkg.com/@carbon/icons@11.8.0/es/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@carbon/icons@11.8.0/lib/index.css">
+    
+    <!-- IBM Plex Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <style>
+        :root {
+            /* IBM Carbon Design System Variables */
+            --cds-interactive-01: #0f62fe;
+            --cds-interactive-02: #393939;
+            --cds-interactive-03: #0f62fe;
+            --cds-interactive-04: #0f62fe;
+            --cds-ui-background: #ffffff;
+            --cds-ui-01: #f4f4f4;
+            --cds-ui-02: #ffffff;
+            --cds-ui-03: #e0e0e0;
+            --cds-ui-04: #8d8d8d;
+            --cds-ui-05: #161616;
+            --cds-text-01: #161616;
+            --cds-text-02: #525252;
+            --cds-text-03: #a8a8a8;
+            --cds-text-04: #ffffff;
+            --cds-text-05: #6f6f6f;
+            --cds-icon-01: #161616;
+            --cds-icon-02: #525252;
+            --cds-icon-03: #ffffff;
+            --cds-link-01: #0f62fe;
+            --cds-field-01: #f4f4f4;
+            --cds-field-02: #ffffff;
+            --cds-inverse-01: #ffffff;
+            --cds-inverse-02: #393939;
+            --cds-support-01: #da1e28;
+            --cds-support-02: #24a148;
+            --cds-support-03: #f1c21b;
+            --cds-support-04: #0043ce;
+            --cds-overlay-01: rgba(22, 22, 22, 0.5);
+            --cds-focus: #0f62fe;
+            --cds-hover-primary: #0353e9;
+            --cds-active-primary: #002d9c;
+            --cds-hover-primary-text: #004ccc;
+            --cds-hover-secondary: #4c4c4c;
+            --cds-active-secondary: #6f6f6f;
+            --cds-hover-tertiary: #0353e9;
+            --cds-active-tertiary: #002d9c;
+            --cds-hover-ui: #e5e5e5;
+            --cds-active-ui: #c6c6c6;
+            --cds-selected-ui: #e0e0e0;
+            --cds-hover-selected-ui: #cacaca;
+            --cds-inverse-hover-ui: #4c4c4c;
+            --cds-hover-danger: #ba1b23;
+            --cds-active-danger: #750e13;
+            --cds-hover-row: #e5e5e5;
+            --cds-visited-link: #8a3ffc;
+            --cds-disabled-01: #f4f4f4;
+            --cds-disabled-02: #c6c6c6;
+            --cds-disabled-03: #8d8d8d;
+            --cds-highlight: #d0e2ff;
+            --cds-skeleton-01: #e5e5e5;
+            --cds-skeleton-02: #c6c6c6;
+            --cds-brand-01: #0f62fe;
+            --cds-brand-02: #393939;
+            --cds-brand-03: #0f62fe;
+            --cds-active-01: #c6c6c6;
+            --cds-hover-field: #e5e5e5;
+            
+            /* IBM Carbon Spacing Scale */
+            --cds-spacing-01: 0.125rem;
+            --cds-spacing-02: 0.25rem;
+            --cds-spacing-03: 0.5rem;
+            --cds-spacing-04: 0.75rem;
+            --cds-spacing-05: 1rem;
+            --cds-spacing-06: 1.5rem;
+            --cds-spacing-07: 2rem;
+            --cds-spacing-08: 2.5rem;
+            --cds-spacing-09: 3rem;
+            --cds-spacing-10: 4rem;
+            --cds-spacing-11: 5rem;
+            --cds-spacing-12: 6rem;
+            --cds-spacing-13: 10rem;
+            
+            /* IBM Carbon Typography Scale */
+            --cds-productive-heading-01: 0.875rem;
+            --cds-productive-heading-02: 1rem;
+            --cds-productive-heading-03: 1.25rem;
+            --cds-productive-heading-04: 1.75rem;
+            --cds-productive-heading-05: 2rem;
+            --cds-productive-heading-06: 2.625rem;
+            --cds-productive-heading-07: 3.375rem;
+            
+            --cds-body-compact-01: 0.875rem;
+            --cds-body-compact-02: 1rem;
+            --cds-body-short-01: 0.875rem;
+            --cds-body-short-02: 1rem;
+            --cds-body-long-01: 0.875rem;
+            --cds-body-long-02: 1rem;
+            
+            --cds-caption-01: 0.75rem;
+            --cds-caption-02: 0.875rem;
+            --cds-label-01: 0.75rem;
+            --cds-label-02: 0.875rem;
+            --cds-helper-text-01: 0.75rem;
+            --cds-helper-text-02: 0.875rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.29;
+            letter-spacing: 0.16px;
+            background-color: var(--cds-ui-background);
+            color: var(--cds-text-01);
+            min-height: 100vh;
+        }
+
+        /* IBM Carbon Header/Navbar */
+        .bx--header {
+            background-color: var(--cds-ui-05);
+            border-bottom: 1px solid var(--cds-ui-03);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 var(--cds-spacing-05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 6000;
+        }
+
+        .bx--header__name {
+            font-size: var(--cds-body-short-02);
+            font-weight: 600;
+            color: var(--cds-text-04);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 0 var(--cds-spacing-05);
+            border-left: 1px solid var(--cds-ui-04);
+            margin-left: var(--cds-spacing-05);
+        }
+
+        .bx--header__name:hover {
+            background-color: var(--cds-inverse-hover-ui);
+        }
+
+        .bx--header__logo {
+            width: 20px;
+            height: 20px;
+            margin-right: var(--cds-spacing-03);
+            fill: var(--cds-icon-03);
+        }
+
+        .bx--header-nav {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            margin-left: auto;
+        }
+
+        .bx--header-nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .bx--header-nav__item {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .bx--header-nav__link {
+            color: var(--cds-text-04);
+            text-decoration: none;
+            font-size: var(--cds-body-short-01);
+            font-weight: 400;
+            padding: 0 var(--cds-spacing-05);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            transition: background-color 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        }
+
+        .bx--header-nav__link:hover {
+            background-color: var(--cds-inverse-hover-ui);
+        }
+
+        .bx--header-nav__link--current {
+            background-color: var(--cds-inverse-02);
+            color: var(--cds-inverse-01);
+        }
+
+        .container {
+            max-width: 1584px;
+            margin: 0 auto;
+            padding: var(--cds-spacing-05);
+            padding-top: calc(48px + var(--cds-spacing-05));
+        }
+
+        /* Calculator Header */
+        .calculator-header {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-06);
+            margin-bottom: var(--cds-spacing-05);
+            border-radius: 4px;
+        }
+
+        .calculator-header h1 {
+            font-size: var(--cds-productive-heading-05);
+            font-weight: 400;
+            margin-bottom: var(--cds-spacing-03);
+            color: var(--cds-text-01);
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+        }
+
+        .calculator-subtitle {
+            font-size: var(--cds-body-long-01);
+            color: var(--cds-text-02);
+        }
+
+        /* Metric Selection */
+        .metric-selection {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-05);
+            margin-bottom: var(--cds-spacing-05);
+            border-radius: 4px;
+        }
+
+        .selection-title {
+            font-size: var(--cds-productive-heading-02);
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-04);
+        }
+
+        .metric-tabs {
+            display: flex;
+            gap: var(--cds-spacing-02);
+            margin-bottom: var(--cds-spacing-05);
+            flex-wrap: wrap;
+        }
+
+        .metric-tab {
+            background: var(--cds-ui-01);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-03) var(--cds-spacing-05);
+            cursor: pointer;
+            transition: all 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+            font-size: var(--cds-body-short-01);
+            color: var(--cds-text-01);
+            border-radius: 0;
+        }
+
+        .metric-tab:hover {
+            background: var(--cds-hover-ui);
+        }
+
+        .metric-tab.active {
+            background: var(--cds-interactive-01);
+            color: var(--cds-text-04);
+            border-color: var(--cds-interactive-01);
+        }
+
+        /* Input Section */
+        .input-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--cds-spacing-07);
+            margin-bottom: var(--cds-spacing-07);
+        }
+
+        .input-form {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-06);
+            border-radius: 4px;
+        }
+
+        .form-title {
+            font-size: var(--cds-productive-heading-02);
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-05);
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+        }
+
+        .form-group {
+            margin-bottom: var(--cds-spacing-05);
+        }
+
+        .bx--label {
+            font-size: var(--cds-label-02);
+            font-weight: 400;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-02);
+            display: block;
+        }
+
+        .bx--text-input {
+            width: 100%;
+            height: 40px;
+            padding: 0 var(--cds-spacing-04);
+            border: none;
+            border-bottom: 1px solid var(--cds-ui-04);
+            background-color: var(--cds-field-01);
+            color: var(--cds-text-01);
+            font-size: var(--cds-body-short-01);
+            font-family: inherit;
+            transition: border-color 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        }
+
+        .bx--text-input:focus {
+            outline: 2px solid var(--cds-focus);
+            outline-offset: -2px;
+            border-color: var(--cds-focus);
+        }
+
+        .bx--helper-text {
+            font-size: var(--cds-helper-text-01);
+            color: var(--cds-text-02);
+            margin-top: var(--cds-spacing-02);
+        }
+
+        .bx--btn {
+            height: 48px;
+            padding: 0 var(--cds-spacing-05);
+            border: none;
+            font-size: var(--cds-body-short-02);
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+            border-radius: 0;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .bx--btn--primary {
+            background-color: var(--cds-interactive-01);
+            color: var(--cds-text-04);
+        }
+
+        .bx--btn--primary:hover {
+            background-color: var(--cds-hover-primary);
+        }
+
+        .bx--btn--secondary {
+            background-color: transparent;
+            color: var(--cds-interactive-01);
+            border: 1px solid var(--cds-interactive-01);
+        }
+
+        .bx--btn--secondary:hover {
+            background-color: var(--cds-hover-ui);
+        }
+
+        /* Results Section */
+        .results-section {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .results-header {
+            background: var(--cds-ui-01);
+            padding: var(--cds-spacing-05);
+            border-bottom: 1px solid var(--cds-ui-03);
+        }
+
+        .results-body {
+            padding: var(--cds-spacing-06);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--cds-spacing-05);
+            margin-bottom: var(--cds-spacing-06);
+        }
+
+        .result-card {
+            background: var(--cds-ui-01);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-05);
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: var(--cds-productive-heading-04);
+            font-weight: 400;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-02);
+        }
+
+        .result-label {
+            font-size: var(--cds-body-short-01);
+            color: var(--cds-text-02);
+            margin-bottom: var(--cds-spacing-03);
+        }
+
+        .result-interpretation {
+            font-size: var(--cds-caption-01);
+            padding: var(--cds-spacing-02) var(--cds-spacing-03);
+            border-radius: 16px;
+            font-weight: 600;
+        }
+
+        .interpretation-excellent { background: var(--cds-support-02); color: var(--cds-text-04); }
+        .interpretation-good { background: var(--cds-support-04); color: var(--cds-text-04); }
+        .interpretation-average { background: var(--cds-support-03); color: var(--cds-text-01); }
+        .interpretation-poor { background: var(--cds-support-01); color: var(--cds-text-04); }
+
+        /* Chart Section */
+        .chart-section {
+            margin-top: var(--cds-spacing-06);
+        }
+
+        .chart-container {
+            background: var(--cds-ui-01);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-05);
+            border-radius: 4px;
+            height: 400px;
+            position: relative;
+        }
+
+        /* Formula Display */
+        .formula-display {
+            background: var(--cds-ui-01);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-05);
+            border-radius: 4px;
+            margin-bottom: var(--cds-spacing-05);
+        }
+
+        .formula-title {
+            font-size: var(--cds-productive-heading-02);
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-03);
+        }
+
+        .formula-text {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: var(--cds-body-short-02);
+            color: var(--cds-text-01);
+            background: var(--cds-field-01);
+            padding: var(--cds-spacing-04);
+            border-radius: 4px;
+            margin-bottom: var(--cds-spacing-03);
+        }
+
+        .formula-description {
+            font-size: var(--cds-body-short-01);
+            color: var(--cds-text-02);
+            line-height: 1.5;
+        }
+
+        /* History Section */
+        .history-section {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            border-radius: 4px;
+            margin-top: var(--cds-spacing-05);
+        }
+
+        .history-header {
+            background: var(--cds-ui-01);
+            padding: var(--cds-spacing-05);
+            border-bottom: 1px solid var(--cds-ui-03);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            padding: var(--cds-spacing-04);
+            border-bottom: 1px solid var(--cds-ui-03);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-details {
+            flex: 1;
+        }
+
+        .history-metric {
+            font-size: var(--cds-body-short-02);
+            font-weight: 600;
+            color: var(--cds-text-01);
+        }
+
+        .history-values {
+            font-size: var(--cds-caption-01);
+            color: var(--cds-text-02);
+            margin-top: var(--cds-spacing-01);
+        }
+
+        .history-result {
+            font-size: var(--cds-body-short-02);
+            font-weight: 600;
+            color: var(--cds-text-01);
+        }
+
+        .history-time {
+            font-size: var(--cds-caption-01);
+            color: var(--cds-text-03);
+            margin-left: var(--cds-spacing-04);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1056px) {
+            .input-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .metric-tabs {
+                flex-direction: column;
+            }
+
+            .results-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 672px) {
+            .container {
+                padding: var(--cds-spacing-04);
+                padding-top: calc(48px + var(--cds-spacing-04));
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Carbon Header/Navbar -->
+    <header class="bx--header">
+        <a href="#" class="bx--header__name">
+            <svg class="bx--header__logo" viewBox="0 0 32 32">
+                <path d="M8.24 25.14L7 24l4.05-4.24.39.4-.47.47L8.52 23l1.36-1.37-.41-.41 4.36-4.59L14 17l-5.79 6.14H8.2zm-5.92-8.12L3.73 15.6l4.2-4.44.4.4-.47.48L5.41 14.4l1.38-1.38-.41-.41L10.55 8.4l.17.37-5.79 6.14H2.3z"/>
+                <path d="M27.12 8h-6.23l-3.7 3.9 3.7 3.9h6.23L32 12l-4.88-4zM22.12 14l2.57-2.7L26.88 14h-4.76zm5.76-4L26.12 8h-2.5l1.26 2z"/>
+            </svg>
+            IBM Quality Management
+        </a>
+        
+        <nav class="bx--header-nav">
+            <ul>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Dashboard</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Quality Analytics</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link bx--header-nav__link--current">Calculadora Métricas</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Casos de Prueba</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Reportes</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Calculator Header -->
+        <div class="calculator-header">
+            <h1>
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 32 32">
+                    <path d="M25,3H7A2,2,0,0,0,5,5V27a2,2,0,0,0,2,2H25a2,2,0,0,0,2-2V5A2,2,0,0,0,25,3ZM7,5H25V8H7ZM7,27V10H25V27Z"/>
+                    <path d="M9,12h2v2H9ZM13,12h8v2H13ZM9,16h2v2H9ZM13,16h8v2H13ZM9,20h2v2H9ZM13,20h8v2H13ZM9,24h2v2H9ZM13,24h8v2H13Z"/>
+                </svg>
+                Calculadora de Métricas de Calidad
+            </h1>
+            <div class="calculator-subtitle">
+                Herramienta para calcular indicadores clave de rendimiento y métricas de calidad de software según estándares IBM
+            </div>
+        </div>
+
+        <!-- Metric Selection -->
+        <div class="metric-selection">
+            <div class="selection-title">Seleccione la Métrica a Calcular</div>
+            <div class="metric-tabs">
+                <div class="metric-tab active" onclick="selectMetric('coverage')">Cobertura de Pruebas</div>
+                <div class="metric-tab" onclick="selectMetric('defect-density')">Densidad de Defectos</div>
+                <div class="metric-tab" onclick="selectMetric('defect-removal')">Eficiencia de Remoción</div>
+                <div class="metric-tab" onclick="selectMetric('test-effectiveness')">Efectividad de Pruebas</div>
+                <div class="metric-tab" onclick="selectMetric('mtbf')">MTBF/MTTR</div>
+                <div class="metric-tab" onclick="selectMetric('roi')">ROI en Calidad</div>
+            </div>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <!-- Input Form -->
+            <div class="input-form">
+                <div class="form-title">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"/>
+                        <path d="M8,18h6v2H8ZM16,18h8v2H16ZM8,14h4v2H8ZM14,14h10v2H14ZM8,10h8v2H8ZM18,10h6v2H18Z"/>
+                    </svg>
+                    Datos de Entrada
+                </div>
+                
+                <form id="metricsForm">
+                    <!-- Cobertura de Pruebas Fields -->
+                    <div id="coverage-fields" class="metric-fields">
+                        <div class="form-group">
+                            <label class="bx--label" for="linesExecuted">Líneas de Código Ejecutadas</label>
+                            <input class="bx--text-input" type="number" id="linesExecuted" min="0" step="1">
+                            <div class="bx--helper-text">Número de líneas de código cubiertas por las pruebas</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="bx--label" for="totalLines">Total de Líneas de Código</label>
+                            <input class="bx--text-input" type="number" id="totalLines" min="1" step="1">
+                            <div class="bx--helper-text">Número total de líneas de código ejecutables</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="bx--label" for="branchesExecuted">Ramas Ejecutadas</label>
+                            <input class="bx--text-input" type="number" id="branchesExecuted" min="0" step="1">
+                            <div class="bx--helper-text">Número de ramas de decisión cubiertas</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="bx--label" for="totalBranches">Total de Ramas</label>
+                            <input class="bx--text-input" type="number" id="totalBranches" min="1" step="1">
+                            <div class="bx--helper-text">Número total de ramas de decisión</div>
+                        </div>
+                    </div>
+
+                    <!-- Densidad de Defectos Fields (hidden by default) -->
+                    <div id="defect-density-fields" class="metric-fields" style="display: none;">
+                        <div class="form-group">
+                            <label class="bx--label" for="totalDefects">Total de Defectos</label>
+                            <input class="bx--text-input" type="number" id="totalDefects" min="0" step="1">
+                            <div class="bx--helper-text">Número total de defectos encontrados</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="bx--label" for="codeSize">Tamaño del Código (KLOC)</label>
+                            <input class="bx--text-input" type="number" id="codeSize" min="0.1" step="0.1">
+                            <div class="bx--helper-text">Tamaño en miles de líneas de código</div>
+                        </div>
+                    </div>
+
+                    <!-- Eficiencia de Remoción Fields (hidden by default) -->
+                    <div id="defect-removal-fields" class="metric-fields" style="display: none;">
+                        <div class="form-group">
+                            <label class="bx--label" for="defectsFoundTesting">Defectos Encontrados en Pruebas</label>
+                            <input class="bx--text-input" type="number" id="defectsFoundTesting" min="0" step="1">
+                            <div class="bx--helper-text">Defectos identificados durante las pruebas</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="bx--label" for="defectsFoundProduction">Defectos Encontrados en Producción</label>
+                            <input class="bx--text-input" type="number" id="defectsFoundProduction" min="0" step="1">
+                            <div class="bx--helper-text">Defectos reportados por usuarios finales</div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="bx--btn bx--btn--primary" onclick="calculateMetric()">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M25,3H7A2,2,0,0,0,5,5V27a2,2,0,0,0,2,2H25a2,2,0,0,0,2-2V5A2,2,0,0,0,25,3ZM7,5H25V8H7ZM7,27V10H25V27Z"/>
+                            <path d="M9,12h2v2H9ZM13,12h8v2H13ZM9,16h2v2H9ZM13,16h8v2H13ZM9,20h2v2H9ZM13,20h8v2H13ZM9,24h2v2H9ZM13,24h8v2H13Z"/>
+                        </svg>
+                        Calcular Métrica
+                    </button>
+                </form>
+            </div>
+
+            <!-- Formula Display -->
+            <div class="input-form">
+                <div class="form-title">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12.0137,12.0137,0,0,1,16,28Z"/>
+                        <path d="M15,8h2v11H15ZM16,24a1.5,1.5,0,1,0-1.5-1.5A1.5,1.5,0,0,0,16,24Z"/>
+                    </svg>
+                    Fórmula y Descripción
+                </div>
+                
+                <div class="formula-display" id="formulaDisplay">
+                    <div class="formula-title">Cobertura de Pruebas</div>
+                    <div class="formula-text">
+                        Cobertura de Líneas = (Líneas Ejecutadas / Total Líneas) × 100<br>
+                        Cobertura de Ramas = (Ramas Ejecutadas / Total Ramas) × 100
+                    </div>
+                    <div class="formula-description">
+                        La cobertura de pruebas mide qué porcentaje del código fuente ha sido ejercitado por las pruebas. 
+                        Una cobertura alta indica que la mayoría del código ha sido probado, reduciendo el riesgo de defectos no detectados.
+                        <br><br>
+                        <strong>Objetivos recomendados:</strong><br>
+                        • Excelente: > 90%<br>
+                        • Bueno: 80-90%<br>
+                        • Promedio: 70-79%<br>
+                        • Pobre: < 70%
+                    </div>
+                </div>
+
+                <button type="button" class="bx--btn bx--btn--secondary" onclick="clearForm()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M24,9.4L22.6,8L16,14.6L9.4,8L8,9.4l6.6,6.6L8,22.6L9.4,24l6.6-6.6l6.6,6.6l1.4-1.4L17.4,16Z"/>
+                    </svg>
+                    Limpiar Formulario
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section">
+            <div class="results-header">
+                <div class="form-title">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M4,20V12a8,8,0,0,1,16,0v8a8,8,0,0,1-16,0Zm2,0a6,6,0,0,0,12,0V12a6,6,0,0,0-12,0Z"/>
+                        <path d="M30,14V10a8,8,0,0,0-8-8V4a6,6,0,0,1,6,6v4a2,2,0,0,1-2,2H24V14h4A2,2,0,0,0,30,14Z"/>
+                    </svg>
+                    Resultados del Cálculo
+                </div>
+            </div>
+            
+            <div class="results-body">
+                <div class="results-grid" id="resultsGrid">
+                    <!-- Results will be populated by JavaScript -->
+                    <div class="result-card">
+                        <div class="result-value">--</div>
+                        <div class="result-label">Esperando cálculo...</div>
+                        <div class="result-interpretation interpretation-average">Complete los campos para calcular</div>
+                    </div>
+                </div>
+
+                <div class="chart-section">
+                    <div class="chart-container">
+                        <canvas id="metricsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Section -->
+        <div class="history-section">
+            <div class="history-header">
+                <div class="form-title">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12.0137,12.0137,0,0,1,16,28Z"/>
+                        <path d="M20.59,22,15,16.41V7h2v8.58l5,5Z"/>
+                    </svg>
+                    Historial de Cálculos
+                </div>
+                <button class="bx--btn bx--btn--secondary" onclick="clearHistory()" style="width: auto;">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M24,9.4L22.6,8L16,14.6L9.4,8L8,9.4l6.6,6.6L8,22.6L9.4,24l6.6-6.6l6.6,6.6l1.4-1.4L17.4,16Z"/>
+                    </svg>
+                    Limpiar Historial
+                </button>
+            </div>
+            
+            <div class="history-list" id="historyList">
+                <div class="history-item">
+                    <div class="history-details">
+                        <div class="history-metric">No hay cálculos previos</div>
+                        <div class="history-values">Realice un cálculo para ver el historial</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentMetric = 'coverage';
+        let calculationHistory = [];
+        let metricsChart = null;
+
+        // Metric configurations
+        const metricConfigs = {
+            'coverage': {
+                title: 'Cobertura de Pruebas',
+                formula: 'Cobertura de Líneas = (Líneas Ejecutadas / Total Líneas) × 100\nCobertura de Ramas = (Ramas Ejecutadas / Total Ramas) × 100',
+                description: 'La cobertura de pruebas mide qué porcentaje del código fuente ha sido ejercitado por las pruebas. Una cobertura alta indica que la mayoría del código ha sido probado, reduciendo el riesgo de defectos no detectados.',
+                targets: {
+                    excellent: '> 90%',
+                    good: '80-90%',
+                    average: '70-79%',
+                    poor: '< 70%'
+                }
+            },
+            'defect-density': {
+                title: 'Densidad de Defectos',
+                formula: 'Densidad de Defectos = Total de Defectos / Tamaño del Código (KLOC)',
+                description: 'La densidad de defectos mide la cantidad de defectos por cada mil líneas de código. Es un indicador de la calidad del código y la efectividad del proceso de desarrollo.',
+                targets: {
+                    excellent: '< 1 defecto/KLOC',
+                    good: '1-3 defectos/KLOC',
+                    average: '3-5 defectos/KLOC',
+                    poor: '> 5 defectos/KLOC'
+                }
+            },
+            'defect-removal': {
+                title: 'Eficiencia de Remoción de Defectos',
+                formula: 'DRE = Defectos Encontrados en Pruebas / (Defectos en Pruebas + Defectos en Producción) × 100',
+                description: 'La eficiencia de remoción de defectos (DRE) mide qué tan efectivo es el proceso de pruebas para identificar defectos antes de la entrega al cliente.',
+                targets: {
+                    excellent: '> 95%',
+                    good: '90-95%',
+                    average: '80-89%',
+                    poor: '< 80%'
+                }
+            }
+        };
+
+        // Select metric tab
+        function selectMetric(metric) {
+            currentMetric = metric;
+            
+            // Update active tab
+            document.querySelectorAll('.metric-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Hide all metric fields
+            document.querySelectorAll('.metric-fields').forEach(fields => {
+                fields.style.display = 'none';
+            });
+            
+            // Show selected metric fields
+            const targetFields = document.getElementById(metric + '-fields');
+            if (targetFields) {
+                targetFields.style.display = 'block';
+            }
+            
+            // Update formula display
+            updateFormulaDisplay(metric);
+            
+            // Clear results
+            clearResults();
+        }
+
+        // Update formula display
+        function updateFormulaDisplay(metric) {
+            const config = metricConfigs[metric] || metricConfigs['coverage'];
+            const display = document.getElementById('formulaDisplay');
+            
+            display.innerHTML = `
+                <div class="formula-title">${config.title}</div>
+                <div class="formula-text">${config.formula}</div>
+                <div class="formula-description">
+                    ${config.description}
+                    <br><br>
+                    <strong>Objetivos recomendados:</strong><br>
+                    • Excelente: ${config.targets.excellent}<br>
+                    • Bueno: ${config.targets.good}<br>
+                    • Promedio: ${config.targets.average}<br>
+                    • Pobre: ${config.targets.poor}
+                </div>
+            `;
+        }
+
+        // Calculate metric based on current selection
+        function calculateMetric() {
+            switch(currentMetric) {
+                case 'coverage':
+                    calculateCoverage();
+                    break;
+                case 'defect-density':
+                    calculateDefectDensity();
+                    break;
+                case 'defect-removal':
+                    calculateDefectRemoval();
+                    break;
+                default:
+                    alert('Métrica no implementada aún');
+            }
+        }
+
+        // Calculate test coverage
+        function calculateCoverage() {
+            const linesExecuted = parseFloat(document.getElementById('linesExecuted').value) || 0;
+            const totalLines = parseFloat(document.getElementById('totalLines').value) || 1;
+            const branchesExecuted = parseFloat(document.getElementById('branchesExecuted').value) || 0;
+            const totalBranches = parseFloat(document.getElementById('totalBranches').value) || 1;
+            
+            const lineCoverage = (linesExecuted / totalLines) * 100;
+            const branchCoverage = (branchesExecuted / totalBranches) * 100;
+            const overallCoverage = (lineCoverage + branchCoverage) / 2;
+            
+            const results = [
+                {
+                    value: lineCoverage.toFixed(2) + '%',
+                    label: 'Cobertura de Líneas',
+                    interpretation: getInterpretation(lineCoverage, 'coverage')
+                },
+                {
+                    value: branchCoverage.toFixed(2) + '%',
+                    label: 'Cobertura de Ramas',
+                    interpretation: getInterpretation(branchCoverage, 'coverage')
+                },
+                {
+                    value: overallCoverage.toFixed(2) + '%',
+                    label: 'Cobertura General',
+                    interpretation: getInterpretation(overallCoverage, 'coverage')
+                },
+                {
+                    value: Math.round(totalLines - linesExecuted),
+                    label: 'Líneas Sin Cubrir',
+                    interpretation: 'info'
+                }
+            ];
+            
+            displayResults(results);
+            addToHistory('Cobertura de Pruebas', {
+                linesExecuted, totalLines, branchesExecuted, totalBranches
+            }, overallCoverage.toFixed(2) + '%');
+            
+            updateChart([lineCoverage, branchCoverage], ['Líneas', 'Ramas']);
+        }
+
+        // Calculate defect density
+        function calculateDefectDensity() {
+            const totalDefects = parseFloat(document.getElementById('totalDefects').value) || 0;
+            const codeSize = parseFloat(document.getElementById('codeSize').value) || 1;
+            
+            const density = totalDefects / codeSize;
+            
+            const results = [
+                {
+                    value: density.toFixed(2),
+                    label: 'Defectos por KLOC',
+                    interpretation: getInterpretation(density, 'defect-density')
+                },
+                {
+                    value: totalDefects,
+                    label: 'Total de Defectos',
+                    interpretation: 'info'
+                },
+                {
+                    value: codeSize.toFixed(1),
+                    label: 'Tamaño del Código (KLOC)',
+                    interpretation: 'info'
+                },
+                {
+                    value: Math.round(1000 * codeSize),
+                    label: 'Líneas de Código Totales',
+                    interpretation: 'info'
+                }
+            ];
+            
+            displayResults(results);
+            addToHistory('Densidad de Defectos', { totalDefects, codeSize }, density.toFixed(2) + ' defectos/KLOC');
+            
+            updateChart([density], ['Densidad']);
+        }
+
+        // Calculate defect removal efficiency
+        function calculateDefectRemoval() {
+            const defectsFoundTesting = parseFloat(document.getElementById('defectsFoundTesting').value) || 0;
+            const defectsFoundProduction = parseFloat(document.getElementById('defectsFoundProduction').value) || 0;
+            
+            const totalDefects = defectsFoundTesting + defectsFoundProduction;
+            const dre = totalDefects > 0 ? (defectsFoundTesting / totalDefects) * 100 : 0;
+            
+            const results = [
+                {
+                    value: dre.toFixed(2) + '%',
+                    label: 'Eficiencia de Remoción (DRE)',
+                    interpretation: getInterpretation(dre, 'defect-removal')
+                },
+                {
+                    value: defectsFoundTesting,
+                    label: 'Defectos en Pruebas',
+                    interpretation: 'info'
+                },
+                {
+                    value: defectsFoundProduction,
+                    label: 'Defectos en Producción',
+                    interpretation: 'info'
+                },
+                {
+                    value: totalDefects,
+                    label: 'Total de Defectos',
+                    interpretation: 'info'
+                }
+            ];
+            
+            displayResults(results);
+            addToHistory('Eficiencia de Remoción', { defectsFoundTesting, defectsFoundProduction }, dre.toFixed(2) + '%');
+            
+            updateChart([dre, 100 - dre], ['Encontrados en Pruebas', 'Encontrados en Producción']);
+        }
+
+        // Get interpretation class based on value and metric type
+        function getInterpretation(value, metricType) {
+            switch(metricType) {
+                case 'coverage':
+                case 'defect-removal':
+                    if (value >= 90) return 'excellent';
+                    if (value >= 80) return 'good';
+                    if (value >= 70) return 'average';
+                    return 'poor';
+                    
+                case 'defect-density':
+                    if (value < 1) return 'excellent';
+                    if (value < 3) return 'good';
+                    if (value < 5) return 'average';
+                    return 'poor';
+                    
+                default:
+                    return 'info';
+            }
+        }
+
+        // Display calculation results
+        function displayResults(results) {
+            const grid = document.getElementById('resultsGrid');
+            grid.innerHTML = '';
+            
+            results.forEach(result => {
+                const card = document.createElement('div');
+                card.className = 'result-card';
+                
+                const interpretationText = {
+                    'excellent': 'Excelente',
+                    'good': 'Bueno',
+                    'average': 'Promedio',
+                    'poor': 'Pobre',
+                    'info': 'Información'
+                };
+                
+                card.innerHTML = `
+                    <div class="result-value">${result.value}</div>
+                    <div class="result-label">${result.label}</div>
+                    <div class="result-interpretation interpretation-${result.interpretation}">
+                        ${interpretationText[result.interpretation]}
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // Clear results display
+        function clearResults() {
+            const grid = document.getElementById('resultsGrid');
+            grid.innerHTML = `
+                <div class="result-card">
+                    <div class="result-value">--</div>
+                    <div class="result-label">Esperando cálculo...</div>
+                    <div class="result-interpretation interpretation-average">Complete los campos para calcular</div>
+                </div>
+            `;
+            
+            if (metricsChart) {
+                metricsChart.destroy();
+                metricsChart = null;
+            }
+        }
+
+        // Update chart with results
+        function updateChart(data, labels) {
+            const ctx = document.getElementById('metricsChart').getContext('2d');
+            
+            if (metricsChart) {
+                metricsChart.destroy();
+            }
+            
+            metricsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Valores (%)',
+                        data: data,
+                        backgroundColor: [
+                            '#0f62fe',
+                            '#24a148',
+                            '#f1c21b',
+                            '#da1e28',
+                            '#8a3ffc'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: currentMetric === 'defect-density' ? Math.max(...data) * 1.2 : 100
+                        }
+                    }
+                }
+            });
+        }
+
+        // Add calculation to history
+        function addToHistory(metric, inputs, result) {
+            const timestamp = new Date().toLocaleString('es-CO');
+            const historyItem = {
+                metric,
+                inputs,
+                result,
+                timestamp
+            };
+            
+            calculationHistory.unshift(historyItem);
+            if (calculationHistory.length > 10) {
+                calculationHistory.pop();
+            }
+            
+            updateHistoryDisplay();
+        }
+
+        // Update history display
+        function updateHistoryDisplay() {
+            const historyList = document.getElementById('historyList');
+            
+            if (calculationHistory.length === 0) {
+                historyList.innerHTML = `
+                    <div class="history-item">
+                        <div class="history-details">
+                            <div class="history-metric">No hay cálculos previos</div>
+                            <div class="history-values">Realice un cálculo para ver el historial</div>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            historyList.innerHTML = '';
+            
+            calculationHistory.forEach(item => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                
+                const inputsText = Object.entries(item.inputs)
+                    .map(([key, value]) => `${key}: ${value}`)
+                    .join(', ');
+                
+                historyItem.innerHTML = `
+                    <div class="history-details">
+                        <div class="history-metric">${item.metric}</div>
+                        <div class="history-values">${inputsText}</div>
+                    </div>
+                    <div class="history-result">${item.result}</div>
+                    <div class="history-time">${item.timestamp}</div>
+                `;
+                
+                historyList.appendChild(historyItem);
+            });
+        }
+
+        // Clear form
+        function clearForm() {
+            document.getElementById('metricsForm').reset();
+            clearResults();
+        }
+
+        // Clear history
+        function clearHistory() {
+            if (confirm('¿Está seguro de que desea limpiar el historial de cálculos?')) {
+                calculationHistory = [];
+                updateHistoryDisplay();
+            }
+        }
+
+        // Initialize the calculator
+        document.addEventListener('DOMContentLoaded', function() {
+            updateFormulaDisplay('coverage');
+            clearResults();
+            updateHistoryDisplay();
+            
+            console.log('Calculadora de métricas inicializada correctamente');
+        });
+
+        // Add sample data button functionality
+        function loadSampleData() {
+            switch(currentMetric) {
+                case 'coverage':
+                    document.getElementById('linesExecuted').value = '8520';
+                    document.getElementById('totalLines').value = '9500';
+                    document.getElementById('branchesExecuted').value = '245';
+                    document.getElementById('totalBranches').value = '280';
+                    break;
+                case 'defect-density':
+                    document.getElementById('totalDefects').value = '23';
+                    document.getElementById('codeSize').value = '12.5';
+                    break;
+                case 'defect-removal':
+                    document.getElementById('defectsFoundTesting').value = '45';
+                    document.getElementById('defectsFoundProduction').value = '3';
+                    break;
+            }
+        }
+
+        // Add sample data button to form
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('.input-form');
+            if (forms.length > 0) {
+                const sampleButton = document.createElement('button');
+                sampleButton.type = 'button';
+                sampleButton.className = 'bx--btn bx--btn--secondary';
+                sampleButton.style.marginTop = 'var(--cds-spacing-04)';
+                sampleButton.onclick = loadSampleData;
+                sampleButton.innerHTML = `
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"/>
+                        <path d="M8,18h6v2H8ZM16,18h8v2H16ZM8,14h4v2H8ZM14,14h10v2H14ZM8,10h8v2H8ZM18,10h6v2H18Z"/>
+                    </svg>
+                    Cargar Datos de Ejemplo
+                `;
+                
+                const form = forms[0];
+                const lastButton = form.querySelector('.bx--btn--secondary');
+                form.insertBefore(sampleButton, lastButton);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Casos de Prueba - IBM Quality Management</title>
+    
+    <!-- IBM favicon -->
+    <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
+    
+    <!-- IBM Carbon Design System CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/carbon-components@10.58.12/css/carbon-components.min.css">
+    
+    <!-- IBM Carbon Icons -->
+    <script type="module" src="https://unpkg.com/@carbon/icons@11.8.0/es/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@carbon/icons@11.8.0/lib/index.css">
+    
+    <!-- IBM Plex Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* IBM Carbon Design System Variables */
+            --cds-interactive-01: #0f62fe;
+            --cds-interactive-02: #393939;
+            --cds-interactive-03: #0f62fe;
+            --cds-interactive-04: #0f62fe;
+            --cds-ui-background: #ffffff;
+            --cds-ui-01: #f4f4f4;
+            --cds-ui-02: #ffffff;
+            --cds-ui-03: #e0e0e0;
+            --cds-ui-04: #8d8d8d;
+            --cds-ui-05: #161616;
+            --cds-text-01: #161616;
+            --cds-text-02: #525252;
+            --cds-text-03: #a8a8a8;
+            --cds-text-04: #ffffff;
+            --cds-text-05: #6f6f6f;
+            --cds-icon-01: #161616;
+            --cds-icon-02: #525252;
+            --cds-icon-03: #ffffff;
+            --cds-link-01: #0f62fe;
+            --cds-field-01: #f4f4f4;
+            --cds-field-02: #ffffff;
+            --cds-inverse-01: #ffffff;
+            --cds-inverse-02: #393939;
+            --cds-support-01: #da1e28;
+            --cds-support-02: #24a148;
+            --cds-support-03: #f1c21b;
+            --cds-support-04: #0043ce;
+            --cds-overlay-01: rgba(22, 22, 22, 0.5);
+            --cds-focus: #0f62fe;
+            --cds-hover-primary: #0353e9;
+            --cds-active-primary: #002d9c;
+            --cds-hover-primary-text: #004ccc;
+            --cds-hover-secondary: #4c4c4c;
+            --cds-active-secondary: #6f6f6f;
+            --cds-hover-tertiary: #0353e9;
+            --cds-active-tertiary: #002d9c;
+            --cds-hover-ui: #e5e5e5;
+            --cds-active-ui: #c6c6c6;
+            --cds-selected-ui: #e0e0e0;
+            --cds-hover-selected-ui: #cacaca;
+            --cds-inverse-hover-ui: #4c4c4c;
+            --cds-hover-danger: #ba1b23;
+            --cds-active-danger: #750e13;
+            --cds-hover-row: #e5e5e5;
+            --cds-visited-link: #8a3ffc;
+            --cds-disabled-01: #f4f4f4;
+            --cds-disabled-02: #c6c6c6;
+            --cds-disabled-03: #8d8d8d;
+            --cds-highlight: #d0e2ff;
+            --cds-skeleton-01: #e5e5e5;
+            --cds-skeleton-02: #c6c6c6;
+            --cds-brand-01: #0f62fe;
+            --cds-brand-02: #393939;
+            --cds-brand-03: #0f62fe;
+            --cds-active-01: #c6c6c6;
+            --cds-hover-field: #e5e5e5;
+            
+            /* IBM Carbon Spacing Scale */
+            --cds-spacing-01: 0.125rem;
+            --cds-spacing-02: 0.25rem;
+            --cds-spacing-03: 0.5rem;
+            --cds-spacing-04: 0.75rem;
+            --cds-spacing-05: 1rem;
+            --cds-spacing-06: 1.5rem;
+            --cds-spacing-07: 2rem;
+            --cds-spacing-08: 2.5rem;
+            --cds-spacing-09: 3rem;
+            --cds-spacing-10: 4rem;
+            --cds-spacing-11: 5rem;
+            --cds-spacing-12: 6rem;
+            --cds-spacing-13: 10rem;
+            
+            /* IBM Carbon Typography Scale */
+            --cds-productive-heading-01: 0.875rem;
+            --cds-productive-heading-02: 1rem;
+            --cds-productive-heading-03: 1.25rem;
+            --cds-productive-heading-04: 1.75rem;
+            --cds-productive-heading-05: 2rem;
+            --cds-productive-heading-06: 2.625rem;
+            --cds-productive-heading-07: 3.375rem;
+            
+            --cds-body-compact-01: 0.875rem;
+            --cds-body-compact-02: 1rem;
+            --cds-body-short-01: 0.875rem;
+            --cds-body-short-02: 1rem;
+            --cds-body-long-01: 0.875rem;
+            --cds-body-long-02: 1rem;
+            
+            --cds-caption-01: 0.75rem;
+            --cds-caption-02: 0.875rem;
+            --cds-label-01: 0.75rem;
+            --cds-label-02: 0.875rem;
+            --cds-helper-text-01: 0.75rem;
+            --cds-helper-text-02: 0.875rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.29;
+            letter-spacing: 0.16px;
+            background-color: var(--cds-ui-background);
+            color: var(--cds-text-01);
+            min-height: 100vh;
+        }
+
+        /* IBM Carbon Header/Navbar */
+        .bx--header {
+            background-color: var(--cds-ui-05);
+            border-bottom: 1px solid var(--cds-ui-03);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 var(--cds-spacing-05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 6000;
+        }
+
+        .bx--header__name {
+            font-size: var(--cds-body-short-02);
+            font-weight: 600;
+            color: var(--cds-text-04);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 0 var(--cds-spacing-05);
+            border-left: 1px solid var(--cds-ui-04);
+            margin-left: var(--cds-spacing-05);
+        }
+
+        .bx--header__name:hover {
+            background-color: var(--cds-inverse-hover-ui);
+        }
+
+        .bx--header__logo {
+            width: 20px;
+            height: 20px;
+            margin-right: var(--cds-spacing-03);
+            fill: var(--cds-icon-03);
+        }
+
+        .bx--header-nav {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            margin-left: auto;
+        }
+
+        .bx--header-nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .bx--header-nav__item {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .bx--header-nav__link {
+            color: var(--cds-text-04);
+            text-decoration: none;
+            font-size: var(--cds-body-short-01);
+            font-weight: 400;
+            padding: 0 var(--cds-spacing-05);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            transition: background-color 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        }
+
+        .bx--header-nav__link:hover {
+            background-color: var(--cds-inverse-hover-ui);
+        }
+
+        .bx--header-nav__link--current {
+            background-color: var(--cds-inverse-02);
+            color: var(--cds-inverse-01);
+        }
+
+        .container {
+            max-width: 1584px;
+            margin: 0 auto;
+            padding: var(--cds-spacing-05);
+            padding-top: calc(48px + var(--cds-spacing-05));
+        }
+
+        /* Form Header */
+        .form-header {
+            background: var(--cds-ui-02);
+            padding: var(--cds-spacing-06);
+            margin-bottom: var(--cds-spacing-05);
+            border: 1px solid var(--cds-ui-03);
+        }
+
+        .form-header h1 {
+            font-size: var(--cds-productive-heading-05);
+            font-weight: 400;
+            margin-bottom: var(--cds-spacing-03);
+            color: var(--cds-text-01);
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+        }
+
+        .form-header .subtitle {
+            font-size: var(--cds-body-long-01);
+            color: var(--cds-text-02);
+            margin-bottom: var(--cds-spacing-05);
+        }
+
+        .form-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--cds-spacing-05);
+        }
+
+        .info-item {
+            background: var(--cds-ui-01);
+            padding: var(--cds-spacing-04);
+            border: 1px solid var(--cds-ui-03);
+        }
+
+        .info-label {
+            font-size: var(--cds-label-01);
+            color: var(--cds-text-02);
+            margin-bottom: var(--cds-spacing-02);
+        }
+
+        .info-value {
+            font-size: var(--cds-body-short-02);
+            color: var(--cds-text-01);
+            font-weight: 600;
+        }
+
+        /* Form Container */
+        .form-container {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-06);
+        }
+
+        .form-section {
+            margin-bottom: var(--cds-spacing-07);
+        }
+
+        .form-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: var(--cds-productive-heading-03);
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-05);
+            padding-bottom: var(--cds-spacing-03);
+            border-bottom: 1px solid var(--cds-ui-03);
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--cds-spacing-05);
+        }
+
+        /* Form Controls */
+        .bx--form-item {
+            margin-bottom: var(--cds-spacing-05);
+        }
+
+        .bx--label {
+            font-size: var(--cds-label-01);
+            font-weight: 400;
+            color: var(--cds-text-02);
+            margin-bottom: var(--cds-spacing-02);
+            display: block;
+        }
+
+        .bx--text-input,
+        .bx--select-input,
+        .bx--text-area {
+            width: 100%;
+            height: 40px;
+            padding: 0 var(--cds-spacing-04);
+            border: none;
+            border-bottom: 1px solid var(--cds-ui-04);
+            background-color: var(--cds-field-01);
+            color: var(--cds-text-01);
+            font-size: var(--cds-body-short-01);
+            font-family: inherit;
+            transition: all 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        }
+
+        .bx--text-area {
+            height: 120px;
+            padding: var(--cds-spacing-04);
+            resize: vertical;
+        }
+
+        .bx--text-input:focus,
+        .bx--select-input:focus,
+        .bx--text-area:focus {
+            outline: 2px solid var(--cds-focus);
+            outline-offset: -2px;
+            border-bottom-color: var(--cds-focus);
+        }
+
+        .bx--helper-text {
+            font-size: var(--cds-helper-text-01);
+            color: var(--cds-text-03);
+            margin-top: var(--cds-spacing-02);
+        }
+
+        /* Select Dropdown */
+        .bx--select {
+            position: relative;
+        }
+
+        .bx--select-input {
+            appearance: none;
+            cursor: pointer;
+            padding-right: var(--cds-spacing-07);
+        }
+
+        .bx--select__arrow {
+            position: absolute;
+            right: var(--cds-spacing-04);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            fill: var(--cds-icon-01);
+            pointer-events: none;
+        }
+
+        /* Checkboxes and Radio */
+        .bx--checkbox-wrapper,
+        .bx--radio-button-wrapper {
+            margin-bottom: var(--cds-spacing-04);
+        }
+
+        .bx--checkbox,
+        .bx--radio-button {
+            position: relative;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .bx--checkbox-label,
+        .bx--radio-button__label {
+            font-size: var(--cds-body-short-01);
+            color: var(--cds-text-01);
+            margin-left: var(--cds-spacing-03);
+            cursor: pointer;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: var(--cds-spacing-04);
+            margin-top: var(--cds-spacing-06);
+            justify-content: flex-end;
+        }
+
+        .bx--btn {
+            height: 48px;
+            padding: 0 var(--cds-spacing-05);
+            border: none;
+            font-size: var(--cds-body-short-01);
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+        }
+
+        .bx--btn--primary {
+            background-color: var(--cds-interactive-01);
+            color: var(--cds-text-04);
+        }
+
+        .bx--btn--primary:hover {
+            background-color: var(--cds-hover-primary);
+        }
+
+        .bx--btn--secondary {
+            background-color: transparent;
+            color: var(--cds-interactive-01);
+            border: 1px solid var(--cds-interactive-01);
+        }
+
+        .bx--btn--secondary:hover {
+            background-color: var(--cds-hover-ui);
+        }
+
+        .bx--btn--tertiary {
+            background-color: transparent;
+            color: var(--cds-interactive-01);
+            border: 1px solid transparent;
+        }
+
+        .bx--btn--tertiary:hover {
+            background-color: var(--cds-hover-ui);
+        }
+
+        /* Validation States */
+        .bx--form-item--error .bx--text-input,
+        .bx--form-item--error .bx--select-input,
+        .bx--form-item--error .bx--text-area {
+            border-bottom-color: var(--cds-support-01);
+        }
+
+        .bx--form-requirement {
+            font-size: var(--cds-caption-01);
+            color: var(--cds-support-01);
+            margin-top: var(--cds-spacing-02);
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-02);
+        }
+
+        /* Priority and Severity indicators */
+        .priority-high { 
+            background: var(--cds-support-01); 
+            color: var(--cds-text-04);
+            padding: var(--cds-spacing-02) var(--cds-spacing-03);
+            border-radius: 4px;
+            font-size: var(--cds-label-01);
+            font-weight: 600;
+        }
+        .priority-medium { 
+            background: var(--cds-support-03); 
+            color: var(--cds-text-01);
+            padding: var(--cds-spacing-02) var(--cds-spacing-03);
+            border-radius: 4px;
+            font-size: var(--cds-label-01);
+            font-weight: 600;
+        }
+        .priority-low { 
+            background: var(--cds-support-02); 
+            color: var(--cds-text-04);
+            padding: var(--cds-spacing-02) var(--cds-spacing-03);
+            border-radius: 4px;
+            font-size: var(--cds-label-01);
+            font-weight: 600;
+        }
+
+        /* Progress indicator */
+        .progress-indicator {
+            margin-bottom: var(--cds-spacing-06);
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--cds-spacing-05);
+        }
+
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .progress-step.completed {
+            color: var(--cds-support-02);
+        }
+
+        .progress-step.current {
+            color: var(--cds-interactive-01);
+        }
+
+        .progress-step.pending {
+            color: var(--cds-text-03);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1056px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 672px) {
+            .container {
+                padding: var(--cds-spacing-04);
+                padding-top: calc(48px + var(--cds-spacing-04));
+            }
+
+            .form-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Carbon Header/Navbar -->
+    <header class="bx--header">
+        <a href="#" class="bx--header__name">
+            <svg class="bx--header__logo" viewBox="0 0 32 32">
+                <path d="M8.24 25.14L7 24l4.05-4.24.39.4-.47.47L8.52 23l1.36-1.37-.41-.41 4.36-4.59L14 17l-5.79 6.14H8.2zm-5.92-8.12L3.73 15.6l4.2-4.44.4.4-.47.48L5.41 14.4l1.38-1.38-.41-.41L10.55 8.4l.17.37-5.79 6.14H2.3z"/>
+                <path d="M27.12 8h-6.23l-3.7 3.9 3.7 3.9h6.23L32 12l-4.88-4zM22.12 14l2.57-2.7L26.88 14h-4.76zm5.76-4L26.12 8h-2.5l1.26 2z"/>
+            </svg>
+            IBM Quality Management
+        </a>
+        
+        <nav class="bx--header-nav">
+            <ul>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Dashboard</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link bx--header-nav__link--current">Casos de Prueba</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Reports</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Analytics</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Form Header -->
+        <div class="form-header">
+            <h1>
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 32 32">
+                    <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26ZM8,8H24v2H8Zm0,4H24v2H8Zm0,4H18v2H8Z"/>
+                </svg>
+                Formulario de Casos de Prueba
+            </h1>
+            <div class="subtitle">Registro y gestión de casos de prueba para proyectos de desarrollo de software</div>
+            
+            <div class="form-info">
+                <div class="info-item">
+                    <div class="info-label">Proyecto Actual</div>
+                    <div class="info-value">IBM Quality Management System</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Versión</div>
+                    <div class="info-value">v2.1.0</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Estado</div>
+                    <div class="info-value">En Desarrollo</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Casos Registrados</div>
+                    <div class="info-value">147 casos</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Indicator -->
+        <div class="progress-indicator">
+            <div class="progress-steps">
+                <div class="progress-step current">
+                    <div>1. Información Básica</div>
+                </div>
+                <div class="progress-step pending">
+                    <div>2. Condiciones de Prueba</div>
+                </div>
+                <div class="progress-step pending">
+                    <div>3. Pasos y Resultados</div>
+                </div>
+                <div class="progress-step pending">
+                    <div>4. Revisión y Envío</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Container -->
+        <form class="form-container" id="testCaseForm">
+            <!-- Section 1: Basic Information -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16,8a5,5,0,1,0,5,5A5,5,0,0,0,16,8Z"/>
+                        <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2ZM10,24.377c.663-1.823,3.2-2.377,6-2.377s5.337.554,6,2.377a11.9493,11.9493,0,0,1-12,0Z"/>
+                    </svg>
+                    Información Básica del Caso de Prueba
+                </h2>
+                
+                <div class="form-grid">
+                    <div class="bx--form-item">
+                        <label for="testCaseId" class="bx--label">ID del Caso de Prueba *</label>
+                        <input id="testCaseId" type="text" class="bx--text-input" placeholder="TC-2024-001" required>
+                        <div class="bx--helper-text">Formato: TC-YYYY-XXX (ej: TC-2024-001)</div>
+                    </div>
+
+                    <div class="bx--form-item">
+                        <label for="testCaseName" class="bx--label">Nombre del Caso de Prueba *</label>
+                        <input id="testCaseName" type="text" class="bx--text-input" placeholder="Validación de login con credenciales válidas" required>
+                        <div class="bx--helper-text">Descripción concisa del escenario a probar</div>
+                    </div>
+
+                    <div class="bx--form-item">
+                        <label for="module" class="bx--label">Módulo/Componente *</label>
+                        <div class="bx--select">
+                            <select id="module" class="bx--select-input" required>
+                                <option value="">Seleccionar módulo...</option>
+                                <option value="authentication">Autenticación</option>
+                                <option value="user-management">Gestión de Usuarios</option>
+                                <option value="reports">Reportes</option>
+                                <option value="dashboard">Dashboard</option>
+                                <option value="api">API</option>
+                                <option value="database">Base de Datos</option>
+                                <option value="integration">Integración</option>
+                                <option value="security">Seguridad</option>
+                            </select>
+                            <svg class="bx--select__arrow" viewBox="0 0 10 5">
+                                <path d="M0 0l5 4.998L10 0z" fill-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="bx--form-item">
+                        <label for="testType" class="bx--label">Tipo de Prueba *</label>
+                        <div class="bx--select">
+                            <select id="testType" class="bx--select-input" required>
+                                <option value="">Seleccionar tipo...</option>
+                                <option value="functional">Funcional</option>
+                                <option value="integration">Integración</option>
+                                <option value="system">Sistema</option>
+                                <option value="acceptance">Aceptación</option>
+                                <option value="regression">Regresión</option>
+                                <option value="performance">Performance</option>
+                                <option value="security">Seguridad</option>
+                                <option value="usability">Usabilidad</option>
+                            </select>
+                            <svg class="bx--select__arrow" viewBox="0 0 10 5">
+                                <path d="M0 0l5 4.998L10 0z" fill-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="bx--form-item">
+                        <label for="priority" class="bx--label">Prioridad *</label>
+                        <div class="bx--select">
+                            <select id="priority" class="bx--select-input" required>
+                                <option value="">Seleccionar prioridad...</option>
+                                <option value="critical">Crítica</option>
+                                <option value="high">Alta</option>
+                                <option value="medium">Media</option>
+                                <option value="low">Baja</option>
+                            </select>
+                            <svg class="bx--select__arrow" viewBox="0 0 10 5">
+                                <path d="M0 0l5 4.998L10 0z" fill-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="bx--form-item">
+                        <label for="severity" class="bx--label">Severidad</label>
+                        <div class="bx--select">
+                            <select id="severity" class="bx--select-input">
+                                <option value="">Seleccionar severidad...</option>
+                                <option value="blocker">Bloqueante</option>
+                                <option value="critical">Crítica</option>
+                                <option value="major">Mayor</option>
+                                <option value="minor">Menor</option>
+                                <option value="trivial">Trivial</option>
+                            </select>
+                            <svg class="bx--select__arrow" viewBox="0 0 10 5">
+                                <path d="M0 0l5 4.998L10 0z" fill-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="bx--form-item">
+                        <label for="assignee" class="bx--label">Asignado a</label>
+                        <div class="bx--select">
+                            <select id="assignee" class="bx--select-input">
+                                <option value="">Seleccionar tester...</option>
+                                <option value="juan.perez">Juan Pérez - QA Senior</option>
+                                <option value="maria.rodriguez">María Rodríguez - QA Lead</option>
+                                <option value="carlos.lopez">Carlos López - QA Analyst</option>
+                                <option value="ana.garcia">Ana García - Test Automation</option>
+                                <option value="luis.martinez">Luis Martínez - QA Junior</option>
+                            </select>
+                            <svg class="bx--select__arrow" viewBox="0 0 10 5">
+                                <path d="M0 0l5 4.998L10 0z" fill-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="bx--form-item">
+                        <label for="estimatedTime" class="bx--label">Tiempo Estimado (minutos)</label>
+                        <input id="estimatedTime" type="number" class="bx--text-input" placeholder="15" min="1" max="480">
+                        <div class="bx--helper-text">Tiempo estimado de ejecución en minutos</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Test Description -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26ZM8,8H24v2H8Zm0,4H24v2H8Zm0,4H18v2H8Z"/>
+                    </svg>
+                    Descripción y Condiciones
+                </h2>
+
+                <div class="bx--form-item">
+                    <label for="description" class="bx--label">Descripción del Caso de Prueba *</label>
+                    <textarea id="description" class="bx--text-area" placeholder="Descripción detallada del objetivo del caso de prueba..." required></textarea>
+                    <div class="bx--helper-text">Explique qué se va a probar y por qué es importante</div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="bx--form-item">
+                        <label for="preconditions" class="bx--label">Precondiciones</label>
+                        <textarea id="preconditions" class="bx--text-area" placeholder="- Usuario debe estar registrado&#10;- Sistema debe estar disponible&#10;- Base de datos debe contener datos de prueba"></textarea>
+                        <div class="bx--helper-text">Condiciones que deben cumplirse antes de ejecutar la prueba</div>
+                    </div>
+
+                    <div class="bx--form-item">
+                        <label for="testData" class="bx--label">Datos de Prueba</label>
+                        <textarea id="testData" class="bx--text-area" placeholder="Usuario: test@ibm.com&#10;Contraseña: Test123!&#10;Rol: Administrador"></textarea>
+                        <div class="bx--helper-text">Datos específicos necesarios para la ejecución</div>
+                    </div>
+                </div>
+
+                <div class="bx--form-item">
+                    <label for="environment" class="bx--label">Entorno de Ejecución</label>
+                    <div class="bx--select">
+                        <select id="environment" class="bx--select-input">
+                            <option value="">Seleccionar entorno...</option>
+                            <option value="development">Desarrollo</option>
+                            <option value="testing">Testing/QA</option>
+                            <option value="staging">Staging/Pre-producción</option>
+                            <option value="production">Producción</option>
+                        </select>
+                        <svg class="bx--select__arrow" viewBox="0 0 10 5">
+                            <path d="M0 0l5 4.998L10 0z" fill-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Test Steps -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2Zm6.78,7.22L14.5,17.5l-6.28-6.28,1.41-1.41L14.5,14.69l7.28-7.28Z"/>
+                    </svg>
+                    Pasos de Ejecución y Resultados Esperados
+                </h2>
+
+                <div id="testStepsContainer">
+                    <div class="test-step-item">
+                        <div class="form-grid">
+                            <div class="bx--form-item">
+                                <label class="bx--label">Paso 1 - Acción</label>
+                                <textarea class="bx--text-area step-action" placeholder="1. Navegar a la página de login&#10;2. Ingresar credenciales válidas&#10;3. Hacer clic en 'Iniciar Sesión'"></textarea>
+                            </div>
+                            <div class="bx--form-item">
+                                <label class="bx--label">Resultado Esperado</label>
+                                <textarea class="bx--text-area step-expected" placeholder="- El usuario es redirigido al dashboard&#10;- Se muestra mensaje de bienvenida&#10;- El menú principal está visible"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="bx--btn bx--btn--tertiary" onclick="addTestStep()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M17,15V8H15v7H8v2h7v7h2V17h7V15Z"/>
+                    </svg>
+                    Agregar Paso
+                </button>
+            </div>
+
+            <!-- Section 4: Additional Information -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12.0137,12.0137,0,0,1,16,28Z"/>
+                        <path d="M15,8h2v11H15ZM16,24a1.5,1.5,0,1,0-1.5-1.5A1.5,1.5,0,0,0,16,24Z"/>
+                    </svg>
+                    Información Adicional
+                </h2>
+
+                <div class="form-grid">
+                    <div class="bx--form-item">
+                        <label for="tags" class="bx--label">Tags/Etiquetas</label>
+                        <input id="tags" type="text" class="bx--text-input" placeholder="login, authentication, security">
+                        <div class="bx--helper-text">Separar con comas (ej: login, authentication, security)</div>
+                    </div>
+
+                    <div class="bx--form-item">
+                        <label for="linkedRequirements" class="bx--label">Requisitos Vinculados</label>
+                        <input id="linkedRequirements" type="text" class="bx--text-input" placeholder="REQ-001, REQ-015">
+                        <div class="bx--helper-text">IDs de requisitos relacionados</div>
+                    </div>
+                </div>
+
+                <div class="bx--form-item">
+                    <label for="notes" class="bx--label">Notas Adicionales</label>
+                    <textarea id="notes" class="bx--text-area" placeholder="Notas, observaciones o consideraciones especiales..."></textarea>
+                </div>
+
+                <div class="bx--form-item">
+                    <label class="bx--label">Opciones de Automatización</label>
+                    <div class="bx--checkbox-wrapper">
+                        <input id="automatable" type="checkbox" class="bx--checkbox">
+                        <label for="automatable" class="bx--checkbox-label">Este caso de prueba puede ser automatizado</label>
+                    </div>
+                    <div class="bx--checkbox-wrapper">
+                        <input id="regression" type="checkbox" class="bx--checkbox">
+                        <label for="regression" class="bx--checkbox-label">Incluir en suite de regresión</label>
+                    </div>
+                    <div class="bx--checkbox-wrapper">
+                        <input id="smoke" type="checkbox" class="bx--checkbox">
+                        <label for="smoke" class="bx--checkbox-label">Incluir en smoke testing</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="button-group">
+                <button type="button" class="bx--btn bx--btn--tertiary">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M11.17,18.72l-3-3H16V8.28h2v7.44h7.83l-3,3L25.64,17,25,16.36,18.64,10,18,9.36,17.36,10,11,16.36,10.36,17Z"/>
+                    </svg>
+                    Guardar Borrador
+                </button>
+                <button type="button" class="bx--btn bx--btn--secondary" onclick="validateForm()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2Zm6.78,7.22L14.5,17.5l-6.28-6.28,1.41-1.41L14.5,14.69l7.28-7.28Z"/>
+                    </svg>
+                    Validar Formulario
+                </button>
+                <button type="submit" class="bx--btn bx--btn--primary">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M24,28H8V18l2-2h5V14h2v2h5l2,2V28ZM10,26H22V19H10V26Z"/>
+                    </svg>
+                    Crear Caso de Prueba
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let stepCounter = 1;
+
+        // Add new test step
+        function addTestStep() {
+            stepCounter++;
+            const container = document.getElementById('testStepsContainer');
+            const newStep = document.createElement('div');
+            newStep.className = 'test-step-item';
+            newStep.innerHTML = `
+                <div class="form-grid">
+                    <div class="bx--form-item">
+                        <label class="bx--label">Paso ${stepCounter} - Acción</label>
+                        <textarea class="bx--text-area step-action" placeholder="Descripción de la acción a realizar..."></textarea>
+                    </div>
+                    <div class="bx--form-item">
+                        <label class="bx--label">Resultado Esperado</label>
+                        <textarea class="bx--text-area step-expected" placeholder="Resultado esperado para esta acción..."></textarea>
+                    </div>
+                </div>
+                <button type="button" class="bx--btn bx--btn--tertiary" onclick="removeTestStep(this)" style="margin-top: 1rem;">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M24,9.4L22.6,8L16,14.6L9.4,8L8,9.4l6.6,6.6L8,22.6L9.4,24l6.6-6.6l6.6,6.6l1.4-1.4L17.4,16Z"/>
+                    </svg>
+                    Eliminar Paso
+                </button>
+            `;
+            container.appendChild(newStep);
+        }
+
+        // Remove test step
+        function removeTestStep(button) {
+            button.parentElement.remove();
+            updateStepNumbers();
+        }
+
+        // Update step numbers after removal
+        function updateStepNumbers() {
+            const steps = document.querySelectorAll('.test-step-item');
+            steps.forEach((step, index) => {
+                const label = step.querySelector('.bx--label');
+                if (label && label.textContent.includes('Paso')) {
+                    label.textContent = `Paso ${index + 1} - Acción`;
+                }
+            });
+            stepCounter = steps.length;
+        }
+
+        // Form validation
+        function validateForm() {
+            const requiredFields = document.querySelectorAll('[required]');
+            let isValid = true;
+            let errors = [];
+
+            requiredFields.forEach(field => {
+                const formItem = field.closest('.bx--form-item');
+                formItem.classList.remove('bx--form-item--error');
+                
+                if (!field.value.trim()) {
+                    formItem.classList.add('bx--form-item--error');
+                    isValid = false;
+                    errors.push(`${field.previousElementSibling.textContent} es requerido`);
+                }
+            });
+
+            // Validate test case ID format
+            const testCaseId = document.getElementById('testCaseId').value;
+            if (testCaseId && !/^TC-\d{4}-\d{3}$/.test(testCaseId)) {
+                document.getElementById('testCaseId').closest('.bx--form-item').classList.add('bx--form-item--error');
+                isValid = false;
+                errors.push('El formato del ID debe ser TC-YYYY-XXX (ej: TC-2024-001)');
+            }
+
+            // Show validation results
+            if (isValid) {
+                alert('✅ Formulario válido. Todos los campos requeridos están completos.');
+            } else {
+                alert('❌ Errores de validación:\n\n' + errors.join('\n'));
+            }
+
+            return isValid;
+        }
+
+        // Form submission
+        document.getElementById('testCaseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (validateForm()) {
+                // Collect form data
+                const formData = new FormData(this);
+                const testCaseData = Object.fromEntries(formData.entries());
+                
+                // Collect test steps
+                const steps = [];
+                const stepActions = document.querySelectorAll('.step-action');
+                const stepExpected = document.querySelectorAll('.step-expected');
+                
+                for (let i = 0; i < stepActions.length; i++) {
+                    if (stepActions[i].value.trim() || stepExpected[i].value.trim()) {
+                        steps.push({
+                            step: i + 1,
+                            action: stepActions[i].value,
+                            expected: stepExpected[i].value
+                        });
+                    }
+                }
+                
+                testCaseData.steps = steps;
+                testCaseData.createdAt = new Date().toISOString();
+                testCaseData.status = 'draft';
+                
+                console.log('Test Case Data:', testCaseData);
+                
+                // Show success message
+                alert('✅ Caso de prueba creado exitosamente!\n\nID: ' + testCaseData.testCaseId + '\nNombre: ' + testCaseData.testCaseName);
+                
+                // Reset form (optional)
+                // this.reset();
+            }
+        });
+
+        // Auto-generate test case ID
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentYear = new Date().getFullYear();
+            const randomNumber = Math.floor(Math.random() * 900) + 100; // 100-999
+            document.getElementById('testCaseId').value = `TC-${currentYear}-${randomNumber.toString().padStart(3, '0')}`;
+        });
+
+        // Real-time validation feedback
+        document.querySelectorAll('.bx--text-input, .bx--select-input, .bx--text-area').forEach(field => {
+            field.addEventListener('blur', function() {
+                const formItem = this.closest('.bx--form-item');
+                formItem.classList.remove('bx--form-item--error');
+                
+                if (this.hasAttribute('required') && !this.value.trim()) {
+                    formItem.classList.add('bx--form-item--error');
+                }
+            });
+        });
+
+        // Dynamic priority/severity indicators
+        document.getElementById('priority').addEventListener('change', function() {
+            const priority = this.value;
+            // You can add visual indicators based on priority selection
+            console.log('Priority selected:', priority);
+        });
+
+        document.getElementById('severity').addEventListener('change', function() {
+            const severity = this.value;
+            // You can add visual indicators based on severity selection
+            console.log('Severity selected:', severity);
+        });
+    </script>
+</body>
+</html>

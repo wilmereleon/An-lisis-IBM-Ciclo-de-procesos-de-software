@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Ejecución de Pruebas - IBM Quality Management</title>
+    
+    <!-- IBM favicon -->
+    <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
+    
+    <!-- IBM Carbon Design System CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/carbon-components@10.58.12/css/carbon-components.min.css">
+    
+    <!-- IBM Carbon Icons -->
+    <script type="module" src="https://unpkg.com/@carbon/icons@11.8.0/es/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@carbon/icons@11.8.0/lib/index.css">
+    
+    <!-- IBM Plex Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <style>
+        :root {
+            /* IBM Carbon Design System Variables */
+            --cds-interactive-01: #0f62fe;
+            --cds-interactive-02: #393939;
+            --cds-interactive-03: #0f62fe;
+            --cds-interactive-04: #0f62fe;
+            --cds-ui-background: #ffffff;
+            --cds-ui-01: #f4f4f4;
+            --cds-ui-02: #ffffff;
+            --cds-ui-03: #e0e0e0;
+            --cds-ui-04: #8d8d8d;
+            --cds-ui-05: #161616;
+            --cds-text-01: #161616;
+            --cds-text-02: #525252;
+            --cds-text-03: #a8a8a8;
+            --cds-text-04: #ffffff;
+            --cds-text-05: #6f6f6f;
+            --cds-icon-01: #161616;
+            --cds-icon-02: #525252;
+            --cds-icon-03: #ffffff;
+            --cds-link-01: #0f62fe;
+            --cds-field-01: #f4f4f4;
+            --cds-field-02: #ffffff;
+            --cds-inverse-01: #ffffff;
+            --cds-inverse-02: #393939;
+            --cds-support-01: #da1e28;
+            --cds-support-02: #24a148;
+            --cds-support-03: #f1c21b;
+            --cds-support-04: #0043ce;
+            --cds-overlay-01: rgba(22, 22, 22, 0.5);
+            --cds-focus: #0f62fe;
+            --cds-hover-primary: #0353e9;
+            --cds-active-primary: #002d9c;
+            --cds-hover-primary-text: #004ccc;
+            --cds-hover-secondary: #4c4c4c;
+            --cds-active-secondary: #6f6f6f;
+            --cds-hover-tertiary: #0353e9;
+            --cds-active-tertiary: #002d9c;
+            --cds-hover-ui: #e5e5e5;
+            --cds-active-ui: #c6c6c6;
+            --cds-selected-ui: #e0e0e0;
+            --cds-hover-selected-ui: #cacaca;
+            --cds-inverse-hover-ui: #4c4c4c;
+            --cds-hover-danger: #ba1b23;
+            --cds-active-danger: #750e13;
+            --cds-hover-row: #e5e5e5;
+            --cds-visited-link: #8a3ffc;
+            --cds-disabled-01: #f4f4f4;
+            --cds-disabled-02: #c6c6c6;
+            --cds-disabled-03: #8d8d8d;
+            --cds-highlight: #d0e2ff;
+            --cds-skeleton-01: #e5e5e5;
+            --cds-skeleton-02: #c6c6c6;
+            --cds-brand-01: #0f62fe;
+            --cds-brand-02: #393939;
+            --cds-brand-03: #0f62fe;
+            --cds-active-01: #c6c6c6;
+            --cds-hover-field: #e5e5e5;
+            
+            /* IBM Carbon Spacing Scale */
+            --cds-spacing-01: 0.125rem;
+            --cds-spacing-02: 0.25rem;
+            --cds-spacing-03: 0.5rem;
+            --cds-spacing-04: 0.75rem;
+            --cds-spacing-05: 1rem;
+            --cds-spacing-06: 1.5rem;
+            --cds-spacing-07: 2rem;
+            --cds-spacing-08: 2.5rem;
+            --cds-spacing-09: 3rem;
+            --cds-spacing-10: 4rem;
+            --cds-spacing-11: 5rem;
+            --cds-spacing-12: 6rem;
+            --cds-spacing-13: 10rem;
+            
+            /* IBM Carbon Typography Scale */
+            --cds-productive-heading-01: 0.875rem;
+            --cds-productive-heading-02: 1rem;
+            --cds-productive-heading-03: 1.25rem;
+            --cds-productive-heading-04: 1.75rem;
+            --cds-productive-heading-05: 2rem;
+            --cds-productive-heading-06: 2.625rem;
+            --cds-productive-heading-07: 3.375rem;
+            
+            --cds-body-compact-01: 0.875rem;
+            --cds-body-compact-02: 1rem;
+            --cds-body-short-01: 0.875rem;
+            --cds-body-short-02: 1rem;
+            --cds-body-long-01: 0.875rem;
+            --cds-body-long-02: 1rem;
+            
+            --cds-caption-01: 0.75rem;
+            --cds-caption-02: 0.875rem;
+            --cds-label-01: 0.75rem;
+            --cds-label-02: 0.875rem;
+            --cds-helper-text-01: 0.75rem;
+            --cds-helper-text-02: 0.875rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.29;
+            letter-spacing: 0.16px;
+            background-color: var(--cds-ui-background);
+            color: var(--cds-text-01);
+            min-height: 100vh;
+        }
+
+        /* IBM Carbon Header/Navbar */
+        .bx--header {
+            background-color: var(--cds-ui-05);
+            border-bottom: 1px solid var(--cds-ui-03);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 var(--cds-spacing-05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 6000;
+        }
+
+        .bx--header__name {
+            font-size: var(--cds-body-short-02);
+            font-weight: 600;
+            color: var(--cds-text-04);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 0 var(--cds-spacing-05);
+            border-left: 1px solid var(--cds-ui-04);
+            margin-left: var(--cds-spacing-05);
+        }
+
+        .bx--header__name:hover {
+            background-color: var(--cds-inverse-hover-ui);
+        }
+
+        .bx--header__logo {
+            width: 20px;
+            height: 20px;
+            margin-right: var(--cds-spacing-03);
+            fill: var(--cds-icon-03);
+        }
+
+        .bx--header-nav {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            margin-left: auto;
+        }
+
+        .bx--header-nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .bx--header-nav__item {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .bx--header-nav__link {
+            color: var(--cds-text-04);
+            text-decoration: none;
+            font-size: var(--cds-body-short-01);
+            font-weight: 400;
+            padding: 0 var(--cds-spacing-05);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            transition: background-color 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+        }
+
+        .bx--header-nav__link:hover {
+            background-color: var(--cds-inverse-hover-ui);
+        }
+
+        .bx--header-nav__link--current {
+            background-color: var(--cds-inverse-02);
+            color: var(--cds-inverse-01);
+        }
+
+        .container {
+            max-width: 1584px;
+            margin: 0 auto;
+            padding: var(--cds-spacing-05);
+            padding-top: calc(48px + var(--cds-spacing-05));
+        }
+
+        /* Report Header */
+        .report-header {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-06);
+            margin-bottom: var(--cds-spacing-05);
+            border-radius: 4px;
+        }
+
+        .report-header h1 {
+            font-size: var(--cds-productive-heading-05);
+            font-weight: 400;
+            margin-bottom: var(--cds-spacing-03);
+            color: var(--cds-text-01);
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+        }
+
+        .report-subtitle {
+            font-size: var(--cds-body-long-01);
+            color: var(--cds-text-02);
+            margin-bottom: var(--cds-spacing-05);
+        }
+
+        .report-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--cds-spacing-05);
+        }
+
+        .meta-card {
+            background: var(--cds-ui-01);
+            padding: var(--cds-spacing-04);
+            border: 1px solid var(--cds-ui-03);
+            border-radius: 4px;
+        }
+
+        .meta-label {
+            font-size: var(--cds-label-01);
+            color: var(--cds-text-02);
+            margin-bottom: var(--cds-spacing-02);
+        }
+
+        .meta-value {
+            font-size: var(--cds-body-short-02);
+            color: var(--cds-text-01);
+            font-weight: 600;
+        }
+
+        /* Filter Controls */
+        .filter-section {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-05);
+            margin-bottom: var(--cds-spacing-05);
+            border-radius: 4px;
+        }
+
+        .filter-title {
+            font-size: var(--cds-productive-heading-02);
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-04);
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: var(--cds-spacing-05);
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+        }
+
+        .bx--select {
+            position: relative;
+            min-width: 160px;
+        }
+
+        .bx--select-input {
+            width: 100%;
+            height: 40px;
+            padding: 0 var(--cds-spacing-04);
+            border: none;
+            border-bottom: 1px solid var(--cds-ui-04);
+            background-color: var(--cds-field-01);
+            color: var(--cds-text-01);
+            font-size: var(--cds-body-short-01);
+            font-family: inherit;
+            appearance: none;
+            cursor: pointer;
+            padding-right: var(--cds-spacing-07);
+        }
+
+        .bx--select__arrow {
+            position: absolute;
+            right: var(--cds-spacing-04);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            fill: var(--cds-icon-01);
+            pointer-events: none;
+        }
+
+        .bx--btn {
+            height: 40px;
+            padding: 0 var(--cds-spacing-04);
+            border: none;
+            font-size: var(--cds-body-short-01);
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--cds-spacing-02);
+            border-radius: 0;
+        }
+
+        .bx--btn--primary {
+            background-color: var(--cds-interactive-01);
+            color: var(--cds-text-04);
+        }
+
+        .bx--btn--primary:hover {
+            background-color: var(--cds-hover-primary);
+        }
+
+        .bx--btn--secondary {
+            background-color: transparent;
+            color: var(--cds-interactive-01);
+            border: 1px solid var(--cds-interactive-01);
+        }
+
+        .bx--btn--secondary:hover {
+            background-color: var(--cds-hover-ui);
+        }
+
+        /* Summary Cards */
+        .summary-section {
+            margin-bottom: var(--cds-spacing-07);
+        }
+
+        .section-title {
+            font-size: var(--cds-productive-heading-03);
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-05);
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: var(--cds-spacing-05);
+        }
+
+        .summary-card {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-05);
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .summary-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto var(--cds-spacing-04);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .summary-icon.passed { background: var(--cds-support-02); color: var(--cds-text-04); }
+        .summary-icon.failed { background: var(--cds-support-01); color: var(--cds-text-04); }
+        .summary-icon.blocked { background: var(--cds-support-03); color: var(--cds-text-01); }
+        .summary-icon.skipped { background: var(--cds-ui-04); color: var(--cds-text-04); }
+
+        .summary-value {
+            font-size: var(--cds-productive-heading-04);
+            font-weight: 400;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-02);
+        }
+
+        .summary-label {
+            font-size: var(--cds-body-short-01);
+            color: var(--cds-text-02);
+            margin-bottom: var(--cds-spacing-03);
+        }
+
+        .summary-percentage {
+            font-size: var(--cds-caption-01);
+            color: var(--cds-text-03);
+        }
+
+        /* Test Results Table */
+        .results-section {
+            margin-bottom: var(--cds-spacing-07);
+        }
+
+        .results-container {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: var(--cds-body-short-01);
+        }
+
+        .results-table th,
+        .results-table td {
+            padding: var(--cds-spacing-04);
+            border-bottom: 1px solid var(--cds-ui-03);
+            text-align: left;
+        }
+
+        .results-table th {
+            background: var(--cds-ui-01);
+            font-weight: 600;
+            color: var(--cds-text-01);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .results-table tbody tr:hover {
+            background-color: var(--cds-hover-ui);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--cds-spacing-02);
+            padding: var(--cds-spacing-01) var(--cds-spacing-03);
+            border-radius: 16px;
+            font-size: var(--cds-caption-01);
+            font-weight: 600;
+        }
+
+        .status-passed { background: var(--cds-support-02); color: var(--cds-text-04); }
+        .status-failed { background: var(--cds-support-01); color: var(--cds-text-04); }
+        .status-blocked { background: var(--cds-support-03); color: var(--cds-text-01); }
+        .status-skipped { background: var(--cds-ui-04); color: var(--cds-text-04); }
+        .status-running { background: var(--cds-interactive-01); color: var(--cds-text-04); }
+
+        .priority-high { color: var(--cds-support-01); font-weight: 600; }
+        .priority-medium { color: var(--cds-support-03); font-weight: 600; }
+        .priority-low { color: var(--cds-support-02); font-weight: 600; }
+
+        /* Charts Section */
+        .charts-section {
+            margin-bottom: var(--cds-spacing-07);
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: var(--cds-spacing-05);
+        }
+
+        .chart-card {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .chart-header {
+            background: var(--cds-ui-01);
+            padding: var(--cds-spacing-05);
+            border-bottom: 1px solid var(--cds-ui-03);
+        }
+
+        .chart-title {
+            font-size: var(--cds-productive-heading-02);
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-02);
+        }
+
+        .chart-subtitle {
+            font-size: var(--cds-caption-01);
+            color: var(--cds-text-02);
+        }
+
+        .chart-body {
+            padding: var(--cds-spacing-05);
+            height: 300px;
+            position: relative;
+        }
+
+        /* Detailed Results */
+        .detailed-results {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            border-radius: 4px;
+            margin-bottom: var(--cds-spacing-05);
+        }
+
+        .detailed-header {
+            background: var(--cds-ui-01);
+            padding: var(--cds-spacing-05);
+            border-bottom: 1px solid var(--cds-ui-03);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: var(--cds-spacing-05);
+            padding: var(--cds-spacing-05);
+        }
+
+        .details-content {
+            font-size: var(--cds-body-long-01);
+            color: var(--cds-text-01);
+            line-height: 1.5;
+        }
+
+        .details-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--cds-spacing-04);
+        }
+
+        .detail-item {
+            background: var(--cds-ui-01);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-04);
+            border-radius: 4px;
+        }
+
+        .detail-label {
+            font-size: var(--cds-label-01);
+            color: var(--cds-text-02);
+            margin-bottom: var(--cds-spacing-02);
+        }
+
+        .detail-value {
+            font-size: var(--cds-body-short-02);
+            color: var(--cds-text-01);
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1056px) {
+            .filter-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-group {
+                justify-content: space-between;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 672px) {
+            .container {
+                padding: var(--cds-spacing-04);
+                padding-top: calc(48px + var(--cds-spacing-04));
+            }
+
+            .report-meta,
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results-table {
+                font-size: var(--cds-caption-01);
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .bx--header,
+            .filter-section {
+                display: none !important;
+            }
+            
+            .container {
+                padding-top: 0 !important;
+                max-width: none !important;
+            }
+            
+            .chart-card,
+            .summary-card {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Carbon Header/Navbar -->
+    <header class="bx--header">
+        <a href="#" class="bx--header__name">
+            <svg class="bx--header__logo" viewBox="0 0 32 32">
+                <path d="M8.24 25.14L7 24l4.05-4.24.39.4-.47.47L8.52 23l1.36-1.37-.41-.41 4.36-4.59L14 17l-5.79 6.14H8.2zm-5.92-8.12L3.73 15.6l4.2-4.44.4.4-.47.48L5.41 14.4l1.38-1.38-.41-.41L10.55 8.4l.17.37-5.79 6.14H2.3z"/>
+                <path d="M27.12 8h-6.23l-3.7 3.9 3.7 3.9h6.23L32 12l-4.88-4zM22.12 14l2.57-2.7L26.88 14h-4.76zm5.76-4L26.12 8h-2.5l1.26 2z"/>
+            </svg>
+            IBM Quality Management
+        </a>
+        
+        <nav class="bx--header-nav">
+            <ul>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Dashboard</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Quality Analytics</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Casos de Prueba</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link bx--header-nav__link--current">Reportes</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="#" class="bx--header-nav__link">Matriz RACI</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Report Header -->
+        <div class="report-header">
+            <h1>
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 32 32">
+                    <path d="M25,5H22V4a2,2,0,0,0-2-2H12a2,2,0,0,0-2,2V5H7A2,2,0,0,0,5,7V28a2,2,0,0,0,2,2H25a2,2,0,0,0,2-2V7A2,2,0,0,0,25,5ZM12,4h8V8H12ZM25,28H7V7h3v3H22V7h3Z"/>
+                    <path d="M10,13h6v2H10ZM18,13h4v2H18ZM10,17h6v2H10ZM18,17h4v2H18ZM10,21h6v2H10ZM18,21h4v2H18Z"/>
+                </svg>
+                Reporte de Ejecución de Pruebas
+            </h1>
+            <div class="report-subtitle">
+                Análisis detallado de resultados y métricas de calidad - Sprint 2024.4.2
+            </div>
+            
+            <div class="report-meta">
+                <div class="meta-card">
+                    <div class="meta-label">Proyecto</div>
+                    <div class="meta-value">IBM Banking Platform v3.2</div>
+                </div>
+                <div class="meta-card">
+                    <div class="meta-label">Período de Ejecución</div>
+                    <div class="meta-value">15/12/2024 - 21/12/2024</div>
+                </div>
+                <div class="meta-card">
+                    <div class="meta-label">Responsable QA</div>
+                    <div class="meta-value">María González</div>
+                </div>
+                <div class="meta-card">
+                    <div class="meta-label">Ambiente</div>
+                    <div class="meta-value">Staging / Pre-Producción</div>
+                </div>
+                <div class="meta-card">
+                    <div class="meta-label">Estado del Reporte</div>
+                    <div class="meta-value">Completado</div>
+                </div>
+                <div class="meta-card">
+                    <div class="meta-label">Generado</div>
+                    <div class="meta-value" id="reportDate">21/12/2024 14:30</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <div class="filter-title">Filtros y Configuración</div>
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label class="meta-label">Suite de Pruebas:</label>
+                    <div class="bx--select">
+                        <select class="bx--select-input" id="testSuiteFilter">
+                            <option value="all">Todas las Suites</option>
+                            <option value="functional">Pruebas Funcionales</option>
+                            <option value="integration">Pruebas de Integración</option>
+                            <option value="regression">Pruebas de Regresión</option>
+                            <option value="performance">Pruebas de Rendimiento</option>
+                            <option value="security">Pruebas de Seguridad</option>
+                        </select>
+                        <svg class="bx--select__arrow" viewBox="0 0 10 5">
+                            <path d="M0 0l5 4.998L10 0z" fill-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label class="meta-label">Estado:</label>
+                    <div class="bx--select">
+                        <select class="bx--select-input" id="statusFilter">
+                            <option value="all">Todos los Estados</option>
+                            <option value="passed">Pasaron</option>
+                            <option value="failed">Fallaron</option>
+                            <option value="blocked">Bloqueados</option>
+                            <option value="skipped">Omitidos</option>
+                        </select>
+                        <svg class="bx--select__arrow" viewBox="0 0 10 5">
+                            <path d="M0 0l5 4.998L10 0z" fill-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label class="meta-label">Prioridad:</label>
+                    <div class="bx--select">
+                        <select class="bx--select-input" id="priorityFilter">
+                            <option value="all">Todas las Prioridades</option>
+                            <option value="high">Alta</option>
+                            <option value="medium">Media</option>
+                            <option value="low">Baja</option>
+                        </select>
+                        <svg class="bx--select__arrow" viewBox="0 0 10 5">
+                            <path d="M0 0l5 4.998L10 0z" fill-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <button class="bx--btn bx--btn--primary" onclick="applyFilters()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M13,21,7,27H5V25l6-6Z"/>
+                        <path d="M19,14a7,7,0,1,0-7,7A7.008,7.008,0,0,0,19,14ZM5,14a7,7,0,1,1,7,7A7.008,7.008,0,0,1,5,14Z"/>
+                        <path d="M27.59,26.18l-5.08-5.09a11.1,11.1,0,0,0,1.49-5.59,11,11,0,1,0-11,11,10.9,10.9,0,0,0,5.59-1.49l5.09,5.08Zm-18.09-11.68a9,9,0,1,1,9,9A9.01,9.01,0,0,1,9.5,14.5Z"/>
+                    </svg>
+                    Aplicar Filtros
+                </button>
+
+                <button class="bx--btn bx--btn--secondary" onclick="exportReport()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M24,28H8V18l2-2h5V14h2v2h5l2,2V28ZM10,26H22V19H10V26Z"/>
+                    </svg>
+                    Exportar PDF
+                </button>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="summary-section">
+            <h2 class="section-title">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 32 32">
+                    <path d="M4,20V12a8,8,0,0,1,16,0v8a8,8,0,0,1-16,0Zm2,0a6,6,0,0,0,12,0V12a6,6,0,0,0-12,0Z"/>
+                    <path d="M30,14V10a8,8,0,0,0-8-8V4a6,6,0,0,1,6,6v4a2,2,0,0,1-2,2H24V14h4A2,2,0,0,0,30,14Z"/>
+                </svg>
+                Resumen de Resultados
+            </h2>
+            
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <div class="summary-icon passed">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M13,24l-9-9,1.414-1.414L13,21.171,26.586,7.586,28,9Z"/>
+                        </svg>
+                    </div>
+                    <div class="summary-value" id="passedCount">187</div>
+                    <div class="summary-label">Casos Exitosos</div>
+                    <div class="summary-percentage">87.8% del total</div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-icon failed">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M24,9.4L22.6,8L16,14.6L9.4,8L8,9.4l6.6,6.6L8,22.6L9.4,24l6.6-6.6l6.6,6.6l1.4-1.4L17.4,16Z"/>
+                        </svg>
+                    </div>
+                    <div class="summary-value" id="failedCount">18</div>
+                    <div class="summary-label">Casos Fallidos</div>
+                    <div class="summary-percentage">8.5% del total</div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-icon blocked">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2Zm0,5a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,16,7Zm1,17H15V11h2Z"/>
+                        </svg>
+                    </div>
+                    <div class="summary-value" id="blockedCount">5</div>
+                    <div class="summary-label">Casos Bloqueados</div>
+                    <div class="summary-percentage">2.3% del total</div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-icon skipped">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 32 32">
+                            <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12.0137,12.0137,0,0,1,16,28Z"/>
+                            <path d="M12,8l8,8L12,24Z"/>
+                        </svg>
+                    </div>
+                    <div class="summary-value" id="skippedCount">3</div>
+                    <div class="summary-label">Casos Omitidos</div>
+                    <div class="summary-percentage">1.4% del total</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <h2 class="section-title">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 32 32">
+                    <path d="M4,2V30H30V28H6V2Z"/>
+                    <path d="M7,26h3V22H7ZM12,26h3V16H12ZM17,26h3V20H17ZM22,26h3V12H22Z"/>
+                </svg>
+                Análisis Visual
+            </h2>
+            
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Distribución de Resultados</div>
+                        <div class="chart-subtitle">Por estado de ejecución</div>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="resultsDistributionChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Tendencia de Ejecución</div>
+                        <div class="chart-subtitle">Últimas 7 ejecuciones</div>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="executionTrendChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Cobertura por Módulo</div>
+                        <div class="chart-subtitle">Porcentaje de casos ejecutados</div>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="coverageChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Tiempo de Ejecución</div>
+                        <div class="chart-subtitle">Por suite de pruebas (minutos)</div>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="executionTimeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Results Table -->
+        <div class="results-section">
+            <h2 class="section-title">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 32 32">
+                    <path d="M6,6V26H26V6ZM24,24H8V8H24Z"/>
+                    <path d="M10,12h6v2H10ZM18,12h4v2H18ZM10,16h6v2H10ZM18,16h4v2H18ZM10,20h6v2H10ZM18,20h4v2H18Z"/>
+                </svg>
+                Resultados Detallados
+            </h2>
+            
+            <div class="results-container">
+                <table class="results-table" id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Caso de Prueba</th>
+                            <th>Suite</th>
+                            <th>Estado</th>
+                            <th>Prioridad</th>
+                            <th>Ejecutado por</th>
+                            <th>Tiempo (seg)</th>
+                            <th>Fecha</th>
+                            <th>Comentarios</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsTableBody">
+                        <!-- Data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Detailed Analysis -->
+        <div class="detailed-results">
+            <div class="detailed-header">
+                <h2 class="section-title">
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12.0137,12.0137,0,0,1,16,28Z"/>
+                        <path d="M15,8h2v11H15ZM16,24a1.5,1.5,0,1,0-1.5-1.5A1.5,1.5,0,0,0,16,24Z"/>
+                    </svg>
+                    Análisis de Resultados
+                </h2>
+                <button class="bx--btn bx--btn--secondary" onclick="toggleDetails()">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16,22L6,12l1.4-1.4l8.6,8.6l8.6-8.6L26,12Z"/>
+                    </svg>
+                    Ver Detalles
+                </button>
+            </div>
+            
+            <div class="details-grid" id="detailsContent">
+                <div class="details-content">
+                    <h3>Resumen Ejecutivo</h3>
+                    <p>
+                        La ejecución del sprint 2024.4.2 muestra un rendimiento sobresaliente con un 87.8% de casos exitosos, 
+                        superando el objetivo del 85%. Los 18 casos fallidos (8.5%) se concentran principalmente en el módulo 
+                        de pagos y están relacionados con la integración de la nueva pasarela de pagos.
+                    </p>
+                    
+                    <h3>Hallazgos Principales</h3>
+                    <ul>
+                        <li><strong>Alta Cobertura:</strong> Se alcanzó una cobertura del 94.2% en todos los módulos críticos</li>
+                        <li><strong>Mejora en Rendimiento:</strong> Tiempo promedio de ejecución reducido en 15% vs sprint anterior</li>
+                        <li><strong>Calidad de Datos:</strong> 100% de casos con datos de prueba válidos y actualizados</li>
+                        <li><strong>Automatización:</strong> 78% de casos ejecutados mediante automatización</li>
+                    </ul>
+                    
+                    <h3>Recomendaciones</h3>
+                    <ul>
+                        <li>Revisar y optimizar la integración con la pasarela de pagos</li>
+                        <li>Implementar pruebas adicionales para validar transacciones de alto valor</li>
+                        <li>Actualizar los casos de prueba de seguridad según nuevos estándares PCI DSS</li>
+                        <li>Incrementar la cobertura de pruebas automatizadas al 85% para el próximo sprint</li>
+                    </ul>
+                </div>
+                
+                <div class="details-sidebar">
+                    <div class="detail-item">
+                        <div class="detail-label">Cobertura Total</div>
+                        <div class="detail-value">94.2%</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-label">Tiempo Total Ejecución</div>
+                        <div class="detail-value">4h 32min</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-label">Casos Automatizados</div>
+                        <div class="detail-value">166 / 213</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-label">Eficiencia vs Sprint Anterior</div>
+                        <div class="detail-value">+15%</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-label">Defectos Encontrados</div>
+                        <div class="detail-value">23</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-label">Severidad Promedio</div>
+                        <div class="detail-value">Media</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample test results data
+        const testResults = [
+            {
+                id: 'TC001',
+                name: 'Login con credenciales válidas',
+                suite: 'Funcionales',
+                status: 'passed',
+                priority: 'high',
+                executor: 'Ana Silva',
+                time: 12,
+                date: '21/12/2024 09:15',
+                comments: 'Ejecución exitosa'
+            },
+            {
+                id: 'TC002',
+                name: 'Transferencia entre cuentas',
+                suite: 'Funcionales',
+                status: 'failed',
+                priority: 'high',
+                executor: 'Carlos Ruiz',
+                time: 45,
+                date: '21/12/2024 09:32',
+                comments: 'Error de timeout en pasarela de pagos'
+            },
+            {
+                id: 'TC003',
+                name: 'Consulta de saldo',
+                suite: 'Funcionales',
+                status: 'passed',
+                priority: 'medium',
+                executor: 'María González',
+                time: 8,
+                date: '21/12/2024 10:05',
+                comments: 'Respuesta optimizada'
+            },
+            {
+                id: 'TC004',
+                name: 'Validación de límites de transferencia',
+                suite: 'Seguridad',
+                status: 'blocked',
+                priority: 'high',
+                executor: 'Luis Pérez',
+                time: 0,
+                date: '21/12/2024 10:20',
+                comments: 'Ambiente de pruebas no disponible'
+            },
+            {
+                id: 'TC005',
+                name: 'Prueba de carga - 1000 usuarios',
+                suite: 'Rendimiento',
+                status: 'passed',
+                priority: 'medium',
+                executor: 'Automated',
+                time: 1800,
+                date: '21/12/2024 11:00',
+                comments: 'Todos los KPIs dentro de rango'
+            },
+            {
+                id: 'TC006',
+                name: 'Recuperación de contraseña',
+                suite: 'Funcionales',
+                status: 'failed',
+                priority: 'medium',
+                executor: 'Ana Silva',
+                time: 25,
+                date: '21/12/2024 11:30',
+                comments: 'Email de recuperación no enviado'
+            },
+            {
+                id: 'TC007',
+                name: 'Integración API terceros',
+                suite: 'Integración',
+                status: 'skipped',
+                priority: 'low',
+                executor: 'Carlos Ruiz',
+                time: 0,
+                date: '21/12/2024 12:00',
+                comments: 'API de terceros en mantenimiento'
+            },
+            {
+                id: 'TC008',
+                name: 'Validación de campos obligatorios',
+                suite: 'Funcionales',
+                status: 'passed',
+                priority: 'high',
+                executor: 'María González',
+                time: 15,
+                date: '21/12/2024 12:15',
+                comments: 'Validación correcta en todos los formularios'
+            }
+        ];
+
+        // Chart configurations
+        const chartColors = {
+            passed: '#24a148',
+            failed: '#da1e28',
+            blocked: '#f1c21b',
+            skipped: '#8d8d8d',
+            primary: '#0f62fe',
+            secondary: '#393939'
+        };
+
+        // Initialize charts
+        function initializeCharts() {
+            // Results Distribution Chart
+            const distributionCtx = document.getElementById('resultsDistributionChart').getContext('2d');
+            new Chart(distributionCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Exitosos', 'Fallidos', 'Bloqueados', 'Omitidos'],
+                    datasets: [{
+                        data: [187, 18, 5, 3],
+                        backgroundColor: [
+                            chartColors.passed,
+                            chartColors.failed,
+                            chartColors.blocked,
+                            chartColors.skipped
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Execution Trend Chart
+            const trendCtx = document.getElementById('executionTrendChart').getContext('2d');
+            new Chart(trendCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Exec 1', 'Exec 2', 'Exec 3', 'Exec 4', 'Exec 5', 'Exec 6', 'Exec 7'],
+                    datasets: [{
+                        label: 'Exitosos',
+                        data: [165, 172, 168, 175, 182, 185, 187],
+                        borderColor: chartColors.passed,
+                        backgroundColor: chartColors.passed + '20',
+                        tension: 0.4
+                    }, {
+                        label: 'Fallidos',
+                        data: [28, 25, 30, 22, 20, 19, 18],
+                        borderColor: chartColors.failed,
+                        backgroundColor: chartColors.failed + '20',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Coverage Chart
+            const coverageCtx = document.getElementById('coverageChart').getContext('2d');
+            new Chart(coverageCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Login', 'Transferencias', 'Consultas', 'Reportes', 'Admin'],
+                    datasets: [{
+                        label: 'Cobertura %',
+                        data: [98, 94, 96, 92, 89],
+                        backgroundColor: chartColors.primary
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+
+            // Execution Time Chart
+            const timeCtx = document.getElementById('executionTimeChart').getContext('2d');
+            new Chart(timeCtx, {
+                type: 'horizontalBar',
+                data: {
+                    labels: ['Funcionales', 'Integración', 'Rendimiento', 'Seguridad', 'Regresión'],
+                    datasets: [{
+                        label: 'Tiempo (min)',
+                        data: [45, 32, 120, 28, 95],
+                        backgroundColor: [
+                            chartColors.primary,
+                            chartColors.secondary,
+                            '#8a3ffc',
+                            '#ff832b',
+                            '#42be65'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Populate results table
+        function populateResultsTable() {
+            const tbody = document.getElementById('resultsTableBody');
+            tbody.innerHTML = '';
+
+            testResults.forEach(result => {
+                const row = document.createElement('tr');
+                
+                const statusClass = `status-${result.status}`;
+                const priorityClass = `priority-${result.priority}`;
+                
+                row.innerHTML = `
+                    <td>${result.id}</td>
+                    <td>${result.name}</td>
+                    <td>${result.suite}</td>
+                    <td><span class="status-badge ${statusClass}">${getStatusText(result.status)}</span></td>
+                    <td><span class="${priorityClass}">${getPriorityText(result.priority)}</span></td>
+                    <td>${result.executor}</td>
+                    <td>${result.time}s</td>
+                    <td>${result.date}</td>
+                    <td>${result.comments}</td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        function getStatusText(status) {
+            const statusTexts = {
+                'passed': 'Exitoso',
+                'failed': 'Fallido',
+                'blocked': 'Bloqueado',
+                'skipped': 'Omitido',
+                'running': 'Ejecutando'
+            };
+            return statusTexts[status] || status;
+        }
+
+        function getPriorityText(priority) {
+            const priorityTexts = {
+                'high': 'Alta',
+                'medium': 'Media',
+                'low': 'Baja'
+            };
+            return priorityTexts[priority] || priority;
+        }
+
+        // Filter functions
+        function applyFilters() {
+            const suiteFilter = document.getElementById('testSuiteFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            const priorityFilter = document.getElementById('priorityFilter').value;
+            
+            console.log('Aplicando filtros:', { suiteFilter, statusFilter, priorityFilter });
+            
+            // Here you would implement actual filtering logic
+            // For now, just log the filters
+            alert('Filtros aplicados correctamente');
+        }
+
+        function exportReport() {
+            console.log('Exportando reporte...');
+            alert('Funcionalidad de exportación en desarrollo');
+        }
+
+        function toggleDetails() {
+            const content = document.getElementById('detailsContent');
+            const isVisible = content.style.display !== 'none';
+            content.style.display = isVisible ? 'none' : 'grid';
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update report date
+            document.getElementById('reportDate').textContent = new Date().toLocaleString('es-CO');
+            
+            // Initialize charts
+            initializeCharts();
+            
+            // Populate table
+            populateResultsTable();
+            
+            console.log('Reporte de ejecución inicializado correctamente');
+        });
+
+        // Auto-refresh functionality (every 30 seconds for running tests)
+        setInterval(() => {
+            console.log('Verificando actualizaciones...');
+            // Here you would check for test execution updates
+        }, 30000);
+    </script>
+</body>
+</html>
