@@ -5,7 +5,9 @@ const morgan = require('morgan');
 const compression = require('compression');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
-require('dotenv').config();
+
+// Configurar dotenv para buscar el archivo .env en el directorio correcto
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
 // Import patterns
 const { ConfigurationManager } = require('./patterns/Singleton');
@@ -38,14 +40,14 @@ class Server {
     
     // CORS configuration
     this.app.use(cors({
-      origin: this.config.get('cors.origins'),
+      origin: this.config.get('app').corsOrigin.split(','),
       credentials: true
     }));
 
     // Rate limiting
     const limiter = rateLimit({
-      windowMs: this.config.get('rateLimit.windowMs'),
-      max: this.config.get('rateLimit.maxRequests'),
+      windowMs: this.config.get('app').rateLimitWindowMs,
+      max: this.config.get('app').rateLimitMaxRequests,
       message: {
         error: 'Too many requests from this IP, please try again later.'
       }
@@ -126,7 +128,7 @@ class Server {
   }
 
   start() {
-    const port = this.config.get('server.port');
+    const port = this.config.get('app').port;
     
     this.app.listen(port, () => {
       this.logger.info(`🚀 IBM Quality Management Server running on port ${port}`);

@@ -52,6 +52,16 @@ class ConfigurationManager {
     }
 
     /**
+     * Método estático para obtener la instancia del Singleton
+     */
+    static getInstance() {
+        if (!ConfigurationManager.instance) {
+            ConfigurationManager.instance = new ConfigurationManager();
+        }
+        return ConfigurationManager.instance;
+    }
+
+    /**
      * Valida la configuración crítica del sistema
      */
     validateConfiguration() {
@@ -180,6 +190,16 @@ class Logger {
         });
 
         Logger.instance = this;
+    }
+
+    /**
+     * Método estático para obtener la instancia del Singleton
+     */
+    static getInstance() {
+        if (!Logger.instance) {
+            Logger.instance = new Logger();
+        }
+        return Logger.instance;
     }
 
     info(message, meta = {}) {

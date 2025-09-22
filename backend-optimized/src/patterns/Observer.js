@@ -11,10 +11,26 @@ const { Logger } = require('./Singleton');
  */
 class EventManager {
     constructor() {
+        if (EventManager.instance) {
+            return EventManager.instance;
+        }
+
         this.listeners = new Map();
         this.logger = new Logger();
         this.eventHistory = [];
         this.maxHistorySize = 1000;
+        
+        EventManager.instance = this;
+    }
+
+    /**
+     * Método estático para obtener la instancia del Singleton
+     */
+    static getInstance() {
+        if (!EventManager.instance) {
+            EventManager.instance = new EventManager();
+        }
+        return EventManager.instance;
     }
 
     /**
