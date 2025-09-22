@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Verificación Inmediata</title>
+    <style>
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            margin: 20px;
+            background: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background: #0f62fe;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #0353e9;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        #log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            border-radius: 4px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test - Verificación Inmediata del Sistema</h1>
+        
+        <div class="test-section">
+            <h3>📋 Acciones de Test</h3>
+            <button onclick="abrirSistemaDefectos()">🔗 Abrir Sistema de Defectos</button>
+            <button onclick="verificarEstadoActual()">🔍 Verificar Estado Actual</button>
+            <button onclick="simularCreacionDefecto()">➕ Simular Creación de Defecto</button>
+            <button onclick="limpiarLog()">🧹 Limpiar Log</button>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Log de Actividad</h3>
+            <div id="log"></div>
+        </div>
+    </div>
+
+    <script>
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            const color = type === 'error' ? '#dc3545' : (type === 'success' ? '#28a745' : (type === 'warning' ? '#ffc107' : '#007bff'));
+            
+            logDiv.innerHTML += `<div style="color: ${color}; margin: 2px 0;"><strong>${timestamp}:</strong> ${message}</div>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function limpiarLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        function abrirSistemaDefectos() {
+            log('🔗 Abriendo sistema de defectos en nueva ventana...', 'info');
+            window.open('http://localhost:8080/sistema_gestion_defectos_ibm.html', '_blank');
+        }
+
+        function verificarEstadoActual() {
+            log('🔍 Verificando estado actual del localStorage...', 'info');
+            
+            // Verificar todas las claves relacionadas con defectos
+            const keys = ['ibm_defects', 'ibm_defects_backup'];
+            let totalDefectos = 0;
+            
+            keys.forEach(key => {
+                const data = localStorage.getItem(key);
+                if (data) {
+                    try {
+                        const defects = JSON.parse(data);
+                        log(`✅ ${key}: ${defects.length} defectos`, 'success');
+                        totalDefectos += defects.length;
+                        
+                        // Mostrar IDs de los defectos
+                        defects.forEach((defect, index) => {
+                            log(`   └─ ${index + 1}. ID: ${defect.id || 'UNDEFINED'} | Título: ${defect.title || 'Sin título'}`, 'info');
+                        });
+                    } catch (e) {
+                        log(`❌ Error parseando ${key}: ${e.message}`, 'error');
+                    }
+                } else {
+                    log(`⚠️ ${key}: No existe`, 'warning');
+                }
+            });
+            
+            log(`📊 Total de defectos encontrados: ${totalDefectos}`, totalDefectos > 0 ? 'success' : 'warning');
+            
+            // Verificar si el sistema está ejecutándose
+            checkSystemStatus();
+        }
+
+        function checkSystemStatus() {
+            // Verificar si el servidor está corriendo
+            fetch('http://localhost:8080/sistema_gestion_defectos_ibm.html', { method: 'HEAD' })
+                .then(response => {
+                    if (response.ok) {
+                        log('✅ Servidor frontend activo en puerto 8080', 'success');
+                    } else {
+                        log('⚠️ Servidor frontend responde pero con errores', 'warning');
+                    }
+                })
+                .catch(error => {
+                    log('❌ Servidor frontend no disponible', 'error');
+                });
+        }
+
+        function simularCreacionDefecto() {
+            log('🧪 Simulando creación de defecto...', 'info');
+            
+            // Crear un defecto de prueba
+            const defectoPrueba = {
+                id: `DEF-2509-TEST-${Date.now().toString().slice(-4)}`,
+                title: 'Defecto de Prueba - Verificación',
+                description: 'Este es un defecto creado para verificar el funcionamiento del sistema',
+                priority: 'medium',
+                severity: 'minor',
+                status: 'open',
+                assignee: 'dev1',
+                created: new Date().toISOString().split('T')[0],
+                updated: new Date().toISOString().split('T')[0],
+                project: 'Sistema IBM - Test',
+                _test: true
+            };
+            
+            // Obtener defectos existentes
+            let defectos = [];
+            const existing = localStorage.getItem('ibm_defects_backup');
+            if (existing) {
+                try {
+                    defectos = JSON.parse(existing);
+                } catch (e) {
+                    log('⚠️ Error parseando defectos existentes, creando array nuevo', 'warning');
+                }
+            }
+            
+            // Agregar el nuevo defecto
+            defectos.push(defectoPrueba);
+            
+            // Guardar en ambas claves
+            localStorage.setItem('ibm_defects_backup', JSON.stringify(defectos));
+            localStorage.setItem('ibm_defects', JSON.stringify(defectos));
+            
+            log(`✅ Defecto de prueba creado: ${defectoPrueba.id}`, 'success');
+            log(`📊 Total de defectos después de la prueba: ${defectos.length}`, 'success');
+            log('💡 Ahora abre el sistema de defectos para verificar que aparezca en la lista', 'info');
+        }
+
+        // Auto-verificar al cargar
+        window.onload = function() {
+            log('🚀 Sistema de verificación iniciado', 'info');
+            verificarEstadoActual();
+        };
+    </script>
+</body>
+</html>

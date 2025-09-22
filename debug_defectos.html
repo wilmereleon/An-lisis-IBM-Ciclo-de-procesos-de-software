@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - Estado de Defectos - IBM Quality Management</title>
+    
+    <!-- IBM Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
+    
+    <!-- IBM Carbon Design System CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/carbon-components@10.58.12/css/carbon-components.min.css">
+    
+    <!-- IBM Carbon Icons -->
+    <script type="module" src="https://unpkg.com/@carbon/icons@11.8.0/es/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@carbon/icons@11.8.0/lib/index.css">
+    
+    <!-- IBM Plex Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* IBM Carbon Design System Variables */
+            --cds-interactive-01: #0f62fe;
+            --cds-interactive-02: #393939;
+            --cds-ui-background: #ffffff;
+            --cds-ui-01: #f4f4f4;
+            --cds-ui-02: #ffffff;
+            --cds-ui-03: #e0e0e0;
+            --cds-ui-04: #8d8d8d;
+            --cds-ui-05: #161616;
+            --cds-text-01: #161616;
+            --cds-text-02: #525252;
+            --cds-text-03: #a8a8a8;
+            --cds-text-04: #ffffff;
+            --cds-support-01: #da1e28;
+            --cds-support-02: #24a148;
+            --cds-support-03: #f1c21b;
+            --cds-field-01: #f4f4f4;
+            --cds-field-02: #ffffff;
+            --cds-spacing-03: 0.5rem;
+            --cds-spacing-05: 1rem;
+            --cds-spacing-06: 1.5rem;
+            --cds-spacing-07: 2rem;
+            --cds-productive-heading-03: 1.25rem;
+            --cds-body-short-01: 0.875rem;
+            --cds-body-short-02: 1rem;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.29;
+            letter-spacing: 0.16px;
+            background-color: var(--cds-ui-background);
+            color: var(--cds-text-01);
+            margin: 0;
+            padding: var(--cds-spacing-05);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--cds-ui-02);
+            padding: var(--cds-spacing-07);
+            border: 1px solid var(--cds-ui-03);
+        }
+
+        .debug-header {
+            background: var(--cds-interactive-01);
+            color: var(--cds-text-04);
+            padding: var(--cds-spacing-06);
+            margin-bottom: var(--cds-spacing-07);
+            border-radius: 4px;
+        }
+
+        .debug-header h1 {
+            font-size: var(--cds-productive-heading-03);
+            font-weight: 400;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+        }
+
+        .debug-section {
+            margin: var(--cds-spacing-07) 0;
+            padding: var(--cds-spacing-06);
+            border: 1px solid var(--cds-ui-03);
+            background: var(--cds-field-01);
+        }
+
+        .debug-section h3 {
+            margin: 0 0 var(--cds-spacing-05) 0;
+            color: var(--cds-text-01);
+            font-size: var(--cds-productive-heading-03);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: var(--cds-spacing-03);
+        }
+
+        .status-success { background: var(--cds-support-02); }
+        .status-warning { background: var(--cds-support-03); }
+        .status-error { background: var(--cds-support-01); }
+
+        pre {
+            background: #f8f8f8;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        button {
+            background: #0f62fe;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0353e9;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Carbon Header -->
+    <header class="bx--header" style="background-color: var(--cds-ui-05); border-bottom: 1px solid var(--cds-ui-03); height: 48px; display: flex; align-items: center; padding: 0 var(--cds-spacing-05); position: fixed; top: 0; left: 0; right: 0; z-index: 6000;">
+        <a href="#" style="font-size: var(--cds-body-short-02); font-weight: 600; color: var(--cds-text-04); text-decoration: none; display: flex; align-items: center; height: 100%; padding: 0 var(--cds-spacing-05); border-left: 1px solid var(--cds-ui-04); margin-left: var(--cds-spacing-05);">
+            <svg width="20" height="20" style="margin-right: var(--cds-spacing-03); fill: var(--cds-text-04);" viewBox="0 0 32 32">
+                <path d="M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14S23.7,2,16,2z M16,28c-6.6,0-12-5.4-12-12S9.4,4,16,4s12,5.4,12,12S22.6,28,16,28z"/>
+                <path d="M16,6c-5.5,0-10,4.5-10,10s4.5,10,10,10s10-4.5,10-10S21.5,6,16,6z M16,24c-4.4,0-8-3.6-8-8s3.6-8,8-8s8,3.6,8,8S20.4,24,16,24z"/>
+                <circle cx="16" cy="16" r="4"/>
+            </svg>
+            IBM Quality Management - Debug
+        </a>
+    </header>
+
+    <div class="container" style="margin-top: 48px; padding-top: var(--cds-spacing-07);">
+        <div class="debug-header">
+            <h1>
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 32 32">
+                    <path d="M17.5,22H14.5l1.5-1.5ZM19,23v7h2V23Zm-8,0v7h2V23ZM26,13a1,1,0,0,0-1,1v8H25V14a1,1,0,0,0-2,0v9h2v5H7V23H9V14a1,1,0,0,0-2,0v8H6V14a1,1,0,0,0-2,0v8H3V9A1,1,0,0,1,4,8H28a1,1,0,0,1,1,1V22H27V14A1,1,0,0,0,26,13Z"/>
+                </svg>
+                Debug - Estado de Defectos IBM
+            </h1>
+        </div>
+        <h1>🔍 Debug - Estado de Defectos IBM</h1>
+        
+        <div class="debug-section">
+            <h3>🎯 Acciones de Debug</h3>
+            <button onclick="verificarDefectos()">Verificar Estado de Defectos</button>
+            <button onclick="mostrarLocalStorage()">Mostrar LocalStorage</button>
+            <button onclick="limpiarTodo()">Limpiar Todo</button>
+            <button onclick="cargarDefectosPrueba()">Cargar Defectos de Prueba</button>
+        </div>
+
+        <div id="resultados"></div>
+    </div>
+
+    <script>
+        function log(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = type === 'error' ? 'warning' : (type === 'success' ? 'success' : '');
+            div.innerHTML = `<strong>${new Date().toLocaleTimeString()}:</strong> ${message}`;
+            document.getElementById('resultados').appendChild(div);
+        }
+
+        function verificarDefectos() {
+            log('🔍 Verificando estado de defectos...', 'info');
+            
+            // Verificar localStorage
+            const defectsBackup = localStorage.getItem('ibm_defects_backup');
+            const defectsMain = localStorage.getItem('ibm_defects');
+            
+            log(`📦 LocalStorage 'ibm_defects_backup': ${defectsBackup ? 'Existe' : 'No existe'}`, 'info');
+            log(`📦 LocalStorage 'ibm_defects': ${defectsMain ? 'Existe' : 'No existe'}`, 'info');
+            
+            if (defectsBackup) {
+                try {
+                    const defects = JSON.parse(defectsBackup);
+                    log(`✅ Defectos en backup: ${defects.length}`, 'success');
+                    
+                    if (defects.length > 0) {
+                        mostrarTablaDefectos(defects, 'Defectos en LocalStorage (ibm_defects_backup)');
+                    }
+                } catch (e) {
+                    log(`❌ Error parseando backup: ${e.message}`, 'error');
+                }
+            }
+            
+            if (defectsMain) {
+                try {
+                    const defects = JSON.parse(defectsMain);
+                    log(`✅ Defectos principales: ${defects.length}`, 'success');
+                    
+                    if (defects.length > 0) {
+                        mostrarTablaDefectos(defects, 'Defectos en LocalStorage (ibm_defects)');
+                    }
+                } catch (e) {
+                    log(`❌ Error parseando principales: ${e.message}`, 'error');
+                }
+            }
+            
+            // Verificar si existe ventana con defectos cargados
+            if (typeof window.defects !== 'undefined') {
+                log(`🎯 Variable global 'defects': ${window.defects.length} elementos`, 'success');
+                if (window.defects.length > 0) {
+                    mostrarTablaDefectos(window.defects, 'Variable Global window.defects');
+                }
+            } else {
+                log(`⚠️ Variable global 'defects' no está definida`, 'warning');
+            }
+        }
+
+        function mostrarTablaDefectos(defects, titulo) {
+            const div = document.createElement('div');
+            div.className = 'debug-section';
+            div.innerHTML = `
+                <h3>${titulo}</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Título</th>
+                            <th>Prioridad</th>
+                            <th>Severidad</th>
+                            <th>Estado</th>
+                            <th>Asignado</th>
+                            <th>Creado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${defects.map(defect => `
+                            <tr>
+                                <td>${defect.id || 'undefined'}</td>
+                                <td>${defect.title || 'Sin título'}</td>
+                                <td>${defect.priority || 'N/A'}</td>
+                                <td>${defect.severity || 'N/A'}</td>
+                                <td>${defect.status || 'N/A'}</td>
+                                <td>${defect.assignee || 'Sin asignar'}</td>
+                                <td>${defect.created || 'N/A'}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            document.getElementById('resultados').appendChild(div);
+        }
+
+        function mostrarLocalStorage() {
+            log('🗄️ Contenido completo de LocalStorage:', 'info');
+            
+            const div = document.createElement('div');
+            div.className = 'debug-section';
+            div.innerHTML = '<h3>📋 LocalStorage Completo</h3>';
+            
+            const pre = document.createElement('pre');
+            let content = '';
+            
+            for (let key in localStorage) {
+                if (localStorage.hasOwnProperty(key)) {
+                    content += `${key}: ${localStorage.getItem(key)}\n\n`;
+                }
+            }
+            
+            pre.textContent = content || 'LocalStorage está vacío';
+            div.appendChild(pre);
+            document.getElementById('resultados').appendChild(div);
+        }
+
+        function limpiarTodo() {
+            if (confirm('¿Estás seguro de que quieres limpiar todo el localStorage?')) {
+                localStorage.clear();
+                log('🧹 LocalStorage limpiado completamente', 'success');
+                
+                // También limpiar variables globales si existen
+                if (typeof window.defects !== 'undefined') {
+                    window.defects = [];
+                    log('🧹 Variable global defects limpiada', 'success');
+                }
+            }
+        }
+
+        function cargarDefectosPrueba() {
+            const defectosPrueba = [
+                {
+                    id: 'DEF-2509-0001',
+                    title: 'Error en login de usuario',
+                    description: 'El usuario no puede iniciar sesión',
+                    priority: 'high',
+                    severity: 'major',
+                    status: 'open',
+                    assignee: 'dev1',
+                    created: '2024-09-22',
+                    updated: '2024-09-22',
+                    project: 'Sistema IBM'
+                },
+                {
+                    id: 'DEF-2509-0002',
+                    title: 'Botón de guardar no funciona',
+                    description: 'Al hacer clic en guardar no se almacenan los datos',
+                    priority: 'critical',
+                    severity: 'blocker',
+                    status: 'in-progress',
+                    assignee: 'dev2',
+                    created: '2024-09-22',
+                    updated: '2024-09-22',
+                    project: 'Sistema IBM'
+                }
+            ];
+            
+            // Guardar en localStorage
+            localStorage.setItem('ibm_defects_backup', JSON.stringify(defectosPrueba));
+            localStorage.setItem('ibm_defects', JSON.stringify(defectosPrueba));
+            
+            // Establecer variable global si existe el contexto
+            if (typeof window.defects !== 'undefined') {
+                window.defects = [...defectosPrueba];
+            }
+            
+            log('✅ Defectos de prueba cargados exitosamente', 'success');
+            log(`📊 Se cargaron ${defectosPrueba.length} defectos de prueba`, 'info');
+        }
+
+        // Auto-ejecutar verificación al cargar la página
+        window.onload = function() {
+            log('🚀 Iniciando verificación automática...', 'info');
+            verificarDefectos();
+        };
+    </script>
+</body>
+</html>

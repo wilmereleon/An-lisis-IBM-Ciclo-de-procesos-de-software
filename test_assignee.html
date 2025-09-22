@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Assignee Functionality</title>
+    <style>
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            margin: 20px;
+            background: #f4f4f4;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background: #0f62fe;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #0353e9;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        #log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            border-radius: 4px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        .form-test {
+            border: 2px solid #0f62fe;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        select, input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test - Funcionalidad de Asignación</h1>
+        
+        <div class="test-section">
+            <h3>🎯 Test Rápido de Asignación</h3>
+            <div class="form-test">
+                <h4>📝 Formulario de Prueba</h4>
+                <form id="testForm">
+                    <label for="testTitle">Título del Defecto:</label>
+                    <input type="text" id="testTitle" name="title" value="Test de Asignación" required>
+                    
+                    <label for="testDescription">Descripción:</label>
+                    <textarea id="testDescription" name="description" required>Defecto creado para probar la funcionalidad de asignación</textarea>
+                    
+                    <label for="testSeverity">Severidad:</label>
+                    <select id="testSeverity" name="severity" required>
+                        <option value="minor">Minor</option>
+                        <option value="major" selected>Major</option>
+                        <option value="critical">Critical</option>
+                        <option value="blocker">Blocker</option>
+                    </select>
+                    
+                    <label for="testPriority">Prioridad:</label>
+                    <select id="testPriority" name="priority" required>
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                        <option value="critical">Critical</option>
+                    </select>
+                    
+                    <label for="testAssignee">Asignado a:</label>
+                    <select id="testAssignee" name="assignee">
+                        <option value="Sin asignar">Sin asignar</option>
+                        <option value="Carlos Martinez (Dev)">Carlos Martinez (Dev)</option>
+                        <option value="Ana Lopez (Backend)">Ana Lopez (Backend)</option>
+                        <option value="Luis Garcia (Senior Dev)">Luis Garcia (Senior Dev)</option>
+                        <option value="Maria Rodriguez (QA)">Maria Rodriguez (QA)</option>
+                        <option value="Pedro Silva (Finance)">Pedro Silva (Finance)</option>
+                    </select>
+                    
+                    <button type="submit" style="margin-top: 15px;">🚀 Probar Asignación</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔧 Acciones de Test</h3>
+            <button onclick="abrirSistemaReal()">🔗 Abrir Sistema Real</button>
+            <button onclick="verificarGetAssigneeName()">🔍 Test getAssigneeName()</button>
+            <button onclick="limpiarTodo()">🧹 Limpiar Todo</button>
+            <button onclick="limpiarLog()">📄 Limpiar Log</button>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Log de Test</h3>
+            <div id="log"></div>
+        </div>
+    </div>
+
+    <script>
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            const color = type === 'error' ? '#dc3545' : (type === 'success' ? '#28a745' : (type === 'warning' ? '#ffc107' : '#007bff'));
+            
+            logDiv.innerHTML += `<div style="color: ${color}; margin: 2px 0;"><strong>${timestamp}:</strong> ${message}</div>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function limpiarLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        function abrirSistemaReal() {
+            log('🔗 Abriendo sistema real de defectos...', 'info');
+            window.open('http://localhost:8080/sistema_gestion_defectos_ibm.html', '_blank');
+        }
+
+        function limpiarTodo() {
+            if (confirm('¿Limpiar todo el localStorage?')) {
+                localStorage.clear();
+                log('🧹 LocalStorage limpiado', 'success');
+            }
+        }
+
+        function verificarGetAssigneeName() {
+            log('🔍 Probando función getAssigneeName()...', 'info');
+            
+            // Simular la función getAssigneeName
+            function testGetAssigneeName(assigneeId) {
+                console.log('getAssigneeName recibió:', assigneeId);
+                
+                if (!assigneeId || assigneeId === 'Sin asignar' || assigneeId === '' || assigneeId === 'undefined') {
+                    return 'No asignado';
+                }
+                
+                if (assigneeId.includes('(') || assigneeId.length > 10) {
+                    return assigneeId;
+                }
+                
+                const assignees = {
+                    'dev1': 'Carlos Martinez (Dev)',
+                    'dev2': 'Ana Lopez (Backend)', 
+                    'dev3': 'Luis Garcia (Senior Dev)',
+                    'dev4': 'Maria Rodriguez (QA)',
+                    'dev5': 'Pedro Silva (Finance)'
+                };
+                
+                if (assignees[assigneeId]) {
+                    return assignees[assigneeId];
+                }
+                
+                return assigneeId;
+            }
+            
+            // Probar diferentes valores
+            const testValues = [
+                'Carlos Martinez (Dev)',
+                'Ana Lopez (Backend)',
+                'Luis Garcia (Senior Dev)',
+                'Sin asignar',
+                '',
+                'undefined',
+                'dev1',
+                'dev2',
+                null
+            ];
+            
+            testValues.forEach(value => {
+                const result = testGetAssigneeName(value);
+                log(`Input: "${value}" → Output: "${result}"`, 'info');
+            });
+            
+            log('✅ Test de getAssigneeName() completado', 'success');
+        }
+
+        // Manejar el formulario de prueba
+        document.getElementById('testForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            log('📋 Datos capturados del formulario de prueba:', 'info');
+            Object.entries(data).forEach(([key, value]) => {
+                log(`  ${key}: "${value}"`, 'info');
+            });
+            
+            log(`🎯 Assignee seleccionado: "${data.assignee}"`, 'success');
+            
+            // Simular el guardado
+            const defectoPrueba = {
+                id: `TEST-${Date.now().toString().slice(-4)}`,
+                title: data.title,
+                description: data.description,
+                severity: data.severity,
+                priority: data.priority,
+                assignee: data.assignee,
+                status: 'open',
+                created: new Date().toISOString().split('T')[0],
+                updated: new Date().toISOString().split('T')[0]
+            };
+            
+            // Agregar a localStorage
+            let defects = [];
+            const existing = localStorage.getItem('ibm_defects_backup');
+            if (existing) {
+                try {
+                    defects = JSON.parse(existing);
+                } catch (e) {
+                    log('⚠️ Error parseando defectos existentes', 'warning');
+                }
+            }
+            
+            defects.push(defectoPrueba);
+            localStorage.setItem('ibm_defects_backup', JSON.stringify(defects));
+            localStorage.setItem('ibm_defects', JSON.stringify(defects));
+            
+            log(`✅ Defecto de prueba guardado con ID: ${defectoPrueba.id}`, 'success');
+            log(`👤 Assignee guardado: "${defectoPrueba.assignee}"`, 'success');
+            log('💡 Ahora abre el sistema real para verificar que aparezca correctamente', 'info');
+        });
+
+        // Auto-inicializar
+        window.onload = function() {
+            log('🚀 Test de Assignee iniciado', 'info');
+            log('📝 Completa el formulario y haz clic en "Probar Asignación"', 'info');
+        };
+    </script>
+</body>
+</html>

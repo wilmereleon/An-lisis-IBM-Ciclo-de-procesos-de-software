@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Completo - Sistema de Defectos</title>
+    <style>
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            margin: 20px;
+            background: #f4f4f4;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background: #0f62fe;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #0353e9;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        #log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            border-radius: 4px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        .highlight {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            border-left: 4px solid #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Test Completo - Sistema de Defectos IBM</h1>
+        
+        <div class="highlight">
+            <h3>🎯 Objetivo del Test</h3>
+            <p>Verificar que el sistema de defectos funcione completamente: crear nuevos defectos, mostrar IDs correctamente, y que la asignación aparezca en la tabla.</p>
+        </div>
+
+        <div class="test-section">
+            <h3>🔧 Acciones de Test</h3>
+            <button onclick="crearDefectoCompleto()">➕ Crear Defecto con Assignee</button>
+            <button onclick="verificarEstado()">🔍 Verificar Estado Actual</button>
+            <button onclick="abrirSistemaReal()">🔗 Abrir Sistema Real</button>
+            <button onclick="cargarDefectosDePrueba()">📊 Cargar Datos de Prueba</button>
+            <button onclick="limpiarTodo()">🧹 Limpiar Todo</button>
+            <button onclick="limpiarLog()">📄 Limpiar Log</button>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Log de Test</h3>
+            <div id="log"></div>
+        </div>
+    </div>
+
+    <script>
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            const color = type === 'error' ? '#dc3545' : (type === 'success' ? '#28a745' : (type === 'warning' ? '#ffc107' : '#007bff'));
+            
+            logDiv.innerHTML += `<div style="color: ${color}; margin: 2px 0;"><strong>${timestamp}:</strong> ${message}</div>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function limpiarLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        function abrirSistemaReal() {
+            log('🔗 Abriendo sistema real de defectos...', 'info');
+            window.open('http://localhost:8080/sistema_gestion_defectos_ibm.html', '_blank');
+        }
+
+        function limpiarTodo() {
+            if (confirm('¿Limpiar todo el localStorage?')) {
+                localStorage.clear();
+                log('🧹 LocalStorage limpiado completamente', 'success');
+            }
+        }
+
+        function verificarEstado() {
+            log('🔍 Verificando estado del sistema...', 'info');
+            
+            // Verificar localStorage
+            const keys = ['ibm_defects', 'ibm_defects_backup'];
+            let totalDefectos = 0;
+            
+            keys.forEach(key => {
+                const data = localStorage.getItem(key);
+                if (data) {
+                    try {
+                        const defects = JSON.parse(data);
+                        log(`✅ ${key}: ${defects.length} defectos`, 'success');
+                        totalDefectos += defects.length;
+                        
+                        defects.forEach((defect, index) => {
+                            const assigneeInfo = defect.assignee || 'Sin asignar';
+                            log(`   └─ ${index + 1}. ID: ${defect.id || 'UNDEFINED'} | Assignee: ${assigneeInfo}`, 'info');
+                        });
+                    } catch (e) {
+                        log(`❌ Error parseando ${key}: ${e.message}`, 'error');
+                    }
+                } else {
+                    log(`⚠️ ${key}: No existe`, 'warning');
+                }
+            });
+            
+            log(`📊 Total de defectos: ${totalDefectos}`, totalDefectos > 0 ? 'success' : 'warning');
+        }
+
+        function crearDefectoCompleto() {
+            log('🧪 Creando defecto completo con assignee...', 'info');
+            
+            const defectoCompleto = {
+                id: `DEF-2509-TEST-${Date.now().toString().slice(-4)}`,
+                title: 'Defecto Test con Assignee Completo',
+                description: 'Este defecto incluye todas las propiedades necesarias para verificar el funcionamiento completo del sistema.',
+                priority: 'high',
+                severity: 'major',
+                status: 'open',
+                assignee: 'Carlos Martinez (Dev)', // ← Assignee específico
+                reporter: 'QA Tester',
+                project: 'Sistema IBM - Test',
+                environment: 'testing',
+                type: 'functional',
+                created: new Date().toISOString().split('T')[0],
+                updated: new Date().toISOString().split('T')[0],
+                _test: true
+            };
+            
+            // Obtener defectos existentes
+            let defectos = [];
+            const existing = localStorage.getItem('ibm_defects_backup');
+            if (existing) {
+                try {
+                    defectos = JSON.parse(existing);
+                } catch (e) {
+                    log('⚠️ Error parseando defectos existentes, creando array nuevo', 'warning');
+                }
+            }
+            
+            // Agregar el nuevo defecto
+            defectos.push(defectoCompleto);
+            
+            // Guardar en ambas claves
+            localStorage.setItem('ibm_defects_backup', JSON.stringify(defectos));
+            localStorage.setItem('ibm_defects', JSON.stringify(defectos));
+            
+            log(`✅ Defecto completo creado: ${defectoCompleto.id}`, 'success');
+            log(`👤 Assignee asignado: ${defectoCompleto.assignee}`, 'success');
+            log(`📊 Total de defectos: ${defectos.length}`, 'success');
+            log('💡 Ahora abre el sistema real para verificar que aparezca correctamente', 'info');
+        }
+
+        function cargarDefectosDePrueba() {
+            log('📊 Cargando conjunto completo de defectos de prueba...', 'info');
+            
+            const defectosPrueba = [
+                {
+                    id: 'DEF-2509-0001',
+                    title: 'Error en login de usuario',
+                    description: 'El usuario no puede iniciar sesión con credenciales válidas',
+                    priority: 'high',
+                    severity: 'major',
+                    status: 'open',
+                    assignee: 'Carlos Martinez (Dev)',
+                    reporter: 'Ana Lopez (QA)',
+                    project: 'Sistema IBM - Login',
+                    environment: 'production',
+                    type: 'functional',
+                    created: '2024-09-22',
+                    updated: '2024-09-22'
+                },
+                {
+                    id: 'DEF-2509-0002',
+                    title: 'Botón de guardar no responde',
+                    description: 'Al hacer clic en guardar, el sistema no almacena los datos',
+                    priority: 'critical',
+                    severity: 'blocker',
+                    status: 'in-progress',
+                    assignee: 'Ana Lopez (Backend)',
+                    reporter: 'Pedro Silva (Finance)',
+                    project: 'Sistema IBM - Core',
+                    environment: 'testing',
+                    type: 'functional',
+                    created: '2024-09-22',
+                    updated: '2024-09-22'
+                },
+                {
+                    id: 'DEF-2509-0003',
+                    title: 'Timeout en transferencias grandes',
+                    description: 'Las transferencias mayores a 100MB fallan por timeout',
+                    priority: 'medium',
+                    severity: 'major',
+                    status: 'resolved',
+                    assignee: 'Luis Garcia (Senior Dev)',
+                    reporter: 'Maria Rodriguez (QA)',
+                    project: 'Sistema IBM - Transfers',
+                    environment: 'staging',
+                    type: 'performance',
+                    created: '2024-09-21',
+                    updated: '2024-09-22'
+                },
+                {
+                    id: 'DEF-2509-0004',
+                    title: 'Interfaz no responsive en móviles',
+                    description: 'La interfaz no se adapta correctamente a dispositivos móviles',
+                    priority: 'low',
+                    severity: 'minor',
+                    status: 'new',
+                    assignee: 'Pedro Silva (Finance)',
+                    reporter: 'Carlos Martinez (Dev)',
+                    project: 'Sistema IBM - UI/UX',
+                    environment: 'development',
+                    type: 'ui',
+                    created: '2024-09-22',
+                    updated: '2024-09-22'
+                },
+                {
+                    id: 'DEF-2509-0005',
+                    title: 'Validación de campos incorrecta',
+                    description: 'Los campos de email no validan correctamente el formato',
+                    priority: 'medium',
+                    severity: 'minor',
+                    status: 'open',
+                    assignee: 'Maria Rodriguez (QA)',
+                    reporter: 'Luis Garcia (Senior Dev)',
+                    project: 'Sistema IBM - Validation',
+                    environment: 'testing',
+                    type: 'functional',
+                    created: '2024-09-22',
+                    updated: '2024-09-22'
+                }
+            ];
+            
+            // Guardar en localStorage
+            localStorage.setItem('ibm_defects_backup', JSON.stringify(defectosPrueba));
+            localStorage.setItem('ibm_defects', JSON.stringify(defectosPrueba));
+            
+            log(`✅ ${defectosPrueba.length} defectos de prueba cargados exitosamente`, 'success');
+            log('📋 Defectos incluidos:', 'info');
+            
+            defectosPrueba.forEach((defect, index) => {
+                log(`   ${index + 1}. ${defect.id} - ${defect.title} (Assignee: ${defect.assignee})`, 'info');
+            });
+            
+            log('💡 Ahora abre el sistema real para verificar que todos aparezcan correctamente', 'info');
+        }
+
+        // Auto-inicializar
+        window.onload = function() {
+            log('🚀 Sistema de test completo iniciado', 'info');
+            log('📝 Usa los botones para probar diferentes funcionalidades', 'info');
+            verificarEstado();
+        };
+    </script>
+</body>
+</html>

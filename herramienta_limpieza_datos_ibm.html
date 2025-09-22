@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herramienta de Limpieza de Datos - IBM Quality Management</title>
+    <style>
+        body {
+            font-family: 'IBM Plex Sans', Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .btn {
+            background: #0f62fe;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-size: 14px;
+        }
+        
+        .btn:hover {
+            background: #0053d6;
+        }
+        
+        .btn-danger {
+            background: #da1e28;
+        }
+        
+        .btn-danger:hover {
+            background: #ba1b23;
+        }
+        
+        .result {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 4px;
+            background: #f1f3f4;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧹 Herramienta de Limpieza de Datos IBM</h1>
+        <p>Esta herramienta permite limpiar datos corruptos del Sistema de Gestión de Defectos.</p>
+        
+        <div class="actions">
+            <button class="btn" onclick="diagnosticar()">🔍 Diagnosticar Datos</button>
+            <button class="btn btn-danger" onclick="limpiarTodo()">🗑️ Limpiar TODO</button>
+            <button class="btn" onclick="eliminarUndefined()">🎯 Eliminar "undefined"</button>
+            <button class="btn" onclick="crearDatosLimpios()">✨ Crear Datos Limpios</button>
+        </div>
+        
+        <div id="resultado" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        function mostrarResultado(mensaje, tipo = 'success') {
+            const resultado = document.getElementById('resultado');
+            resultado.className = `result ${tipo}`;
+            resultado.innerHTML = mensaje;
+            resultado.style.display = 'block';
+        }
+
+        function diagnosticar() {
+            try {
+                const datos = localStorage.getItem('ibm_defects_backup');
+                
+                if (!datos) {
+                    mostrarResultado('ℹ️ No se encontraron datos en localStorage.', 'warning');
+                    return;
+                }
+                
+                const defectos = JSON.parse(datos);
+                
+                let reporte = `<h3>📊 Diagnóstico de Datos</h3>`;
+                reporte += `<p><strong>Total de defectos:</strong> ${defectos.length}</p>`;
+                
+                // Analizar corrupción
+                const corruptos = defectos.filter(d => 
+                    !d.id || 
+                    d.id === 'undefined' || 
+                    d.title === 'undefined' ||
+                    !d.title ||
+                    d.title.trim() === ''
+                );
+                
+                const validos = defectos.filter(d => 
+                    d.id && 
+                    d.id !== 'undefined' && 
+                    d.title && 
+                    d.title !== 'undefined' &&
+                    d.title.trim() !== ''
+                );
+                
+                reporte += `<p><strong>Defectos válidos:</strong> ${validos.length}</p>`;
+                reporte += `<p><strong>Defectos corruptos:</strong> ${corruptos.length}</p>`;
+                
+                if (corruptos.length > 0) {
+                    reporte += `<h4>🔴 Defectos corruptos encontrados:</h4>`;
+                    reporte += `<pre>${JSON.stringify(corruptos, null, 2)}</pre>`;
+                }
+                
+                if (validos.length > 0) {
+                    reporte += `<h4>✅ Defectos válidos:</h4>`;
+                    reporte += `<pre>${JSON.stringify(validos.map(d => ({id: d.id, title: d.title})), null, 2)}</pre>`;
+                }
+                
+                mostrarResultado(reporte, corruptos.length > 0 ? 'warning' : 'success');
+                
+            } catch (error) {
+                mostrarResultado(`❌ Error al diagnosticar: ${error.message}`, 'error');
+            }
+        }
+
+        function limpiarTodo() {
+            if (confirm('⚠️ ¿Estás seguro de que quieres eliminar TODOS los datos? Esta acción no se puede deshacer.')) {
+                try {
+                    localStorage.clear();
+                    mostrarResultado('✅ Todos los datos han sido eliminados del localStorage.', 'success');
+                } catch (error) {
+                    mostrarResultado(`❌ Error al limpiar: ${error.message}`, 'error');
+                }
+            }
+        }
+
+        function eliminarUndefined() {
+            try {
+                const datos = localStorage.getItem('ibm_defects_backup');
+                
+                if (!datos) {
+                    mostrarResultado('ℹ️ No se encontraron datos para limpiar.', 'warning');
+                    return;
+                }
+                
+                const defectos = JSON.parse(datos);
+                const defectosOriginales = defectos.length;
+                
+                // Filtrar solo defectos válidos
+                const defectosLimpios = defectos.filter(d => 
+                    d && 
+                    d.id && 
+                    d.id !== 'undefined' && 
+                    d.title && 
+                    d.title !== 'undefined' &&
+                    d.title.trim() !== '' &&
+                    typeof d.id === 'string' &&
+                    typeof d.title === 'string'
+                );
+                
+                const eliminados = defectosOriginales - defectosLimpios.length;
+                
+                if (eliminados === 0) {
+                    mostrarResultado('✅ No se encontraron defectos corruptos para eliminar.', 'success');
+                    return;
+                }
+                
+                // Guardar datos limpios
+                localStorage.setItem('ibm_defects_backup', JSON.stringify(defectosLimpios));
+                
+                mostrarResultado(
+                    `✅ Limpieza completada:<br>
+                    • Defectos originales: ${defectosOriginales}<br>
+                    • Defectos válidos: ${defectosLimpios.length}<br>
+                    • Defectos eliminados: ${eliminados}<br>
+                    <br>Los datos corruptos han sido eliminados.`, 
+                    'success'
+                );
+                
+            } catch (error) {
+                mostrarResultado(`❌ Error al eliminar defectos corruptos: ${error.message}`, 'error');
+            }
+        }
+
+        function crearDatosLimpios() {
+            try {
+                const datosLimpios = [
+                    {
+                        id: 'DEF-SBO-001',
+                        title: 'Validación de campos no funciona en login',
+                        description: 'El sistema no valida correctamente los campos vacíos en el formulario de login, permitiendo acceso con credenciales inválidas',
+                        severity: 'critical',
+                        priority: 'critical',
+                        status: 'open',
+                        environment: 'Testing',
+                        type: 'Security',
+                        reporter: 'María Rodriguez (QA)',
+                        assignee: 'Carlos Martinez (Dev)',
+                        created: '2025-09-20',
+                        updated: '2025-09-22',
+                        project: 'Sistema Bancario Online'
+                    },
+                    {
+                        id: 'DEF-SBO-002',
+                        title: 'Timeout en transferencias grandes',
+                        description: 'Las transferencias mayores a $10,000 generan timeout después de 30 segundos, causando error en la transacción',
+                        severity: 'high',
+                        priority: 'critical',
+                        status: 'in_progress',
+                        environment: 'Production',
+                        type: 'Performance',
+                        reporter: 'Ana Lopez (Support)',
+                        assignee: 'Luis Garcia (Senior Dev)',
+                        created: '2025-09-19',
+                        updated: '2025-09-22',
+                        project: 'Sistema Bancario Online'
+                    },
+                    {
+                        id: 'DEF-ERP-003',
+                        title: 'Inconsistencia en reportes financieros',
+                        description: 'Los reportes mensuales muestran diferencias del 0.1% con los cálculos automáticos del sistema contable',
+                        severity: 'medium',
+                        priority: 'high',
+                        status: 'resolved',
+                        environment: 'Production',
+                        type: 'Business Logic',
+                        reporter: 'Pedro Silva (Finance)',
+                        assignee: 'Ana Lopez (Backend)',
+                        created: '2025-09-15',
+                        updated: '2025-09-21',
+                        project: 'ERP Empresarial'
+                    }
+                ];
+                
+                localStorage.setItem('ibm_defects_backup', JSON.stringify(datosLimpios));
+                localStorage.setItem('ibm_defects_counter', '4');
+                
+                mostrarResultado(
+                    `✅ Datos limpios creados exitosamente:<br>
+                    • ${datosLimpios.length} defectos de ejemplo<br>
+                    • Todos los campos están completos<br>
+                    • IDs únicos y válidos<br>
+                    • Contador reiniciado a 4<br>
+                    <br>El sistema ahora tiene datos consistentes.`, 
+                    'success'
+                );
+                
+            } catch (error) {
+                mostrarResultado(`❌ Error al crear datos limpios: ${error.message}`, 'error');
+            }
+        }
+
+        // Diagnóstico automático al cargar la página
+        window.onload = function() {
+            setTimeout(diagnosticar, 500);
+        };
+    </script>
+</body>
+</html>

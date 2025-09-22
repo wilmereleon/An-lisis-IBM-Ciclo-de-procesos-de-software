@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test ID Generation</title>
+</head>
+<body>
+    <h1>Test de Generación de IDs</h1>
+    <button onclick="testIDGeneration()">Generar ID</button>
+    <div id="results"></div>
+
+    <script>
+        function generateDefectId() {
+            const now = new Date();
+            const year = now.getFullYear().toString().slice(-2);
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const day = now.getDate().toString().padStart(2, '0');
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const milliseconds = now.getMilliseconds().toString().padStart(3, '0');
+            
+            // Generate unique ID with timestamp to avoid duplicates
+            const uniqueId = `DEF-${year}${month}${day}-${hours}${minutes}${seconds}${milliseconds}`;
+            return uniqueId;
+        }
+
+        function testIDGeneration() {
+            const resultsDiv = document.getElementById('results');
+            const id1 = generateDefectId();
+            
+            // Esperar un poco y generar otro
+            setTimeout(() => {
+                const id2 = generateDefectId();
+                
+                setTimeout(() => {
+                    const id3 = generateDefectId();
+                    
+                    resultsDiv.innerHTML = `
+                        <h3>IDs Generados:</h3>
+                        <p>ID 1: ${id1}</p>
+                        <p>ID 2: ${id2}</p>
+                        <p>ID 3: ${id3}</p>
+                        <p><strong>Únicos: ${new Set([id1, id2, id3]).size === 3 ? 'SÍ' : 'NO'}</strong></p>
+                        <hr>
+                        <button onclick="testIDGeneration()">Generar más IDs</button>
+                    `;
+                }, 10);
+            }, 10);
+        }
+    </script>
+</body>
+</html>

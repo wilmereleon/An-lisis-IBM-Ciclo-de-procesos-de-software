@@ -27,9 +27,9 @@ class ConfigurationManager {
                 refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d'
             },
             app: {
-                port: process.env.PORT || 3001,
+                port: process.env.PORT || 3003,
                 env: process.env.NODE_ENV || 'development',
-                corsOrigin: process.env.FRONTEND_URL || 'http://localhost:3000',
+                corsOrigin: process.env.CORS_ORIGIN || 'http://localhost:3000,http://localhost:8080',
                 rateLimitWindowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 900000,
                 rateLimitMaxRequests: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || 100
             },

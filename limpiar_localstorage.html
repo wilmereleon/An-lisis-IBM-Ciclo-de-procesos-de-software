@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limpieza LocalStorage - IBM Quality</title>
+    <style>
+        body {
+            font-family: 'IBM Plex Sans', Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .btn {
+            background: #0f62fe;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-size: 14px;
+        }
+        .btn:hover {
+            background: #0353e9;
+        }
+        .btn-danger {
+            background: #da1e28;
+        }
+        .btn-danger:hover {
+            background: #ba1b23;
+        }
+        .btn-success {
+            background: #198038;
+        }
+        .btn-success:hover {
+            background: #0e6027;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 4px solid #0f62fe;
+            background: #f0f8ff;
+        }
+        .error {
+            border-left-color: #da1e28;
+            background: #fff1f1;
+            color: #750e13;
+        }
+        .success {
+            border-left-color: #198038;
+            background: #f1f8f1;
+            color: #0e6027;
+        }
+        pre {
+            background: #262626;
+            color: #f4f4f4;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Herramienta de Limpieza - Sistema de Gestión de Defectos IBM</h1>
+        
+        <div class="status" id="status">
+            <strong>Estado:</strong> Listo para diagnóstico
+        </div>
+        
+        <h3>Acciones Disponibles:</h3>
+        
+        <button class="btn" onclick="diagnosticar()">🔍 Diagnosticar localStorage</button>
+        <button class="btn btn-danger" onclick="limpiarTodo()">🗑️ Limpiar TODO el localStorage</button>
+        <button class="btn btn-success" onclick="crearDatosLimpios()">✨ Crear Datos Limpios</button>
+        <button class="btn" onclick="irAlSistema()">🚀 Ir al Sistema de Defectos</button>
+        
+        <div id="output" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        function updateStatus(message, type = 'info') {
+            const status = document.getElementById('status');
+            status.innerHTML = `<strong>Estado:</strong> ${message}`;
+            status.className = `status ${type}`;
+        }
+
+        function addOutput(content) {
+            const output = document.getElementById('output');
+            output.innerHTML += content;
+        }
+
+        function diagnosticar() {
+            updateStatus('Diagnosticando localStorage...', 'info');
+            addOutput('<h4>📊 Diagnóstico de localStorage:</h4>');
+            
+            const keys = Object.keys(localStorage);
+            addOutput(`<p><strong>Total de claves en localStorage:</strong> ${keys.length}</p>`);
+            
+            if (keys.length === 0) {
+                addOutput('<p style="color: green;">✅ localStorage está vacío - Sin problemas</p>');
+                updateStatus('localStorage vacío - Todo bien', 'success');
+                return;
+            }
+            
+            addOutput('<pre>');
+            let hasCorruptedData = false;
+            
+            keys.forEach(key => {
+                try {
+                    if (key.includes('ibm') || key.includes('defect')) {
+                        const value = localStorage.getItem(key);
+                        addOutput(`\n🔑 Clave: ${key}\n`);
+                        
+                        if (key === 'ibm_defects_backup') {
+                            const defects = JSON.parse(value);
+                            addOutput(`📝 Contiene ${defects.length} defectos:\n`);
+                            
+                            defects.forEach((defect, index) => {
+                                const hasUndefined = defect.id === 'undefined' || defect.title === 'undefined';
+                                const invalidId = !defect.id || typeof defect.id !== 'string' || !defect.id.startsWith('DEF-');
+                                
+                                if (hasUndefined || invalidId) {
+                                    hasCorruptedData = true;
+                                    addOutput(`  ❌ Defecto ${index + 1}: ID="${defect.id}" TÍTULO="${defect.title}" (CORRUPTO)\n`);
+                                } else {
+                                    addOutput(`  ✅ Defecto ${index + 1}: ID="${defect.id}" TÍTULO="${defect.title}" (OK)\n`);
+                                }
+                            });
+                        } else {
+                            addOutput(`📄 Valor: ${value.substring(0, 100)}${value.length > 100 ? '...' : ''}\n`);
+                        }
+                    }
+                } catch (error) {
+                    hasCorruptedData = true;
+                    addOutput(`\n❌ Error parseando ${key}: ${error.message}\n`);
+                }
+            });
+            
+            addOutput('</pre>');
+            
+            if (hasCorruptedData) {
+                updateStatus('¡Datos corruptos detectados!', 'error');
+                addOutput('<p style="color: red; font-weight: bold;">⚠️ Se encontraron datos corruptos. Recomendado: Limpiar y crear datos nuevos.</p>');
+            } else {
+                updateStatus('Todos los datos están correctos', 'success');
+                addOutput('<p style="color: green; font-weight: bold;">✅ Todos los datos están en buen estado.</p>');
+            }
+        }
+
+        function limpiarTodo() {
+            if (confirm('¿Estás SEGURO de que quieres eliminar TODOS los datos de localStorage?\n\nEsta acción NO se puede deshacer.')) {
+                try {
+                    const keysBefore = Object.keys(localStorage).length;
+                    localStorage.clear();
+                    const keysAfter = Object.keys(localStorage).length;
+                    
+                    updateStatus(`localStorage limpiado completamente (${keysBefore} → ${keysAfter} claves)`, 'success');
+                    addOutput(`<h4>🗑️ Limpieza Completa:</h4><p>Se eliminaron ${keysBefore} claves del localStorage.</p>`);
+                    
+                } catch (error) {
+                    updateStatus('Error limpiando localStorage', 'error');
+                    addOutput(`<h4>❌ Error:</h4><p>${error.message}</p>`);
+                }
+            }
+        }
+
+        function crearDatosLimpios() {
+            try {
+                const defectsLimpios = [
+                    {
+                        id: 'DEF-001',
+                        title: 'Error de validación en formulario de login',
+                        description: 'El formulario no valida correctamente las credenciales vacías',
+                        severity: 'critical',
+                        priority: 'critical',
+                        status: 'open',
+                        environment: 'Testing',
+                        type: 'Bug',
+                        reporter: 'QA Team',
+                        assignee: 'No asignado',
+                        created: new Date().toISOString().split('T')[0],
+                        updated: new Date().toISOString().split('T')[0]
+                    },
+                    {
+                        id: 'DEF-002',
+                        title: 'Performance lenta en dashboard',
+                        description: 'El dashboard tarda más de 5 segundos en cargar',
+                        severity: 'high',
+                        priority: 'high',
+                        status: 'open',
+                        environment: 'Production',
+                        type: 'Performance',
+                        reporter: 'User Testing',
+                        assignee: 'No asignado',
+                        created: new Date().toISOString().split('T')[0],
+                        updated: new Date().toISOString().split('T')[0]
+                    }
+                ];
+                
+                localStorage.setItem('ibm_defects_backup', JSON.stringify(defectsLimpios));
+                
+                updateStatus('Datos limpios creados exitosamente', 'success');
+                addOutput('<h4>✨ Datos Limpios Creados:</h4>');
+                addOutput('<ul>');
+                addOutput('<li>✅ DEF-001: Error de validación en formulario de login (Critical)</li>');
+                addOutput('<li>✅ DEF-002: Performance lenta en dashboard (High)</li>');
+                addOutput('</ul>');
+                addOutput('<p><strong>Ahora puedes ir al sistema de defectos y deberías ver los IDs correctos.</strong></p>');
+                
+            } catch (error) {
+                updateStatus('Error creando datos limpios', 'error');
+                addOutput(`<h4>❌ Error:</h4><p>${error.message}</p>`);
+            }
+        }
+
+        function irAlSistema() {
+            window.open('sistema_gestion_defectos_ibm.html', '_blank');
+        }
+
+        // Auto-diagnóstico al cargar
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(diagnosticar, 500);
+        });
+    </script>
+</body>
+</html>

@@ -618,21 +618,25 @@
             initializeSystem();
             setupEventListeners();
             loadInitialData();
+            startRealTimeUpdates();
             updateDisplay();
         });
 
         function initializeSystem() {
-            console.log('Inicializando sistema integrado IBM Quality Management...');
+            console.log('🚀 Inicializando sistema integrado IBM Quality Management...');
             
             // Verificar que el data manager esté disponible
             if (typeof IBMQualityManager === 'undefined') {
-                console.error('IBM Quality Data Manager no está disponible');
+                console.error('❌ IBM Quality Data Manager no está disponible');
                 return;
             }
             
             // Configurar listeners del data manager
             IBMQualityManager.subscribe('dataChanged', handleDataChange);
             IBMQualityManager.subscribe('metricsUpdated', handleMetricsUpdate);
+            IBMQualityManager.subscribe('defectsUpdated', handleDefectsUpdate);
+            IBMQualityManager.subscribe('dataSync', handleDataSync);
+            IBMQualityManager.subscribe('externalUpdate', handleExternalUpdate);
             IBMQualityManager.subscribe('syncStarted', handleSyncStarted);
             IBMQualityManager.subscribe('syncCompleted', handleSyncCompleted);
             IBMQualityManager.subscribe('connectionChanged', handleConnectionChange);
@@ -640,12 +644,72 @@
             // Inicializar gráficos
             initializeCharts();
             
-            console.log('Sistema inicializado correctamente');
+            // Forzar primera sincronización
+            IBMQualityManager.syncAllData();
+            
+            console.log('✅ Sistema inicializado correctamente');
+        }
+
+        function startRealTimeUpdates() {
+            console.log('🔄 Iniciando actualizaciones en tiempo real...');
+            
+            // Sincronización cada 3 segundos
+            setInterval(() => {
+                IBMQualityManager.syncAllData();
+                updateDisplay();
+            }, 3000);
+            
+            // Verificar actualizaciones en localStorage cada segundo
+            setInterval(() => {
+                checkForDataUpdates();
+            }, 1000);
+            
+            // Escuchar eventos de storage para sincronización entre pestañas
+            window.addEventListener('storage', function(e) {
+                if (e.key && e.key.startsWith('ibm_')) {
+                    console.log(`🔔 Detectado cambio en ${e.key}`);
+                    IBMQualityManager.notifyUpdate('localStorage', e.key);
+                    updateDisplay();
+                }
+            });
+        }
+
+        function checkForDataUpdates() {
+            // Verificar cambios en defectos
+            const currentDefects = localStorage.getItem('ibm_defects');
+            const backupDefects = localStorage.getItem('ibm_defects_backup');
+            
+            if (currentDefects || backupDefects) {
+                const defectsData = JSON.parse(currentDefects || backupDefects || '[]');
+                const currentCount = IBMQualityManager.data.defects.length;
+                
+                if (defectsData.length !== currentCount) {
+                    console.log(`📊 Defectos actualizados: ${currentCount} → ${defectsData.length}`);
+                    IBMQualityManager.notifyUpdate('defects', defectsData);
+                }
+            }
+            
+            // Verificar métricas de calidad
+            const qualityMetrics = localStorage.getItem('ibm_quality_metrics');
+            if (qualityMetrics) {
+                try {
+                    const metrics = JSON.parse(qualityMetrics);
+                    IBMQualityManager.data.qualityMetrics = metrics;
+                } catch (e) {
+                    console.warn('Error parseando métricas de calidad:', e);
+                }
+            }
         }
 
         function setupEventListeners() {
-            // Actualizar display cada 5 segundos
-            setInterval(updateDisplay, 5000);
+            // Botón de sincronización manual
+            const syncButton = document.querySelector('[onclick="triggerSync()"]');
+            if (syncButton) {
+                syncButton.addEventListener('click', function() {
+                    IBMQualityManager.syncAllData();
+                    showNotification('Sincronización', 'Actualizando datos desde todas las fuentes...');
+                });
+            }
         }
 
         function loadInitialData() {
@@ -665,6 +729,103 @@
             updateMetricsDisplay(metrics);
             updateCharts();
             addActivity('metrics update', 'Métricas actualizadas automáticamente');
+        }
+
+        function handleDefectsUpdate(defects) {
+            console.log(`🐛 Defectos actualizados: ${defects.length} defectos`);
+            updateDefectsMetrics(defects);
+            addActivity('defects update', `${defects.length} defectos sincronizados desde base de datos`);
+        }
+
+        function handleDataSync(aggregatedMetrics) {
+            console.log('📊 Datos sincronizados:', aggregatedMetrics);
+            updateDashboardWithAggregatedData(aggregatedMetrics);
+            addActivity('data sync', 'Sincronización completa de todas las fuentes');
+        }
+
+        function handleExternalUpdate(event) {
+            console.log(`🔔 Actualización externa desde ${event.source}:`, event.data);
+            addActivity('external update', `Datos actualizados desde ${event.source}`);
+            updateDisplay();
+        }
+
+        function updateDefectsMetrics(defects) {
+            const defectsCard = document.querySelector('.metric-card h3:contains("Defectos")');
+            if (defectsCard) {
+                const card = defectsCard.closest('.metric-card');
+                const valueEl = card.querySelector('.metric-value');
+                const detailEl = card.querySelector('.metric-detail');
+                
+                const openDefects = defects.filter(d => ['open', 'new'].includes(d.status)).length;
+                const criticalDefects = defects.filter(d => d.severity === 'critical').length;
+                
+                if (valueEl) valueEl.textContent = defects.length;
+                if (detailEl) detailEl.textContent = `${openDefects} abiertos, ${criticalDefects} críticos`;
+            }
+        }
+
+        function updateDashboardWithAggregatedData(metrics) {
+            // Actualizar tarjetas de métricas principales
+            updateMetricCard('defects', metrics.defects.total, 
+                `${metrics.defects.open} abiertos, ${metrics.defects.critical} críticos`);
+            
+            updateMetricCard('testing', metrics.testing.totalCases, 
+                `${metrics.testing.passRate}% pass rate, ${metrics.testing.failed} fallos`);
+            
+            updateMetricCard('quality', metrics.quality.score, 
+                `Tendencia: ${metrics.quality.trend === 'improving' ? '📈 Mejorando' : '📉 Empeorando'}`);
+            
+            updateMetricCard('risks', metrics.risks.total, 
+                `${metrics.risks.high} alto riesgo, ${metrics.risks.mitigated} mitigados`);
+            
+            // Actualizar gráficos con datos reales
+            updateChartsWithRealData(metrics);
+            
+            // Actualizar timestamp
+            const updateEl = document.getElementById('metricsUpdate');
+            if (updateEl) {
+                updateEl.textContent = `Actualizado: ${new Date().toLocaleTimeString()}`;
+            }
+        }
+
+        function updateMetricCard(type, value, detail) {
+            const cards = document.querySelectorAll('.metric-card');
+            cards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                if (title.includes(type) || 
+                    (type === 'testing' && title.includes('casos')) ||
+                    (type === 'quality' && title.includes('calidad')) ||
+                    (type === 'risks' && title.includes('riesgo'))) {
+                    
+                    const valueEl = card.querySelector('.metric-value');
+                    const detailEl = card.querySelector('.metric-detail');
+                    
+                    if (valueEl) valueEl.textContent = value;
+                    if (detailEl) detailEl.textContent = detail;
+                }
+            });
+        }
+
+        function updateChartsWithRealData(metrics) {
+            // Actualizar gráfico de calidad
+            if (qualityChart && qualityChart.data) {
+                qualityChart.data.datasets[0].data = [
+                    metrics.quality.score,
+                    metrics.testing.passRate,
+                    100 - ((metrics.defects.open / metrics.defects.total) * 100)
+                ];
+                qualityChart.update();
+            }
+            
+            // Actualizar gráfico de riesgos
+            if (riskChart && riskChart.data) {
+                riskChart.data.datasets[0].data = [
+                    metrics.risks.high,
+                    metrics.risks.medium,
+                    metrics.risks.low
+                ];
+                riskChart.update();
+            }
         }
 
         function handleSyncStarted() {
@@ -955,28 +1116,66 @@
         }
 
         function triggerSync() {
-            // Sincronizar métricas del generador de casos de caja negra/blanca
-            const testCaseGeneratorMetrics = JSON.parse(localStorage.getItem('ibm-quality-metrics') || '{}').testCaseGenerator;
+            console.log('🔄 Iniciando sincronización manual completa...');
             
+            // Sincronizar con el data manager
+            IBMQualityManager.syncAllData();
+            
+            // Obtener métricas agregadas
+            const aggregatedMetrics = IBMQualityManager.getAggregatedMetrics();
+            console.log('📊 Métricas agregadas:', aggregatedMetrics);
+            
+            // Actualizar dashboard con datos reales
+            updateDashboardWithAggregatedData(aggregatedMetrics);
+            
+            // Sincronizar métricas específicas del generador de casos
+            const testCaseGeneratorMetrics = JSON.parse(localStorage.getItem('ibm-quality-metrics') || '{}').testCaseGenerator;
             if (testCaseGeneratorMetrics) {
-                addActivity('sync completed', `Sincronizado Generador C.N/B: ${testCaseGeneratorMetrics.data.totalCases} casos generados`);
+                addActivity('sync completed', `Generador C.N/B: ${testCaseGeneratorMetrics.data.totalCases} casos, Score: ${testCaseGeneratorMetrics.data.qualityScore}`);
                 
-                // Actualizar métricas locales con datos del generador
-                const metrics = IBMQualityManager.getMetrics();
-                metrics.testCaseGenerator = testCaseGeneratorMetrics;
+                // Integrar métricas del generador
+                aggregatedMetrics.testCaseGenerator = testCaseGeneratorMetrics;
+                updateMetricsDisplay(aggregatedMetrics);
                 
-                // Forzar actualización de métricas en dashboard
-                updateMetricsDisplay(metrics);
-                
-                // Mostrar notificación de éxito
-                showNotification('Sincronización completada', `Integradas métricas del Generador de Casos: ${testCaseGeneratorMetrics.data.totalCases} casos, Score: ${testCaseGeneratorMetrics.data.qualityScore}`);
-            } else {
-                addActivity('sync failed', 'No hay métricas disponibles del Generador de Casos C.N/B');
-                showNotification('Sin datos', 'No se encontraron métricas del Generador de Casos Caja Negra/Blanca');
+                showNotification('Sincronización completada', 
+                    `Integrados ${aggregatedMetrics.defects.total} defectos, ${aggregatedMetrics.testing.totalCases} casos de prueba`);
             }
             
-            IBMQualityManager.syncData();
-            addActivity('manual sync', 'Sincronización manual iniciada');
+            // Sincronizar datos desde API si está disponible
+            try {
+                IBMQualityManager.syncDefectsFromAPI();
+            } catch (error) {
+                console.warn('API no disponible para sincronización:', error.message);
+            }
+            
+            // Verificar datos de otras herramientas
+            const sources = [
+                'ibm_coverage_data',
+                'ibm_risk_analysis', 
+                'ibm_ml_analytics',
+                'ibm_environments',
+                'ibm_quality_metrics'
+            ];
+            
+            let syncedSources = 0;
+            sources.forEach(source => {
+                const data = localStorage.getItem(source);
+                if (data) {
+                    syncedSources++;
+                    try {
+                        const parsedData = JSON.parse(data);
+                        addActivity('source sync', `${source}: ${Object.keys(parsedData).length} elementos`);
+                    } catch (e) {
+                        addActivity('source sync', `${source}: datos encontrados`);
+                    }
+                }
+            });
+            
+            addActivity('manual sync', `Sincronización completada - ${syncedSources}/${sources.length} fuentes sincronizadas`);
+            
+            // Mostrar resumen
+            showNotification('Sincronización completa', 
+                `${aggregatedMetrics.defects.total} defectos, ${aggregatedMetrics.testing.totalCases} casos de prueba, Score: ${aggregatedMetrics.quality.score}%`);
         }
         
         function showNotification(title, message) {

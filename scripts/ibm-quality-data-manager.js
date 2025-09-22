@@ -6,16 +6,27 @@
 class IBMQualityDataManager {
     constructor() {
         this.data = {
+            // Datos de defectos
+            defects: this.loadFromStorage('ibm_defects', []),
+            defectsBackup: this.loadFromStorage('ibm_defects_backup', []),
+            
             // Datos de pruebas
             testCases: this.loadFromStorage('testCases', []),
             testExecutions: this.loadFromStorage('testExecutions', []),
+            testResults: this.loadFromStorage('ibm_test_results', []),
+            
+            // Datos de cobertura
+            coverage: this.loadFromStorage('ibm_coverage_data', {}),
+            codeMetrics: this.loadFromStorage('ibm_code_metrics', {}),
             
             // Datos de métricas
             metrics: this.loadFromStorage('metrics', {}),
             calculations: this.loadFromStorage('calculations', []),
+            qualityMetrics: this.loadFromStorage('ibm_quality_metrics', {}),
             
             // Datos de riesgos
             risks: this.loadFromStorage('risks', []),
+            riskAnalysis: this.loadFromStorage('ibm_risk_analysis', []),
             
             // Datos RACI
             raciMatrix: this.loadFromStorage('raciMatrix', {}),
@@ -23,24 +34,36 @@ class IBMQualityDataManager {
             // Datos ML
             mlPredictions: this.loadFromStorage('mlPredictions', []),
             mlModels: this.loadFromStorage('mlModels', {}),
+            mlAnalytics: this.loadFromStorage('ibm_ml_analytics', {}),
+            
+            // Datos de ambientes
+            environments: this.loadFromStorage('ibm_environments', []),
             
             // Configuración
             settings: this.loadFromStorage('settings', {
                 autoSync: true,
-                refreshInterval: 5000,
-                enableNotifications: true
-            })
+                refreshInterval: 3000, // Reducido para mayor responsividad
+                enableNotifications: true,
+                enableRealTimeUpdates: true
+            }),
+            
+            // Timestamps para sincronización
+            lastUpdated: this.loadFromStorage('lastUpdated', {})
         };
         
         this.subscribers = new Map();
         this.isOnline = navigator.onLine;
         this.syncQueue = [];
+        this.apiEndpoint = 'http://localhost:3003/api/v1';
         
         this.initializeEventListeners();
         this.startPeriodicSync();
+        this.startApiSync(); // Nueva función para sincronizar con API
         
         // Simular datos en tiempo real para demostración
         this.startDataSimulation();
+        
+        console.log('🚀 IBM Quality Data Manager inicializado con sincronización avanzada');
     }
 
     // Gestión de suscripciones
@@ -454,26 +477,228 @@ class IBMQualityDataManager {
         }
     }
 
+    // Sincronización con API Backend
+    async startApiSync() {
+        if (!this.data.settings.enableRealTimeUpdates) return;
+        
+        try {
+            await this.syncDefectsFromAPI();
+            
+            // Programar siguiente sincronización
+            setTimeout(() => this.startApiSync(), this.data.settings.refreshInterval);
+        } catch (error) {
+            console.warn('Error en sincronización API, reintentando en 10s:', error.message);
+            setTimeout(() => this.startApiSync(), 10000);
+        }
+    }
+    
+    async syncDefectsFromAPI() {
+        try {
+            const response = await fetch(`${this.apiEndpoint}/defects`);
+            if (response.ok) {
+                const result = await response.json();
+                if (result.success && Array.isArray(result.data)) {
+                    const apiDefects = result.data.map(defect => ({
+                        id: defect.defect_id,
+                        title: defect.title,
+                        description: defect.description,
+                        severity: defect.severity,
+                        priority: defect.priority,
+                        status: defect.status,
+                        assignee: defect.assigned_to_name || 'No asignado',
+                        reporter: defect.reported_by_name || 'Sistema',
+                        environment: defect.found_in_environment,
+                        type: defect.type,
+                        created: new Date(defect.created_at).toISOString().split('T')[0],
+                        updated: new Date(defect.updated_at).toISOString().split('T')[0],
+                        _fromAPI: true
+                    }));
+                    
+                    // Actualizar datos solo si hay cambios
+                    const currentDefects = this.data.defects;
+                    if (JSON.stringify(currentDefects) !== JSON.stringify(apiDefects)) {
+                        this.data.defects = apiDefects;
+                        this.saveToStorage('ibm_defects', apiDefects);
+                        this.data.lastUpdated.defects = Date.now();
+                        
+                        console.log(`🔄 Defectos sincronizados desde API: ${apiDefects.length} defectos`);
+                        this.emit('defectsUpdated', apiDefects);
+                        this.updateMetrics();
+                    }
+                }
+            }
+        } catch (error) {
+            console.warn('Error sincronizando defectos desde API:', error.message);
+        }
+    }
+    
+    // Sincronización de datos de todas las fuentes
+    syncAllData() {
+        console.log('🔄 Iniciando sincronización completa de datos...');
+        
+        // Sincronizar defectos
+        this.syncDataFromStorage('ibm_defects', 'defects');
+        this.syncDataFromStorage('ibm_defects_backup', 'defectsBackup');
+        
+        // Sincronizar casos de prueba
+        this.syncDataFromStorage('ibm_test_cases', 'testCases');
+        this.syncDataFromStorage('ibm_test_results', 'testResults');
+        this.syncDataFromStorage('ibm_test_executions', 'testExecutions');
+        
+        // Sincronizar métricas
+        this.syncDataFromStorage('ibm_quality_metrics', 'qualityMetrics');
+        this.syncDataFromStorage('ibm_coverage_data', 'coverage');
+        this.syncDataFromStorage('ibm_code_metrics', 'codeMetrics');
+        
+        // Sincronizar análisis de riesgos
+        this.syncDataFromStorage('ibm_risk_analysis', 'riskAnalysis');
+        
+        // Sincronizar ML Analytics
+        this.syncDataFromStorage('ibm_ml_analytics', 'mlAnalytics');
+        
+        // Sincronizar ambientes
+        this.syncDataFromStorage('ibm_environments', 'environments');
+        
+        this.updateMetrics();
+        this.emit('dataSync', this.getAggregatedMetrics());
+        
+        console.log('✅ Sincronización completa finalizada');
+    }
+    
+    syncDataFromStorage(storageKey, dataKey) {
+        try {
+            const data = this.loadFromStorage(storageKey, null);
+            if (data !== null) {
+                this.data[dataKey] = data;
+                this.data.lastUpdated[dataKey] = Date.now();
+                console.log(`📊 ${dataKey}: ${Array.isArray(data) ? data.length : Object.keys(data).length} elementos`);
+            }
+        } catch (error) {
+            console.warn(`Error sincronizando ${dataKey}:`, error.message);
+        }
+    }
+    
+    // Métricas agregadas para el dashboard
+    getAggregatedMetrics() {
+        const defects = this.data.defects || [];
+        const testCases = this.data.testCases || [];
+        const testResults = this.data.testResults || [];
+        const risks = this.data.riskAnalysis || [];
+        
+        const metrics = {
+            // Métricas de defectos
+            defects: {
+                total: defects.length,
+                open: defects.filter(d => ['open', 'new'].includes(d.status)).length,
+                inProgress: defects.filter(d => d.status === 'in_progress').length,
+                resolved: defects.filter(d => ['resolved', 'closed'].includes(d.status)).length,
+                critical: defects.filter(d => d.severity === 'critical').length,
+                high: defects.filter(d => d.severity === 'high').length,
+                byPriority: this.groupBy(defects, 'priority'),
+                bySeverity: this.groupBy(defects, 'severity'),
+                byStatus: this.groupBy(defects, 'status'),
+                byEnvironment: this.groupBy(defects, 'environment')
+            },
+            
+            // Métricas de pruebas
+            testing: {
+                totalCases: testCases.length,
+                totalExecutions: testResults.length,
+                passed: testResults.filter(t => t.status === 'passed').length,
+                failed: testResults.filter(t => t.status === 'failed').length,
+                pending: testResults.filter(t => t.status === 'pending').length,
+                passRate: testResults.length > 0 ? 
+                    ((testResults.filter(t => t.status === 'passed').length / testResults.length) * 100).toFixed(2) : 0,
+                coverage: this.data.coverage?.overall || 0
+            },
+            
+            // Métricas de riesgos
+            risks: {
+                total: risks.length,
+                high: risks.filter(r => r.level === 'high').length,
+                medium: risks.filter(r => r.level === 'medium').length,
+                low: risks.filter(r => r.level === 'low').length,
+                mitigated: risks.filter(r => r.status === 'mitigated').length
+            },
+            
+            // Métricas de calidad generales
+            quality: {
+                score: this.calculateQualityScore(defects, testResults),
+                trend: this.calculateTrend(),
+                lastUpdated: new Date().toISOString()
+            }
+        };
+        
+        return metrics;
+    }
+    
+    groupBy(array, key) {
+        return array.reduce((result, item) => {
+            const group = item[key] || 'undefined';
+            result[group] = (result[group] || 0) + 1;
+            return result;
+        }, {});
+    }
+    
+    calculateQualityScore(defects, testResults) {
+        if (defects.length === 0 && testResults.length === 0) return 100;
+        
+        const defectScore = Math.max(0, 100 - (defects.filter(d => ['open', 'new'].includes(d.status)).length * 5));
+        const testScore = testResults.length > 0 ? 
+            (testResults.filter(t => t.status === 'passed').length / testResults.length) * 100 : 50;
+        
+        return Math.round((defectScore + testScore) / 2);
+    }
+    
+    calculateTrend() {
+        // Implementación simple de tendencia basada en timestamps
+        const recentDefects = this.data.defects.filter(d => {
+            const created = new Date(d.created).getTime();
+            const now = Date.now();
+            return (now - created) < (7 * 24 * 60 * 60 * 1000); // Últimos 7 días
+        });
+        
+        return recentDefects.length <= 5 ? 'improving' : 'declining';
+    }
+    
+    // Función para notificar actualizaciones específicas
+    notifyUpdate(source, data) {
+        console.log(`🔔 Actualización desde ${source}:`, data);
+        this.syncAllData();
+        this.emit('externalUpdate', { source, data, timestamp: Date.now() });
+    }
+
     // Limpiar datos
     clearAllData() {
         const keys = Object.keys(this.data);
         keys.forEach(key => {
             if (key !== 'settings') {
-                localStorage.removeItem(`ibm_quality_${key}`);
+                const storageKey = key.startsWith('ibm_') ? key : `ibm_${key}`;
+                localStorage.removeItem(storageKey);
             }
         });
         
         // Reinicializar datos
         this.data = {
+            defects: [],
+            defectsBackup: [],
             testCases: [],
             testExecutions: [],
+            testResults: [],
+            coverage: {},
+            codeMetrics: {},
             metrics: {},
             calculations: [],
+            qualityMetrics: {},
             risks: [],
+            riskAnalysis: [],
             raciMatrix: {},
             mlPredictions: [],
             mlModels: {},
-            settings: this.data.settings
+            mlAnalytics: {},
+            environments: [],
+            settings: this.data.settings,
+            lastUpdated: {}
         };
         
         this.emit('dataCleared');
