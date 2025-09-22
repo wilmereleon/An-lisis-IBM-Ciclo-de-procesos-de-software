@@ -1,0 +1,50 @@
+{
+  "name": "ibm-quality-management-frontend",
+  "version": "1.0.0",
+  "description": "Frontend React para IBM Quality Management - Sistema de Administración",
+  "homepage": ".",
+  "dependencies": {
+    "@carbon/react": "^1.42.0",
+    "@carbon/icons-react": "^11.31.0",
+    "@carbon/themes": "^11.16.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.15.0",
+    "react-query": "^3.39.3",
+    "axios": "^1.5.0",
+    "recharts": "^2.8.0",
+    "moment": "^2.29.4",
+    "lodash": "^4.17.21",
+    "react-hook-form": "^7.45.4",
+    "react-hot-toast": "^2.4.1",
+    "js-file-download": "^0.4.12",
+    "react-virtualized": "^9.22.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.0.4",
+    "vite": "^4.4.9",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
+    "eslint": "^8.47.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

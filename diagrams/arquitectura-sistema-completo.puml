@@ -1,0 +1,158 @@
+@startuml IBM_Quality_Management_Architecture
+!define RECTANGLE class
+!theme aws-orange
+
+title IBM Quality Management System - Arquitectura Empresarial
+
+package "Frontend Layer" {
+  [React App] as Frontend
+  [IBM Carbon Design] as CarbonUI
+  [Dashboard Components] as Dashboard
+  [Authentication] as FrontAuth
+  
+  Frontend --> CarbonUI
+  Frontend --> Dashboard
+  Frontend --> FrontAuth
+}
+
+package "API Gateway Layer" {
+  [Express Server] as API
+  [Rate Limiter] as RateLimit
+  [CORS Middleware] as CORS
+  [Authentication Middleware] as AuthMiddleware
+  [Validation Middleware] as Validation
+  
+  API --> RateLimit
+  API --> CORS
+  API --> AuthMiddleware
+  API --> Validation
+}
+
+package "Controller Layer (MVC)" {
+  [User Controller] as UserCtrl
+  [Metrics Controller] as MetricsCtrl
+  [Project Controller] as ProjectCtrl
+  [Reports Controller] as ReportsCtrl
+  
+  API --> UserCtrl
+  API --> MetricsCtrl
+  API --> ProjectCtrl
+  API --> ReportsCtrl
+}
+
+package "Service Layer (Business Logic)" {
+  [User Service] as UserSvc
+  [Metrics Service] as MetricsSvc
+  [Project Service] as ProjectSvc
+  [Authentication Service] as AuthSvc
+  
+  UserCtrl --> UserSvc
+  MetricsCtrl --> MetricsSvc
+  ProjectCtrl --> ProjectSvc
+  UserCtrl --> AuthSvc
+}
+
+package "Repository Layer (Data Access)" {
+  [User Repository] as UserRepo
+  [Metrics Repository] as MetricsRepo
+  [Project Repository] as ProjectRepo
+  [Base Repository] as BaseRepo
+  
+  UserSvc --> UserRepo
+  MetricsSvc --> MetricsRepo
+  ProjectSvc --> ProjectRepo
+  UserRepo --> BaseRepo
+  MetricsRepo --> BaseRepo
+  ProjectRepo --> BaseRepo
+}
+
+package "Observer Pattern Layer" {
+  [Event Manager] as EventMgr
+  [Metrics Observer] as MetricsObs
+  [Notification Observer] as NotifObs
+  [Real-time Updates] as RealTime
+  
+  MetricsSvc --> EventMgr
+  EventMgr --> MetricsObs
+  EventMgr --> NotifObs
+  EventMgr --> RealTime
+}
+
+package "Factory Pattern Layer" {
+  [Model Factory] as ModelFactory
+  [Service Factory] as ServiceFactory
+  [Validator Factory] as ValidatorFactory
+  
+  UserSvc --> ServiceFactory
+  MetricsSvc --> ServiceFactory
+  UserCtrl --> ValidatorFactory
+  MetricsCtrl --> ValidatorFactory
+  UserRepo --> ModelFactory
+  MetricsRepo --> ModelFactory
+}
+
+package "Singleton Pattern Layer" {
+  [Configuration Manager] as Config
+  [Logger Instance] as Logger
+  [Database Pool] as DBPool
+  
+  UserSvc --> Config
+  MetricsSvc --> Config
+  UserRepo --> Logger
+  MetricsRepo --> Logger
+  BaseRepo --> DBPool
+}
+
+package "Database Layer" {
+  database "PostgreSQL" {
+    [Users Table] as UsersDB
+    [Projects Table] as ProjectsDB
+    [Metrics Table] as MetricsDB
+    [Test Cases Table] as TestCasesDB
+    [Defects Table] as DefectsDB
+  }
+  
+  UserRepo --> UsersDB
+  ProjectRepo --> ProjectsDB
+  MetricsRepo --> MetricsDB
+}
+
+package "External Integration Layer" {
+  [HTML Tools] as HTMLTools
+  [Data Manager JS] as DataManager
+  [Offline Storage] as OfflineStorage
+  [Batch Processor] as BatchProcessor
+  
+  HTMLTools --> DataManager
+  DataManager --> OfflineStorage
+  DataManager --> BatchProcessor
+  BatchProcessor --> API
+}
+
+package "Security Layer" {
+  [JWT Token Service] as JWT
+  [Password Hashing] as PasswordHash
+  [Role-Based Access] as RBAC
+  [Input Sanitization] as Sanitize
+  
+  AuthSvc --> JWT
+  AuthSvc --> PasswordHash
+  AuthMiddleware --> RBAC
+  Validation --> Sanitize
+}
+
+' Connections between layers
+Frontend --> API : "HTTPS Requests"
+API --> UserSvc : "Business Logic Calls"
+UserRepo --> UsersDB : "SQL Queries"
+HTMLTools --> API : "Metrics Sync"
+EventMgr --> Frontend : "WebSocket Updates"
+
+' Notes
+note right of Frontend : "React + Carbon Design\nResponsive UI\nReal-time Dashboard"
+note right of API : "RESTful API\nJWT Authentication\nRate Limiting"
+note right of UserRepo : "Repository Pattern\nQuery Optimization\nTransaction Support"
+note right of EventMgr : "Observer Pattern\nReal-time Events\nNotification System"
+note right of Config : "Singleton Pattern\nCentralized Config\nEnvironment Management"
+
+@enduml

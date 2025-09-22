@@ -1,0 +1,331 @@
+@startuml IBM_Quality_Management_Classes
+!define RECTANGLE class
+!theme aws-orange
+
+title IBM Quality Management System - Diagrama de Clases (Patrones de Diseño)
+
+package "Singleton Pattern" {
+  class ConfigurationManager {
+    - static instance: ConfigurationManager
+    - config: Object
+    --
+    + getInstance(): ConfigurationManager
+    + get(module: string): Object
+    + update(module: string, updates: Object): void
+    + validateConfiguration(): void
+    + getDatabaseConfig(): Object
+    + isProduction(): boolean
+    + isDevelopment(): boolean
+  }
+  
+  class Logger {
+    - static instance: Logger
+    - logger: WinstonLogger
+    --
+    + getInstance(): Logger
+    + info(message: string, meta?: Object): void
+    + error(message: string, error?: Error, meta?: Object): void
+    + warn(message: string, meta?: Object): void
+    + debug(message: string, meta?: Object): void
+    + getExpressMiddleware(): Function
+  }
+}
+
+package "Factory Pattern" {
+  class ModelFactory {
+    + createUser(userData: Object): User
+    + createProject(projectData: Object): Project
+    + createMetric(metricData: Object): Metric
+  }
+  
+  class ServiceFactory {
+    + createUserService(repository: Repository): UserService
+    + createMetricsService(repository: Repository): MetricsService
+    + createProjectService(repository: Repository): ProjectService
+  }
+  
+  class ValidatorFactory {
+    + createAPIValidator(schema: JoiSchema): Function
+    + createUserSchemas(): Object
+    + createProjectSchemas(): Object
+    + createMetricsSchemas(): Object
+  }
+}
+
+package "Repository Pattern" {
+  abstract class BaseRepository {
+    # tableName: string
+    # db: DatabaseConnection
+    # logger: Logger
+    --
+    + create(data: Object): Promise<Object>
+    + createBulk(dataArray: Array): Promise<Array>
+    + findById(id: number): Promise<Object>
+    + findAll(filters?: Object, options?: Object): Promise<Array>
+    + update(id: number, data: Object): Promise<Object>
+    + delete(id: number): Promise<Object>
+    + count(filters?: Object): Promise<number>
+  }
+  
+  class UserRepository extends BaseRepository {
+    + findByEmail(email: string): Promise<User>
+    + findByEmailWithPassword(email: string): Promise<User>
+    + updateLastLogin(userId: number): Promise<Object>
+    + getUsersByRole(role: string): Promise<Array>
+  }
+  
+  class MetricsRepository extends BaseRepository {
+    + getAggregated(groupBy: string, filters?: Object): Promise<Array>
+    + getTrend(metricType: string, period: string, filters?: Object): Promise<Array>
+    + getTopTools(limit?: number): Promise<Array>
+  }
+  
+  class ProjectRepository extends BaseRepository {
+    + findByCode(code: string): Promise<Project>
+    + findActiveProjects(): Promise<Array>
+    + getProjectMetricsSummary(projectCode: string): Promise<Object>
+  }
+}
+
+package "Observer Pattern" {
+  class EventManager {
+    - listeners: Map<string, Array>
+    - eventHistory: Array
+    - maxHistorySize: number
+    --
+    + subscribe(eventType: string, listener: Function, options?: Object): string
+    + unsubscribe(eventType: string, listenerId: string): boolean
+    + emit(eventType: string, eventData?: Object): Promise<Object>
+    + emitSync(eventType: string, eventData?: Object): void
+    + getEventHistory(filters?: Object): Array
+    + getEventStats(): Object
+  }
+  
+  class MetricsObserver {
+    - eventManager: EventManager
+    - metricsService: MetricsService
+    --
+    + setupListeners(): void
+    + handleNewMetric(metricData: Object): Promise<void>
+    + handleBulkMetrics(metricsData: Object): Promise<void>
+    + handleQualityThreshold(thresholdData: Object): Promise<void>
+    + checkThresholds(metricData: Object): void
+    + updateRealTimeStats(metricData: Object): void
+  }
+  
+  class NotificationObserver {
+    - eventManager: EventManager
+    - notifications: Array
+    --
+    + setupListeners(): void
+    + sendAlert(alertData: Object): Promise<void>
+    + sendWelcomeNotification(userData: Object): Promise<void>
+    + sendProjectCompletionNotification(projectData: Object): Promise<void>
+    + getNotifications(userId?: number, filters?: Object): Array
+    + markAsRead(notificationId: string): boolean
+  }
+}
+
+package "MVC Pattern" {
+  abstract class BaseController {
+    # logger: Logger
+    # eventManager: EventManager
+    --
+    + asyncHandler(fn: Function): Function
+    + sendSuccess(res: Response, data: Object, message?: string, statusCode?: number): void
+    + sendError(res: Response, message: string, statusCode?: number, details?: Object): void
+    + getPaginationParams(req: Request): Object
+    + getFilters(req: Request, allowedFilters: Array): Object
+  }
+  
+  class UserController extends BaseController {
+    - userRepository: UserRepository
+    - userService: UserService
+    - validators: Object
+    --
+    + create(req: Request, res: Response): Promise<void>
+    + login(req: Request, res: Response): Promise<void>
+    + getAll(req: Request, res: Response): Promise<void>
+    + getById(req: Request, res: Response): Promise<void>
+    + update(req: Request, res: Response): Promise<void>
+    + delete(req: Request, res: Response): Promise<void>
+  }
+  
+  class MetricsController extends BaseController {
+    - metricsRepository: MetricsRepository
+    - metricsService: MetricsService
+    - validators: Object
+    --
+    + record(req: Request, res: Response): Promise<void>
+    + recordBulk(req: Request, res: Response): Promise<void>
+    + getMetrics(req: Request, res: Response): Promise<void>
+    + getAggregated(req: Request, res: Response): Promise<void>
+    + getTrends(req: Request, res: Response): Promise<void>
+    + getDashboardData(req: Request, res: Response): Promise<void>
+  }
+  
+  class ResponseView {
+    + formatUser(user: User): Object
+    + formatProject(project: Project): Object
+    + formatMetric(metric: Metric): Object
+    + formatPaginatedResponse(data: Object, pagination: Object, message?: string): Object
+    + formatErrorResponse(error: Error, statusCode?: number): Object
+  }
+}
+
+package "Domain Models" {
+  class User {
+    + id: number
+    + username: string
+    + email: string
+    + role: string
+    + isActive: boolean
+    + lastLogin: Date
+    + createdAt: Date
+    + updatedAt: Date
+    --
+    + validate(): Array<string>
+    + isValidEmail(): boolean
+    + hasPermission(permission: string): boolean
+    + toJSON(): Object
+  }
+  
+  class Project {
+    + id: number
+    + name: string
+    + code: string
+    + description: string
+    + startDate: Date
+    + endDate: Date
+    + status: string
+    + ownerId: number
+    + budget: number
+    + createdAt: Date
+    + updatedAt: Date
+    --
+    + validate(): Array<string>
+    + getDuration(): number
+    + isActive(): boolean
+    + toJSON(): Object
+  }
+  
+  class Metric {
+    + id: number
+    + toolFilename: string
+    + metricType: string
+    + metricName: string
+    + metricValue: number
+    + metadata: Object
+    + projectCode: string
+    + userId: number
+    + sessionId: string
+    + timestamp: Date
+    + createdAt: Date
+    --
+    + validate(): Array<string>
+    + getCategory(): string
+    + toJSON(): Object
+  }
+}
+
+package "Service Layer" {
+  class UserService {
+    - repository: UserRepository
+    - logger: Logger
+    --
+    + create(userData: Object): Promise<User>
+    + authenticate(email: string, password: string): Promise<User>
+    + findById(id: number): Promise<User>
+    + findAll(filters?: Object): Promise<Array>
+    + update(id: number, updateData: Object): Promise<User>
+    + delete(id: number): Promise<void>
+  }
+  
+  class MetricsService {
+    - repository: MetricsRepository
+    - logger: Logger
+    - config: ConfigurationManager
+    --
+    + recordMetric(metricData: Object): Promise<Metric>
+    + recordBulkMetrics(metricsData: Array): Promise<Array>
+    + getMetrics(filters?: Object): Promise<Array>
+    + getAggregatedMetrics(groupBy: string, filters?: Object): Promise<Array>
+    + getMetricsTrend(metricType: string, period: string, filters?: Object): Promise<Array>
+  }
+}
+
+' Relationships
+ConfigurationManager --> "1" ConfigurationManager : singleton
+Logger --> "1" Logger : singleton
+
+ModelFactory ..> User : creates
+ModelFactory ..> Project : creates
+ModelFactory ..> Metric : creates
+
+ServiceFactory ..> UserService : creates
+ServiceFactory ..> MetricsService : creates
+
+UserController --> UserService : uses
+UserController --> UserRepository : uses
+MetricsController --> MetricsService : uses
+MetricsController --> MetricsRepository : uses
+
+BaseController <|-- UserController
+BaseController <|-- MetricsController
+
+BaseRepository <|-- UserRepository
+BaseRepository <|-- MetricsRepository
+BaseRepository <|-- ProjectRepository
+
+UserService --> UserRepository : uses
+MetricsService --> MetricsRepository : uses
+
+EventManager --> MetricsObserver : notifies
+EventManager --> NotificationObserver : notifies
+
+MetricsObserver --> MetricsService : observes
+MetricsObserver --> EventManager : subscribes to
+
+UserRepository --> User : manages
+MetricsRepository --> Metric : manages
+ProjectRepository --> Project : manages
+
+BaseController --> Logger : uses
+BaseRepository --> Logger : uses
+UserService --> Logger : uses
+MetricsService --> Logger : uses
+
+' Notes
+note right of ConfigurationManager
+  Singleton Pattern:
+  - Single instance
+  - Global configuration
+  - Environment management
+  - Validation
+end note
+
+note right of BaseRepository
+  Repository Pattern:
+  - Data access abstraction
+  - CRUD operations
+  - Query optimization
+  - Transaction support
+end note
+
+note right of EventManager
+  Observer Pattern:
+  - Event-driven architecture
+  - Loose coupling
+  - Real-time updates
+  - Scalable notifications
+end note
+
+note right of BaseController
+  MVC Pattern:
+  - Request handling
+  - Response formatting
+  - Error management
+  - Validation
+end note
+
+@enduml

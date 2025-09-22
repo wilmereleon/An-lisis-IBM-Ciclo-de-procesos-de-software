@@ -1,0 +1,222 @@
+@startuml IBM_Quality_Management_Sequence
+!define RECTANGLE class
+!theme aws-orange
+
+title IBM Quality Management System - Diagrama de Secuencia: Registro de Métricas en Tiempo Real
+
+actor "QA Engineer" as QA
+participant "HTML Tool" as HTMLTool
+participant "Data Manager JS" as DataManager
+participant "Express API" as API
+participant "Metrics Controller" as Controller
+participant "Metrics Service" as Service
+participant "Metrics Repository" as Repository
+participant "Event Manager" as EventManager
+participant "Metrics Observer" as Observer
+participant "Notification Observer" as NotifObserver
+participant "WebSocket Server" as WSServer
+participant "React Dashboard" as Dashboard
+participant "PostgreSQL DB" as Database
+
+== Inicialización del Sistema ==
+
+QA -> HTMLTool : Abre herramienta de cobertura
+activate HTMLTool
+
+HTMLTool -> DataManager : Inicializar integración
+activate DataManager
+
+DataManager -> DataManager : Configurar session ID
+DataManager -> DataManager : Verificar conectividad
+
+HTMLTool -> QA : Herramienta lista
+deactivate HTMLTool
+
+== Generación de Métricas ==
+
+QA -> HTMLTool : Calcula cobertura de pruebas
+activate HTMLTool
+
+HTMLTool -> HTMLTool : Procesar análisis\n(Line: 87%, Branch: 82%)
+
+HTMLTool -> DataManager : recordMetric('coverage_analysis', \n'line_coverage', 87)
+activate DataManager
+
+DataManager -> DataManager : Validar datos localmente
+DataManager -> DataManager : Agregar a batch local
+
+note right of DataManager
+  Batch local:
+  - Métrica 1: line_coverage = 87%
+  - Métrica 2: branch_coverage = 82%
+  - Acumular hasta 10 métricas o 30s
+end note
+
+HTMLTool -> QA : Resultados mostrados
+deactivate HTMLTool
+
+== Sincronización Automática (Trigger: 30 segundos) ==
+
+DataManager -> DataManager : Timer alcanzado (30s)
+DataManager -> API : POST /api/metrics/bulk
+activate API
+note right of API
+  Request Body:
+  {
+    "metrics": [
+      {
+        "toolFilename": "analizador_cobertura_ibm.html",
+        "metricType": "coverage_analysis",
+        "metricName": "line_coverage",
+        "metricValue": 87,
+        "metadata": {...},
+        "sessionId": "uuid-123",
+        "timestamp": "2024-01-15T10:30:00Z"
+      }
+    ]
+  }
+end note
+
+API -> API : Autenticación JWT
+API -> API : Rate limiting check
+API -> API : Validación de entrada
+
+API -> Controller : recordBulk(req, res)
+activate Controller
+
+Controller -> Controller : Validar schema Joi
+Controller -> Service : recordBulkMetrics(metricsData)
+activate Service
+
+Service -> Service : Crear modelos Metric
+Service -> Service : Validar lógica de negocio
+
+Service -> Repository : createBulk(metrics)
+activate Repository
+
+Repository -> Database : BEGIN TRANSACTION
+activate Database
+
+Repository -> Database : INSERT INTO metrics (...)
+Database -> Repository : RETURNING * (2 records)
+
+Repository -> Database : COMMIT
+Database -> Repository : Transaction confirmed
+deactivate Database
+
+Repository -> Service : [Metric objects created]
+deactivate Repository
+
+Service -> EventManager : emitSync('metrics.bulk_created', data)
+activate EventManager
+note right of EventManager
+  Event Data:
+  {
+    "metrics": [...],
+    "summary": {
+      "count": 2,
+      "userId": 123,
+      "timestamp": "2024-01-15T10:30:00Z"
+    }
+  }
+end note
+
+EventManager -> Observer : handleBulkMetrics(eventData)
+activate Observer
+
+Observer -> Observer : Agregar estadísticas en tiempo real
+Observer -> Observer : Verificar umbrales de calidad
+
+alt Umbral excedido (line_coverage < 90%)
+  Observer -> EventManager : emitSync('quality.threshold_check', thresholdData)
+  EventManager -> NotifObserver : handleQualityThreshold(data)
+  activate NotifObserver
+  
+  NotifObserver -> NotifObserver : Crear alerta crítica
+  NotifObserver -> EventManager : emitSync('notification.new', alert)
+  EventManager -> WSServer : Broadcast notification
+  activate WSServer
+  
+  WSServer -> Dashboard : WebSocket message
+  activate Dashboard
+  Dashboard -> Dashboard : Mostrar alerta en UI
+  deactivate Dashboard
+  deactivate WSServer
+  deactivate NotifObserver
+end
+
+Observer -> EventManager : emitSync('dashboard.update', aggregatedData)
+EventManager -> WSServer : Broadcast dashboard update
+WSServer -> Dashboard : WebSocket message
+Dashboard -> Dashboard : Actualizar métricas en tiempo real
+
+deactivate Observer
+deactivate EventManager
+
+Service -> Controller : Success response
+deactivate Service
+
+Controller -> API : sendSuccess(res, metrics)
+deactivate Controller
+
+API -> DataManager : HTTP 201 + Response body
+deactivate API
+
+DataManager -> DataManager : Limpiar batch local
+DataManager -> DataManager : Actualizar estadísticas de sesión
+
+note right of DataManager
+  Session Stats Updated:
+  - Métricas enviadas: +2
+  - Último sync: now
+  - Estado: connected
+end note
+
+deactivate DataManager
+
+== Dashboard en Tiempo Real ==
+
+Dashboard -> Dashboard : WebSocket conectado
+Dashboard -> Dashboard : Escuchar eventos
+
+note right of Dashboard
+  Eventos WebSocket recibidos:
+  1. 'metrics.bulk_created' -> Actualizar contadores
+  2. 'quality.threshold_check' -> Mostrar alerta
+  3. 'dashboard.update' -> Refresh gráficos
+end note
+
+Dashboard -> QA : Métricas actualizadas\nen tiempo real
+
+== Modo Offline (Escenario Alternativo) ==
+
+alt Sin conectividad
+  DataManager -> API : POST /api/metrics/bulk
+  API -> DataManager : Connection timeout
+  
+  DataManager -> DataManager : Detectar fallo de conexión
+  DataManager -> DataManager : Guardar en localStorage
+  
+  note right of DataManager
+    Offline Storage:
+    - Queue de métricas pendientes
+    - Timestamp de último intento
+    - Retry counter
+  end note
+  
+  DataManager -> DataManager : Programar retry (exponential backoff)
+  
+  loop Retry cada 5min, 10min, 20min...
+    DataManager -> API : Retry conexión
+    alt Conexión restaurada
+      API -> DataManager : Success
+      DataManager -> DataManager : Procesar queue offline
+      DataManager -> DataManager : Limpiar localStorage
+    else
+      API -> DataManager : Still failing
+      DataManager -> DataManager : Incrementar retry delay
+    end
+  end
+end
+
+@enduml

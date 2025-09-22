@@ -1,0 +1,313 @@
+@startuml IBM_Quality_Management_Database_ER
+!define PRIMARY_KEY(x) <b><color:#b8861b><&key></color> x</b>
+!define FOREIGN_KEY(x) <color:#aaaaaa><&key></color> x
+!define COLUMN(x) <color:#efefef><&media-record></color> x
+!define TABLE(x) entity x << (T, white) >>
+
+title IBM Quality Management System - Diagrama Entidad-Relación
+
+' Entidades principales
+TABLE(users) {
+  PRIMARY_KEY(id) : SERIAL
+  COLUMN(username) : VARCHAR(50) NOT NULL UNIQUE
+  COLUMN(email) : VARCHAR(100) NOT NULL UNIQUE
+  COLUMN(password_hash) : VARCHAR(255) NOT NULL
+  COLUMN(role) : user_role_enum NOT NULL DEFAULT 'qa_engineer'
+  COLUMN(is_active) : BOOLEAN NOT NULL DEFAULT true
+  COLUMN(last_login) : TIMESTAMP
+  COLUMN(created_at) : TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  COLUMN(updated_at) : TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  COLUMN(deleted_at) : TIMESTAMP
+}
+
+TABLE(projects) {
+  PRIMARY_KEY(id) : SERIAL
+  COLUMN(name) : VARCHAR(100) NOT NULL
+  COLUMN(code) : VARCHAR(20) NOT NULL UNIQUE
+  COLUMN(description) : TEXT
+  COLUMN(start_date) : DATE NOT NULL
+  COLUMN(end_date) : DATE
+  COLUMN(status) : project_status_enum NOT NULL DEFAULT 'active'
+  FOREIGN_KEY(owner_id) : INTEGER NOT NULL
+  COLUMN(budget) : DECIMAL(12,2) DEFAULT 0
+  COLUMN(created_at) : TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  COLUMN(updated_at) : TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+}
+
+TABLE(tools) {
+  PRIMARY_KEY(id) : SERIAL
+  COLUMN(filename) : VARCHAR(100) NOT NULL UNIQUE
+  COLUMN(name) : VARCHAR(100) NOT NULL
+  COLUMN(description) : TEXT
+  COLUMN(category) : tool_category_enum NOT NULL
+  COLUMN(version) : VARCHAR(20)
+  COLUMN(is_active) : BOOLEAN NOT NULL DEFAULT true
+  COLUMN(created_at) : TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  COLUMN(updated_at) : TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+}
+
+TABLE(metrics) {
+  PRIMARY_KEY(id) : BIGSERIAL
+  COLUMN(tool_filename) : VARCHAR(100) NOT NULL
+  COLUMN(metric_type) : VARCHAR(50) NOT NULL
+  COLUMN(metric_name) : VARCHAR(100) NOT NULL
+  COLUMN(metric_value) : DECIMAL(10,4) NOT NULL
+  COLUMN(metadata) : JSONB
+  COLUMN(project_code) : VARCHAR(20)
+  FOREIGN_KEY(user_id) : INTEGER
+  COLUMN(session_id) : VARCHAR(100) NOT NULL
+  COLUMN(timestamp) : TIMESTAMP NOT NULL
+  COLUMN(created_at) : TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+}
+
+TABLE(test_cases) {
+  PRIMARY_KEY(id) : SERIAL
+  COLUMN(name) : VARCHAR(200) NOT NULL
+  COLUMN(description) : TEXT
+  COLUMN(preconditions) : TEXT
+  COLUMN(steps) : JSONB NOT NULL
+  COLUMN(expected_result) : TEXT NOT NULL
+  COLUMN(test_type) : test_type_enum NOT NULL
+  COLUMN(priority) : priority_enum NOT NULL DEFAULT 'medium'
+  COLUMN(status) : test_case_status_enum NOT NULL DEFAULT 'draft'
+  FOREIGN_KEY(project_id) : INTEGER NOT NULL
+  FOREIGN_KEY(created_by) : INTEGER NOT NULL
+  FOREIGN_KEY(assigned_to) : INTEGER
+  COLUMN(created_at) : TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  COLUMN(updated_at) : TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+}
+
+TABLE(test_executions) {
+  PRIMARY_KEY(id) : BIGSERIAL
+  FOREIGN_KEY(test_case_id) : INTEGER NOT NULL
+  FOREIGN_KEY(executed_by) : INTEGER NOT NULL
+  COLUMN(execution_date) : TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  COLUMN(result) : execution_result_enum NOT NULL
+  COLUMN(actual_result) : TEXT
+  COLUMN(notes) : TEXT
+  COLUMN(execution_time_ms) : INTEGER
+  COLUMN(environment) : VARCHAR(50)
+  COLUMN(browser) : VARCHAR(50)
+  COLUMN(screenshots) : JSONB
+  COLUMN(created_at) : TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+}
+
+TABLE(defects) {
+  PRIMARY_KEY(id) : SERIAL
+  COLUMN(title) : VARCHAR(200) NOT NULL
+  COLUMN(description) : TEXT NOT NULL
+  COLUMN(severity) : severity_enum NOT NULL
+  COLUMN(priority) : priority_enum NOT NULL
+  COLUMN(status) : defect_status_enum NOT NULL DEFAULT 'open'
+  COLUMN(steps_to_reproduce) : TEXT
+  COLUMN(expected_behavior) : TEXT
+  COLUMN(actual_behavior) : TEXT
+  FOREIGN_KEY(project_id) : INTEGER NOT NULL
+  FOREIGN_KEY(reported_by) : INTEGER NOT NULL
+  FOREIGN_KEY(assigned_to) : INTEGER
+  FOREIGN_KEY(related_test_case_id) : INTEGER
+  COLUMN(environment) : VARCHAR(50)
+  COLUMN(attachments) : JSONB
+  COLUMN(resolution_notes) : TEXT
+  COLUMN(resolved_at) : TIMESTAMP
+  COLUMN(created_at) : TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  COLUMN(updated_at) : TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+}
+
+TABLE(test_environments) {
+  PRIMARY_KEY(id) : SERIAL
+  COLUMN(name) : VARCHAR(100) NOT NULL
+  COLUMN(description) : TEXT
+  COLUMN(url) : VARCHAR(500)
+  COLUMN(type) : environment_type_enum NOT NULL
+  COLUMN(status) : environment_status_enum NOT NULL DEFAULT 'available'
+  FOREIGN_KEY(project_id) : INTEGER NOT NULL
+  COLUMN(configuration) : JSONB
+  COLUMN(credentials) : JSONB
+  COLUMN(created_at) : TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  COLUMN(updated_at) : TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+}
+
+TABLE(quality_risks) {
+  PRIMARY_KEY(id) : SERIAL
+  COLUMN(title) : VARCHAR(200) NOT NULL
+  COLUMN(description) : TEXT NOT NULL
+  COLUMN(category) : risk_category_enum NOT NULL
+  COLUMN(probability) : DECIMAL(3,2) NOT NULL CHECK (probability >= 0 AND probability <= 1)
+  COLUMN(impact) : DECIMAL(3,2) NOT NULL CHECK (impact >= 0 AND impact <= 1)
+  COLUMN(risk_score) : DECIMAL(4,3) GENERATED ALWAYS AS (probability * impact) STORED
+  COLUMN(mitigation_strategy) : TEXT
+  COLUMN(status) : risk_status_enum NOT NULL DEFAULT 'identified'
+  FOREIGN_KEY(project_id) : INTEGER NOT NULL
+  FOREIGN_KEY(identified_by) : INTEGER NOT NULL
+  FOREIGN_KEY(assigned_to) : INTEGER
+  COLUMN(target_date) : DATE
+  COLUMN(created_at) : TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  COLUMN(updated_at) : TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+}
+
+TABLE(user_sessions) {
+  PRIMARY_KEY(id) : BIGSERIAL
+  FOREIGN_KEY(user_id) : INTEGER NOT NULL
+  COLUMN(session_id) : VARCHAR(100) NOT NULL UNIQUE
+  COLUMN(ip_address) : INET
+  COLUMN(user_agent) : TEXT
+  COLUMN(login_at) : TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  COLUMN(logout_at) : TIMESTAMP
+  COLUMN(expires_at) : TIMESTAMP NOT NULL
+  COLUMN(is_active) : BOOLEAN NOT NULL DEFAULT true
+}
+
+TABLE(activity_logs) {
+  PRIMARY_KEY(id) : BIGSERIAL
+  FOREIGN_KEY(user_id) : INTEGER
+  COLUMN(action) : VARCHAR(100) NOT NULL
+  COLUMN(entity_type) : VARCHAR(50) NOT NULL
+  COLUMN(entity_id) : INTEGER
+  COLUMN(old_values) : JSONB
+  COLUMN(new_values) : JSONB
+  COLUMN(ip_address) : INET
+  COLUMN(user_agent) : TEXT
+  COLUMN(created_at) : TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+}
+
+' Relaciones
+projects ||--o{ test_cases : "has many"
+projects ||--o{ defects : "has many"
+projects ||--o{ test_environments : "has many"
+projects ||--o{ quality_risks : "has many"
+projects }o--|| users : "owned by"
+
+users ||--o{ test_cases : "creates"
+users ||--o{ test_cases : "assigned to"
+users ||--o{ test_executions : "executes"
+users ||--o{ defects : "reports"
+users ||--o{ defects : "assigned to"
+users ||--o{ quality_risks : "identifies"
+users ||--o{ quality_risks : "assigned to"
+users ||--o{ metrics : "generates"
+users ||--o{ user_sessions : "has many"
+users ||--o{ activity_logs : "performs"
+
+test_cases ||--o{ test_executions : "has many"
+test_cases ||--o{ defects : "related to"
+
+tools ||--o{ metrics : "generates"
+projects ||--o{ metrics : "belongs to"
+
+' Índices principales
+note top of users
+  **Índices:**
+  - idx_users_email (UNIQUE)
+  - idx_users_username (UNIQUE)
+  - idx_users_role
+  - idx_users_active
+end note
+
+note top of metrics
+  **Índices:**
+  - idx_metrics_tool_filename
+  - idx_metrics_type_name
+  - idx_metrics_project_code
+  - idx_metrics_user_id
+  - idx_metrics_timestamp
+  - idx_metrics_session_id
+end note
+
+note top of test_executions
+  **Índices:**
+  - idx_test_executions_test_case_id
+  - idx_test_executions_executed_by
+  - idx_test_executions_execution_date
+  - idx_test_executions_result
+end note
+
+note top of defects
+  **Índices:**
+  - idx_defects_project_id
+  - idx_defects_status
+  - idx_defects_severity
+  - idx_defects_assigned_to
+  - idx_defects_created_at
+end note
+
+' Enumeraciones
+note bottom of users
+  **user_role_enum:**
+  - admin
+  - quality_manager
+  - qa_engineer
+  - developer
+  - executive
+end note
+
+note bottom of projects
+  **project_status_enum:**
+  - active
+  - on_hold
+  - completed
+  - cancelled
+end note
+
+note bottom of test_cases
+  **test_type_enum:**
+  - functional
+  - performance
+  - security
+  - usability
+  - integration
+  - regression
+  
+  **priority_enum:**
+  - low
+  - medium
+  - high
+  - critical
+  
+  **test_case_status_enum:**
+  - draft
+  - review
+  - approved
+  - deprecated
+end note
+
+note bottom of defects
+  **severity_enum:**
+  - low
+  - medium
+  - high
+  - critical
+  
+  **defect_status_enum:**
+  - open
+  - in_progress
+  - resolved
+  - closed
+  - reopened
+end note
+
+' Triggers y funciones
+note right of metrics
+  **Triggers:**
+  - update_updated_at_column()
+  - validate_metric_value()
+  - audit_metric_changes()
+end note
+
+note right of projects
+  **Triggers:**
+  - update_updated_at_column()
+  - validate_project_dates()
+  - log_project_changes()
+end note
+
+' Vistas materializadas
+note left of test_executions
+  **Vistas Materializadas:**
+  - mv_project_metrics_summary
+  - mv_user_activity_summary
+  - mv_quality_trends_monthly
+  - mv_defect_resolution_stats
+end note
+
+@enduml

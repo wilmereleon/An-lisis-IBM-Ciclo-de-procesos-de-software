@@ -1,0 +1,235 @@
+@startuml IBM_Quality_Management_Deployment
+!define RECTANGLE class
+!theme aws-orange
+
+title IBM Quality Management System - Diagrama de Despliegue
+
+node "Cliente (Navegador)" as ClientBrowser {
+  artifact "React App" as ReactApp
+  artifact "HTML Tools (17)" as HTMLTools
+  artifact "Service Worker" as SW
+  artifact "IndexedDB" as IndexedDB
+}
+
+node "Load Balancer" as LB {
+  component "NGINX" as Nginx
+  component "SSL Termination" as SSL
+}
+
+node "Frontend Server" as FrontendServer {
+  artifact "Static Files" as StaticFiles
+  artifact "React Build" as ReactBuild
+  component "Web Server" as WebServer
+}
+
+node "API Server Cluster" as APICluster {
+  node "API Server 1" as API1 {
+    component "Node.js App" as NodeApp1
+    component "PM2 Process Manager" as PM2_1
+  }
+  
+  node "API Server 2" as API2 {
+    component "Node.js App" as NodeApp2
+    component "PM2 Process Manager" as PM2_2
+  }
+  
+  node "API Server 3" as API3 {
+    component "Node.js App" as NodeApp3
+    component "PM2 Process Manager" as PM2_3
+  }
+}
+
+node "Database Cluster" as DBCluster {
+  node "Primary DB" as PrimaryDB {
+    database "PostgreSQL Master" as PostgreSQL_Master
+    component "Connection Pool" as ConnPool1
+  }
+  
+  node "Replica DB 1" as ReplicaDB1 {
+    database "PostgreSQL Replica" as PostgreSQL_Replica1
+    component "Connection Pool" as ConnPool2
+  }
+  
+  node "Replica DB 2" as ReplicaDB2 {
+    database "PostgreSQL Replica" as PostgreSQL_Replica2
+    component "Connection Pool" as ConnPool3
+  }
+}
+
+node "Cache Layer" as CacheLayer {
+  component "Redis Cluster" as Redis
+  component "Memory Cache" as MemCache
+}
+
+node "Message Queue" as MessageQueue {
+  component "Redis Pub/Sub" as RedisPubSub
+  component "Event Queue" as EventQueue
+}
+
+node "File Storage" as FileStorage {
+  component "MinIO S3" as MinIO
+  artifact "Reports" as Reports
+  artifact "Logs" as Logs
+  artifact "Backups" as Backups
+}
+
+node "Monitoring & Logging" as Monitoring {
+  component "Prometheus" as Prometheus
+  component "Grafana" as Grafana
+  component "ELK Stack" as ELK
+  component "Alert Manager" as AlertManager
+}
+
+node "Security Services" as Security {
+  component "OAuth Provider" as OAuth
+  component "JWT Service" as JWT
+  component "Rate Limiter" as RateLimiter
+  component "WAF" as WAF
+}
+
+node "External Services" as ExternalServices {
+  component "Email Service" as EmailService
+  component "SMS Service" as SMSService
+  component "Analytics API" as AnalyticsAPI
+  component "Backup Service" as BackupService
+}
+
+' Conexiones de red
+ClientBrowser -[#blue]-> LB : "HTTPS/443"
+LB -[#blue]-> FrontendServer : "HTTP/8080"
+LB -[#blue]-> APICluster : "HTTP/3001"
+
+ReactApp -[#green]-> APICluster : "REST API\nWebSocket"
+HTMLTools -[#green]-> APICluster : "Metrics Sync"
+
+APICluster -[#red]-> DBCluster : "SQL Queries\nPort 5432"
+APICluster -[#orange]-> CacheLayer : "Cache Operations\nPort 6379"
+APICluster -[#purple]-> MessageQueue : "Event Publishing\nPort 6379"
+
+APICluster -[#brown]-> FileStorage : "File Operations\nPort 9000"
+APICluster -[#gray]-> Security : "Auth Validation"
+APICluster -[#pink]-> ExternalServices : "External APIs"
+
+' Replicación
+PostgreSQL_Master -[#red,dashed]-> PostgreSQL_Replica1 : "Streaming\nReplication"
+PostgreSQL_Master -[#red,dashed]-> PostgreSQL_Replica2 : "Streaming\nReplication"
+
+' Monitoreo
+Monitoring -[#yellow,dotted]-> APICluster : "Metrics Collection"
+Monitoring -[#yellow,dotted]-> DBCluster : "DB Metrics"
+Monitoring -[#yellow,dotted]-> CacheLayer : "Cache Metrics"
+
+' Configuración de puertos
+note right of LB
+  **Puertos:**
+  - 80 (HTTP -> Redirect)
+  - 443 (HTTPS)
+  - Health checks
+end note
+
+note right of APICluster
+  **Puertos por servidor:**
+  - 3001 (API)
+  - 3002 (WebSocket)
+  - 3003 (Health)
+  - 9229 (Debug - Dev only)
+end note
+
+note right of DBCluster
+  **Configuración:**
+  - Puerto: 5432
+  - Max Connections: 200
+  - Shared Buffers: 256MB
+  - Connection Pooling: PgBouncer
+end note
+
+note right of CacheLayer
+  **Redis Configuración:**
+  - Puerto: 6379
+  - Memory: 4GB
+  - Persistence: RDB + AOF
+  - Cluster Mode: 3 nodes
+end note
+
+' Especificaciones de hardware
+note top of APICluster
+  **Hardware Specs:**
+  - CPU: 4 cores each
+  - RAM: 8GB each
+  - Storage: 100GB SSD
+  - Network: 1Gbps
+end note
+
+note top of DBCluster
+  **Hardware Specs:**
+  - CPU: 8 cores (Master), 4 cores (Replicas)
+  - RAM: 16GB (Master), 8GB (Replicas)
+  - Storage: 500GB SSD (Master), 250GB (Replicas)
+  - Network: 10Gbps
+end note
+
+' Configuración de red
+package "Network Configuration" {
+  component "VPC" as VPC
+  component "Private Subnets" as PrivateSubnets
+  component "Public Subnets" as PublicSubnets
+  component "Security Groups" as SecurityGroups
+  component "Network ACLs" as NetworkACLs
+}
+
+LB -[hidden]-> VPC
+APICluster -[hidden]-> PrivateSubnets
+DBCluster -[hidden]-> PrivateSubnets
+FrontendServer -[hidden]-> PublicSubnets
+
+' Backup y DR
+package "Backup & Disaster Recovery" {
+  component "Automated Backups" as AutoBackups
+  component "Point-in-Time Recovery" as PITR
+  component "Cross-Region Replication" as CrossRegion
+  component "Backup Verification" as BackupVerification
+}
+
+DBCluster -[#brown,dotted]-> AutoBackups : "Daily Backups"
+FileStorage -[#brown,dotted]-> CrossRegion : "Geo Replication"
+
+' Escalabilidad
+note bottom of APICluster
+  **Auto Scaling:**
+  - Min: 2 instances
+  - Max: 10 instances
+  - Target CPU: 70%
+  - Scale out: +2 instances
+  - Scale in: -1 instance
+end note
+
+note bottom of DBCluster
+  **Scaling Strategy:**
+  - Vertical scaling for Master
+  - Horizontal scaling via read replicas
+  - Connection pooling optimization
+  - Query performance monitoring
+end note
+
+' Configuración SSL/TLS
+note left of LB
+  **SSL Configuration:**
+  - TLS 1.3
+  - HSTS enabled
+  - Certificate: Let's Encrypt
+  - Perfect Forward Secrecy
+  - OCSP Stapling
+end note
+
+' Configuración de seguridad
+note left of Security
+  **Security Measures:**
+  - JWT with RS256
+  - Rate limiting: 100 req/15min
+  - CORS configured
+  - Input validation
+  - SQL injection prevention
+  - XSS protection
+end note
+
+@enduml

@@ -1,0 +1,191 @@
+@startuml IBM_Quality_Management_Components
+!define RECTANGLE class
+!theme aws-orange
+
+title IBM Quality Management System - Diagrama de Componentes
+
+package "Presentation Tier" <<Container>> {
+  component "React Frontend" as Frontend {
+    component "Dashboard Component" as Dashboard
+    component "Metrics Component" as MetricsUI
+    component "Users Component" as UsersUI
+    component "Projects Component" as ProjectsUI
+    component "Auth Component" as AuthUI
+    component "Reports Component" as ReportsUI
+  }
+  
+  component "HTML Tools Suite" as HTMLTools {
+    component "Quality Calculator" as QualityCalc
+    component "Coverage Analyzer" as CoverageAnalyzer
+    component "Test Generator" as TestGen
+    component "Risk Analyzer" as RiskAnalyzer
+    component "Defects Manager" as DefectsManager
+    component "Environment Manager" as EnvManager
+  }
+  
+  component "Data Manager" as DataManager {
+    component "Metrics Collector" as MetricsCollector
+    component "Offline Storage" as OfflineStorage
+    component "Batch Processor" as BatchProcessor
+    component "Session Manager" as SessionManager
+  }
+}
+
+package "API Gateway Tier" <<Container>> {
+  component "Express API Server" as APIServer {
+    component "Authentication Middleware" as AuthMiddleware
+    component "Rate Limiter" as RateLimit
+    component "Validation Middleware" as ValidationMiddleware
+    component "CORS Handler" as CORSHandler
+    component "Error Handler" as ErrorHandler
+    component "Logger Middleware" as LoggerMiddleware
+  }
+  
+  component "WebSocket Server" as WSServer {
+    component "Real-time Updates" as RealTimeUpdates
+    component "Event Broadcasting" as EventBroadcast
+    component "Connection Manager" as ConnectionManager
+  }
+}
+
+package "Business Logic Tier" <<Container>> {
+  component "Controllers Layer" as Controllers {
+    component "User Controller" as UserController
+    component "Metrics Controller" as MetricsController
+    component "Projects Controller" as ProjectsController
+    component "Reports Controller" as ReportsController
+    component "Auth Controller" as AuthController
+  }
+  
+  component "Services Layer" as Services {
+    component "User Service" as UserService
+    component "Metrics Service" as MetricsService
+    component "Projects Service" as ProjectsService
+    component "Analytics Service" as AnalyticsService
+    component "Notification Service" as NotificationService
+  }
+  
+  component "Event System" as EventSystem {
+    component "Event Manager" as EventManager
+    component "Metrics Observer" as MetricsObserver
+    component "Notification Observer" as NotificationObserver
+    component "Analytics Observer" as AnalyticsObserver
+  }
+}
+
+package "Data Access Tier" <<Container>> {
+  component "Repository Layer" as Repositories {
+    component "User Repository" as UserRepository
+    component "Metrics Repository" as MetricsRepository
+    component "Projects Repository" as ProjectsRepository
+    component "Test Cases Repository" as TestCasesRepository
+    component "Defects Repository" as DefectsRepository
+  }
+  
+  component "Database Connection" as DBConnection {
+    component "Connection Pool" as ConnectionPool
+    component "Query Builder" as QueryBuilder
+    component "Transaction Manager" as TransactionManager
+  }
+}
+
+package "Persistence Tier" <<Container>> {
+  database "PostgreSQL Database" as Database {
+    component "Users Schema" as UsersSchema
+    component "Projects Schema" as ProjectsSchema
+    component "Metrics Schema" as MetricsSchema
+    component "Test Cases Schema" as TestCasesSchema
+    component "Defects Schema" as DefectsSchema
+    component "System Schema" as SystemSchema
+  }
+  
+  component "File Storage" as FileStorage {
+    component "Reports Storage" as ReportsStorage
+    component "Logs Storage" as LogsStorage
+    component "Cache Storage" as CacheStorage
+  }
+}
+
+package "External Services" <<Container>> {
+  component "Authentication Provider" as AuthProvider
+  component "Email Service" as EmailService
+  component "Analytics Service" as ExternalAnalytics
+  component "Monitoring Service" as MonitoringService
+}
+
+' Frontend connections
+Frontend --> APIServer : "HTTPS/REST API"
+HTMLTools --> DataManager : "JavaScript Integration"
+DataManager --> APIServer : "API Calls"
+Frontend --> WSServer : "WebSocket Connection"
+
+' API Gateway connections
+APIServer --> Controllers : "Route Handling"
+WSServer --> EventSystem : "Event Subscription"
+
+' Business Logic connections
+Controllers --> Services : "Business Logic"
+Services --> Repositories : "Data Operations"
+Services --> EventSystem : "Event Publishing"
+EventSystem --> WSServer : "Real-time Notifications"
+
+' Data Access connections
+Repositories --> DBConnection : "Database Operations"
+DBConnection --> Database : "SQL Queries"
+
+' External connections
+Services --> AuthProvider : "JWT Validation"
+NotificationService --> EmailService : "Email Notifications"
+AnalyticsService --> ExternalAnalytics : "Advanced Analytics"
+Services --> MonitoringService : "Health Metrics"
+
+' File operations
+ReportsController --> FileStorage : "Report Generation"
+LoggerMiddleware --> FileStorage : "Log Writing"
+
+' Component interfaces
+interface "REST API" as RESTAPI
+interface "WebSocket API" as WSAPI
+interface "Database API" as DBAPI
+interface "File System API" as FILEAPI
+
+APIServer -- RESTAPI
+WSServer -- WSAPI
+DBConnection -- DBAPI
+FileStorage -- FILEAPI
+
+' Notes
+note right of Frontend
+  React Application with:
+  - IBM Carbon Design System
+  - Real-time dashboard updates
+  - Responsive design
+  - Progressive Web App features
+end note
+
+note right of HTMLTools
+  17 Integrated Tools:
+  - Quality calculators
+  - Test generators
+  - Coverage analyzers
+  - Risk assessments
+  - Environment management
+end note
+
+note right of EventSystem
+  Observer Pattern Implementation:
+  - Real-time metric updates
+  - Automatic notifications
+  - Event-driven architecture
+  - Scalable event handling
+end note
+
+note right of Database
+  PostgreSQL with:
+  - 11 normalized tables
+  - Optimized indexes
+  - Row-level security
+  - Automated backups
+end note
+
+@enduml

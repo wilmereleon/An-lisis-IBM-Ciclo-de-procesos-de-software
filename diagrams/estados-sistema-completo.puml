@@ -1,0 +1,326 @@
+@startuml IBM_Quality_Management_State_Machines
+!theme aws-orange
+
+title IBM Quality Management System - Diagramas de Estados
+
+package "Estados del Proyecto" {
+  state "Gestión de Proyectos" as ProjectManagement {
+    [*] --> DRAFT : Crear proyecto
+    
+    DRAFT : Proyecto en borrador
+    DRAFT : - Datos básicos
+    DRAFT : - Sin configuración
+    
+    PLANNING : Proyecto en planificación
+    PLANNING : - Configuración de procesos
+    PLANNING : - Asignación de recursos
+    
+    ACTIVE : Proyecto activo
+    ACTIVE : - Ejecución de pruebas
+    ACTIVE : - Seguimiento de métricas
+    
+    ON_HOLD : Proyecto pausado
+    ON_HOLD : - Temporalmente suspendido
+    ON_HOLD : - Recursos liberados
+    
+    COMPLETED : Proyecto completado
+    COMPLETED : - Todos los objetivos cumplidos
+    COMPLETED : - Reportes finales generados
+    
+    CANCELLED : Proyecto cancelado
+    CANCELLED : - Terminado prematuramente
+    CANCELLED : - Recursos liberados
+    
+    ARCHIVED : Proyecto archivado
+    ARCHIVED : - Datos preservados
+    ARCHIVED : - Solo lectura
+    
+    DRAFT --> PLANNING : Configurar\n[datos_completos]
+    PLANNING --> ACTIVE : Activar\n[recursos_asignados]
+    ACTIVE --> ON_HOLD : Pausar\n[solicitud_pausa]
+    ON_HOLD --> ACTIVE : Reanudar\n[recursos_disponibles]
+    ACTIVE --> COMPLETED : Finalizar\n[objetivos_cumplidos]
+    PLANNING --> CANCELLED : Cancelar\n[decisión_stakeholder]
+    ACTIVE --> CANCELLED : Cancelar\n[problemas_críticos]
+    ON_HOLD --> CANCELLED : Cancelar\n[tiempo_excedido]
+    COMPLETED --> ARCHIVED : Archivar\n[after 30 days]
+    CANCELLED --> ARCHIVED : Archivar\n[after 7 days]
+    
+    ' Transiciones especiales
+    ARCHIVED --> ACTIVE : Reactivar\n[solicitud_especial]\n/ crear_nueva_version
+  }
+}
+
+package "Estados de Casos de Prueba" {
+  state "Ciclo de Vida de Casos de Prueba" as TestCaseLifecycle {
+    [*] --> CREATED : Crear caso
+    
+    CREATED : Caso creado
+    CREATED : - Estructura básica
+    CREATED : - Sin revisar
+    
+    UNDER_REVIEW : En revisión
+    UNDER_REVIEW : - Validación de contenido
+    UNDER_REVIEW : - Verificación de criterios
+    
+    APPROVED : Caso aprobado
+    APPROVED : - Listo para ejecución
+    APPROVED : - Criterios validados
+    
+    READY_FOR_EXECUTION : Listo para ejecutar
+    READY_FOR_EXECUTION : - Ambiente preparado
+    READY_FOR_EXECUTION : - Datos de prueba listos
+    
+    IN_EXECUTION : En ejecución
+    IN_EXECUTION : - Ejecutándose actualmente
+    IN_EXECUTION : - Resultados parciales
+    
+    PASSED : Caso exitoso
+    PASSED : - Criterios cumplidos
+    PASSED : - Resultados documentados
+    
+    FAILED : Caso fallido
+    FAILED : - Criterios no cumplidos
+    FAILED : - Defectos identificados
+    
+    BLOCKED : Caso bloqueado
+    BLOCKED : - No se puede ejecutar
+    BLOCKED : - Dependencias pendientes
+    
+    DEFERRED : Caso diferido
+    DEFERRED : - Pospuesto para siguiente ciclo
+    DEFERRED : - Prioridad reducida
+    
+    OBSOLETE : Caso obsoleto
+    OBSOLETE : - Ya no aplicable
+    OBSOLETE : - Funcionalidad removida
+    
+    CREATED --> UNDER_REVIEW : Enviar a revisión\n[contenido_completo]
+    UNDER_REVIEW --> APPROVED : Aprobar\n[revisión_exitosa]
+    UNDER_REVIEW --> CREATED : Rechazar\n[modificaciones_requeridas]
+    APPROVED --> READY_FOR_EXECUTION : Preparar\n[ambiente_listo]
+    READY_FOR_EXECUTION --> IN_EXECUTION : Ejecutar\n[iniciar_prueba]
+    IN_EXECUTION --> PASSED : Completar exitosamente\n[criterios_cumplidos]
+    IN_EXECUTION --> FAILED : Completar con fallas\n[criterios_no_cumplidos]
+    IN_EXECUTION --> BLOCKED : Bloquear\n[impedimento_encontrado]
+    BLOCKED --> READY_FOR_EXECUTION : Desbloquear\n[impedimento_resuelto]
+    FAILED --> READY_FOR_EXECUTION : Re-ejecutar\n[after_defect_fix]
+    PASSED --> READY_FOR_EXECUTION : Re-ejecutar\n[regression_test]
+    READY_FOR_EXECUTION --> DEFERRED : Diferir\n[cambio_prioridad]
+    DEFERRED --> READY_FOR_EXECUTION : Reactivar\n[prioridad_restaurada]
+    APPROVED --> OBSOLETE : Marcar obsoleto\n[funcionalidad_removida]
+    
+    ' Estados de error y recuperación
+    IN_EXECUTION --> IN_EXECUTION : Continuar\n[paso_intermedio]
+    BLOCKED --> FAILED : Forzar falla\n[bloqueo_permanente]
+  }
+}
+
+package "Estados de Defectos" {
+  state "Gestión de Defectos" as DefectManagement {
+    [*] --> NEW : Reportar defecto
+    
+    NEW : Defecto nuevo
+    NEW : - Recién reportado
+    NEW : - Sin asignación
+    
+    ASSIGNED : Defecto asignado
+    ASSIGNED : - Desarrollador asignado
+    ASSIGNED : - En cola de trabajo
+    
+    IN_PROGRESS : En desarrollo
+    IN_PROGRESS : - Siendo corregido
+    IN_PROGRESS : - Análisis en curso
+    
+    RESOLVED : Defecto resuelto
+    RESOLVED : - Corrección implementada
+    RESOLVED : - Pendiente verificación
+    
+    VERIFIED : Defecto verificado
+    VERIFIED : - Corrección confirmada
+    VERIFIED : - Pruebas exitosas
+    
+    CLOSED : Defecto cerrado
+    CLOSED : - Proceso completado
+    CLOSED : - Sin acciones pendientes
+    
+    REOPENED : Defecto reabierto
+    REOPENED : - Corrección insuficiente
+    REOPENED : - Problema persiste
+    
+    REJECTED : Defecto rechazado
+    REJECTED : - No es un defecto válido
+    REJECTED : - Comportamiento esperado
+    
+    DUPLICATE : Defecto duplicado
+    DUPLICATE : - Ya reportado previamente
+    DUPLICATE : - Referencia a original
+    
+    DEFERRED : Defecto diferido
+    DEFERRED : - Pospuesto para siguiente release
+    DEFERRED : - Prioridad baja
+    
+    NEW --> ASSIGNED : Asignar\n[desarrollador_disponible]
+    NEW --> REJECTED : Rechazar\n[not_a_bug]
+    NEW --> DUPLICATE : Marcar duplicado\n[defecto_existente]
+    ASSIGNED --> IN_PROGRESS : Iniciar trabajo\n[análisis_iniciado]
+    IN_PROGRESS --> RESOLVED : Resolver\n[corrección_implementada]
+    RESOLVED --> VERIFIED : Verificar\n[testing_exitoso]
+    VERIFIED --> CLOSED : Cerrar\n[confirmación_final]
+    RESOLVED --> REOPENED : Reabrir\n[corrección_insuficiente]
+    VERIFIED --> REOPENED : Reabrir\n[regresión_detectada]
+    REOPENED --> IN_PROGRESS : Continuar trabajo\n[nueva_asignación]
+    ASSIGNED --> DEFERRED : Diferir\n[baja_prioridad]
+    DEFERRED --> ASSIGNED : Reactivar\n[prioridad_aumentada]
+    
+    ' Transiciones especiales
+    IN_PROGRESS --> REJECTED : Rechazar durante análisis\n[not_reproducible]
+    CLOSED --> REOPENED : Reabrir por regresión\n[new_evidence]
+  }
+}
+
+package "Estados del Sistema de Métricas" {
+  state "Sistema de Monitoreo" as MetricsSystem {
+    [*] --> INITIALIZING : Iniciar sistema
+    
+    INITIALIZING : Inicializando
+    INITIALIZING : - Cargando configuración
+    INITIALIZING : - Conectando servicios
+    
+    COLLECTING : Recolectando datos
+    COLLECTING : - Métricas en tiempo real
+    COLLECTING : - Almacenamiento activo
+    
+    PROCESSING : Procesando datos
+    PROCESSING : - Análisis de métricas
+    PROCESSING : - Cálculo de KPIs
+    
+    ALERTING : Generando alertas
+    ALERTING : - Umbrales superados
+    ALERTING : - Notificaciones activas
+    
+    MAINTENANCE : En mantenimiento
+    MAINTENANCE : - Limpieza de datos
+    MAINTENANCE : - Optimización de índices
+    
+    ERROR : Error del sistema
+    ERROR : - Falla crítica
+    ERROR : - Recolección interrumpida
+    
+    SHUTDOWN : Sistema detenido
+    SHUTDOWN : - Proceso de cierre
+    SHUTDOWN : - Guardado de estado
+    
+    INITIALIZING --> COLLECTING : Inicio exitoso\n[servicios_conectados]
+    COLLECTING --> PROCESSING : Datos disponibles\n[batch_completo]
+    PROCESSING --> COLLECTING : Procesamiento completo\n[métricas_calculadas]
+    COLLECTING --> ALERTING : Umbral superado\n[condición_crítica]
+    ALERTING --> COLLECTING : Alerta procesada\n[notificación_enviada]
+    COLLECTING --> MAINTENANCE : Mantenimiento programado\n[scheduled_time]
+    MAINTENANCE --> COLLECTING : Mantenimiento completo\n[optimización_terminada]
+    COLLECTING --> ERROR : Falla del sistema\n[error_crítico]
+    ERROR --> INITIALIZING : Recuperación\n[error_resuelto]
+    COLLECTING --> SHUTDOWN : Detener sistema\n[shutdown_signal]
+    SHUTDOWN --> [*] : Sistema detenido\n[cleanup_completo]
+    
+    ' Estados internos
+    PROCESSING : do / calcular_kpis()
+    PROCESSING : do / generar_reportes()
+    PROCESSING : do / actualizar_dashboard()
+    
+    ALERTING : do / evaluar_umbrales()
+    ALERTING : do / enviar_notificaciones()
+    ALERTING : do / registrar_eventos()
+    
+    MAINTENANCE : do / limpiar_datos_antiguos()
+    MAINTENANCE : do / optimizar_índices()
+    MAINTENANCE : do / backup_configuración()
+  }
+}
+
+package "Estados de Notificaciones" {
+  state "Sistema de Notificaciones" as NotificationSystem {
+    [*] --> PENDING : Crear notificación
+    
+    PENDING : Notificación pendiente
+    PENDING : - En cola de envío
+    PENDING : - Esperando procesamiento
+    
+    PROCESSING : Procesando envío
+    PROCESSING : - Preparando mensaje
+    PROCESSING : - Validando destinatarios
+    
+    SENT : Notificación enviada
+    SENT : - Entregada exitosamente
+    SENT : - Confirmación recibida
+    
+    DELIVERED : Notificación entregada
+    DELIVERED : - Confirmada por destinatario
+    DELIVERED : - Proceso completado
+    
+    FAILED : Envío fallido
+    FAILED : - Error en entrega
+    FAILED : - Reintento pendiente
+    
+    EXPIRED : Notificación expirada
+    EXPIRED : - Tiempo límite superado
+    EXPIRED : - Ya no relevante
+    
+    CANCELLED : Notificación cancelada
+    CANCELLED : - Cancelada por usuario
+    CANCELLED : - Evento no válido
+    
+    PENDING --> PROCESSING : Procesar\n[turno_en_cola]
+    PROCESSING --> SENT : Enviar exitosamente\n[entrega_confirmada]
+    SENT --> DELIVERED : Confirmar entrega\n[acknowledgment_recibido]
+    PROCESSING --> FAILED : Falla en envío\n[error_de_entrega]
+    FAILED --> PROCESSING : Reintentar\n[retry_attempt < max_retries]
+    FAILED --> EXPIRED : Expirar\n[max_retries_reached]
+    PENDING --> EXPIRED : Expirar en cola\n[timeout_reached]
+    PENDING --> CANCELLED : Cancelar\n[user_cancellation]
+    PROCESSING --> CANCELLED : Cancelar durante envío\n[event_invalidated]
+    
+    ' Configuraciones de reintento
+    FAILED : entry / increment_retry_count()
+    FAILED : entry / schedule_next_retry()
+    
+    PROCESSING : do / validate_recipients()
+    PROCESSING : do / format_message()
+    PROCESSING : do / select_delivery_channel()
+  }
+}
+
+' Notas explicativas
+note top of ProjectManagement
+  **Triggers de Estado:**
+  - Timer events para archivado automático
+  - User actions para cambios manuales
+  - System events para actualizaciones automáticas
+  - Business rules para validaciones
+end note
+
+note top of TestCaseLifecycle
+  **Validaciones:**
+  - Criterios de aceptación completos
+  - Datos de prueba disponibles
+  - Ambiente de prueba funcional
+  - Permisos de ejecución válidos
+end note
+
+note top of DefectManagement
+  **Métricas Asociadas:**
+  - Tiempo en cada estado
+  - Tasa de resolución
+  - Tasa de reapertura
+  - Distribución por severidad
+end note
+
+note top of MetricsSystem
+  **Configuración:**
+  - Intervalos de recolección
+  - Umbrales de alerta
+  - Políticas de retención
+  - Canales de notificación
+end note
+
+@enduml
