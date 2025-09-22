@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista Desarrollador - Gestión de Defectos - IBM Quality Management</title>
+    <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
+    
+    <!-- IBM Carbon Design System Icons -->
+    <script type="module" src="https://unpkg.com/@carbon/icons@11.8.0/es/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            /* IBM Carbon Design System Variables */
+            --cds-interactive-01: #0f62fe;
+            --cds-interactive-02: #393939;
+            --cds-interactive-03: #0f62fe;
+            --cds-ui-background: #f4f4f4;
+            --cds-ui-01: #ffffff;
+            --cds-ui-02: #f4f4f4;
+            --cds-text-01: #161616;
+            --cds-text-02: #525252;
+            --cds-text-03: #a8a8a8;
+            --cds-field-01: #f4f4f4;
+            --cds-support-01: #da1e28;
+            --cds-support-02: #24a148;
+            --cds-support-03: #f1c21b;
+            --cds-support-04: #0043ce;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', Arial, sans-serif;
+            background-color: var(--cds-ui-background);
+            color: var(--cds-text-01);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .bx--header {
+            background-color: var(--cds-interactive-02);
+            border-bottom: 1px solid #393939;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .bx--header__name {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bx--header__logo {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        /* Navigation Styles */
+        .bx--header-nav {
+            display: flex;
+            flex: 1;
+            margin-left: 2rem;
+        }
+
+        .bx--header-nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .bx--header-nav__item {
+            display: flex;
+            align-items: center;
+        }
+
+        .bx--header-nav__link {
+            color: #c6c6c6;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 0.75rem 0;
+            transition: color 0.2s ease;
+            border-bottom: 2px solid transparent;
+            font-weight: 400;
+        }
+
+        .bx--header-nav__link:hover {
+            color: white;
+            border-bottom-color: var(--cds-interactive-01);
+        }
+
+        .bx--header-nav__link--current {
+            color: white;
+            border-bottom-color: var(--cds-interactive-01);
+            font-weight: 600;
+        }
+
+        /* Role Badge */
+        .role-badge {
+            background: var(--cds-interactive-01);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--cds-interactive-01), #001d6c);
+            color: white;
+            padding: 3rem 2rem;
+            margin: -2rem -2rem 2rem -2rem;
+            border-radius: 0 0 8px 8px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .role-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Work Queue */
+        .work-queue {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .queue-section {
+            background: var(--cds-ui-01);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .queue-header {
+            background: var(--cds-ui-02);
+            padding: 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .queue-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--cds-interactive-01);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .queue-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .queue-count {
+            background: var(--cds-support-01);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .defect-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+            transition: background 0.2s ease;
+            cursor: pointer;
+        }
+
+        .defect-item:hover {
+            background: var(--cds-ui-02);
+        }
+
+        .defect-item:last-child {
+            border-bottom: none;
+        }
+
+        .defect-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .defect-id {
+            font-weight: 600;
+            color: var(--cds-interactive-01);
+        }
+
+        .defect-title {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .defect-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: var(--cds-text-02);
+        }
+
+        /* Priority badges */
+        .priority-critical { 
+            background: var(--cds-support-01); 
+            color: white; 
+            padding: 2px 8px; 
+            border-radius: 4px; 
+            font-size: 11px; 
+            font-weight: 600;
+        }
+        .priority-high { 
+            background: #ff8400; 
+            color: white; 
+            padding: 2px 8px; 
+            border-radius: 4px; 
+            font-size: 11px; 
+            font-weight: 600;
+        }
+        .priority-medium { 
+            background: var(--cds-support-03); 
+            color: black; 
+            padding: 2px 8px; 
+            border-radius: 4px; 
+            font-size: 11px; 
+            font-weight: 600;
+        }
+
+        /* Statistics Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--cds-ui-01);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--cds-interactive-01);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--cds-text-02);
+            font-size: 0.9rem;
+        }
+
+        /* Progress Chart */
+        .progress-section {
+            background: var(--cds-ui-01);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .progress-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--cds-interactive-01);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0050e6;
+        }
+
+        .btn-secondary {
+            background: var(--cds-ui-02);
+            color: var(--cds-text-01);
+            border: 1px solid #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .page-header {
+                margin: -1rem -1rem 1rem -1rem;
+                padding: 2rem 1rem;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .work-queue {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Carbon Header/Navbar -->
+    <header class="bx--header">
+        <a href="dashboard_integrado_ibm.html" class="bx--header__name">
+            <!-- IBM Watson AI Icon -->
+            <svg class="bx--header__logo" viewBox="0 0 32 32">
+                <path d="M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14S23.7,2,16,2z M16,28c-6.6,0-12-5.4-12-12S9.4,4,16,4s12,5.4,12,12S22.6,28,16,28z"/>
+                <path d="M16,6c-5.5,0-10,4.5-10,10s4.5,10,10,10s10-4.5,10-10S21.5,6,16,6z M16,24c-4.4,0-8-3.6-8-8s3.6-8,8-8s8,3.6,8,8S20.4,24,16,24z"/>
+                <circle cx="16" cy="16" r="4"/>
+                <circle cx="16" cy="9" r="1"/>
+                <circle cx="23" cy="16" r="1"/>
+                <circle cx="16" cy="23" r="1"/>
+                <circle cx="9" cy="16" r="1"/>
+            </svg>
+            IBM Quality Management
+        </a>
+        
+        <nav class="bx--header-nav">
+            <ul>
+                <li class="bx--header-nav__item">
+                    <a href="dashboard_integrado_ibm.html" class="bx--header-nav__link">Dashboard</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="formulario_casos_prueba_ibm.html" class="bx--header-nav__link">Casos de Prueba</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="generador_casos_caja_negra_blanca_ibm.html" class="bx--header-nav__link">Generador Tests</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="ml_quality_analytics_dashboard.html" class="bx--header-nav__link">ML Analytics</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="calculadora_metricas_calidad_ibm.html" class="bx--header-nav__link">Métricas</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="analisis_riesgos_calidad_ibm.html" class="bx--header-nav__link">Riesgos</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="sistema_gestion_defectos_ibm.html" class="bx--header-nav__link bx--header-nav__link--current">Defectos</a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="role-badge">👨‍💻 Desarrollador</div>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <div class="role-icon">
+                <svg viewBox="0 0 32 32" fill="white" width="24" height="24">
+                    <path d="M31,16l-7,7L22.59,21.59L28.17,16l-5.58-5.59L24,8.41ZM1,16l7-7,1.41,1.41L3.83,16l5.58,5.59L8,23.41ZM20.12,5.5l-8,21L10.88,26.5l8-21Z"/>
+                </svg>
+            </div>
+            <div>
+                <h1 class="page-title">Panel del Desarrollador</h1>
+                <p class="page-subtitle">Gestión y resolución de defectos asignados</p>
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">8</div>
+                <div class="stat-label">Defectos Asignados</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">En Progreso</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">15</div>
+                <div class="stat-label">Resueltos Esta Semana</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">2.5</div>
+                <div class="stat-label">Tiempo Promedio (días)</div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="startWork()">Comenzar Trabajo</button>
+            <button class="btn btn-secondary" onclick="updateStatus()">Actualizar Estado</button>
+            <button class="btn btn-secondary" onclick="requestInfo()">Solicitar Información</button>
+            <button class="btn btn-secondary" onclick="viewHistory()">Ver Historial</button>
+        </div>
+
+        <!-- Work Queue -->
+        <div class="work-queue">
+            <!-- High Priority Queue -->
+            <div class="queue-section">
+                <div class="queue-header">
+                    <div class="queue-icon">
+                        <svg viewBox="0 0 32 32" fill="white" width="20" height="20">
+                            <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2ZM14.9971,7h2.0029l-.1528,11H15.1499ZM16,25a1.5,1.5,0,1,1,1.5-1.5A1.5,1.5,0,0,1,16,25Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="queue-title">Alta Prioridad</h3>
+                    <span class="queue-count">3</span>
+                </div>
+                
+                <div class="defect-item" onclick="openDefect('DEF-001')">
+                    <div class="defect-header">
+                        <span class="defect-id">DEF-001</span>
+                        <span class="defect-title">Error de validación en formulario de login</span>
+                        <span class="priority-critical">Crítica</span>
+                    </div>
+                    <div class="defect-meta">
+                        <span>Reportado por: Ana García</span>
+                        <span>Hace 2 horas</span>
+                    </div>
+                </div>
+
+                <div class="defect-item" onclick="openDefect('DEF-005')">
+                    <div class="defect-header">
+                        <span class="defect-id">DEF-005</span>
+                        <span class="defect-title">Pérdida de datos en transacción</span>
+                        <span class="priority-critical">Crítica</span>
+                    </div>
+                    <div class="defect-meta">
+                        <span>Reportado por: Luis Martín</span>
+                        <span>Hace 4 horas</span>
+                    </div>
+                </div>
+
+                <div class="defect-item" onclick="openDefect('DEF-008')">
+                    <div class="defect-header">
+                        <span class="defect-id">DEF-008</span>
+                        <span class="defect-title">Fallo en proceso de backup automático</span>
+                        <span class="priority-high">Alta</span>
+                    </div>
+                    <div class="defect-meta">
+                        <span>Reportado por: Carmen Silva</span>
+                        <span>Hace 6 horas</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Regular Queue -->
+            <div class="queue-section">
+                <div class="queue-header">
+                    <div class="queue-icon">
+                        <svg viewBox="0 0 32 32" fill="white" width="20" height="20">
+                            <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="queue-title">Cola Regular</h3>
+                    <span class="queue-count" style="background: var(--cds-support-03); color: black;">5</span>
+                </div>
+
+                <div class="defect-item" onclick="openDefect('DEF-002')">
+                    <div class="defect-header">
+                        <span class="defect-id">DEF-002</span>
+                        <span class="defect-title">Carga lenta en dashboard de métricas</span>
+                        <span class="priority-high">Alta</span>
+                    </div>
+                    <div class="defect-meta">
+                        <span>Reportado por: Pedro Ruiz</span>
+                        <span>Ayer</span>
+                    </div>
+                </div>
+
+                <div class="defect-item" onclick="openDefect('DEF-003')">
+                    <div class="defect-header">
+                        <span class="defect-id">DEF-003</span>
+                        <span class="defect-title">Texto truncado en dispositivos móviles</span>
+                        <span class="priority-medium">Media</span>
+                    </div>
+                    <div class="defect-meta">
+                        <span>Reportado por: Rosa López</span>
+                        <span>Hace 2 días</span>
+                    </div>
+                </div>
+
+                <div class="defect-item" onclick="openDefect('DEF-006')">
+                    <div class="defect-header">
+                        <span class="defect-id">DEF-006</span>
+                        <span class="defect-title">Inconsistencia en formato de fechas</span>
+                        <span class="priority-medium">Media</span>
+                    </div>
+                    <div class="defect-meta">
+                        <span>Reportado por: Miguel Torres</span>
+                        <span>Hace 3 días</span>
+                    </div>
+                </div>
+
+                <div class="defect-item" onclick="openDefect('DEF-007')">
+                    <div class="defect-header">
+                        <span class="defect-id">DEF-007</span>
+                        <span class="defect-title">Mejora en accesibilidad del formulario</span>
+                        <span class="priority-medium">Media</span>
+                    </div>
+                    <div class="defect-meta">
+                        <span>Reportado por: Elena Castro</span>
+                        <span>Hace 4 días</span>
+                    </div>
+                </div>
+
+                <div class="defect-item" onclick="openDefect('DEF-009')">
+                    <div class="defect-header">
+                        <span class="defect-id">DEF-009</span>
+                        <span class="defect-title">Optimización de consultas de base de datos</span>
+                        <span class="priority-medium">Media</span>
+                    </div>
+                    <div class="defect-meta">
+                        <span>Reportado por: Javier Moreno</span>
+                        <span>Hace 5 días</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Development Tools Section -->
+        <div style="margin: 2rem 0;">
+            <h2 style="font-size: 1.75rem; margin-bottom: 1rem; color: var(--cds-text-01); font-weight: 600;">
+                ⚙️ Herramientas de Desarrollo
+            </h2>
+            
+            <!-- Defect Management -->
+            <div style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--cds-interactive-01);">
+                    🐛 Gestión de Defectos
+                </h3>
+                <div class="quick-actions" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                    <div class="action-card" style="background: var(--cds-ui-01); padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); cursor: pointer; transition: box-shadow 0.2s;" onclick="window.location.href='sistema_gestion_defectos_ibm.html'">
+                        <div class="action-icon" style="background: var(--cds-support-01); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                            <svg viewBox="0 0 32 32" style="width: 20px; height: 20px; fill: white;">
+                                <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2ZM14.9971,7h2.0029l-.1528,11H15.1499ZM16,25a1.5,1.5,0,1,1,1.5-1.5A1.5,1.5,0,0,1,16,25Z"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--cds-text-01);">Sistema de Gestión</h3>
+                        <p style="color: var(--cds-text-02); font-size: 0.9rem;">Gestión completa de defectos asignados</p>
+                    </div>
+
+                    <div class="action-card" style="background: var(--cds-ui-01); padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); cursor: pointer; transition: box-shadow 0.2s;" onclick="window.location.href='sistema_trazabilidad_ibm.html'">
+                        <div class="action-icon" style="background: var(--cds-interactive-01); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                            <svg viewBox="0 0 32 32" style="width: 20px; height: 20px; fill: white;">
+                                <path d="M30,14H26.828l-6.5-6.5A2,2,0,0,0,18.914,7H13.086a2,2,0,0,0-1.414.586l-6.5,6.5H2v2H5.172l6.5,6.5A2,2,0,0,0,13.086,23h5.828a2,2,0,0,0,1.414-.586l6.5-6.5H30Z"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--cds-text-01);">Trazabilidad</h3>
+                        <p style="color: var(--cds-text-02); font-size: 0.9rem;">Trazabilidad de código y cambios</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Development & Automation -->
+            <div style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--cds-interactive-01);">
+                    🔧 Desarrollo y Automatización
+                </h3>
+                <div class="quick-actions" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                    <div class="action-card" style="background: var(--cds-ui-01); padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); cursor: pointer; transition: box-shadow 0.2s;" onclick="window.location.href='templates_automatizacion_ibm.html'">
+                        <div class="action-icon" style="background: var(--cds-support-02); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                            <svg viewBox="0 0 32 32" style="width: 20px; height: 20px; fill: white;">
+                                <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--cds-text-01);">Templates Automatización</h3>
+                        <p style="color: var(--cds-text-02); font-size: 0.9rem;">Plantillas para scripts y automatización</p>
+                    </div>
+
+                    <div class="action-card" style="background: var(--cds-ui-01); padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); cursor: pointer; transition: box-shadow 0.2s;" onclick="window.location.href='gestion_ambientes_ibm.html'">
+                        <div class="action-icon" style="background: var(--cds-support-03); color: black; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                            <svg viewBox="0 0 32 32" style="width: 20px; height: 20px; fill: black;">
+                                <path d="M23,2V4h5V6H23.7L20,18H30v2H4V18H14L10.3,6H4V4H9V2ZM12.7,18H19.3l.9-3H11.8Z"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--cds-text-01);">Gestión de Ambientes</h3>
+                        <p style="color: var(--cds-text-02); font-size: 0.9rem;">Configuración y gestión de ambientes</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis & Quality -->
+            <div style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--cds-interactive-01);">
+                    📊 Análisis y Calidad
+                </h3>
+                <div class="quick-actions" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                    <div class="action-card" style="background: var(--cds-ui-01); padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); cursor: pointer; transition: box-shadow 0.2s;" onclick="window.location.href='analizador_cobertura_ibm.html'">
+                        <div class="action-icon" style="background: var(--cds-interactive-01); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                            <svg viewBox="0 0 32 32" style="width: 20px; height: 20px; fill: white;">
+                                <path d="M16,30A14,14,0,1,1,30,16,14,14,0,0,1,16,30ZM16,4A12,12,0,1,0,28,16,12,12,0,0,0,16,4Z"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--cds-text-01);">Cobertura de Código</h3>
+                        <p style="color: var(--cds-text-02); font-size: 0.9rem;">Análisis de cobertura y calidad</p>
+                    </div>
+
+                    <div class="action-card" style="background: var(--cds-ui-01); padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); cursor: pointer; transition: box-shadow 0.2s;" onclick="window.location.href='dashboard_calidad_ibm.html'">
+                        <div class="action-icon" style="background: var(--cds-support-04); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                            <svg viewBox="0 0 32 32" style="width: 20px; height: 20px; fill: white;">
+                                <path d="M4,20V22H6.586l7-7L12.172,13.586ZM26,8a1,1,0,0,0-.293-.707l-3-3a1,1,0,0,0-1.414,0L19,6.586,24.414,12,26.707,9.707A1,1,0,0,0,26,8Z"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--cds-text-01);">Dashboard Calidad</h3>
+                        <p style="color: var(--cds-text-02); font-size: 0.9rem;">Dashboard técnico de calidad</p>
+                    </div>
+
+                    <div class="action-card" style="background: var(--cds-ui-01); padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); cursor: pointer; transition: box-shadow 0.2s;" onclick="window.location.href='calculadora_metricas_calidad_ibm.html'">
+                        <div class="action-icon" style="background: #8a3ffc; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                            <svg viewBox="0 0 32 32" style="width: 20px; height: 20px; fill: white;">
+                                <path d="M25,5H22V4a2,2,0,0,0-2-2H12a2,2,0,0,0-2,2V5H7A2,2,0,0,0,5,7V28a2,2,0,0,0,2,2H25a2,2,0,0,0,2-2V7A2,2,0,0,0,25,5Z"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--cds-text-01);">Métricas de Calidad</h3>
+                        <p style="color: var(--cds-text-02); font-size: 0.9rem;">Calculadora de métricas técnicas</p>
+                    </div>
+
+                    <div class="action-card" style="background: var(--cds-ui-01); padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); cursor: pointer; transition: box-shadow 0.2s;" onclick="window.location.href='reporte_ejecucion_pruebas_ibm.html'">
+                        <div class="action-icon" style="background: var(--cds-interactive-02); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                            <svg viewBox="0 0 32 32" style="width: 20px; height: 20px; fill: white;">
+                                <path d="M25,5H22V4a2,2,0,0,0-2-2H12a2,2,0,0,0-2,2V5H7A2,2,0,0,0,5,7V28a2,2,0,0,0,2,2H25a2,2,0,0,0,2-2V7A2,2,0,0,0,25,5ZM12,4h8V8H12ZM25,28H7V7h3v3H22V7h3Z"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--cds-text-01);">Reportes de Pruebas</h3>
+                        <p style="color: var(--cds-text-02); font-size: 0.9rem;">Resultados y reportes de testing</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Chart -->
+        <div class="progress-section">
+            <h3 class="progress-title">Progreso de Resolución Semanal</h3>
+            <canvas id="progressChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Navigation functions for Developer role
+        function startWork() {
+            alert('Iniciando trabajo en el próximo defecto de alta prioridad...');
+            // Logic to start working on highest priority defect
+        }
+
+        function updateStatus() {
+            // Navigate to status update interface
+            window.location.href = 'actualizar_estado_defecto.html';
+        }
+
+        function requestInfo() {
+            alert('Solicitando información adicional al reporter...');
+            // Logic to request more information
+        }
+
+        function viewHistory() {
+            // Navigate to developer's work history
+            window.location.href = 'historial_desarrollador.html';
+        }
+
+        function openDefect(defectId) {
+            // Navigate to specific defect detail for developer
+            window.location.href = `detalle_defecto_dev.html?id=${defectId}`;
+        }
+
+        // Initialize progress chart
+        function initProgressChart() {
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+                    datasets: [{
+                        label: 'Defectos Resueltos',
+                        data: [2, 3, 4, 2, 5, 1, 0],
+                        borderColor: '#0f62fe',
+                        backgroundColor: 'rgba(15, 98, 254, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Defectos Asignados',
+                        data: [3, 2, 5, 3, 4, 2, 1],
+                        borderColor: '#da1e28',
+                        backgroundColor: 'rgba(218, 30, 40, 0.1)',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 6
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Vista Desarrollador - Gestión de Defectos iniciada');
+            initProgressChart();
+            
+            // Auto-refresh defect counts every 60 seconds
+            setInterval(function() {
+                // Update queue counts (simulation)
+                const queueCounts = document.querySelectorAll('.queue-count');
+                queueCounts[0].textContent = Math.floor(Math.random() * 5) + 1;
+                queueCounts[1].textContent = Math.floor(Math.random() * 8) + 3;
+            }, 60000);
+        });
+    </script>
+</body>
+</html>

@@ -35,6 +35,79 @@
             line-height: 1.5;
         }
 
+        /* IBM Carbon Header/Navbar */
+        .bx--header {
+            background-color: var(--ibm-gray-100);
+            height: 48px;
+            border-bottom: 1px solid var(--ibm-gray-20);
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .bx--header__name {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-right: 2rem;
+        }
+
+        .bx--header__logo {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .bx--header-nav {
+            display: flex;
+            flex: 1;
+        }
+
+        .bx--header-nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 2rem;
+        }
+
+        .bx--header-nav__item {
+            display: flex;
+            align-items: center;
+        }
+
+        .bx--header-nav__link {
+            color: var(--ibm-gray-30);
+            text-decoration: none;
+            font-size: 14px;
+            padding: 0.75rem 0;
+            transition: color 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .bx--header-nav__link:hover {
+            color: white;
+            border-bottom-color: var(--ibm-blue);
+        }
+
+        .bx--header-nav__link--current {
+            color: white;
+            border-bottom-color: var(--ibm-blue);
+        }
+
+        .main-container {
+            margin-top: 64px; /* Account for fixed header */
+        }
+
         .header {
             background: var(--ibm-blue);
             color: white;
@@ -346,6 +419,49 @@
     </style>
 </head>
 <body>
+    <!-- IBM Carbon Header/Navbar -->
+    <header class="bx--header">
+        <a href="dashboard_integrado_ibm.html" class="bx--header__name">
+            <!-- IBM Watson AI Icon -->
+            <svg class="bx--header__logo" viewBox="0 0 32 32">
+                <path d="M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14S23.7,2,16,2z M16,28c-6.6,0-12-5.4-12-12S9.4,4,16,4s12,5.4,12,12S22.6,28,16,28z"/>
+                <path d="M16,6c-5.5,0-10,4.5-10,10s4.5,10,10,10s10-4.5,10-10S21.5,6,16,6z M16,24c-4.4,0-8-3.6-8-8s3.6-8,8-8s8,3.6,8,8S20.4,24,16,24z"/>
+                <circle cx="16" cy="16" r="4"/>
+                <circle cx="16" cy="9" r="1"/>
+                <circle cx="23" cy="16" r="1"/>
+                <circle cx="16" cy="23" r="1"/>
+                <circle cx="9" cy="16" r="1"/>
+            </svg>
+            IBM Quality Management
+        </a>
+        
+        <nav class="bx--header-nav">
+            <ul>
+                <li class="bx--header-nav__item">
+                    <a href="dashboard_integrado_ibm.html" class="bx--header-nav__link">Dashboard</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="formulario_casos_prueba_ibm.html" class="bx--header-nav__link">Casos de Prueba</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="generador_casos_caja_negra_blanca_ibm.html" class="bx--header-nav__link bx--header-nav__link--current">Generador Tests</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="ml_quality_analytics_dashboard.html" class="bx--header-nav__link">ML Analytics</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="calculadora_metricas_calidad_ibm.html" class="bx--header-nav__link">Métricas</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="analisis_riesgos_calidad_ibm.html" class="bx--header-nav__link">Riesgos</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="sistema_gestion_defectos_ibm.html" class="bx--header-nav__link">Defectos</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
     <header class="header">
         <h1>🧪 Generador de Casos de Prueba: Caja Negra y Caja Blanca</h1>
         <p>IBM Quality Management System - Diseño de Testing Estructurado y Funcional</p>

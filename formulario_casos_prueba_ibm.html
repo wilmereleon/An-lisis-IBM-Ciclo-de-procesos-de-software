@@ -564,16 +564,25 @@
         <nav class="bx--header-nav">
             <ul>
                 <li class="bx--header-nav__item">
-                    <a href="#" class="bx--header-nav__link">Dashboard</a>
+                    <a href="dashboard_integrado_ibm.html" class="bx--header-nav__link">Dashboard</a>
                 </li>
                 <li class="bx--header-nav__item">
-                    <a href="#" class="bx--header-nav__link bx--header-nav__link--current">Casos de Prueba</a>
+                    <a href="formulario_casos_prueba_ibm.html" class="bx--header-nav__link bx--header-nav__link--current">Casos de Prueba</a>
                 </li>
                 <li class="bx--header-nav__item">
-                    <a href="#" class="bx--header-nav__link">Reports</a>
+                    <a href="generador_casos_caja_negra_blanca_ibm.html" class="bx--header-nav__link">Generador Tests</a>
                 </li>
                 <li class="bx--header-nav__item">
-                    <a href="#" class="bx--header-nav__link">Analytics</a>
+                    <a href="ml_quality_analytics_dashboard.html" class="bx--header-nav__link">ML Analytics</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="calculadora_metricas_calidad_ibm.html" class="bx--header-nav__link">Métricas</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="analisis_riesgos_calidad_ibm.html" class="bx--header-nav__link">Riesgos</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="sistema_gestion_defectos_ibm.html" class="bx--header-nav__link">Defectos</a>
                 </li>
             </ul>
         </nav>
@@ -643,20 +652,20 @@
                 <div class="form-grid">
                     <div class="bx--form-item">
                         <label for="testCaseId" class="bx--label">ID del Caso de Prueba *</label>
-                        <input id="testCaseId" type="text" class="bx--text-input" placeholder="TC-2024-001" required>
+                        <input id="testCaseId" name="testCaseId" type="text" class="bx--text-input" placeholder="TC-2024-001" required>
                         <div class="bx--helper-text">Formato: TC-YYYY-XXX (ej: TC-2024-001)</div>
                     </div>
 
                     <div class="bx--form-item">
                         <label for="testCaseName" class="bx--label">Nombre del Caso de Prueba *</label>
-                        <input id="testCaseName" type="text" class="bx--text-input" placeholder="Validación de login con credenciales válidas" required>
+                        <input id="testCaseName" name="testCaseName" type="text" class="bx--text-input" placeholder="Validación de login con credenciales válidas" required>
                         <div class="bx--helper-text">Descripción concisa del escenario a probar</div>
                     </div>
 
                     <div class="bx--form-item">
                         <label for="module" class="bx--label">Módulo/Componente *</label>
                         <div class="bx--select">
-                            <select id="module" class="bx--select-input" required>
+                            <select id="module" name="module" class="bx--select-input" required>
                                 <option value="">Seleccionar módulo...</option>
                                 <option value="authentication">Autenticación</option>
                                 <option value="user-management">Gestión de Usuarios</option>
@@ -676,7 +685,7 @@
                     <div class="bx--form-item">
                         <label for="testType" class="bx--label">Tipo de Prueba *</label>
                         <div class="bx--select">
-                            <select id="testType" class="bx--select-input" required>
+                            <select id="testType" name="testType" class="bx--select-input" required>
                                 <option value="">Seleccionar tipo...</option>
                                 <option value="functional">Funcional</option>
                                 <option value="integration">Integración</option>
@@ -696,7 +705,7 @@
                     <div class="bx--form-item">
                         <label for="priority" class="bx--label">Prioridad *</label>
                         <div class="bx--select">
-                            <select id="priority" class="bx--select-input" required>
+                            <select id="priority" name="priority" class="bx--select-input" required>
                                 <option value="">Seleccionar prioridad...</option>
                                 <option value="critical">Crítica</option>
                                 <option value="high">Alta</option>
@@ -712,7 +721,7 @@
                     <div class="bx--form-item">
                         <label for="severity" class="bx--label">Severidad</label>
                         <div class="bx--select">
-                            <select id="severity" class="bx--select-input">
+                            <select id="severity" name="severity" class="bx--select-input">
                                 <option value="">Seleccionar severidad...</option>
                                 <option value="blocker">Bloqueante</option>
                                 <option value="critical">Crítica</option>
@@ -729,7 +738,7 @@
                     <div class="bx--form-item">
                         <label for="assignee" class="bx--label">Asignado a</label>
                         <div class="bx--select">
-                            <select id="assignee" class="bx--select-input">
+                            <select id="assignee" name="assignee" class="bx--select-input">
                                 <option value="">Seleccionar tester...</option>
                                 <option value="juan.perez">Juan Pérez - QA Senior</option>
                                 <option value="maria.rodriguez">María Rodríguez - QA Lead</option>
@@ -745,7 +754,7 @@
 
                     <div class="bx--form-item">
                         <label for="estimatedTime" class="bx--label">Tiempo Estimado (minutos)</label>
-                        <input id="estimatedTime" type="number" class="bx--text-input" placeholder="15" min="1" max="480">
+                        <input id="estimatedTime" name="estimatedTime" type="number" class="bx--text-input" placeholder="15" min="1" max="480">
                         <div class="bx--helper-text">Tiempo estimado de ejecución en minutos</div>
                     </div>
                 </div>
@@ -762,20 +771,20 @@
 
                 <div class="bx--form-item">
                     <label for="description" class="bx--label">Descripción del Caso de Prueba *</label>
-                    <textarea id="description" class="bx--text-area" placeholder="Descripción detallada del objetivo del caso de prueba..." required></textarea>
+                    <textarea id="description" name="description" class="bx--text-area" placeholder="Descripción detallada del objetivo del caso de prueba..." required></textarea>
                     <div class="bx--helper-text">Explique qué se va a probar y por qué es importante</div>
                 </div>
 
                 <div class="form-grid">
                     <div class="bx--form-item">
                         <label for="preconditions" class="bx--label">Precondiciones</label>
-                        <textarea id="preconditions" class="bx--text-area" placeholder="- Usuario debe estar registrado&#10;- Sistema debe estar disponible&#10;- Base de datos debe contener datos de prueba"></textarea>
+                        <textarea id="preconditions" name="preconditions" class="bx--text-area" placeholder="- Usuario debe estar registrado&#10;- Sistema debe estar disponible&#10;- Base de datos debe contener datos de prueba"></textarea>
                         <div class="bx--helper-text">Condiciones que deben cumplirse antes de ejecutar la prueba</div>
                     </div>
 
                     <div class="bx--form-item">
                         <label for="testData" class="bx--label">Datos de Prueba</label>
-                        <textarea id="testData" class="bx--text-area" placeholder="Usuario: test@ibm.com&#10;Contraseña: Test123!&#10;Rol: Administrador"></textarea>
+                        <textarea id="testData" name="testData" class="bx--text-area" placeholder="Usuario: test@ibm.com&#10;Contraseña: Test123!&#10;Rol: Administrador"></textarea>
                         <div class="bx--helper-text">Datos específicos necesarios para la ejecución</div>
                     </div>
                 </div>
@@ -783,7 +792,7 @@
                 <div class="bx--form-item">
                     <label for="environment" class="bx--label">Entorno de Ejecución</label>
                     <div class="bx--select">
-                        <select id="environment" class="bx--select-input">
+                        <select id="environment" name="environment" class="bx--select-input">
                             <option value="">Seleccionar entorno...</option>
                             <option value="development">Desarrollo</option>
                             <option value="testing">Testing/QA</option>
@@ -811,11 +820,11 @@
                         <div class="form-grid">
                             <div class="bx--form-item">
                                 <label class="bx--label">Paso 1 - Acción</label>
-                                <textarea class="bx--text-area step-action" placeholder="1. Navegar a la página de login&#10;2. Ingresar credenciales válidas&#10;3. Hacer clic en 'Iniciar Sesión'"></textarea>
+                                <textarea name="stepAction1" class="bx--text-area step-action" placeholder="1. Navegar a la página de login&#10;2. Ingresar credenciales válidas&#10;3. Hacer clic en 'Iniciar Sesión'"></textarea>
                             </div>
                             <div class="bx--form-item">
                                 <label class="bx--label">Resultado Esperado</label>
-                                <textarea class="bx--text-area step-expected" placeholder="- El usuario es redirigido al dashboard&#10;- Se muestra mensaje de bienvenida&#10;- El menú principal está visible"></textarea>
+                                <textarea name="stepExpected1" class="bx--text-area step-expected" placeholder="- El usuario es redirigido al dashboard&#10;- Se muestra mensaje de bienvenida&#10;- El menú principal está visible"></textarea>
                             </div>
                         </div>
                     </div>
@@ -842,34 +851,34 @@
                 <div class="form-grid">
                     <div class="bx--form-item">
                         <label for="tags" class="bx--label">Tags/Etiquetas</label>
-                        <input id="tags" type="text" class="bx--text-input" placeholder="login, authentication, security">
+                        <input id="tags" name="tags" type="text" class="bx--text-input" placeholder="login, authentication, security">
                         <div class="bx--helper-text">Separar con comas (ej: login, authentication, security)</div>
                     </div>
 
                     <div class="bx--form-item">
                         <label for="linkedRequirements" class="bx--label">Requisitos Vinculados</label>
-                        <input id="linkedRequirements" type="text" class="bx--text-input" placeholder="REQ-001, REQ-015">
+                        <input id="linkedRequirements" name="linkedRequirements" type="text" class="bx--text-input" placeholder="REQ-001, REQ-015">
                         <div class="bx--helper-text">IDs de requisitos relacionados</div>
                     </div>
                 </div>
 
                 <div class="bx--form-item">
                     <label for="notes" class="bx--label">Notas Adicionales</label>
-                    <textarea id="notes" class="bx--text-area" placeholder="Notas, observaciones o consideraciones especiales..."></textarea>
+                    <textarea id="notes" name="notes" class="bx--text-area" placeholder="Notas, observaciones o consideraciones especiales..."></textarea>
                 </div>
 
                 <div class="bx--form-item">
                     <label class="bx--label">Opciones de Automatización</label>
                     <div class="bx--checkbox-wrapper">
-                        <input id="automatable" type="checkbox" class="bx--checkbox">
+                        <input id="automatable" name="automatable" type="checkbox" class="bx--checkbox">
                         <label for="automatable" class="bx--checkbox-label">Este caso de prueba puede ser automatizado</label>
                     </div>
                     <div class="bx--checkbox-wrapper">
-                        <input id="regression" type="checkbox" class="bx--checkbox">
+                        <input id="regression" name="regression" type="checkbox" class="bx--checkbox">
                         <label for="regression" class="bx--checkbox-label">Incluir en suite de regresión</label>
                     </div>
                     <div class="bx--checkbox-wrapper">
-                        <input id="smoke" type="checkbox" class="bx--checkbox">
+                        <input id="smoke" name="smoke" type="checkbox" class="bx--checkbox">
                         <label for="smoke" class="bx--checkbox-label">Incluir en smoke testing</label>
                     </div>
                 </div>
@@ -944,11 +953,11 @@
                 <div class="form-grid">
                     <div class="bx--form-item">
                         <label class="bx--label">Paso ${stepCounter} - Acción</label>
-                        <textarea class="bx--text-area step-action" placeholder="Descripción de la acción a realizar..."></textarea>
+                        <textarea name="stepAction${stepCounter}" class="bx--text-area step-action" placeholder="Descripción de la acción a realizar..."></textarea>
                     </div>
                     <div class="bx--form-item">
                         <label class="bx--label">Resultado Esperado</label>
-                        <textarea class="bx--text-area step-expected" placeholder="Resultado esperado para esta acción..."></textarea>
+                        <textarea name="stepExpected${stepCounter}" class="bx--text-area step-expected" placeholder="Resultado esperado para esta acción..."></textarea>
                     </div>
                 </div>
                 <button type="button" class="bx--btn bx--btn--tertiary" onclick="removeTestStep(this)" style="margin-top: 1rem;">
@@ -1019,36 +1028,112 @@
             e.preventDefault();
             
             if (validateForm()) {
-                // Collect form data
-                const formData = new FormData(this);
-                const testCaseData = Object.fromEntries(formData.entries());
+                // Mostrar feedback de procesamiento
+                const submitButton = this.querySelector('button[type="submit"]');
+                const originalText = submitButton.innerHTML;
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32"><path d="M16 2 A14 14 0 1 0 30 16 A14 14 0 0 0 16 2 z M16 4 A12 12 0 1 1 4 16 A12 12 0 0 1 16 4 z"/></svg> Guardando...';
                 
-                // Collect test steps
-                const steps = [];
-                const stepActions = document.querySelectorAll('.step-action');
-                const stepExpected = document.querySelectorAll('.step-expected');
-                
-                for (let i = 0; i < stepActions.length; i++) {
-                    if (stepActions[i].value.trim() || stepExpected[i].value.trim()) {
-                        steps.push({
-                            step: i + 1,
-                            action: stepActions[i].value,
-                            expected: stepExpected[i].value
-                        });
+                setTimeout(() => {
+                    try {
+                        // Collect form data
+                        const formData = new FormData(this);
+                        const testCaseData = Object.fromEntries(formData.entries());
+                        
+                        // Collect test steps
+                        const steps = [];
+                        const stepActions = document.querySelectorAll('.step-action');
+                        const stepExpected = document.querySelectorAll('.step-expected');
+                        
+                        for (let i = 0; i < stepActions.length; i++) {
+                            if (stepActions[i].value.trim() || stepExpected[i].value.trim()) {
+                                steps.push({
+                                    step: i + 1,
+                                    action: stepActions[i].value,
+                                    expected: stepExpected[i].value
+                                });
+                            }
+                        }
+                        
+                        testCaseData.steps = steps;
+                        testCaseData.createdAt = new Date().toISOString();
+                        testCaseData.updatedAt = new Date().toISOString();
+                        testCaseData.status = 'draft';
+                        testCaseData.creator = 'Usuario Actual'; // En un sistema real vendría de la sesión
+                        
+                        console.log('Test Case Data:', testCaseData);
+                        
+                        // Guardar en el sistema reactivo
+                        try {
+                            const dataManager = new IBMQualityDataManager();
+                            
+                            // Agregar el caso de prueba
+                            dataManager.data.testCases.push(testCaseData);
+                            dataManager.saveToStorage('testCases', dataManager.data.testCases);
+                            
+                            // Actualizar métricas
+                            const currentMetrics = dataManager.data.metrics;
+                            if (!currentMetrics.testMetrics) {
+                                currentMetrics.testMetrics = {
+                                    total: 0,
+                                    executed: 0,
+                                    passed: 0,
+                                    failed: 0,
+                                    pending: 0
+                                };
+                            }
+                            
+                            currentMetrics.testMetrics.total = dataManager.data.testCases.length;
+                            currentMetrics.testMetrics.pending = dataManager.data.testCases.filter(tc => tc.status === 'draft').length;
+                            
+                            dataManager.saveToStorage('metrics', currentMetrics);
+                            
+                            // Notificar a otros componentes del sistema
+                            dataManager.notify('testCaseCreated', testCaseData);
+                            dataManager.notify('metricsUpdated', currentMetrics);
+                            
+                            console.log('✅ Caso de prueba guardado en el sistema');
+                            
+                        } catch (error) {
+                            console.log('⚠️  DataManager no disponible, guardando en localStorage local');
+                            
+                            // Fallback: guardar en localStorage local
+                            const existingTestCases = JSON.parse(localStorage.getItem('ibm-test-cases') || '[]');
+                            existingTestCases.push(testCaseData);
+                            localStorage.setItem('ibm-test-cases', JSON.stringify(existingTestCases));
+                            
+                            // Actualizar métricas en localStorage
+                            const existingMetrics = JSON.parse(localStorage.getItem('ibm-quality-metrics') || '{}');
+                            if (!existingMetrics.testMetrics) {
+                                existingMetrics.testMetrics = { total: 0, executed: 0, passed: 0, failed: 0, pending: 0 };
+                            }
+                            existingMetrics.testMetrics.total = existingTestCases.length;
+                            existingMetrics.testMetrics.pending = existingTestCases.filter(tc => tc.status === 'draft').length;
+                            localStorage.setItem('ibm-quality-metrics', JSON.stringify(existingMetrics));
+                        }
+                        
+                        // Show success message
+                        alert('✅ Caso de prueba creado exitosamente!\n\n' +
+                              'ID: ' + testCaseData.testCaseId + '\n' +
+                              'Nombre: ' + testCaseData.testCaseName + '\n' +
+                              'Módulo: ' + testCaseData.module + '\n' +
+                              'Prioridad: ' + testCaseData.priority + '\n\n' +
+                              '📊 Los datos se han sincronizado con el dashboard principal.');
+                        
+                        // Reset form
+                        this.reset();
+                        clearTestSteps();
+                        generateTestCaseId(); // Generar nuevo ID para el siguiente caso
+                        
+                    } catch (error) {
+                        console.error('Error al crear caso de prueba:', error);
+                        alert('❌ Error al crear el caso de prueba. Por favor intente nuevamente.');
+                    } finally {
+                        // Restaurar botón
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = originalText;
                     }
-                }
-                
-                testCaseData.steps = steps;
-                testCaseData.createdAt = new Date().toISOString();
-                testCaseData.status = 'draft';
-                
-                console.log('Test Case Data:', testCaseData);
-                
-                // Show success message
-                alert('✅ Caso de prueba creado exitosamente!\n\nID: ' + testCaseData.testCaseId + '\nNombre: ' + testCaseData.testCaseName);
-                
-                // Reset form (optional)
-                // this.reset();
+                }, 800); // Simular tiempo de procesamiento
             }
         });
 
@@ -1083,6 +1168,44 @@
             // You can add visual indicators based on severity selection
             console.log('Severity selected:', severity);
         });
+
+        // Helper functions for form management
+        function generateTestCaseId() {
+            const currentYear = new Date().getFullYear();
+            const randomNumber = Math.floor(Math.random() * 9000) + 1000; // 1000-9999
+            const timestamp = Date.now().toString().slice(-4); // Últimos 4 dígitos del timestamp
+            const newId = `TC-${currentYear}-${randomNumber}-${timestamp}`;
+            document.getElementById('testCaseId').value = newId;
+            return newId;
+        }
+
+        function clearTestSteps() {
+            const testStepsContainer = document.getElementById('testSteps');
+            if (testStepsContainer) {
+                // Limpiar todos los pasos de prueba dinámicos
+                const dynamicSteps = testStepsContainer.querySelectorAll('.dynamic-test-step');
+                dynamicSteps.forEach(step => step.remove());
+                
+                // Resetear el contador de pasos si existe
+                if (window.testStepCounter) {
+                    window.testStepCounter = 1;
+                }
+                
+                // Limpiar textarea del primer paso si existe
+                const firstStepTextarea = testStepsContainer.querySelector('.bx--text-area');
+                if (firstStepTextarea) {
+                    firstStepTextarea.value = '';
+                }
+            }
+            
+            // Limpiar cualquier paso de prueba en formato de lista
+            const stepsList = document.querySelector('#stepsList, .steps-list, .test-steps-list');
+            if (stepsList) {
+                stepsList.innerHTML = '';
+            }
+            
+            console.log('✅ Pasos de prueba limpiados exitosamente');
+        }
     </script>
 </body>
 </html>

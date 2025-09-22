@@ -1,0 +1,145 @@
+@startuml secuencia-ciclo-completo-defecto-vistas
+!theme cerulean-outline
+title Secuencia del Ciclo Completo de un Defecto - Vistas por Rol
+
+' Definir participantes
+actor "QA Tester 🧪" as Tester #0f62fe
+participant "Vista Tester" as TesterView #lightblue
+participant "Sistema de\nAsignación" as AssignmentSystem #lightgray
+participant "Vista Desarrollador" as DeveloperView #lightgreen
+actor "Desarrollador 👨‍💻" as Developer #24a148
+participant "Vista Project Manager" as ManagerView #lightpink
+actor "Project Manager 👨‍💼" as Manager #6f267d
+database "Base de Datos" as Database #lightyellow
+participant "Sistema de\nNotificaciones" as NotificationSystem #lightcoral
+
+' Activación de lifelines
+activate TesterView
+activate AssignmentSystem
+activate DeveloperView
+activate ManagerView
+activate Database
+activate NotificationSystem
+
+== Fase 1: Descubrimiento y Reporte ==
+
+Tester -> TesterView : 1. Accede a Vista Tester
+note right : Usuario hace clic en\ncard "Vista Tester 🧪"\ndesde dashboard principal
+
+TesterView -> TesterView : 2. Carga dashboard personal\ny acciones rápidas
+note right : • Estadísticas personales\n• Defectos pendientes verificación\n• Acciones rápidas disponibles
+
+Tester -> TesterView : 3. Click "Reportar Defecto"
+TesterView -> TesterView : 4. Abre formulario especializado
+note right : Formulario optimizado\npara QA con campos:\n• Pasos reproducción\n• Evidencias\n• Clasificación
+
+Tester -> TesterView : 5. Completa información del defecto
+note right : • Título descriptivo\n• Descripción técnica\n• Pasos numerados\n• Screenshots/logs\n• Severidad y prioridad
+
+TesterView -> Database : 6. Guarda defecto con estado "Nuevo"
+Database -> AssignmentSystem : 7. Trigger: Nuevo defecto creado
+
+== Fase 2: Asignación Automática ==
+
+AssignmentSystem -> AssignmentSystem : 8. Analiza carga de equipo\ny expertise
+note right : Algoritmo considera:\n• Carga actual desarrolladores\n• Expertise en módulo\n• Prioridad del defecto\n• Disponibilidad
+
+AssignmentSystem -> Database : 9. Asigna defecto a desarrollador
+AssignmentSystem -> NotificationSystem : 10. Envía notificación de asignación
+
+NotificationSystem -> Developer : 11. Notifica nuevo defecto asignado
+note right : • Email notification\n• Dashboard alert\n• Slack/Teams message
+
+== Fase 3: Monitoreo Ejecutivo ==
+
+Database -> ManagerView : 12. Actualiza métricas en tiempo real
+ManagerView -> Manager : 13. Muestra alerta si es crítico
+note right : Alertas automáticas para:\n• Defectos críticos\n• SLA en riesgo\n• Equipos sobrecargados
+
+Manager -> ManagerView : 14. Revisa KPIs y tendencias
+ManagerView -> ManagerView : 15. Actualiza dashboard ejecutivo
+note right : • Total defectos abiertos\n• Tiempo promedio resolución\n• Performance del equipo\n• Cumplimiento SLA
+
+== Fase 4: Resolución por Desarrollador ==
+
+Developer -> DeveloperView : 16. Accede a Vista Desarrollador
+DeveloperView -> Database : 17. Consulta defectos asignados
+Database -> DeveloperView : 18. Retorna cola de trabajo priorizada
+
+DeveloperView -> Developer : 19. Muestra colas: Alta Prioridad y Regular
+note right : Interface optimizada con:\n• Detalles técnicos\n• Estimación esfuerzo\n• Historial cambios\n• Enlaces código
+
+Developer -> DeveloperView : 20. Selecciona defecto y click "Tomar"
+DeveloperView -> Database : 21. Actualiza estado a "En Progreso"
+Database -> ManagerView : 22. Actualiza métricas tiempo real
+
+Developer -> DeveloperView : 23. Análiza información técnica
+note right : • Pasos reproducción\n• Logs y evidencias\n• Código relacionado\n• Historial previo
+
+Developer -> DeveloperView : 24. Implementa solución
+note right : Desarrollador trabaja\nen fix del defecto\nfuera del sistema
+
+Developer -> DeveloperView : 25. Actualiza defecto a "Resuelto"
+DeveloperView -> Database : 26. Guarda resolución con comentarios
+Database -> NotificationSystem : 27. Trigger: Defecto resuelto
+
+== Fase 5: Verificación por Tester ==
+
+NotificationSystem -> Tester : 28. Notifica defecto resuelto para verificación
+Tester -> TesterView : 29. Accede a sección "Pendientes Verificación"
+TesterView -> Database : 30. Consulta defectos para verificar
+Database -> TesterView : 31. Retorna lista con detalles de resolución
+
+TesterView -> Tester : 32. Muestra defecto con checklist verificación
+note right : Checklist incluye:\n• Defecto no se reproduce\n• No hay regresiones\n• Documentación actualizada
+
+Tester -> TesterView : 33. Ejecuta pasos de verificación
+TesterView -> TesterView : 34. Tester marca checklist items
+
+alt Verificación Exitosa
+    Tester -> TesterView : 35a. Marca como "Verificado"
+    TesterView -> Database : 36a. Actualiza estado a "Cerrado"
+    Database -> NotificationSystem : 37a. Notifica cierre exitoso
+    NotificationSystem -> Developer : 38a. Confirmación de cierre
+    Database -> ManagerView : 39a. Actualiza métricas de cierre
+else Verificación Fallida
+    Tester -> TesterView : 35b. Marca como "Rechazado" con comentarios
+    TesterView -> Database : 36b. Regresa estado a "Asignado"
+    Database -> NotificationSystem : 37b. Notifica rechazo
+    NotificationSystem -> Developer : 38b. Defecto rechazado, revisar
+    Database -> ManagerView : 39b. Actualiza métricas de rechazo
+end
+
+== Fase 6: Análisis y Seguimiento ==
+
+Database -> ManagerView : 40. Actualiza todas las métricas finales
+ManagerView -> Manager : 41. Genera insights automáticos
+note right : • Tiempo total resolución\n• Calidad del fix\n• Performance del equipo\n• Tendencias de mejora
+
+Manager -> ManagerView : 42. Revisa métricas de cierre
+ManagerView -> ManagerView : 43. Actualiza dashboard con nueva data
+note right : • KPIs actualizados\n• Tendencias recalculadas\n• Alertas reevaluadas\n• Performance del equipo
+
+== Mejora Continua ==
+
+ManagerView -> Manager : 44. Identifica oportunidades de mejora
+note right : Basado en análisis:\n• Tiempos de resolución\n• Patrones de defectos\n• Carga de trabajo\n• Calidad de fixes
+
+Manager -> ManagerView : 45. Planifica acciones correctivas
+note right : • Redistribución carga\n• Capacitación específica\n• Mejoras en proceso\n• Ajuste de recursos
+
+' Notas de integración
+note over TesterView, ManagerView : **Sincronización en Tiempo Real**\nTodas las vistas se actualizan automáticamente\ngracias a WebSocket y arquitectura reactiva
+
+note over Database : **Trazabilidad Completa**\nCada acción queda registrada con:\n• Timestamp\n• Usuario responsable\n• Estado anterior y nuevo\n• Comentarios y evidencias
+
+note over NotificationSystem : **Comunicación Multicanal**\n• Notificaciones in-app\n• Emails automáticos\n• Integración Slack/Teams\n• Dashboard alerts
+
+deactivate TesterView
+deactivate AssignmentSystem
+deactivate DeveloperView
+deactivate ManagerView
+deactivate Database
+deactivate NotificationSystem
+
+@enduml

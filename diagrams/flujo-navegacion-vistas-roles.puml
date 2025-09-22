@@ -1,0 +1,94 @@
+@startuml flujo-navegacion-vistas-roles
+!theme cerulean-outline
+title Flujo de Navegación entre Vistas de Roles - Sistema de Gestión de Defectos IBM
+
+' Definir estilos
+skinparam backgroundColor #F8F9FA
+skinparam defaultFontName Arial
+skinparam defaultFontSize 10
+
+' Colores por rol
+!define TESTER_COLOR #0f62fe
+!define DEVELOPER_COLOR #24a148
+!define MANAGER_COLOR #6f267d
+!define SYSTEM_COLOR #393939
+
+' Estados/Vistas
+state "Dashboard Principal\nGestión de Defectos" as MainDashboard #LightGray
+state "Vista Tester 🧪" as TesterView #TESTER_COLOR : **Funcionalidades:**\n• Reportar defectos\n• Verificar resoluciones\n• Dashboard personal\n• Gestión de evidencias
+state "Vista Desarrollador 👨‍💻" as DeveloperView #DEVELOPER_COLOR : **Funcionalidades:**\n• Cola de trabajo priorizada\n• Resolución de defectos\n• Progreso personal\n• Gestión de fixes
+state "Vista Project Manager 👨‍💼" as ManagerView #MANAGER_COLOR : **Funcionalidades:**\n• KPIs ejecutivos\n• Alertas críticas\n• Performance del equipo\n• Acciones estratégicas
+
+' Componentes del sistema
+state "Sistema de\nNotificaciones" as NotificationSystem #SYSTEM_COLOR
+state "Base de Datos\nCentralizada" as Database #SYSTEM_COLOR
+state "Motor de\nAsignación" as AssignmentEngine #SYSTEM_COLOR
+
+' Flujos principales
+MainDashboard --> TesterView : **Rol: QA Tester**\nAcceso directo\ndesde card de vista
+MainDashboard --> DeveloperView : **Rol: Developer**\nAcceso directo\ndesde card de vista
+MainDashboard --> ManagerView : **Rol: Project Manager**\nAcceso directo\ndesde card de vista
+
+' Flujos de trabajo entre vistas
+TesterView --> AssignmentEngine : Reporta nuevo\ndefecto
+AssignmentEngine --> DeveloperView : Asigna defecto\nautomáticamente
+DeveloperView --> TesterView : Marca como\n"Resuelto"
+TesterView --> Database : Verifica y cierra\ndefecto
+
+' Flujos de monitoreo
+TesterView --> Database : Actualiza métricas\nde testing
+DeveloperView --> Database : Actualiza métricas\nde desarrollo
+Database --> ManagerView : Sincroniza KPIs\nen tiempo real
+
+' Notificaciones
+AssignmentEngine --> NotificationSystem : Nuevo defecto\nasignado
+DeveloperView --> NotificationSystem : Defecto resuelto
+TesterView --> NotificationSystem : Defecto verificado
+NotificationSystem --> ManagerView : Alertas críticas
+
+' Estados internos de cada vista
+state TesterView {
+  state "Acciones Rápidas" as TesterActions : • Reportar Defecto\n• Verificar Resolución\n• Re-test\n• Escalación
+  state "Dashboard Personal" as TesterDashboard : • Defectos reportados\n• Pendientes verificación\n• Métricas personales\n• Tendencias semanales
+  state "Tabla de Trabajo" as TesterWorkTable : • Defectos asignados\n• Filtros avanzados\n• Acciones directas\n• Historial actividades
+  
+  TesterActions --> TesterDashboard : Actualización\nautomática
+  TesterDashboard --> TesterWorkTable : Navegación\ncontextual
+}
+
+state DeveloperView {
+  state "Cola Alta Prioridad" as HighPriorityQueue : • Defectos críticos\n• Defectos urgentes\n• Estimación esfuerzo\n• Asignación directa
+  state "Cola Regular" as RegularQueue : • Media prioridad\n• Baja prioridad\n• Backlog personal\n• Planificación
+  state "Dashboard Progreso" as DeveloperDashboard : • Gráfico semanal\n• Métricas resolución\n• Burndown chart\n• Comparación equipo
+  
+  HighPriorityQueue --> DeveloperDashboard : Métricas en\ntiempo real
+  RegularQueue --> DeveloperDashboard : Actualización\ncontinua
+}
+
+state ManagerView {
+  state "KPIs Estratégicos" as ManagerKPIs : • Total defectos abiertos\n• Defectos críticos\n• Cumplimiento SLA\n• Satisfacción cliente
+  state "Alertas Críticas" as CriticalAlerts : • Defectos sin asignar\n• Equipos sobrecargados\n• Violaciones SLA\n• Escalaciones
+  state "Performance Equipo" as TeamPerformance : • Métricas por persona\n• Distribución carga\n• Productividad\n• Calidad trabajo
+  state "Acciones Ejecutivas" as ExecutiveActions : • Reportes ejecutivos\n• Gestión recursos\n• Revisión SLA\n• Reuniones equipo
+  
+  ManagerKPIs --> CriticalAlerts : Identificación\nautomática
+  CriticalAlerts --> TeamPerformance : Análisis\nroot cause
+  TeamPerformance --> ExecutiveActions : Decisiones\nbasadas en datos
+}
+
+' Navegación de retorno
+TesterView --> MainDashboard : Navegación navbar\nIBM Quality Management
+DeveloperView --> MainDashboard : Navegación navbar\nIBM Quality Management
+ManagerView --> MainDashboard : Navegación navbar\nIBM Quality Management
+
+' Integraciones externas
+note right of Database : **Tecnologías:**\n• PostgreSQL\n• Redis (cache)\n• WebSocket (real-time)\n• REST API
+
+note right of NotificationSystem : **Canales:**\n• Email\n• Slack/Teams\n• Push notifications\n• Dashboard alerts
+
+note bottom of MainDashboard : **Características:**\n• Single Sign-On (SSO)\n• Role-based access\n• IBM Carbon Design\n• Responsive design
+
+' Leyenda de colores
+note top : **Leyenda de Colores:**\n🧪 Azul: Vista Tester\n👨‍💻 Verde: Vista Desarrollador\n👨‍💼 Púrpura: Vista Project Manager\n⚙️ Gris: Componentes del Sistema
+
+@enduml

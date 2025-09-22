@@ -73,6 +73,48 @@
             fill: white;
         }
 
+        /* Navigation Styles */
+        .bx--header-nav {
+            display: flex;
+            flex: 1;
+            margin-left: 2rem;
+        }
+
+        .bx--header-nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .bx--header-nav__item {
+            display: flex;
+            align-items: center;
+        }
+
+        .bx--header-nav__link {
+            color: #c6c6c6;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 0.75rem 0;
+            transition: color 0.2s ease;
+            border-bottom: 2px solid transparent;
+            font-weight: 400;
+        }
+
+        .bx--header-nav__link:hover {
+            color: white;
+            border-bottom-color: var(--cds-interactive-01);
+        }
+
+        .bx--header-nav__link--current {
+            color: white;
+            border-bottom-color: var(--cds-interactive-01);
+            font-weight: 600;
+        }
+
         /* Container */
         .container {
             max-width: 1600px;
@@ -516,12 +558,32 @@
                 flex-direction: column;
             }
         }
+
+        /* Role Views Hover Effects */
+        .role-view-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .role-view-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Quick Actions Hover Effects */
+        .quick-action-btn {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .quick-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
     </style>
 </head>
 <body>
     <!-- IBM Carbon Header/Navbar -->
     <header class="bx--header">
-        <a href="#" class="bx--header__name">
+        <a href="dashboard_integrado_ibm.html" class="bx--header__name">
             <!-- IBM Watson AI Icon -->
             <svg class="bx--header__logo" viewBox="0 0 32 32">
                 <path d="M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14S23.7,2,16,2z M16,28c-6.6,0-12-5.4-12-12S9.4,4,16,4s12,5.4,12,12S22.6,28,16,28z"/>
@@ -534,6 +596,32 @@
             </svg>
             IBM Quality Management
         </a>
+        
+        <nav class="bx--header-nav">
+            <ul>
+                <li class="bx--header-nav__item">
+                    <a href="dashboard_integrado_ibm.html" class="bx--header-nav__link">Dashboard</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="formulario_casos_prueba_ibm.html" class="bx--header-nav__link">Casos de Prueba</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="generador_casos_caja_negra_blanca_ibm.html" class="bx--header-nav__link">Generador Tests</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="ml_quality_analytics_dashboard.html" class="bx--header-nav__link">ML Analytics</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="calculadora_metricas_calidad_ibm.html" class="bx--header-nav__link">Métricas</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="analisis_riesgos_calidad_ibm.html" class="bx--header-nav__link">Riesgos</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="sistema_gestion_defectos_ibm.html" class="bx--header-nav__link bx--header-nav__link--current">Defectos</a>
+                </li>
+            </ul>
+        </nav>
     </header>
 
     <div class="container">
@@ -552,6 +640,56 @@
 
         <!-- Dashboard Tab -->
         <div id="dashboard" class="tab-content active">
+            <!-- Role-Based Views -->
+            <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);">
+                <h3 style="color: var(--cds-interactive-01); margin-bottom: 1rem; font-size: 1.2rem;">🎯 Vistas por Rol</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                    <a href="vista_tester_defectos_ibm.html" style="text-decoration: none;">
+                        <div class="role-view-card" style="background: linear-gradient(135deg, #0f62fe, #0530ad); color: white; padding: 1.5rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🧪</div>
+                            <div style="font-weight: 600; margin-bottom: 0.5rem;">Vista Tester</div>
+                            <div style="font-size: 0.9rem; opacity: 0.9;">Reportar y verificar defectos</div>
+                        </div>
+                    </a>
+                    <a href="vista_desarrollador_defectos_ibm.html" style="text-decoration: none;">
+                        <div class="role-view-card" style="background: linear-gradient(135deg, #24a148, #198038); color: white; padding: 1.5rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">👨‍💻</div>
+                            <div style="font-weight: 600; margin-bottom: 0.5rem;">Vista Desarrollador</div>
+                            <div style="font-size: 0.9rem; opacity: 0.9;">Resolver y gestionar defectos</div>
+                        </div>
+                    </a>
+                    <a href="vista_project_manager_defectos_ibm.html" style="text-decoration: none;">
+                        <div class="role-view-card" style="background: linear-gradient(135deg, #6f267d, #491356); color: white; padding: 1.5rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">👨‍💼</div>
+                            <div style="font-weight: 600; margin-bottom: 0.5rem;">Vista Project Manager</div>
+                            <div style="font-size: 0.9rem; opacity: 0.9;">Dashboard ejecutivo y gestión</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);">
+                <h3 style="color: var(--cds-interactive-01); margin-bottom: 1rem; font-size: 1.2rem;">⚡ Acciones Rápidas</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <button class="quick-action-btn" onclick="showTab('defects')" style="background: linear-gradient(135deg, #da1e28, #ba1b23); color: white; border: none; padding: 1rem; border-radius: 8px; cursor: pointer;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🐛</div>
+                        <div style="font-weight: 600; margin-bottom: 0.25rem;">Reportar Defecto</div>
+                        <div style="font-size: 0.8rem; opacity: 0.9;">Click aquí para reportar un nuevo defecto</div>
+                    </button>
+                    <button class="quick-action-btn" onclick="showTab('analytics')" style="background: linear-gradient(135deg, #f1c21b, #d2a106); color: white; border: none; padding: 1rem; border-radius: 8px; cursor: pointer;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📊</div>
+                        <div style="font-weight: 600; margin-bottom: 0.25rem;">Ver Analíticas</div>
+                        <div style="font-size: 0.8rem; opacity: 0.9;">Revisar métricas y tendencias</div>
+                    </button>
+                    <button class="quick-action-btn" onclick="showTab('reports')" style="background: linear-gradient(135deg, #8a3ffc, #6929c4); color: white; border: none; padding: 1rem; border-radius: 8px; cursor: pointer;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📋</div>
+                        <div style="font-weight: 600; margin-bottom: 0.25rem;">Generar Reportes</div>
+                        <div style="font-size: 0.8rem; opacity: 0.9;">Crear reportes ejecutivos</div>
+                    </button>
+                </div>
+            </div>
+            
             <div class="dashboard-grid">
                 <div class="metric-card">
                     <div class="metric-value" id="totalDefects">127</div>
@@ -641,11 +779,11 @@
                 <div class="form-grid">
                     <div class="bx--form-item">
                         <label class="bx--label">ID del Defecto</label>
-                        <input type="text" class="bx--text-input" id="defectId" readonly>
+                        <input type="text" class="bx--text-input" id="defectId" name="id" readonly>
                     </div>
                     <div class="bx--form-item">
-                        <label class="bx--label">Prioridad</label>
-                        <select class="bx--select-input" id="priority" required>
+                        <label class="bx--label">Prioridad *</label>
+                        <select class="bx--select-input" id="priority" name="priority" required>
                             <option value="">Seleccionar prioridad...</option>
                             <option value="critical">Crítica</option>
                             <option value="high">Alta</option>
@@ -654,8 +792,8 @@
                         </select>
                     </div>
                     <div class="bx--form-item">
-                        <label class="bx--label">Severidad</label>
-                        <select class="bx--select-input" id="severity" required>
+                        <label class="bx--label">Severidad *</label>
+                        <select class="bx--select-input" id="severity" name="severity" required>
                             <option value="">Seleccionar severidad...</option>
                             <option value="blocker">Blocker</option>
                             <option value="critical">Crítica</option>
@@ -666,7 +804,7 @@
                     </div>
                     <div class="bx--form-item">
                         <label class="bx--label">Módulo/Componente</label>
-                        <select class="bx--select-input" id="module" required>
+                        <select class="bx--select-input" id="module" name="module">
                             <option value="">Seleccionar módulo...</option>
                             <option value="login">Autenticación</option>
                             <option value="dashboard">Dashboard</option>
@@ -678,7 +816,7 @@
                     </div>
                     <div class="bx--form-item">
                         <label class="bx--label">Asignado a</label>
-                        <select class="bx--select-input" id="assignee">
+                        <select class="bx--select-input" id="assignee" name="assignee">
                             <option value="">Seleccionar desarrollador...</option>
                             <option value="dev1">Juan Pérez - Frontend</option>
                             <option value="dev2">María González - Backend</option>
@@ -688,24 +826,24 @@
                     </div>
                     <div class="bx--form-item">
                         <label class="bx--label">Reportado por</label>
-                        <input type="text" class="bx--text-input" id="reporter" placeholder="QA Tester">
+                        <input type="text" class="bx--text-input" id="reporter" name="reporter" placeholder="QA Tester">
                     </div>
                 </div>
 
                 <div class="bx--form-item">
-                    <label class="bx--label">Título del Defecto</label>
-                    <input type="text" class="bx--text-input" id="defectTitle" placeholder="Descripción breve del defecto" required>
+                    <label class="bx--label">Título del Defecto *</label>
+                    <input type="text" class="bx--text-input" id="defectTitle" name="title" placeholder="Descripción breve del defecto" required>
                 </div>
 
                 <div class="bx--form-item">
-                    <label class="bx--label">Descripción Detallada</label>
-                    <textarea class="bx--text-area" id="defectDescription" placeholder="Descripción completa del defecto, pasos para reproducir, comportamiento esperado vs actual..." required></textarea>
+                    <label class="bx--label">Descripción Detallada *</label>
+                    <textarea class="bx--text-area" id="defectDescription" name="description" placeholder="Descripción completa del defecto, pasos para reproducir, comportamiento esperado vs actual..." required></textarea>
                 </div>
 
                 <div class="form-grid">
                     <div class="bx--form-item">
                         <label class="bx--label">Ambiente</label>
-                        <select class="bx--select-input" id="environment">
+                        <select class="bx--select-input" id="environment" name="environment">
                             <option value="development">Desarrollo</option>
                             <option value="testing">Testing</option>
                             <option value="staging">Staging</option>
@@ -714,15 +852,15 @@
                     </div>
                     <div class="bx--form-item">
                         <label class="bx--label">Versión</label>
-                        <input type="text" class="bx--text-input" id="version" placeholder="v1.2.3">
+                        <input type="text" class="bx--text-input" id="version" name="version" placeholder="v1.2.3">
                     </div>
                     <div class="bx--form-item">
                         <label class="bx--label">Navegador/OS</label>
-                        <input type="text" class="bx--text-input" id="browser" placeholder="Chrome 119 / Windows 11">
+                        <input type="text" class="bx--text-input" id="browser" name="browser" placeholder="Chrome 119 / Windows 11">
                     </div>
                     <div class="bx--form-item">
                         <label class="bx--label">Caso de Prueba Relacionado</label>
-                        <input type="text" class="bx--text-input" id="testCase" placeholder="TC-001">
+                        <input type="text" class="bx--text-input" id="testCase" name="testCase" placeholder="TC-001">
                     </div>
                 </div>
 
@@ -903,7 +1041,7 @@
 
     <script>
         // Configurar sistema reactivo
-        window.addEventListener('DOMContentLoaded', function() {
+        window.addEventListener('DOMContentLoaded', async function() {
             const dataManager = new IBMQualityDataManager();
             const config = new IBMQualityConfig();
             
@@ -918,15 +1056,155 @@
                 loadDefectsData();
             });
             
-            // Cargar datos iniciales
-            loadDefectsData();
+            // Cargar datos iniciales desde la base de datos
+            await loadDefectsFromDatabase();
+            
+            // Intentar sincronizar defectos locales pendientes
+            await syncLocalDefectsToDatabase();
+            
+            // Inicializar componentes de la interfaz
             generateDefectId();
             initializeCharts();
             loadDefectsList();
+            
+            // Configurar sincronización automática cada 5 minutos
+            setInterval(async () => {
+                try {
+                    await syncLocalDefectsToDatabase();
+                    console.log('Sincronización automática completada');
+                } catch (error) {
+                    console.warn('Error en sincronización automática:', error);
+                }
+            }, 5 * 60 * 1000); // 5 minutos
         });
 
         let defectCounter = 1;
         let defects = [];
+
+        // Función para cargar defectos desde la base de datos
+        async function loadDefectsFromDatabase() {
+            try {
+                const response = await fetch('/api/v1/defects?limit=100');
+                const result = await response.json();
+                
+                if (result.success && result.data) {
+                    console.log('Defectos cargados desde la base de datos:', result.data.length);
+                    
+                    // Convertir formato de la base de datos al formato local
+                    defects = result.data.map(dbDefect => ({
+                        id: dbDefect.defect_id,
+                        title: dbDefect.title,
+                        description: dbDefect.description,
+                        severity: dbDefect.severity,
+                        priority: dbDefect.priority,
+                        status: dbDefect.status,
+                        environment: dbDefect.found_in_environment || 'N/A',
+                        type: dbDefect.type || 'N/A',
+                        reporter: dbDefect.reporter_name || 'N/A',
+                        assignee: dbDefect.assignee_name || 'Sin asignar',
+                        created: new Date(dbDefect.created_at).toISOString().split('T')[0],
+                        updated: new Date(dbDefect.updated_at).toISOString().split('T')[0],
+                        _fromDb: true // Marcar como proveniente de la base de datos
+                    }));
+                    
+                    // Actualizar contador basado en el último ID
+                    if (defects.length > 0) {
+                        const lastId = Math.max(...defects.map(d => {
+                            const match = d.id.match(/DEF-(\d+)/);
+                            return match ? parseInt(match[1]) : 0;
+                        }));
+                        defectCounter = lastId + 1;
+                    }
+                    
+                    // Actualizar la interfaz
+                    loadDefectsList();
+                    updateDashboardMetrics();
+                    
+                } else {
+                    console.warn('No se pudieron cargar defectos desde la base de datos');
+                    // Intentar cargar desde localStorage como fallback
+                    loadDefectsFromLocalStorage();
+                }
+                
+            } catch (error) {
+                console.warn('Error cargando defectos desde la base de datos:', error);
+                // Fallback a localStorage
+                loadDefectsFromLocalStorage();
+            }
+        }
+
+        // Función fallback para cargar desde localStorage
+        function loadDefectsFromLocalStorage() {
+            try {
+                const storedDefects = localStorage.getItem('ibm_defects_backup');
+                if (storedDefects) {
+                    defects = JSON.parse(storedDefects);
+                    console.log('Defectos cargados desde localStorage:', defects.length);
+                    
+                    // Actualizar contador
+                    if (defects.length > 0) {
+                        const lastId = Math.max(...defects.map(d => {
+                            const match = d.id.match(/DEF-(\d+)/);
+                            return match ? parseInt(match[1]) : 0;
+                        }));
+                        defectCounter = lastId + 1;
+                    }
+                    
+                    loadDefectsList();
+                    updateDashboardMetrics();
+                }
+            } catch (error) {
+                console.warn('Error cargando desde localStorage:', error);
+            }
+        }
+
+        // Función para sincronizar defectos locales con la base de datos
+        async function syncLocalDefectsToDatabase() {
+            const localDefects = defects.filter(d => d._local && !d._synced);
+            
+            for (const defect of localDefects) {
+                try {
+                    const apiData = {
+                        defect_id: defect.id,
+                        title: defect.title,
+                        description: defect.description,
+                        severity: defect.severity,
+                        priority: defect.priority,
+                        type: defect.type || 'functional',
+                        found_in_environment: defect.environment || 'development',
+                        status: defect.status || 'open'
+                    };
+                    
+                    const response = await fetch('/api/v1/defects', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(apiData)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        // Marcar como sincronizado
+                        defect._synced = true;
+                        defect._fromDb = true;
+                        delete defect._local;
+                        console.log('Defecto sincronizado:', defect.id);
+                    }
+                    
+                } catch (error) {
+                    console.warn('Error sincronizando defecto:', defect.id, error);
+                }
+            }
+            
+            // Actualizar localStorage
+            try {
+                localStorage.setItem('ibm_defects_backup', JSON.stringify(defects));
+            } catch (error) {
+                console.warn('Error actualizando localStorage:', error);
+            }
+        }
 
         function showTab(tabName) {
             // Hide all tabs
@@ -940,6 +1218,18 @@
             // Show selected tab
             document.getElementById(tabName).classList.add('active');
             event.target.classList.add('active');
+            
+            // Si se accede al tab de defectos, asegurar que hay un ID generado
+            if (tabName === 'defects') {
+                generateDefectId();
+                // Hacer scroll al formulario para mejor UX
+                setTimeout(() => {
+                    const form = document.getElementById('defectForm');
+                    if (form) {
+                        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 100);
+            }
         }
 
         function generateDefectId() {
@@ -1279,22 +1569,182 @@
         document.getElementById('defectForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const formData = new FormData(this);
-            const defectData = Object.fromEntries(formData);
-            defectData.created = new Date().toISOString().split('T')[0];
-            defectData.updated = defectData.created;
-            defectData.status = 'new';
+            // Agregar feedback visual
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32"><path d="M16 2 A14 14 0 1 0 30 16 A14 14 0 0 0 16 2 z M16 4 A12 12 0 1 1 4 16 A12 12 0 0 1 16 4 z"/><path d="M16 8 L20 12 L16 16 L12 12 z"/></svg> Procesando...';
             
-            defects.push(defectData);
-            defectCounter++;
+            // Validar campos requeridos
+            const requiredFields = ['title', 'description', 'severity', 'priority'];
+            let isValid = true;
+            let firstInvalidField = null;
             
-            const dataManager = new IBMQualityDataManager();
-            dataManager.notify('defectUpdated', defectData);
+            requiredFields.forEach(fieldName => {
+                const field = this.querySelector(`[name="${fieldName}"]`);
+                if (field && (!field.value || field.value.trim() === '')) {
+                    isValid = false;
+                    field.style.borderColor = '#da1e28';
+                    if (!firstInvalidField) firstInvalidField = field;
+                } else if (field) {
+                    field.style.borderColor = '';
+                }
+            });
             
-            alert('Defecto reportado exitosamente');
-            clearForm();
-            loadDefectsList();
-            updateDashboardMetrics();
+            if (!isValid) {
+                alert('Por favor complete todos los campos requeridos');
+                if (firstInvalidField) firstInvalidField.focus();
+                // Restaurar botón
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalText;
+                return;
+            }
+            
+                    // Simular procesamiento
+                    setTimeout(async () => {
+                        try {
+                            const formData = new FormData(this);
+                            const defectData = Object.fromEntries(formData);
+                            
+                            // Debug: Verificar datos capturados
+                            console.log('Datos del formulario capturados:', defectData);
+                            
+                            // Generar ID único si no existe
+                            if (!defectData.id) {
+                                defectData.defect_id = document.getElementById('defectId').value;
+                            }
+                            
+                            // Asegurar que campos opcionales tengan valores por defecto
+                            defectData.found_in_environment = defectData.environment || 'development';
+                            defectData.type = defectData.type || 'functional';
+                            
+                            // Preparar datos para la API
+                            const apiData = {
+                                defect_id: defectData.defect_id,
+                                title: defectData.title,
+                                description: defectData.description,
+                                severity: defectData.severity,
+                                priority: defectData.priority,
+                                type: defectData.type,
+                                found_in_environment: defectData.found_in_environment,
+                                steps_to_reproduce: {
+                                    steps: defectData.stepsToReproduce || '',
+                                    browser: defectData.browser || 'N/A',
+                                    version: defectData.version || 'N/A'
+                                },
+                                expected_behavior: defectData.expectedBehavior || '',
+                                actual_behavior: defectData.actualBehavior || '',
+                                status: 'open'
+                            };
+                            
+                            // Debug: Verificar datos para API
+                            console.log('Datos preparados para API:', apiData);
+                            
+                            // Intentar guardar en la base de datos
+                            try {
+                                const response = await fetch('/api/v1/defects', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(apiData)
+                                });
+                                
+                                const result = await response.json();
+                                
+                                if (result.success) {
+                                    // Éxito: Defecto guardado en la base de datos
+                                    console.log('Defecto guardado en la base de datos:', result.data);
+                                    
+                                    alert('✅ Defecto guardado exitosamente en la base de datos!\n\n' +
+                                          'ID: ' + result.data.defect_id + '\n' +
+                                          'Título: ' + result.data.title + '\n' +
+                                          'Prioridad: ' + result.data.priority + '\n' +
+                                          'Severidad: ' + result.data.severity + '\n' +
+                                          'Estado: ' + result.data.status + '\n\n' +
+                                          '🗄️ El defecto ha sido almacenado permanentemente en PostgreSQL.');
+                                    
+                                    // Actualizar la lista local para sincronización
+                                    defects.push({
+                                        id: result.data.defect_id,
+                                        title: result.data.title,
+                                        description: result.data.description,
+                                        severity: result.data.severity,
+                                        priority: result.data.priority,
+                                        status: result.data.status,
+                                        environment: result.data.found_in_environment,
+                                        created: new Date(result.data.created_at).toISOString().split('T')[0],
+                                        updated: new Date(result.data.updated_at).toISOString().split('T')[0]
+                                    });
+                                    
+                                } else {
+                                    throw new Error(result.message || 'Error desconocido del servidor');
+                                }
+                                
+                            } catch (apiError) {
+                                console.warn('Error conectando con la API, guardando localmente:', apiError);
+                                
+                                // Fallback: Guardar localmente si la API no está disponible
+                                const localDefectData = {
+                                    id: apiData.defect_id,
+                                    title: apiData.title,
+                                    description: apiData.description,
+                                    severity: apiData.severity,
+                                    priority: apiData.priority,
+                                    status: 'open',
+                                    environment: apiData.found_in_environment,
+                                    created: new Date().toISOString().split('T')[0],
+                                    updated: new Date().toISOString().split('T')[0],
+                                    _local: true // Marcar como guardado localmente
+                                };
+                                
+                                // Agregar al array local
+                                defects.push(localDefectData);
+                                defectCounter++;
+                                
+                                // Guardar en localStorage como backup
+                                try {
+                                    localStorage.setItem('ibm_defects_backup', JSON.stringify(defects));
+                                } catch (storageError) {
+                                    console.warn('Error guardando en localStorage:', storageError);
+                                }
+                                
+                                alert('⚠️ Defecto guardado localmente!\n\n' +
+                                      'ID: ' + localDefectData.id + '\n' +
+                                      'Título: ' + localDefectData.title + '\n' +
+                                      'Prioridad: ' + localDefectData.priority + '\n' +
+                                      'Severidad: ' + localDefectData.severity + '\n\n' +
+                                      '📝 El defecto se ha guardado temporalmente.\n' +
+                                      '🔄 Se sincronizará automáticamente cuando la base de datos esté disponible.');
+                            }
+                            
+                            // Notificar al sistema
+                            try {
+                                const dataManager = new IBMQualityDataManager();
+                                dataManager.notify('defectUpdated', apiData);
+                            } catch (error) {
+                                console.log('DataManager no disponible, continuando...');
+                            }                    
+                    // Limpiar formulario y actualizar vista
+                    clearForm();
+                    loadDefectsList();
+                    updateDashboardMetrics();
+                    
+                    // Mostrar la tabla de defectos actualizada
+                    const defectsTable = document.getElementById('defectsTableBody');
+                    if (defectsTable) {
+                        defectsTable.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    
+                } catch (error) {
+                    console.error('Error al reportar defecto:', error);
+                    alert('❌ Error al reportar el defecto. Por favor intente nuevamente.');
+                } finally {
+                    // Restaurar botón
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = originalText;
+                }
+            }, 1000); // Simular delay de procesamiento
         });
     </script>
 </body>

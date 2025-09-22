@@ -214,7 +214,7 @@ Este manual proporciona una guía completa para utilizar todas las plantillas, h
 
 ### 12. Sistema de Gestión de Defectos (`sistema_gestion_defectos_ibm.html`)
 
-**Propósito**: Gestionar el ciclo de vida completo de defectos.
+**Propósito**: Gestionar el ciclo de vida completo de defectos con vistas especializadas por rol.
 
 **Estados de defecto**:
 - Nuevo → Asignado → En Progreso → Resuelto → Cerrado
@@ -225,6 +225,159 @@ Este manual proporciona una guía completa para utilizar todas las plantillas, h
 - Componente afectado
 - Versión encontrada/corregida
 - Esfuerzo de corrección
+
+#### Vistas Especializadas por Rol
+
+El sistema incluye tres vistas especializadas diseñadas para optimizar el flujo de trabajo de cada rol:
+
+##### 🧪 Vista Tester (`vista_tester_defectos_ibm.html`)
+
+**Propósito**: Interface optimizada para el equipo de testing y QA.
+
+**Funcionalidades principales**:
+- **Acciones Rápidas**:
+  - Reportar nuevo defecto con formulario simplificado
+  - Verificar defectos resueltos con checklist
+  - Re-test de defectos corregidos
+  - Escalación de defectos críticos
+
+- **Dashboard Personal**:
+  - Estadísticas de defectos reportados esta semana
+  - Defectos pendientes de verificación
+  - Métricas de productividad personal
+  - Tiempo promedio de verificación
+
+- **Tabla de Trabajo**:
+  - Defectos asignados para verificación
+  - Filtros por estado, severidad y fecha
+  - Acciones directas: verificar, rechazar, aprobar
+  - Historial de actividades por defecto
+
+**Cómo usar la Vista Tester**:
+1. **Acceso**: Desde el dashboard principal, click en "Vista Tester" 🧪
+2. **Reportar Defecto**:
+   - Click en "Reportar Defecto"
+   - Completar formulario con detalles técnicos
+   - Adjuntar evidencias (screenshots, logs)
+   - Asignar severidad y prioridad
+   - Enviar para asignación
+3. **Verificar Defectos**:
+   - Revisar lista "Pendientes de Verificación"
+   - Click en "Verificar" para abrir checklist
+   - Seguir pasos de verificación
+   - Marcar como "Verificado" o "Rechazado"
+4. **Monitoreo Personal**:
+   - Revisar métricas en dashboard personal
+   - Identificar tendencias de productividad
+   - Usar filtros para análisis detallado
+
+##### 👨‍💻 Vista Desarrollador (`vista_desarrollador_defectos_ibm.html`)
+
+**Propósito**: Interface optimizada para el equipo de desarrollo.
+
+**Funcionalidades principales**:
+- **Colas de Trabajo Priorizadas**:
+  - Cola de Alta Prioridad (críticos y urgentes)
+  - Cola Regular (media y baja prioridad)
+  - Estimación de esfuerzo por defecto
+  - Asignación automática basada en carga
+
+- **Dashboard de Progreso**:
+  - Gráfico de progreso semanal (Chart.js)
+  - Métricas de resolución por desarrollador
+  - Tiempo promedio de resolución
+  - Burndown de defectos asignados
+
+- **Interface de Resolución**:
+  - Detalles técnicos del defecto
+  - Historial de cambios y comentarios
+  - Enlaces a código y documentación
+  - Status de build y testing
+
+**Cómo usar la Vista Desarrollador**:
+1. **Acceso**: Desde el dashboard principal, click en "Vista Desarrollador" 👨‍💻
+2. **Gestionar Cola de Trabajo**:
+   - Revisar defectos en "Alta Prioridad" primero
+   - Click en "Tomar" para asignar defecto
+   - Estimar esfuerzo antes de comenzar
+   - Actualizar status a "En Progreso"
+3. **Resolver Defectos**:
+   - Click en defecto para ver detalles completos
+   - Revisar pasos de reproducción
+   - Implementar solución en código
+   - Actualizar status a "Resuelto"
+   - Agregar comentarios técnicos
+4. **Monitorear Progreso**:
+   - Revisar gráfico de progreso semanal
+   - Comparar métricas con objetivos del equipo
+   - Identificar cuellos de botella
+
+##### 👨‍💼 Vista Project Manager (`vista_project_manager_defectos_ibm.html`)
+
+**Propósito**: Dashboard ejecutivo para gestión estratégica de defectos.
+
+**Funcionalidades principales**:
+- **KPIs Estratégicos**:
+  - Total de defectos abiertos con tendencias
+  - Defectos críticos y tiempo de resolución
+  - Cumplimiento de SLA (92% objetivo)
+  - Satisfacción del cliente
+
+- **Alertas Críticas**:
+  - Defectos críticos sin asignar >2 horas
+  - Equipos sobrecargados (>15 defectos)
+  - Violaciones de SLA inminentes
+  - Escalaciones requeridas
+
+- **Performance del Equipo**:
+  - Métricas por desarrollador y tester
+  - Distribución de carga de trabajo
+  - Productividad y calidad por persona
+  - Identificación de cuellos de botella
+
+- **Acciones Ejecutivas**:
+  - Generar reportes ejecutivos
+  - Gestionar recursos y redistribución
+  - Revisar cumplimiento de SLA
+  - Escalar defectos críticos
+  - Programar reuniones de equipo
+
+**Cómo usar la Vista Project Manager**:
+1. **Acceso**: Desde el dashboard principal, click en "Vista Project Manager" 👨‍💼
+2. **Monitoreo Ejecutivo**:
+   - Revisar KPIs principales al inicio del día
+   - Atender alertas críticas inmediatamente
+   - Analizar tendencias semanales
+   - Identificar riesgos tempranos
+3. **Gestión de Equipo**:
+   - Revisar performance individual
+   - Identificar necesidades de capacitación
+   - Redistribuir carga de trabajo si necesario
+   - Reconocer alto rendimiento
+4. **Toma de Decisiones**:
+   - Usar métricas para decisiones estratégicas
+   - Generar reportes para stakeholders
+   - Ajustar procesos basado en datos
+   - Planificar recursos futuros
+
+#### Flujo de Trabajo Integrado entre Vistas
+
+**Ciclo Completo de Defecto**:
+1. **Tester** reporta defecto en Vista Tester 🧪
+2. **System** asigna automáticamente a desarrollador
+3. **Desarrollador** toma defecto en Vista Desarrollador 👨‍💻
+4. **Project Manager** monitorea progreso en Vista Ejecutiva 👨‍💼
+5. **Desarrollador** resuelve y marca como "Resuelto"
+6. **Tester** verifica solución en Vista Tester
+7. **System** cierra defecto automáticamente
+8. **Project Manager** revisa métricas de cierre
+
+**Beneficios de las Vistas Especializadas**:
+- ✅ **Eficiencia**: Cada rol ve solo información relevante
+- ✅ **Productividad**: Acciones optimizadas por flujo de trabajo
+- ✅ **Visibilidad**: Métricas específicas para cada nivel
+- ✅ **Colaboración**: Integración fluida entre equipos
+- ✅ **Calidad**: Procesos estructurados y consistentes
 
 ### 13. Matriz RACI (`matriz_raci_ibm.html`)
 

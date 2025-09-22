@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista Tester - Gestión de Defectos - IBM Quality Management</title>
+    <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
+    
+    <!-- IBM Carbon Design System Icons -->
+    <script type="module" src="https://unpkg.com/@carbon/icons@11.8.0/es/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            /* IBM Carbon Design System Variables */
+            --cds-interactive-01: #0f62fe;
+            --cds-interactive-02: #393939;
+            --cds-interactive-03: #0f62fe;
+            --cds-ui-background: #f4f4f4;
+            --cds-ui-01: #ffffff;
+            --cds-ui-02: #f4f4f4;
+            --cds-text-01: #161616;
+            --cds-text-02: #525252;
+            --cds-text-03: #a8a8a8;
+            --cds-field-01: #f4f4f4;
+            --cds-support-01: #da1e28;
+            --cds-support-02: #24a148;
+            --cds-support-03: #f1c21b;
+            --cds-support-04: #0043ce;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', Arial, sans-serif;
+            background-color: var(--cds-ui-background);
+            color: var(--cds-text-01);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .bx--header {
+            background-color: var(--cds-interactive-02);
+            border-bottom: 1px solid #393939;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .bx--header__name {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bx--header__logo {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        /* Navigation Styles */
+        .bx--header-nav {
+            display: flex;
+            flex: 1;
+            margin-left: 2rem;
+        }
+
+        .bx--header-nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .bx--header-nav__item {
+            display: flex;
+            align-items: center;
+        }
+
+        .bx--header-nav__link {
+            color: #c6c6c6;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 0.75rem 0;
+            transition: color 0.2s ease;
+            border-bottom: 2px solid transparent;
+            font-weight: 400;
+        }
+
+        .bx--header-nav__link:hover {
+            color: white;
+            border-bottom-color: var(--cds-interactive-01);
+        }
+
+        .bx--header-nav__link--current {
+            color: white;
+            border-bottom-color: var(--cds-interactive-01);
+            font-weight: 600;
+        }
+
+        /* Role Badge */
+        .role-badge {
+            background: var(--cds-support-02);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--cds-support-02), #1e8e3e);
+            color: white;
+            padding: 3rem 2rem;
+            margin: -2rem -2rem 2rem -2rem;
+            border-radius: 0 0 8px 8px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .role-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .action-card {
+            background: var(--cds-ui-01);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+
+        .action-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .action-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--cds-interactive-01);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .action-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        .action-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--cds-text-01);
+        }
+
+        .action-description {
+            color: var(--cds-text-02);
+            font-size: 0.9rem;
+        }
+
+        /* My Defects Table */
+        .my-defects {
+            background: var(--cds-ui-01);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-header {
+            background: var(--cds-ui-02);
+            padding: 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .table-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .table-description {
+            color: var(--cds-text-02);
+        }
+
+        .defect-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .defect-table th,
+        .defect-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .defect-table th {
+            background: var(--cds-ui-02);
+            font-weight: 600;
+            color: var(--cds-text-01);
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-new { background: var(--cds-support-04); color: white; }
+        .status-assigned { background: var(--cds-support-03); color: black; }
+        .status-inprogress { background: var(--cds-interactive-01); color: white; }
+        .status-resolved { background: var(--cds-support-02); color: white; }
+
+        .priority-critical { color: var(--cds-support-01); font-weight: 600; }
+        .priority-high { color: #ff8400; font-weight: 600; }
+        .priority-medium { color: var(--cds-support-03); font-weight: 600; }
+        .priority-low { color: var(--cds-text-02); }
+
+        /* Statistics Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--cds-ui-01);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--cds-interactive-01);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--cds-text-02);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .page-header {
+                margin: -1rem -1rem 1rem -1rem;
+                padding: 2rem 1rem;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .defect-table {
+                font-size: 0.9rem;
+            }
+
+            .defect-table th,
+            .defect-table td {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Carbon Header/Navbar -->
+    <header class="bx--header">
+        <a href="dashboard_integrado_ibm.html" class="bx--header__name">
+            <!-- IBM Watson AI Icon -->
+            <svg class="bx--header__logo" viewBox="0 0 32 32">
+                <path d="M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14s14-6.3,14-14S23.7,2,16,2z M16,28c-6.6,0-12-5.4-12-12S9.4,4,16,4s12,5.4,12,12S22.6,28,16,28z"/>
+                <path d="M16,6c-5.5,0-10,4.5-10,10s4.5,10,10,10s10-4.5,10-10S21.5,6,16,6z M16,24c-4.4,0-8-3.6-8-8s3.6-8,8-8s8,3.6,8,8S20.4,24,16,24z"/>
+                <circle cx="16" cy="16" r="4"/>
+                <circle cx="16" cy="9" r="1"/>
+                <circle cx="23" cy="16" r="1"/>
+                <circle cx="16" cy="23" r="1"/>
+                <circle cx="9" cy="16" r="1"/>
+            </svg>
+            IBM Quality Management
+        </a>
+        
+        <nav class="bx--header-nav">
+            <ul>
+                <li class="bx--header-nav__item">
+                    <a href="dashboard_integrado_ibm.html" class="bx--header-nav__link">Dashboard</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="formulario_casos_prueba_ibm.html" class="bx--header-nav__link">Casos de Prueba</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="generador_casos_caja_negra_blanca_ibm.html" class="bx--header-nav__link">Generador Tests</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="ml_quality_analytics_dashboard.html" class="bx--header-nav__link">ML Analytics</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="calculadora_metricas_calidad_ibm.html" class="bx--header-nav__link">Métricas</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="analisis_riesgos_calidad_ibm.html" class="bx--header-nav__link">Riesgos</a>
+                </li>
+                <li class="bx--header-nav__item">
+                    <a href="sistema_gestion_defectos_ibm.html" class="bx--header-nav__link bx--header-nav__link--current">Defectos</a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="role-badge">👨‍💻 Tester</div>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <div class="role-icon">
+                <svg viewBox="0 0 32 32" fill="white" width="24" height="24">
+                    <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26ZM8,8H24v2H8Zm0,4H24v2H8Zm0,4H18v2H8Z"/>
+                </svg>
+            </div>
+            <div>
+                <h1 class="page-title">Panel del Tester</h1>
+                <p class="page-subtitle">Gestión de defectos encontrados durante las pruebas</p>
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Defectos Reportados Hoy</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">45</div>
+                <div class="stat-label">Defectos Activos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">8</div>
+                <div class="stat-label">Pendientes Verificación</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">23</div>
+                <div class="stat-label">Resueltos Esta Semana</div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <div class="action-card" onclick="reportDefect()">
+                <div class="action-icon">
+                    <svg viewBox="0 0 32 32">
+                        <path d="M17,15V8H15v7H8v2h7v7h2V17h7V15Z"/>
+                    </svg>
+                </div>
+                <h3 class="action-title">Reportar Nuevo Defecto</h3>
+                <p class="action-description">Crear un nuevo reporte de defecto con toda la información necesaria</p>
+            </div>
+
+            <div class="action-card" onclick="viewMyDefects()">
+                <div class="action-icon">
+                    <svg viewBox="0 0 32 32">
+                        <path d="M22.45,6h-12L8.78,7.64a2,2,0,0,0-.25,2.8L15.46,18.6a2,2,0,0,0,3.19,0l6.93-8.16a2,2,0,0,0-.25-2.8Z"/>
+                    </svg>
+                </div>
+                <h3 class="action-title">Mis Defectos</h3>
+                <p class="action-description">Ver todos los defectos que he reportado y su estado actual</p>
+            </div>
+
+            <div class="action-card" onclick="verifyFixes()">
+                <div class="action-icon">
+                    <svg viewBox="0 0 32 32">
+                        <path d="M13,24l-9-9,1.414-1.414L13,21.172l15.586-15.586L30,7Z"/>
+                    </svg>
+                </div>
+                <h3 class="action-title">Verificar Correcciones</h3>
+                <p class="action-description">Revisar y validar las correcciones implementadas por desarrollo</p>
+            </div>
+
+            <div class="action-card" onclick="generateReport()">
+                <div class="action-icon">
+                    <svg viewBox="0 0 32 32">
+                        <path d="M25,5H22V4a2,2,0,0,0-2-2H12a2,2,0,0,0-2,2V5H7A2,2,0,0,0,5,7V28a2,2,0,0,0,2,2H25a2,2,0,0,0,2-2V7A2,2,0,0,0,25,5ZM12,4h8V8H12ZM25,28H7V7h3v3H22V7h3Z"/>
+                    </svg>
+                </div>
+                <h3 class="action-title">Generar Reporte</h3>
+                <p class="action-description">Crear reportes de actividad y métricas de testing</p>
+            </div>
+        </div>
+
+        <!-- Testing Tools Section -->
+        <div style="margin: 2rem 0;">
+            <h2 style="font-size: 1.75rem; margin-bottom: 1rem; color: var(--cds-text-01); font-weight: 600;">
+                🧪 Herramientas de Testing
+            </h2>
+            
+            <!-- Test Case Management -->
+            <div style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--cds-interactive-01);">
+                    📝 Gestión de Casos de Prueba
+                </h3>
+                <div class="quick-actions">
+                    <div class="action-card" onclick="window.location.href='formulario_casos_prueba_ibm.html'">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 32 32">
+                                <path d="M17,15V8H15v7H8v2h7v7h2V17h7V15Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="action-title">Formulario de Casos</h3>
+                        <p class="action-description">Crear nuevos casos de prueba detallados</p>
+                    </div>
+
+                    <div class="action-card" onclick="window.location.href='generador_casos_prueba_ibm.html'">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 32 32">
+                                <path d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm7.7,7.7L15.4,18,8.3,10.9l1.4-1.4,5.7,5.7,6.9-6.9Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="action-title">Generador Automático</h3>
+                        <p class="action-description">Generar casos de prueba automáticamente</p>
+                    </div>
+
+                    <div class="action-card" onclick="window.location.href='generador_casos_caja_negra_blanca_ibm.html'">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 32 32">
+                                <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="action-title">Caja Negra/Blanca</h3>
+                        <p class="action-description">Casos específicos por técnica de prueba</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports & Analysis -->
+            <div style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--cds-interactive-01);">
+                    📊 Reportes y Análisis
+                </h3>
+                <div class="quick-actions">
+                    <div class="action-card" onclick="window.location.href='reporte_ejecucion_pruebas_ibm.html'">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 32 32">
+                                <path d="M25,5H22V4a2,2,0,0,0-2-2H12a2,2,0,0,0-2,2V5H7A2,2,0,0,0,5,7V28a2,2,0,0,0,2,2H25a2,2,0,0,0,2-2V7A2,2,0,0,0,25,5Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="action-title">Reporte de Ejecución</h3>
+                        <p class="action-description">Reportes detallados de ejecución de pruebas</p>
+                    </div>
+
+                    <div class="action-card" onclick="window.location.href='dashboard_testing_metrics_ibm.html'">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 32 32">
+                                <path d="M4,20V22H6.586l7-7L12.172,13.586ZM26,8a1,1,0,0,0-.293-.707l-3-3a1,1,0,0,0-1.414,0L19,6.586,24.414,12,26.707,9.707A1,1,0,0,0,26,8Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="action-title">Dashboard Testing</h3>
+                        <p class="action-description">Métricas y KPIs de testing en tiempo real</p>
+                    </div>
+
+                    <div class="action-card" onclick="window.location.href='analizador_cobertura_ibm.html'">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 32 32">
+                                <path d="M16,30A14,14,0,1,1,30,16,14,14,0,0,1,16,30ZM16,4A12,12,0,1,0,28,16,12,12,0,0,0,16,4Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="action-title">Análisis de Cobertura</h3>
+                        <p class="action-description">Análisis detallado de cobertura de pruebas</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tools & Templates -->
+            <div style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--cds-interactive-01);">
+                    🔧 Herramientas y Templates
+                </h3>
+                <div class="quick-actions">
+                    <div class="action-card" onclick="window.location.href='plan_pruebas_template_ibm.html'">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 32 32">
+                                <path d="M21,2H11A2,2,0,0,0,9,4V28a2,2,0,0,0,2,2H21a2,2,0,0,0,2-2V4A2,2,0,0,0,21,2ZM11,28V4H21V28Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="action-title">Plan de Pruebas</h3>
+                        <p class="action-description">Template para crear planes de prueba</p>
+                    </div>
+
+                    <div class="action-card" onclick="window.location.href='sistema_trazabilidad_ibm.html'">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 32 32">
+                                <path d="M30,14H26.828l-6.5-6.5A2,2,0,0,0,18.914,7H13.086a2,2,0,0,0-1.414.586l-6.5,6.5H2v2H5.172l6.5,6.5A2,2,0,0,0,13.086,23h5.828a2,2,0,0,0,1.414-.586l6.5-6.5H30Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="action-title">Trazabilidad</h3>
+                        <p class="action-description">Sistema de trazabilidad de pruebas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Recent Defects -->
+        <div class="my-defects">
+            <div class="table-header">
+                <h2 class="table-title">Mis Defectos Recientes</h2>
+                <p class="table-description">Últimos defectos reportados y su estado actual</p>
+            </div>
+            
+            <table class="defect-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Prioridad</th>
+                        <th>Estado</th>
+                        <th>Asignado a</th>
+                        <th>Fecha</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>DEF-001</strong></td>
+                        <td>Error de validación en formulario de login</td>
+                        <td><span class="priority-critical">Crítica</span></td>
+                        <td><span class="status-badge status-assigned">Asignado</span></td>
+                        <td>Juan Pérez</td>
+                        <td>2025-09-22</td>
+                        <td>
+                            <button onclick="viewDefect('DEF-001')">Ver</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>DEF-002</strong></td>
+                        <td>Carga lenta en dashboard de métricas</td>
+                        <td><span class="priority-high">Alta</span></td>
+                        <td><span class="status-badge status-inprogress">En Progreso</span></td>
+                        <td>María González</td>
+                        <td>2025-09-21</td>
+                        <td>
+                            <button onclick="viewDefect('DEF-002')">Ver</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>DEF-003</strong></td>
+                        <td>Texto truncado en dispositivos móviles</td>
+                        <td><span class="priority-medium">Media</span></td>
+                        <td><span class="status-badge status-resolved">Resuelto</span></td>
+                        <td>Carlos López</td>
+                        <td>2025-09-20</td>
+                        <td>
+                            <button onclick="verifyDefect('DEF-003')">Verificar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>DEF-004</strong></td>
+                        <td>Enlaces rotos en documentación</td>
+                        <td><span class="priority-low">Baja</span></td>
+                        <td><span class="status-badge status-new">Nuevo</span></td>
+                        <td>-</td>
+                        <td>2025-09-22</td>
+                        <td>
+                            <button onclick="viewDefect('DEF-004')">Ver</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Navigation functions for Tester role
+        function reportDefect() {
+            // Navigate to defect reporting form
+            window.location.href = 'formulario_reporte_defecto_tester.html';
+        }
+
+        function viewMyDefects() {
+            // Navigate to tester's defect list
+            window.location.href = 'lista_defectos_tester.html';
+        }
+
+        function verifyFixes() {
+            // Navigate to verification interface
+            window.location.href = 'verificacion_correcciones_tester.html';
+        }
+
+        function generateReport() {
+            // Navigate to report generator
+            window.location.href = 'generador_reportes_tester.html';
+        }
+
+        function viewDefect(defectId) {
+            // Navigate to specific defect view
+            window.location.href = `detalle_defecto.html?id=${defectId}`;
+        }
+
+        function verifyDefect(defectId) {
+            // Navigate to defect verification
+            window.location.href = `verificar_defecto.html?id=${defectId}`;
+        }
+
+        // Update statistics in real-time
+        function updateStats() {
+            // Simulate real-time updates
+            const stats = [
+                Math.floor(Math.random() * 20),
+                Math.floor(Math.random() * 60),
+                Math.floor(Math.random() * 15),
+                Math.floor(Math.random() * 30)
+            ];
+            
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach((stat, index) => {
+                if (stats[index] !== undefined) {
+                    stat.textContent = stats[index];
+                }
+            });
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Vista Tester - Gestión de Defectos iniciada');
+            
+            // Update stats every 30 seconds
+            setInterval(updateStats, 30000);
+        });
+    </script>
+</body>
+</html>
