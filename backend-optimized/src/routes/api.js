@@ -142,6 +142,238 @@ router.get('/testcases', (req, res) => {
   }
 });
 
+// GET /api/defects - Lista de defectos
+router.get('/defects', async (req, res) => {
+  try {
+    const { Pool } = require('pg');
+    const pool = new Pool({
+      host: process.env.DB_HOST || 'localhost',
+      port: process.env.DB_PORT || 5432,
+      database: process.env.DB_NAME || 'ibm_quality_management',
+      user: process.env.DB_USER || 'postgres',
+      password: process.env.DB_PASSWORD || 'postgres'
+    });
+
+    const query = `
+      SELECT 
+        d.id,
+        d.defect_id,
+        d.title,
+        d.description,
+        d.severity,
+        d.priority,
+        d.status,
+        d.type,
+        d.found_in_environment,
+        p.name AS project_name,
+        u_reported.full_name AS reported_by_name,
+        u_assigned.full_name AS assigned_to_name,
+        d.steps_to_reproduce,
+        d.expected_behavior,
+        d.actual_behavior,
+        d.resolution,
+        d.created_at,
+        d.updated_at
+      FROM defects d
+      LEFT JOIN projects p ON d.project_id = p.id
+      LEFT JOIN users u_reported ON d.reported_by = u_reported.id
+      LEFT JOIN users u_assigned ON d.assigned_to = u_assigned.id
+      ORDER BY d.created_at DESC
+    `;
+
+    const result = await pool.query(query);
+    await pool.end();
+
+    logger.info(`Defectos obtenidos: ${result.rows.length}`);
+    res.json({
+      success: true,
+      total: result.rows.length,
+      data: result.rows
+    });
+  } catch (error) {
+    logger.error('Error al obtener defectos:', error);
+    res.status(500).json({ error: 'Error interno del servidor', details: error.message });
+  }
+});
+
+// GET /api/v1/defects - Alias para compatibilidad con frontend
+router.get('/v1/defects', async (req, res) => {
+  try {
+    const { Pool } = require('pg');
+    const pool = new Pool({
+      host: process.env.DB_HOST || 'localhost',
+      port: process.env.DB_PORT || 5432,
+      database: process.env.DB_NAME || 'ibm_quality_management',
+      user: process.env.DB_USER || 'postgres',
+      password: process.env.DB_PASSWORD || 'postgres'
+    });
+
+    const query = `
+      SELECT 
+        d.id,
+        d.defect_id,
+        d.title,
+        d.description,
+        d.severity,
+        d.priority,
+        d.status,
+        d.type,
+        d.found_in_environment,
+        p.name AS project_name,
+        u_reported.full_name AS reported_by_name,
+        u_assigned.full_name AS assigned_to_name,
+        d.steps_to_reproduce,
+        d.expected_behavior,
+        d.actual_behavior,
+        d.resolution,
+        d.created_at,
+        d.updated_at
+      FROM defects d
+      LEFT JOIN projects p ON d.project_id = p.id
+      LEFT JOIN users u_reported ON d.reported_by = u_reported.id
+      LEFT JOIN users u_assigned ON d.assigned_to = u_assigned.id
+      ORDER BY d.created_at DESC
+    `;
+
+    const result = await pool.query(query);
+    await pool.end();
+
+    logger.info(`Defectos obtenidos: ${result.rows.length}`);
+    res.json({
+      success: true,
+      total: result.rows.length,
+      data: result.rows
+    });
+  } catch (error) {
+    logger.error('Error al obtener defectos:', error);
+    res.status(500).json({ error: 'Error interno del servidor', details: error.message });
+  }
+});
+
+// POST /api/defects - Crear nuevo defecto
+router.post('/defects', async (req, res) => {
+  try {
+    const { Pool } = require('pg');
+    const pool = new Pool({
+      host: process.env.DB_HOST || 'localhost',
+      port: process.env.DB_PORT || 5432,
+      database: process.env.DB_NAME || 'ibm_quality_management',
+      user: process.env.DB_USER || 'postgres',
+      password: process.env.DB_PASSWORD || 'postgres'
+    });
+
+    const {
+      defect_id,
+      title,
+      description,
+      severity,
+      priority,
+      type,
+      found_in_environment,
+      project_id,
+      reported_by,
+      assigned_to,
+      steps_to_reproduce,
+      expected_behavior,
+      actual_behavior
+    } = req.body;
+
+    // Generar defect_id si no se proporciona
+    const finalDefectId = defect_id || `DEF-${Date.now()}`;
+
+    const query = `
+      INSERT INTO defects (
+        defect_id, title, description, severity, priority, type,
+        found_in_environment, project_id, reported_by, assigned_to,
+        steps_to_reproduce, expected_behavior, actual_behavior
+      ) VALUES (
+        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13
+      ) RETURNING *
+    `;
+
+    const values = [
+      finalDefectId, title, description, severity, priority, type,
+      found_in_environment, project_id, reported_by, assigned_to,
+      steps_to_reproduce ? JSON.stringify(steps_to_reproduce) : null,
+      expected_behavior, actual_behavior
+    ];
+
+    const result = await pool.query(query, values);
+    await pool.end();
+
+    logger.info(`Defecto creado: ${finalDefectId}`);
+    res.status(201).json({
+      success: true,
+      defect: result.rows[0]
+    });
+  } catch (error) {
+    logger.error('Error al crear defecto:', error);
+    res.status(500).json({ error: 'Error interno del servidor', details: error.message });
+  }
+});
+
+// POST /api/v1/defects - Alias para compatibilidad con frontend
+router.post('/v1/defects', async (req, res) => {
+  try {
+    const { Pool } = require('pg');
+    const pool = new Pool({
+      host: process.env.DB_HOST || 'localhost',
+      port: process.env.DB_PORT || 5432,
+      database: process.env.DB_NAME || 'ibm_quality_management',
+      user: process.env.DB_USER || 'postgres',
+      password: process.env.DB_PASSWORD || 'postgres'
+    });
+
+    const {
+      defect_id,
+      title,
+      description,
+      severity,
+      priority,
+      type,
+      found_in_environment,
+      project_id,
+      reported_by,
+      assigned_to,
+      steps_to_reproduce,
+      expected_behavior,
+      actual_behavior
+    } = req.body;
+
+    // Generar defect_id si no se proporciona
+    const finalDefectId = defect_id || `DEF-${Date.now()}`;
+
+    const query = `
+      INSERT INTO defects (
+        defect_id, title, description, severity, priority, type,
+        found_in_environment, project_id, reported_by, assigned_to,
+        steps_to_reproduce, expected_behavior, actual_behavior
+      ) VALUES (
+        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13
+      ) RETURNING *
+    `;
+
+    const values = [
+      finalDefectId, title, description, severity, priority, type,
+      found_in_environment, project_id, reported_by, assigned_to,
+      steps_to_reproduce ? JSON.stringify(steps_to_reproduce) : null,
+      expected_behavior, actual_behavior
+    ];
+
+    const result = await pool.query(query, values);
+    await pool.end();
+
+    logger.info(`Defecto creado: ${finalDefectId}`);
+    res.status(201).json({
+      success: true,
+      defect: result.rows[0]
+    });
+  } catch (error) {
+    logger.error('Error al crear defecto:', error);
+    res.status(500).json({ error: 'Error interno del servidor', details: error.message });
+  }
+});
+
 // POST /api/sync - Sincronización de datos
 router.post('/sync', (req, res) => {
   try {
