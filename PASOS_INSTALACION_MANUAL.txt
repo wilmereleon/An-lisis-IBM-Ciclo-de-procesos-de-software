@@ -1,0 +1,28 @@
+REM Guía paso a paso para aplicar schema.sql y seed_data.sql
+
+REM PASO 1: Abrir PostgreSQL desde línea de comandos
+REM Abra una nueva ventana de PowerShell como Administrador y ejecute:
+
+set PATH=%PATH%;C:\Program Files\PostgreSQL\17\bin
+
+REM PASO 2: Conectar a PostgreSQL
+REM Ejecute este comando y proporcione la contraseña del usuario postgres:
+psql -U postgres -h localhost
+
+REM PASO 3: Crear la base de datos ejecutando schema.sql
+REM Desde psql ejecute:
+\i database/schema.sql
+
+REM PASO 4: Conectar a la nueva base de datos
+\c ibm_quality_management
+
+REM PASO 5: Insertar datos iniciales
+\i database/seed_data.sql
+
+REM PASO 6: Verificar la instalación
+SELECT 'Usuarios' as tabla, COUNT(*) as registros FROM users 
+UNION ALL SELECT 'Herramientas', COUNT(*) FROM tools 
+UNION ALL SELECT 'Proyectos', COUNT(*) FROM projects;
+
+REM PASO 7: Salir de psql
+\q
