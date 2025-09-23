@@ -6,8 +6,18 @@
     <title>Vista Project Manager - Gestión de Defectos - IBM Quality Management</title>
     <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
     
-    <!-- IBM Carbon Design System Icons -->
+    <!-- IBM Carbon Design System CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/carbon-components@10.58.12/css/carbon-components.min.css">
+    
+    <!-- IBM Carbon Icons -->
     <script type="module" src="https://unpkg.com/@carbon/icons@11.8.0/es/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@carbon/icons@11.8.0/lib/index.css">
+    
+    <!-- IBM Plex Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
@@ -16,17 +26,96 @@
             --cds-interactive-01: #0f62fe;
             --cds-interactive-02: #393939;
             --cds-interactive-03: #0f62fe;
-            --cds-ui-background: #f4f4f4;
-            --cds-ui-01: #ffffff;
-            --cds-ui-02: #f4f4f4;
+            --cds-interactive-04: #0f62fe;
+            --cds-ui-background: #ffffff;
+            --cds-ui-01: #f4f4f4;
+            --cds-ui-02: #ffffff;
+            --cds-ui-03: #e0e0e0;
+            --cds-ui-04: #8d8d8d;
+            --cds-ui-05: #161616;
             --cds-text-01: #161616;
             --cds-text-02: #525252;
             --cds-text-03: #a8a8a8;
+            --cds-text-04: #ffffff;
+            --cds-text-05: #6f6f6f;
+            --cds-icon-01: #161616;
+            --cds-icon-02: #525252;
+            --cds-icon-03: #ffffff;
+            --cds-link-01: #0f62fe;
             --cds-field-01: #f4f4f4;
+            --cds-field-02: #ffffff;
+            --cds-inverse-01: #ffffff;
+            --cds-inverse-02: #393939;
             --cds-support-01: #da1e28;
             --cds-support-02: #24a148;
             --cds-support-03: #f1c21b;
             --cds-support-04: #0043ce;
+            --cds-overlay-01: rgba(22, 22, 22, 0.5);
+            --cds-focus: #0f62fe;
+            --cds-hover-primary: #0353e9;
+            --cds-active-primary: #002d9c;
+            --cds-hover-primary-text: #004ccc;
+            --cds-hover-secondary: #4c4c4c;
+            --cds-active-secondary: #6f6f6f;
+            --cds-hover-tertiary: #0353e9;
+            --cds-active-tertiary: #002d9c;
+            --cds-hover-ui: #e5e5e5;
+            --cds-active-ui: #c6c6c6;
+            --cds-selected-ui: #e0e0e0;
+            --cds-hover-selected-ui: #cacaca;
+            --cds-inverse-hover-ui: #4c4c4c;
+            --cds-hover-danger: #ba1b23;
+            --cds-active-danger: #750e13;
+            --cds-hover-row: #e5e5e5;
+            --cds-visited-link: #8a3ffc;
+            --cds-disabled-01: #f4f4f4;
+            --cds-disabled-02: #c6c6c6;
+            --cds-disabled-03: #8d8d8d;
+            --cds-highlight: #d0e2ff;
+            --cds-skeleton-01: #e5e5e5;
+            --cds-skeleton-02: #c6c6c6;
+            --cds-brand-01: #0f62fe;
+            --cds-brand-02: #393939;
+            --cds-brand-03: #0f62fe;
+            --cds-active-01: #c6c6c6;
+            --cds-hover-field: #e5e5e5;
+            
+            /* IBM Carbon Spacing Scale */
+            --cds-spacing-01: 0.125rem;
+            --cds-spacing-02: 0.25rem;
+            --cds-spacing-03: 0.5rem;
+            --cds-spacing-04: 0.75rem;
+            --cds-spacing-05: 1rem;
+            --cds-spacing-06: 1.5rem;
+            --cds-spacing-07: 2rem;
+            --cds-spacing-08: 2.5rem;
+            --cds-spacing-09: 3rem;
+            --cds-spacing-10: 4rem;
+            --cds-spacing-11: 5rem;
+            --cds-spacing-12: 6rem;
+            --cds-spacing-13: 10rem;
+            
+            /* IBM Carbon Typography Scale */
+            --cds-productive-heading-01: 0.875rem;
+            --cds-productive-heading-02: 1rem;
+            --cds-productive-heading-03: 1.25rem;
+            --cds-productive-heading-04: 1.75rem;
+            --cds-productive-heading-05: 2rem;
+            --cds-productive-heading-06: 2.625rem;
+            --cds-productive-heading-07: 3.375rem;
+            
+            --cds-body-compact-01: 0.875rem;
+            --cds-body-compact-02: 1rem;
+            --cds-body-short-01: 0.875rem;
+            --cds-body-short-02: 1rem;
+            --cds-body-long-01: 0.875rem;
+            --cds-body-long-02: 1rem;
+            --cds-code-01: 0.75rem;
+            --cds-code-02: 0.875rem;
+            --cds-label-01: 0.75rem;
+            --cds-label-02: 0.875rem;
+            --cds-helper-text-01: 0.75rem;
+            --cds-helper-text-02: 0.875rem;
         }
 
         * {
@@ -37,26 +126,32 @@
 
         body {
             font-family: 'IBM Plex Sans', Arial, sans-serif;
+            font-size: var(--cds-body-short-02);
+            font-weight: 400;
+            line-height: 1.29;
+            letter-spacing: 0.16px;
             background-color: var(--cds-ui-background);
             color: var(--cds-text-01);
-            line-height: 1.6;
+            min-height: 100vh;
         }
 
-        /* Header */
+        /* IBM Carbon Header/Navbar */
         .bx--header {
-            background-color: var(--cds-interactive-02);
-            border-bottom: 1px solid #393939;
+            background-color: var(--cds-ui-05);
+            border-bottom: 1px solid var(--cds-ui-03);
             height: 48px;
             display: flex;
             align-items: center;
-            padding: 0 1rem;
-            position: sticky;
+            padding: 0 var(--cds-spacing-05);
+            position: fixed;
             top: 0;
-            z-index: 1000;
+            left: 0;
+            right: 0;
+            z-index: 6000;
         }
 
         .bx--header__name {
-            color: white;
+            color: var(--cds-text-04);
             text-decoration: none;
             font-weight: 600;
             font-size: 14px;
@@ -64,6 +159,259 @@
             align-items: center;
             gap: 8px;
         }
+
+        .bx--header__logo {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .bx--header__menu-trigger {
+            background: none;
+            border: none;
+            color: var(--cds-text-04);
+            cursor: pointer;
+            padding: var(--cds-spacing-03);
+        }
+
+        /* Main content adjustment for fixed header */
+        .main-content {
+            margin-top: 48px;
+            padding: var(--cds-spacing-05);
+        }
+
+        /* IBM Carbon Page Header */
+        .page-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--cds-spacing-07);
+            gap: var(--cds-spacing-05);
+            padding: var(--cds-spacing-07) var(--cds-spacing-05);
+            flex-wrap: wrap;
+            min-height: 120px;
+            background: linear-gradient(135deg, var(--cds-interactive-01) 0%, #0f62fe 100%);
+            border-radius: var(--cds-border-radius);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: skewX(-15deg);
+            transform-origin: top;
+        }
+
+        .role-icon {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            padding: var(--cds-spacing-04);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            flex-shrink: 0;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .role-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .page-title {
+            color: white;
+            margin: 0;
+            font-size: var(--cds-heading-03-font-size, 1.75rem);
+            font-weight: var(--cds-heading-03-font-weight, 400);
+            line-height: var(--cds-heading-03-line-height, 1.4);
+            letter-spacing: var(--cds-heading-03-letter-spacing, 0);
+        }
+
+        .page-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            margin: var(--cds-spacing-02) 0 0 0;
+            font-size: var(--cds-body-short-02-font-size, 1rem);
+            font-weight: var(--cds-body-short-02-font-weight, 400);
+            line-height: var(--cds-body-short-02-line-height, 1.375);
+        }
+
+        /* IBM Carbon Stat Cards */
+        .stat-card {
+            text-align: center;
+            margin-bottom: var(--cds-spacing-05);
+        }
+
+        .stat-number {
+            font-size: var(--cds-display-02-font-size, 2.5rem);
+            font-weight: var(--cds-display-02-font-weight, 300);
+            color: var(--cds-interactive-01);
+            line-height: var(--cds-display-02-line-height, 1.19);
+            letter-spacing: var(--cds-display-02-letter-spacing, 0);
+        }
+
+        .stat-label {
+            font-size: var(--cds-label-01-font-size, 0.75rem);
+            font-weight: var(--cds-label-01-font-weight, 400);
+            color: var(--cds-text-02);
+            margin-top: var(--cds-spacing-02);
+            line-height: var(--cds-label-01-line-height, 1.34);
+            letter-spacing: var(--cds-label-01-letter-spacing, 0.32px);
+        }
+
+        /* IBM Carbon Action Cards */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--cds-spacing-05);
+            margin-bottom: var(--cds-spacing-07);
+        }
+
+        .action-card {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            padding: var(--cds-spacing-05);
+        }
+
+        .action-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-icon {
+            background-color: var(--cds-interactive-01);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--cds-spacing-04) auto;
+            color: white;
+        }
+
+        .action-title {
+            color: var(--cds-text-01);
+            margin: var(--cds-spacing-03) 0;
+            font-size: var(--cds-heading-compact-01-font-size, 0.875rem);
+            font-weight: var(--cds-heading-compact-01-font-weight, 600);
+            line-height: var(--cds-heading-compact-01-line-height, 1.29);
+            letter-spacing: var(--cds-heading-compact-01-letter-spacing, 0.16px);
+        }
+
+        .action-description {
+            color: var(--cds-text-02);
+            margin: 0;
+            font-size: var(--cds-body-compact-01-font-size, 0.875rem);
+            font-weight: var(--cds-body-compact-01-font-weight, 400);
+            line-height: var(--cds-body-compact-01-line-height, 1.29);
+            letter-spacing: var(--cds-body-compact-01-letter-spacing, 0.16px);
+        }
+
+        /* IBM Carbon Executive KPI Cards */
+        .kpi-card {
+            text-align: center;
+            margin-bottom: var(--cds-spacing-05);
+        }
+
+        .kpi-number {
+            font-size: 2.25rem;
+            font-weight: 600;
+            line-height: 1;
+            margin-bottom: var(--cds-spacing-02);
+        }
+
+        .kpi-number.critical {
+            color: var(--cds-support-01);
+        }
+
+        .kpi-number.warning {
+            color: var(--cds-support-03);
+        }
+
+        .kpi-number.success {
+            color: var(--cds-support-02);
+        }
+
+        .kpi-number.info {
+            color: var(--cds-interactive-01);
+        }
+
+        .kpi-label {
+            font-size: 0.875rem;
+            color: var(--cds-text-02);
+            margin-bottom: var(--cds-spacing-02);
+        }
+
+        .kpi-trend {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .trend-up {
+            color: var(--cds-support-02);
+        }
+
+        .trend-down {
+            color: var(--cds-support-01);
+        }
+
+        .trend-stable {
+            color: var(--cds-text-03);
+        }
+
+        /* IBM Carbon Alert Panel */
+        .alert-panel {
+            margin-bottom: var(--cds-spacing-06);
+        }
+
+        .alert-header {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--cds-support-01);
+            margin-bottom: var(--cds-spacing-04);
+        }
+
+        .alert-item {
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+            padding: var(--cds-spacing-04);
+            border-left: 4px solid var(--cds-support-01);
+            background-color: var(--cds-ui-01);
+            margin-bottom: var(--cds-spacing-03);
+        }
+
+        .alert-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+        }
+
+        .alert-text {
+            flex: 1;
+            color: var(--cds-text-01);
+        }
+
+        .alert-time {
+            color: var(--cds-text-03);
+            font-size: 0.75rem;
+        }
+        
 
         .bx--header__logo {
             width: 24px;
@@ -419,10 +767,59 @@
                 padding: 2rem 1rem;
                 flex-direction: column;
                 text-align: center;
+                gap: var(--cds-spacing-04);
+            }
+
+            .bx--header-nav {
+                display: none;
             }
 
             .action-buttons {
                 grid-template-columns: 1fr;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: var(--cds-spacing-04);
+            }
+
+            .role-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .role-icon svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header {
+                padding: 1.5rem 1rem;
+                gap: var(--cds-spacing-03);
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .dashboard-grid {
+                gap: var(--cds-spacing-03);
+            }
+
+            .bx--header__name {
+                font-size: 12px;
+                gap: 6px;
+            }
+
+            .bx--header__logo {
+                width: 18px;
+                height: 18px;
+            }
+
+            .action-buttons {
+                gap: var(--cds-spacing-03);
             }
         }
     </style>
@@ -473,27 +870,34 @@
         <div class="role-badge">👨‍💼 Project Manager</div>
     </header>
 
-    <div class="container">
-        <div class="page-header">
-            <div class="role-icon">
-                <svg viewBox="0 0 32 32" fill="white" width="24" height="24">
-                    <path d="M28,6H4A2,2,0,0,0,2,8V24a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V8A2,2,0,0,0,28,6ZM4,24V8H28V24Z"/>
-                    <path d="M7,11h5v2H7ZM7,15h8v2H7ZM7,19h4v2H7ZM20,11h5v2H20ZM20,15h5v2H20ZM20,19h5v2H20Z"/>
-                </svg>
+    <div class="main-content bx--content">
+        <div class="bx--grid">
+            <div class="bx--row">
+                <div class="bx--col-lg-16">
+                    <div class="page-header">
+                        <div class="role-icon">
+                            <svg viewBox="0 0 32 32" fill="currentColor" width="24" height="24">
+                                <path d="M28,6H4A2,2,0,0,0,2,8V24a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V8A2,2,0,0,0,28,6ZM4,24V8H28V24Z"/>
+                                <path d="M7,11h5v2H7ZM7,15h8v2H7ZM7,19h4v2H7ZM20,11h5v2H20ZM20,15h5v2H20ZM20,19h5v2H20Z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="bx--type-productive-heading-05 page-title">Panel del Project Manager</h1>
+                            <p class="bx--type-body-long-01 page-subtitle">Vista ejecutiva y gestión estratégica de defectos</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <h1 class="page-title">Panel del Project Manager</h1>
-                <p class="page-subtitle">Vista ejecutiva y gestión estratégica de defectos</p>
-            </div>
-        </div>
 
-        <!-- Alert Panel -->
-        <div class="alert-panel">
-            <div class="alert-header">
-                ⚠️ Alertas Críticas
-            </div>
-            <div class="alert-item">
-                <div class="alert-icon alert-critical">
+            <!-- Alert Panel -->
+            <div class="bx--row">
+                <div class="bx--col-lg-16">
+                    <div class="bx--tile alert-panel">
+                        <div class="alert-header">
+                            ⚠️ Alertas Críticas
+                        </div>
+                        <div class="alert-item">
+                            <div class="alert-icon alert-critical">
                     <svg viewBox="0 0 32 32" fill="white" width="12" height="12">
                         <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2ZM14.9971,7h2.0029l-.1528,11H15.1499ZM16,25a1.5,1.5,0,1,1,1.5-1.5A1.5,1.5,0,0,1,16,25Z"/>
                     </svg>
@@ -508,42 +912,56 @@
                     </svg>
                 </div>
                 <div class="alert-text">Equipo de desarrollo sobrecargado - 15 defectos pendientes</div>
-                <div class="alert-time">Hace 30 min</div>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <!-- KPI Grid -->
-        <div class="kpi-grid">
-            <div class="kpi-card critical">
-                <div class="kpi-number critical">23</div>
-                <div class="kpi-label">Defectos Abiertos</div>
-                <div class="kpi-trend trend-up">↗ +15% vs semana anterior</div>
+            <!-- Executive KPI Grid -->
+            <div class="bx--row">
+                <div class="bx--col-lg-2 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile kpi-card critical">
+                        <div class="kpi-number critical">23</div>
+                        <div class="kpi-label">Defectos Abiertos</div>
+                        <div class="kpi-trend trend-up">↗ +15% vs semana anterior</div>
+                    </div>
+                </div>
+                <div class="bx--col-lg-2 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile kpi-card warning">
+                        <div class="kpi-number warning">8</div>
+                        <div class="kpi-label">Defectos Críticos</div>
+                        <div class="kpi-trend trend-up">↗ +2 desde ayer</div>
+                    </div>
+                </div>
+                <div class="bx--col-lg-2 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile kpi-card success">
+                        <div class="kpi-number success">92%</div>
+                        <div class="kpi-label">SLA Cumplimiento</div>
+                        <div class="kpi-trend trend-stable">→ Estable</div>
+                    </div>
+                </div>
+                <div class="bx--col-lg-2 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile kpi-card">
+                        <div class="kpi-number info">3.2</div>
+                        <div class="kpi-label">Tiempo Resolución (días)</div>
+                        <div class="kpi-trend trend-down">↘ -0.5 días</div>
+                    </div>
+                </div>
+                <div class="bx--col-lg-2 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile kpi-card success">
+                        <div class="kpi-number success">45</div>
+                        <div class="kpi-label">Resueltos Esta Semana</div>
+                        <div class="kpi-trend trend-up">↗ +12 vs objetivo</div>
+                    </div>
+                </div>
+                <div class="bx--col-lg-2 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile kpi-card">
+                        <div class="kpi-number info">85%</div>
+                        <div class="kpi-label">Satisfacción Cliente</div>
+                        <div class="kpi-trend trend-up">↗ +5% vs mes anterior</div>
+                    </div>
+                </div>
             </div>
-            <div class="kpi-card warning">
-                <div class="kpi-number warning">8</div>
-                <div class="kpi-label">Defectos Críticos</div>
-                <div class="kpi-trend trend-up">↗ +2 desde ayer</div>
-            </div>
-            <div class="kpi-card success">
-                <div class="kpi-number success">92%</div>
-                <div class="kpi-label">SLA Cumplimiento</div>
-                <div class="kpi-trend trend-stable">→ Estable</div>
-            </div>
-            <div class="kpi-card">
-                <div class="kpi-number info">3.2</div>
-                <div class="kpi-label">Tiempo Resolución (días)</div>
-                <div class="kpi-trend trend-down">↘ -0.5 días</div>
-            </div>
-            <div class="kpi-card success">
-                <div class="kpi-number success">45</div>
-                <div class="kpi-label">Resueltos Esta Semana</div>
-                <div class="kpi-trend trend-up">↗ +12 vs objetivo</div>
-            </div>
-            <div class="kpi-card">
-                <div class="kpi-number info">85%</div>
-                <div class="kpi-label">Satisfacción Cliente</div>
-                <div class="kpi-trend trend-up">↗ +5% vs mes anterior</div>
-            </div>
+
         </div>
 
         <!-- Dashboard Grid -->
@@ -619,35 +1037,41 @@
                 <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--cds-interactive-01);">
                     📈 Dashboards Ejecutivos
                 </h3>
-                <div class="quick-actions" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
-                    <div class="action-card" style="background: var(--cds-ui-01); padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); cursor: pointer; transition: box-shadow 0.2s;" onclick="window.location.href='dashboard_ejecutivo_ibm.html'">
-                        <div class="action-icon" style="background: var(--cds-interactive-01); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-                            <svg viewBox="0 0 32 32" style="width: 20px; height: 20px; fill: white;">
-                                <path d="M25,5H22V4a2,2,0,0,0-2-2H12a2,2,0,0,0-2,2V5H7A2,2,0,0,0,5,7V28a2,2,0,0,0,2,2H25a2,2,0,0,0,2-2V7A2,2,0,0,0,25,5Z"/>
-                            </svg>
+                <div class="bx--row">
+                    <div class="bx--col-lg-4 bx--col-md-8 bx--col-sm-4">
+                        <div class="bx--tile action-card" onclick="window.location.href='dashboard_ejecutivo_ibm.html'">
+                            <div class="action-icon" style="background: var(--cds-interactive-01); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                                <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: white;">
+                                    <path d="M25,5H22V4a2,2,0,0,0-2-2H12a2,2,0,0,0-2,2V5H7A2,2,0,0,0,5,7V28a2,2,0,0,2,2H25a2,2,0,0,0,2-2V7A2,2,0,0,0,25,5Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="bx--type-productive-heading-03 action-title">Dashboard Ejecutivo</h3>
+                            <p class="bx--type-body-short-01 action-description">Vista ejecutiva integral del proyecto</p>
                         </div>
-                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--cds-text-01);">Dashboard Ejecutivo</h3>
-                        <p style="color: var(--cds-text-02); font-size: 0.9rem;">Vista ejecutiva integral del proyecto</p>
                     </div>
 
-                    <div class="action-card" style="background: var(--cds-ui-01); padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); cursor: pointer; transition: box-shadow 0.2s;" onclick="window.location.href='dashboard_integrado_ibm.html'">
-                        <div class="action-icon" style="background: var(--cds-support-04); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-                            <svg viewBox="0 0 32 32" style="width: 20px; height: 20px; fill: white;">
-                                <path d="M4,20V22H6.586l7-7L12.172,13.586ZM26,8a1,1,0,0,0-.293-.707l-3-3a1,1,0,0,0-1.414,0L19,6.586,24.414,12,26.707,9.707A1,1,0,0,0,26,8Z"/>
-                            </svg>
+                    <div class="bx--col-lg-4 bx--col-md-8 bx--col-sm-4">
+                        <div class="bx--tile action-card" onclick="window.location.href='dashboard_integrado_ibm.html'">
+                            <div class="action-icon" style="background: var(--cds-support-04); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                                <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: white;">
+                                    <path d="M4,20V22H6.586l7-7L12.172,13.586ZM26,8a1,1,0,0,0-.293-.707l-3-3a1,1,0,0,0-1.414,0L19,6.586,24.414,12,26.707,9.707A1,1,0,0,0,26,8Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="bx--type-productive-heading-03 action-title">Dashboard Integrado</h3>
+                            <p class="bx--type-body-short-01 action-description">Vista consolidada de todas las métricas</p>
                         </div>
-                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--cds-text-01);">Dashboard Integrado</h3>
-                        <p style="color: var(--cds-text-02); font-size: 0.9rem;">Vista consolidada de todas las métricas</p>
                     </div>
 
-                    <div class="action-card" style="background: var(--cds-ui-01); padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); cursor: pointer; transition: box-shadow 0.2s;" onclick="window.location.href='ml_quality_analytics_dashboard.html'">
-                        <div class="action-icon" style="background: #8a3ffc; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-                            <svg viewBox="0 0 32 32" style="width: 20px; height: 20px; fill: white;">
-                                <path d="M16,30A14,14,0,1,1,30,16,14,14,0,0,1,16,30ZM16,4A12,12,0,1,0,28,16,12,12,0,0,0,16,4Z"/>
-                            </svg>
+                    <div class="bx--col-lg-4 bx--col-md-8 bx--col-sm-4">
+                        <div class="bx--tile action-card" onclick="window.location.href='ml_quality_analytics_dashboard.html'">
+                            <div class="action-icon" style="background: #8a3ffc; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                                <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: white;">
+                                    <path d="M16,30A14,14,0,1,1,30,16,14,14,0,0,1,16,30ZM16,4A12,12,0,1,0,28,16,12,12,0,0,0,16,4Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="bx--type-productive-heading-03 action-title">ML Analytics</h3>
+                            <p class="bx--type-body-short-01 action-description">Analytics avanzados con Machine Learning</p>
                         </div>
-                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--cds-text-01);">ML Analytics</h3>
-                        <p style="color: var(--cds-text-02); font-size: 0.9rem;">Analytics avanzados con Machine Learning</p>
                     </div>
                 </div>
             </div>
@@ -657,35 +1081,41 @@
                 <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--cds-interactive-01);">
                     📊 Métricas y Análisis
                 </h3>
-                <div class="quick-actions" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
-                    <div class="action-card" style="background: var(--cds-ui-01); padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); cursor: pointer; transition: box-shadow 0.2s;" onclick="window.location.href='calculadora_metricas_calidad_ibm.html'">
-                        <div class="action-icon" style="background: var(--cds-support-02); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-                            <svg viewBox="0 0 32 32" style="width: 20px; height: 20px; fill: white;">
-                                <path d="M25,5H22V4a2,2,0,0,0-2-2H12a2,2,0,0,0-2,2V5H7A2,2,0,0,0,5,7V28a2,2,0,0,0,2,2H25a2,2,0,0,0,2-2V7A2,2,0,0,0,25,5ZM12,4h8V8H12ZM25,28H7V7h3v3H22V7h3Z"/>
-                            </svg>
+                <div class="bx--row">
+                    <div class="bx--col-lg-4 bx--col-md-8 bx--col-sm-4">
+                        <div class="bx--tile action-card" onclick="window.location.href='calculadora_metricas_calidad_ibm.html'">
+                            <div class="action-icon" style="background: var(--cds-support-02); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                                <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: white;">
+                                    <path d="M25,5H22V4a2,2,0,0,0-2-2H12a2,2,0,0,0-2,2V5H7A2,2,0,0,0,5,7V28a2,2,0,0,0,2,2H25a2,2,0,0,0,2-2V7A2,2,0,0,0,25,5ZM12,4h8V8H12ZM25,28H7V7h3v3H22V7h3Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="bx--type-productive-heading-03 action-title">Calculadora de Métricas</h3>
+                            <p class="bx--type-body-short-01 action-description">Cálculo y análisis de métricas de calidad</p>
                         </div>
-                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--cds-text-01);">Calculadora de Métricas</h3>
-                        <p style="color: var(--cds-text-02); font-size: 0.9rem;">Cálculo y análisis de métricas de calidad</p>
                     </div>
 
-                    <div class="action-card" style="background: var(--cds-ui-01); padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); cursor: pointer; transition: box-shadow 0.2s;" onclick="window.location.href='analisis_riesgos_calidad_ibm.html'">
-                        <div class="action-icon" style="background: var(--cds-support-01); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-                            <svg viewBox="0 0 32 32" style="width: 20px; height: 20px; fill: white;">
-                                <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2ZM14.9971,7h2.0029l-.1528,11H15.1499ZM16,25a1.5,1.5,0,1,1,1.5-1.5A1.5,1.5,0,0,1,16,25Z"/>
-                            </svg>
+                    <div class="bx--col-lg-4 bx--col-md-8 bx--col-sm-4">
+                        <div class="bx--tile action-card" onclick="window.location.href='analisis_riesgos_calidad_ibm.html'">
+                            <div class="action-icon" style="background: var(--cds-support-01); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                                <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: white;">
+                                    <path d="M16,2A14,14,0,1,0,30,16,14.0158,14.0158,0,0,0,16,2ZM14.9971,7h2.0029l-.1528,11H15.1499ZM16,25a1.5,1.5,0,1,1,1.5-1.5A1.5,1.5,0,0,1,16,25Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="bx--type-productive-heading-03 action-title">Análisis de Riesgos</h3>
+                            <p class="bx--type-body-short-01 action-description">Evaluación y gestión de riesgos de calidad</p>
                         </div>
-                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--cds-text-01);">Análisis de Riesgos</h3>
-                        <p style="color: var(--cds-text-02); font-size: 0.9rem;">Evaluación y gestión de riesgos de calidad</p>
                     </div>
 
-                    <div class="action-card" style="background: var(--cds-ui-01); padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); cursor: pointer; transition: box-shadow 0.2s;" onclick="window.location.href='reporte_ejecucion_ml_analytics.html'">
-                        <div class="action-icon" style="background: var(--cds-support-03); color: black; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-                            <svg viewBox="0 0 32 32" style="width: 20px; height: 20px; fill: black;">
-                                <path d="M23,2V4h5V6H23.7L20,18H30v2H4V18H14L10.3,6H4V4H9V2ZM12.7,18H19.3l.9-3H11.8Z"/>
-                            </svg>
+                    <div class="bx--col-lg-4 bx--col-md-8 bx--col-sm-4">
+                        <div class="bx--tile action-card" onclick="window.location.href='reporte_ejecucion_ml_analytics.html'">
+                            <div class="action-icon" style="background: var(--cds-support-03); color: black; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                                <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: black;">
+                                    <path d="M23,2V4h5V6H23.7L20,18H30v2H4V18H14L10.3,6H4V4H9V2ZM12.7,18H19.3l.9-3H11.8Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="bx--type-productive-heading-03 action-title">Reportes ML Analytics</h3>
+                            <p class="bx--type-body-short-01 action-description">Reportes avanzados con Machine Learning</p>
                         </div>
-                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--cds-text-01);">Reportes ML Analytics</h3>
-                        <p style="color: var(--cds-text-02); font-size: 0.9rem;">Reportes avanzados con Machine Learning</p>
                     </div>
                 </div>
             </div>
@@ -695,25 +1125,29 @@
                 <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--cds-interactive-01);">
                     🎯 Herramientas de Gestión
                 </h3>
-                <div class="quick-actions" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
-                    <div class="action-card" style="background: var(--cds-ui-01); padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); cursor: pointer; transition: box-shadow 0.2s;" onclick="window.location.href='matriz_raci_ibm.html'">
-                        <div class="action-icon" style="background: var(--cds-interactive-01); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-                            <svg viewBox="0 0 32 32" style="width: 20px; height: 20px; fill: white;">
-                                <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26ZM8,8H24v2H8Zm0,4H24v2H8Zm0,4H18v2H8Z"/>
-                            </svg>
+                <div class="bx--row">
+                    <div class="bx--col-lg-6 bx--col-md-8 bx--col-sm-4">
+                        <div class="bx--tile action-card" onclick="window.location.href='matriz_raci_ibm.html'">
+                            <div class="action-icon" style="background: var(--cds-interactive-01); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                                <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: white;">
+                                    <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26ZM8,8H24v2H8Zm0,4H24v2H8Zm0,4H18v2H8Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="bx--type-productive-heading-03 action-title">Matriz RACI</h3>
+                            <p class="bx--type-body-short-01 action-description">Matriz de responsabilidades del proyecto</p>
                         </div>
-                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--cds-text-01);">Matriz RACI</h3>
-                        <p style="color: var(--cds-text-02); font-size: 0.9rem;">Matriz de responsabilidades del proyecto</p>
                     </div>
 
-                    <div class="action-card" style="background: var(--cds-ui-01); padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); cursor: pointer; transition: box-shadow 0.2s;" onclick="window.location.href='gestion_ambientes_ibm.html'">
-                        <div class="action-icon" style="background: var(--cds-interactive-02); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-                            <svg viewBox="0 0 32 32" style="width: 20px; height: 20px; fill: white;">
-                                <path d="M30,14H26.828l-6.5-6.5A2,2,0,0,0,18.914,7H13.086a2,2,0,0,0-1.414.586l-6.5,6.5H2v2H5.172l6.5,6.5A2,2,0,0,0,13.086,23h5.828a2,2,0,0,0,1.414-.586l6.5-6.5H30Z"/>
-                            </svg>
+                    <div class="bx--col-lg-6 bx--col-md-8 bx--col-sm-4">
+                        <div class="bx--tile action-card" onclick="window.location.href='gestion_ambientes_ibm.html'">
+                            <div class="action-icon" style="background: var(--cds-interactive-02); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                                <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: white;">
+                                    <path d="M30,14H26.828l-6.5-6.5A2,2,0,0,0,18.914,7H13.086a2,2,0,0,0-1.414.586l-6.5,6.5H2v2H5.172l6.5,6.5A2,2,0,0,0,13.086,23h5.828a2,2,0,0,0,1.414-.586l6.5-6.5H30Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="bx--type-productive-heading-03 action-title">Gestión de Ambientes</h3>
+                            <p class="bx--type-body-short-01 action-description">Administración de ambientes de desarrollo</p>
                         </div>
-                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--cds-text-01);">Gestión de Ambientes</h3>
-                        <p style="color: var(--cds-text-02); font-size: 0.9rem;">Administración de ambientes de desarrollo</p>
                     </div>
                 </div>
             </div>

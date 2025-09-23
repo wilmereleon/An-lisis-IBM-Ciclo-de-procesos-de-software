@@ -6,8 +6,18 @@
     <title>Vista Desarrollador - Gestión de Defectos - IBM Quality Management</title>
     <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
     
-    <!-- IBM Carbon Design System Icons -->
+    <!-- IBM Carbon Design System CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/carbon-components@10.58.12/css/carbon-components.min.css">
+    
+    <!-- IBM Carbon Icons -->
     <script type="module" src="https://unpkg.com/@carbon/icons@11.8.0/es/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@carbon/icons@11.8.0/lib/index.css">
+    
+    <!-- IBM Plex Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
@@ -16,17 +26,96 @@
             --cds-interactive-01: #0f62fe;
             --cds-interactive-02: #393939;
             --cds-interactive-03: #0f62fe;
-            --cds-ui-background: #f4f4f4;
-            --cds-ui-01: #ffffff;
-            --cds-ui-02: #f4f4f4;
+            --cds-interactive-04: #0f62fe;
+            --cds-ui-background: #ffffff;
+            --cds-ui-01: #f4f4f4;
+            --cds-ui-02: #ffffff;
+            --cds-ui-03: #e0e0e0;
+            --cds-ui-04: #8d8d8d;
+            --cds-ui-05: #161616;
             --cds-text-01: #161616;
             --cds-text-02: #525252;
             --cds-text-03: #a8a8a8;
+            --cds-text-04: #ffffff;
+            --cds-text-05: #6f6f6f;
+            --cds-icon-01: #161616;
+            --cds-icon-02: #525252;
+            --cds-icon-03: #ffffff;
+            --cds-link-01: #0f62fe;
             --cds-field-01: #f4f4f4;
+            --cds-field-02: #ffffff;
+            --cds-inverse-01: #ffffff;
+            --cds-inverse-02: #393939;
             --cds-support-01: #da1e28;
             --cds-support-02: #24a148;
             --cds-support-03: #f1c21b;
             --cds-support-04: #0043ce;
+            --cds-overlay-01: rgba(22, 22, 22, 0.5);
+            --cds-focus: #0f62fe;
+            --cds-hover-primary: #0353e9;
+            --cds-active-primary: #002d9c;
+            --cds-hover-primary-text: #004ccc;
+            --cds-hover-secondary: #4c4c4c;
+            --cds-active-secondary: #6f6f6f;
+            --cds-hover-tertiary: #0353e9;
+            --cds-active-tertiary: #002d9c;
+            --cds-hover-ui: #e5e5e5;
+            --cds-active-ui: #c6c6c6;
+            --cds-selected-ui: #e0e0e0;
+            --cds-hover-selected-ui: #cacaca;
+            --cds-inverse-hover-ui: #4c4c4c;
+            --cds-hover-danger: #ba1b23;
+            --cds-active-danger: #750e13;
+            --cds-hover-row: #e5e5e5;
+            --cds-visited-link: #8a3ffc;
+            --cds-disabled-01: #f4f4f4;
+            --cds-disabled-02: #c6c6c6;
+            --cds-disabled-03: #8d8d8d;
+            --cds-highlight: #d0e2ff;
+            --cds-skeleton-01: #e5e5e5;
+            --cds-skeleton-02: #c6c6c6;
+            --cds-brand-01: #0f62fe;
+            --cds-brand-02: #393939;
+            --cds-brand-03: #0f62fe;
+            --cds-active-01: #c6c6c6;
+            --cds-hover-field: #e5e5e5;
+            
+            /* IBM Carbon Spacing Scale */
+            --cds-spacing-01: 0.125rem;
+            --cds-spacing-02: 0.25rem;
+            --cds-spacing-03: 0.5rem;
+            --cds-spacing-04: 0.75rem;
+            --cds-spacing-05: 1rem;
+            --cds-spacing-06: 1.5rem;
+            --cds-spacing-07: 2rem;
+            --cds-spacing-08: 2.5rem;
+            --cds-spacing-09: 3rem;
+            --cds-spacing-10: 4rem;
+            --cds-spacing-11: 5rem;
+            --cds-spacing-12: 6rem;
+            --cds-spacing-13: 10rem;
+            
+            /* IBM Carbon Typography Scale */
+            --cds-productive-heading-01: 0.875rem;
+            --cds-productive-heading-02: 1rem;
+            --cds-productive-heading-03: 1.25rem;
+            --cds-productive-heading-04: 1.75rem;
+            --cds-productive-heading-05: 2rem;
+            --cds-productive-heading-06: 2.625rem;
+            --cds-productive-heading-07: 3.375rem;
+            
+            --cds-body-compact-01: 0.875rem;
+            --cds-body-compact-02: 1rem;
+            --cds-body-short-01: 0.875rem;
+            --cds-body-short-02: 1rem;
+            --cds-body-long-01: 0.875rem;
+            --cds-body-long-02: 1rem;
+            --cds-code-01: 0.75rem;
+            --cds-code-02: 0.875rem;
+            --cds-label-01: 0.75rem;
+            --cds-label-02: 0.875rem;
+            --cds-helper-text-01: 0.75rem;
+            --cds-helper-text-02: 0.875rem;
         }
 
         * {
@@ -37,26 +126,32 @@
 
         body {
             font-family: 'IBM Plex Sans', Arial, sans-serif;
+            font-size: var(--cds-body-short-02);
+            font-weight: 400;
+            line-height: 1.29;
+            letter-spacing: 0.16px;
             background-color: var(--cds-ui-background);
             color: var(--cds-text-01);
-            line-height: 1.6;
+            min-height: 100vh;
         }
 
-        /* Header */
+        /* IBM Carbon Header/Navbar */
         .bx--header {
-            background-color: var(--cds-interactive-02);
-            border-bottom: 1px solid #393939;
+            background-color: var(--cds-ui-05);
+            border-bottom: 1px solid var(--cds-ui-03);
             height: 48px;
             display: flex;
             align-items: center;
-            padding: 0 1rem;
-            position: sticky;
+            padding: 0 var(--cds-spacing-05);
+            position: fixed;
             top: 0;
-            z-index: 1000;
+            left: 0;
+            right: 0;
+            z-index: 6000;
         }
 
         .bx--header__name {
-            color: white;
+            color: var(--cds-text-04);
             text-decoration: none;
             font-weight: 600;
             font-size: 14px;
@@ -66,9 +161,163 @@
         }
 
         .bx--header__logo {
-            width: 24px;
-            height: 24px;
-            fill: white;
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .bx--header__menu-trigger {
+            background: none;
+            border: none;
+            color: var(--cds-text-04);
+            cursor: pointer;
+            padding: var(--cds-spacing-03);
+        }
+
+        /* Main content adjustment for fixed header */
+        .main-content {
+            margin-top: 48px;
+            padding: var(--cds-spacing-05);
+        }
+
+        /* IBM Carbon Page Header */
+        .page-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--cds-spacing-07);
+            gap: var(--cds-spacing-05);
+            padding: var(--cds-spacing-07) var(--cds-spacing-05);
+            flex-wrap: wrap;
+            min-height: 120px;
+            background: linear-gradient(135deg, var(--cds-interactive-01) 0%, #0f62fe 100%);
+            border-radius: var(--cds-border-radius);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: skewX(-15deg);
+            transform-origin: top;
+        }
+
+        .role-icon {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            padding: var(--cds-spacing-04);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            flex-shrink: 0;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .role-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .page-title {
+            color: white;
+            margin: 0;
+            font-size: var(--cds-heading-03-font-size, 1.75rem);
+            font-weight: var(--cds-heading-03-font-weight, 400);
+            line-height: var(--cds-heading-03-line-height, 1.4);
+            letter-spacing: var(--cds-heading-03-letter-spacing, 0);
+        }
+
+        .page-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            margin: var(--cds-spacing-02) 0 0 0;
+            font-size: var(--cds-body-short-02-font-size, 1rem);
+            font-weight: var(--cds-body-short-02-font-weight, 400);
+            line-height: var(--cds-body-short-02-line-height, 1.375);
+        }
+
+        /* IBM Carbon Stat Cards */
+        .stat-card {
+            text-align: center;
+            margin-bottom: var(--cds-spacing-05);
+        }
+
+        .stat-number {
+            font-size: var(--cds-display-02-font-size, 2.5rem);
+            font-weight: var(--cds-display-02-font-weight, 300);
+            color: var(--cds-interactive-01);
+            line-height: var(--cds-display-02-line-height, 1.19);
+            letter-spacing: var(--cds-display-02-letter-spacing, 0);
+        }
+
+        .stat-label {
+            font-size: var(--cds-label-01-font-size, 0.75rem);
+            font-weight: var(--cds-label-01-font-weight, 400);
+            color: var(--cds-text-02);
+            margin-top: var(--cds-spacing-02);
+            line-height: var(--cds-label-01-line-height, 1.34);
+            letter-spacing: var(--cds-label-01-letter-spacing, 0.32px);
+        }
+
+        /* IBM Carbon Action Cards */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--cds-spacing-05);
+            margin-bottom: var(--cds-spacing-07);
+        }
+
+        .action-card {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            padding: var(--cds-spacing-05);
+        }
+
+        .action-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-icon {
+            background-color: var(--cds-interactive-01);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--cds-spacing-04) auto;
+            color: white;
+        }
+
+        .action-title {
+            color: var(--cds-text-01);
+            margin: var(--cds-spacing-03) 0;
+            font-size: var(--cds-heading-compact-01-font-size, 0.875rem);
+            font-weight: var(--cds-heading-compact-01-font-weight, 600);
+            line-height: var(--cds-heading-compact-01-line-height, 1.29);
+            letter-spacing: var(--cds-heading-compact-01-letter-spacing, 0.16px);
+        }
+
+        .action-description {
+            color: var(--cds-text-02);
+            margin: 0;
+            font-size: var(--cds-body-compact-01-font-size, 0.875rem);
+            font-weight: var(--cds-body-compact-01-font-weight, 400);
+            line-height: var(--cds-body-compact-01-line-height, 1.29);
+            letter-spacing: var(--cds-body-compact-01-letter-spacing, 0.16px);
         }
 
         /* Navigation Styles */
@@ -368,6 +617,11 @@
                 padding: 2rem 1rem;
                 flex-direction: column;
                 text-align: center;
+                gap: var(--cds-spacing-04);
+            }
+
+            .bx--header-nav {
+                display: none;
             }
 
             .work-queue {
@@ -376,6 +630,51 @@
 
             .action-buttons {
                 flex-direction: column;
+            }
+
+            .quick-actions {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: var(--cds-spacing-04);
+            }
+
+            .role-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .role-icon svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header {
+                padding: 1.5rem 1rem;
+                gap: var(--cds-spacing-03);
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+                gap: var(--cds-spacing-03);
+            }
+
+            .work-queue {
+                gap: var(--cds-spacing-03);
+            }
+
+            .bx--header__name {
+                font-size: 12px;
+                gap: 6px;
+            }
+
+            .bx--header__logo {
+                width: 18px;
+                height: 18px;
             }
         }
     </style>
@@ -426,45 +725,103 @@
         <div class="role-badge">👨‍💻 Desarrollador</div>
     </header>
 
-    <div class="container">
-        <div class="page-header">
-            <div class="role-icon">
-                <svg viewBox="0 0 32 32" fill="white" width="24" height="24">
-                    <path d="M31,16l-7,7L22.59,21.59L28.17,16l-5.58-5.59L24,8.41ZM1,16l7-7,1.41,1.41L3.83,16l5.58,5.59L8,23.41ZM20.12,5.5l-8,21L10.88,26.5l8-21Z"/>
-                </svg>
+    <div class="main-content bx--content">
+        <div class="bx--grid">
+            <div class="bx--row">
+                <div class="bx--col-lg-16">
+                    <div class="page-header">
+                        <div class="role-icon">
+                            <svg viewBox="0 0 32 32" fill="currentColor" width="24" height="24">
+                                <path d="M31,16l-7,7L22.59,21.59L28.17,16l-5.58-5.59L24,8.41ZM1,16l7-7,1.41,1.41L3.83,16l5.58,5.59L8,23.41ZM20.12,5.5l-8,21L10.88,26.5l8-21Z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="bx--type-productive-heading-05 page-title">Panel del Desarrollador</h1>
+                            <p class="bx--type-body-long-01 page-subtitle">Gestión y resolución de defectos asignados</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <h1 class="page-title">Panel del Desarrollador</h1>
-                <p class="page-subtitle">Gestión y resolución de defectos asignados</p>
-            </div>
-        </div>
 
-        <!-- Statistics -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number">8</div>
-                <div class="stat-label">Defectos Asignados</div>
+            <!-- Statistics -->
+            <div class="bx--row">
+                <div class="bx--col-lg-3 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile stat-card">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Defectos Asignados</div>
+                    </div>
+                </div>
+                <div class="bx--col-lg-3 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile stat-card">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">En Progreso</div>
+                    </div>
+                </div>
+                <div class="bx--col-lg-3 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile stat-card">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Resueltos Esta Semana</div>
+                    </div>
+                </div>
+                <div class="bx--col-lg-3 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile stat-card">
+                        <div class="stat-number">2.5</div>
+                        <div class="stat-label">Tiempo Promedio (días)</div>
+                    </div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number">3</div>
-                <div class="stat-label">En Progreso</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">15</div>
-                <div class="stat-label">Resueltos Esta Semana</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">2.5</div>
-                <div class="stat-label">Tiempo Promedio (días)</div>
-            </div>
-        </div>
 
-        <!-- Action Buttons -->
-        <div class="action-buttons">
-            <button class="btn btn-primary" onclick="startWork()">Comenzar Trabajo</button>
-            <button class="btn btn-secondary" onclick="updateStatus()">Actualizar Estado</button>
-            <button class="btn btn-secondary" onclick="requestInfo()">Solicitar Información</button>
-            <button class="btn btn-secondary" onclick="viewHistory()">Ver Historial</button>
+            <!-- Quick Actions -->
+            <div class="bx--row">
+                <div class="bx--col-lg-3 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile action-card" onclick="startWork()">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                                <path d="M16,4A12,12,0,1,0,28,16,12,12,0,0,0,16,4Zm6,13H17v5H15V17H10V15h5V10h2v5h5Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="bx--type-productive-heading-03 action-title">Comenzar Trabajo</h3>
+                        <p class="bx--type-body-short-01 action-description">Iniciar trabajo en defecto asignado</p>
+                    </div>
+                </div>
+                
+                <div class="bx--col-lg-3 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile action-card" onclick="updateStatus()">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                                <path d="M13,24l-9-9,1.414-1.414L13,21.171,26.586,7.586,28,9Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="bx--type-productive-heading-03 action-title">Actualizar Estado</h3>
+                        <p class="bx--type-body-short-01 action-description">Actualizar progreso de resolución</p>
+                    </div>
+                </div>
+                
+                <div class="bx--col-lg-3 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile action-card" onclick="requestInfo()">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                                <path d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12,12,0,0,1,16,28ZM15,8h2v8H15Zm0,10h2v2H15Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="bx--type-productive-heading-03 action-title">Solicitar Información</h3>
+                        <p class="bx--type-body-short-01 action-description">Pedir detalles adicionales del defecto</p>
+                    </div>
+                </div>
+                
+                <div class="bx--col-lg-3 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile action-card" onclick="viewHistory()">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                                <path d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm7,15H17V9h2v6h4Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="bx--type-productive-heading-03 action-title">Ver Historial</h3>
+                        <p class="bx--type-body-short-01 action-description">Revisar histórico de defectos resueltos</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <!-- Work Queue -->

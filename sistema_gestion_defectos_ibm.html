@@ -6,8 +6,18 @@
     <title>Sistema de Gestión de Defectos - IBM Quality Management</title>
     <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
     
-    <!-- IBM Carbon Design System Icons -->
+    <!-- IBM Carbon Design System CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/carbon-components@10.58.12/css/carbon-components.min.css">
+    
+    <!-- IBM Carbon Icons -->
     <script type="module" src="https://unpkg.com/@carbon/icons@11.8.0/es/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@carbon/icons@11.8.0/lib/index.css">
+    
+    <!-- IBM Plex Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    
     <script src="scripts/ibm-quality-data-manager.js"></script>
     <script src="scripts/ibm-quality-config.js"></script>
     
@@ -17,17 +27,97 @@
             --cds-interactive-01: #0f62fe;
             --cds-interactive-02: #393939;
             --cds-interactive-03: #0f62fe;
-            --cds-ui-background: #f4f4f4;
-            --cds-ui-01: #ffffff;
-            --cds-ui-02: #f4f4f4;
+            --cds-interactive-04: #0f62fe;
+            --cds-ui-background: #ffffff;
+            --cds-ui-01: #f4f4f4;
+            --cds-ui-02: #ffffff;
+            --cds-ui-03: #e0e0e0;
+            --cds-ui-04: #8d8d8d;
+            --cds-ui-05: #161616;
             --cds-text-01: #161616;
             --cds-text-02: #525252;
             --cds-text-03: #a8a8a8;
+            --cds-text-04: #ffffff;
+            --cds-text-05: #6f6f6f;
+            --cds-icon-01: #161616;
+            --cds-icon-02: #525252;
+            --cds-icon-03: #ffffff;
+            --cds-link-01: #0f62fe;
             --cds-field-01: #f4f4f4;
+            --cds-field-02: #ffffff;
+            --cds-inverse-01: #ffffff;
+            --cds-inverse-02: #393939;
             --cds-support-01: #da1e28;
             --cds-support-02: #24a148;
             --cds-support-03: #f1c21b;
             --cds-support-04: #0043ce;
+            --cds-overlay-01: rgba(22, 22, 22, 0.5);
+            --cds-focus: #0f62fe;
+            --cds-hover-primary: #0353e9;
+            --cds-active-primary: #002d9c;
+            --cds-hover-primary-text: #004ccc;
+            --cds-hover-secondary: #4c4c4c;
+            --cds-active-secondary: #6f6f6f;
+            --cds-hover-tertiary: #0353e9;
+            --cds-active-tertiary: #002d9c;
+            --cds-hover-ui: #e5e5e5;
+            --cds-active-ui: #c6c6c6;
+            --cds-selected-ui: #e0e0e0;
+            --cds-hover-selected-ui: #cacaca;
+            --cds-inverse-hover-ui: #4c4c4c;
+            --cds-hover-danger: #ba1b23;
+            --cds-active-danger: #750e13;
+            --cds-hover-row: #e5e5e5;
+            --cds-visited-link: #8a3ffc;
+            --cds-disabled-01: #f4f4f4;
+            --cds-disabled-02: #c6c6c6;
+            --cds-disabled-03: #8d8d8d;
+            --cds-highlight: #d0e2ff;
+            --cds-skeleton-01: #e5e5e5;
+            --cds-skeleton-02: #c6c6c6;
+            --cds-brand-01: #0f62fe;
+            --cds-brand-02: #393939;
+            --cds-brand-03: #0f62fe;
+            --cds-active-01: #c6c6c6;
+            --cds-hover-field: #e5e5e5;
+            
+            /* IBM Carbon Spacing Scale */
+            --cds-spacing-01: 0.125rem;
+            --cds-spacing-02: 0.25rem;
+            --cds-spacing-03: 0.5rem;
+            --cds-spacing-04: 0.75rem;
+            --cds-spacing-05: 1rem;
+            --cds-spacing-06: 1.5rem;
+            --cds-spacing-07: 2rem;
+            --cds-spacing-08: 2.5rem;
+            --cds-spacing-09: 3rem;
+            --cds-spacing-10: 4rem;
+            --cds-spacing-11: 5rem;
+            --cds-spacing-12: 6rem;
+            --cds-spacing-13: 10rem;
+            
+            /* IBM Carbon Typography Scale */
+            --cds-productive-heading-01: 0.875rem;
+            --cds-productive-heading-02: 1rem;
+            --cds-productive-heading-03: 1.25rem;
+            --cds-productive-heading-04: 1.75rem;
+            --cds-productive-heading-05: 2rem;
+            --cds-productive-heading-06: 2.625rem;
+            --cds-productive-heading-07: 3.375rem;
+            
+            --cds-body-compact-01: 0.875rem;
+            --cds-body-compact-02: 1rem;
+            --cds-body-short-01: 0.875rem;
+            --cds-body-short-02: 1rem;
+            --cds-body-long-01: 0.875rem;
+            --cds-body-long-02: 1rem;
+            
+            --cds-caption-01: 0.75rem;
+            --cds-caption-02: 0.875rem;
+            --cds-label-01: 0.75rem;
+            --cds-label-02: 0.875rem;
+            --cds-helper-text-01: 0.75rem;
+            --cds-helper-text-02: 0.875rem;
         }
 
         * {
@@ -37,136 +127,166 @@
         }
 
         body {
-            font-family: 'IBM Plex Sans', Arial, sans-serif;
+            font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.29;
+            letter-spacing: 0.16px;
             background-color: var(--cds-ui-background);
             color: var(--cds-text-01);
-            line-height: 1.6;
+            min-height: 100vh;
         }
 
-        /* Header */
+        /* IBM Carbon Header/Navbar */
         .bx--header {
-            background-color: var(--cds-interactive-02);
-            border-bottom: 1px solid #393939;
+            background-color: var(--cds-ui-05);
+            border-bottom: 1px solid var(--cds-ui-03);
             height: 48px;
             display: flex;
             align-items: center;
-            padding: 0 1rem;
-            position: sticky;
+            padding: 0 var(--cds-spacing-05);
+            position: fixed;
             top: 0;
-            z-index: 1000;
+            left: 0;
+            right: 0;
+            z-index: 6000;
         }
 
         .bx--header__name {
-            color: white;
-            text-decoration: none;
+            font-size: var(--cds-body-short-02);
             font-weight: 600;
-            font-size: 14px;
+            color: var(--cds-text-04);
+            text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 8px;
+            height: 100%;
+            padding: 0 var(--cds-spacing-05);
+            border-left: 1px solid var(--cds-ui-04);
+            margin-left: var(--cds-spacing-05);
+        }
+
+        .bx--header__name:hover {
+            background-color: var(--cds-inverse-hover-ui);
         }
 
         .bx--header__logo {
-            width: 24px;
-            height: 24px;
-            fill: white;
+            width: 20px;
+            height: 20px;
+            margin-right: var(--cds-spacing-03);
+            fill: var(--cds-icon-03);
         }
 
-        /* Navigation Styles */
         .bx--header-nav {
             display: flex;
-            flex: 1;
-            margin-left: 2rem;
+            align-items: center;
+            height: 100%;
+            margin-left: auto;
         }
 
         .bx--header-nav ul {
-            display: flex;
             list-style: none;
+            display: flex;
             margin: 0;
             padding: 0;
-            gap: 2rem;
-            align-items: center;
         }
 
         .bx--header-nav__item {
             display: flex;
             align-items: center;
+            height: 100%;
         }
 
         .bx--header-nav__link {
-            color: #c6c6c6;
+            color: var(--cds-text-04);
             text-decoration: none;
-            font-size: 14px;
-            padding: 0.75rem 0;
-            transition: color 0.2s ease;
-            border-bottom: 2px solid transparent;
+            font-size: var(--cds-body-short-01);
             font-weight: 400;
+            padding: 0 var(--cds-spacing-05);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            transition: background-color 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
         }
 
         .bx--header-nav__link:hover {
-            color: white;
-            border-bottom-color: var(--cds-interactive-01);
+            background-color: var(--cds-inverse-hover-ui);
         }
 
         .bx--header-nav__link--current {
-            color: white;
-            border-bottom-color: var(--cds-interactive-01);
-            font-weight: 600;
+            background-color: var(--cds-inverse-02);
+            color: var(--cds-inverse-01);
         }
 
         /* Container */
         .container {
-            max-width: 1600px;
+            max-width: 1584px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: var(--cds-spacing-05);
+            padding-top: calc(48px + var(--cds-spacing-05));
         }
 
+        /* Page Header */
         .page-header {
-            background: linear-gradient(135deg, var(--cds-interactive-01), #0043ce);
-            color: white;
-            padding: 3rem 2rem;
-            margin: -2rem -2rem 2rem -2rem;
-            border-radius: 0 0 8px 8px;
+            background: var(--cds-ui-02);
+            padding: var(--cds-spacing-06);
+            margin-bottom: var(--cds-spacing-05);
+            border: 1px solid var(--cds-ui-03);
         }
 
         .page-title {
-            font-size: 2.5rem;
-            font-weight: 300;
-            margin-bottom: 0.5rem;
+            font-size: var(--cds-productive-heading-05);
+            font-weight: 400;
+            margin-bottom: var(--cds-spacing-03);
+            color: var(--cds-text-01);
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
         }
 
         .page-subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
+            font-size: var(--cds-body-long-01);
+            color: var(--cds-text-02);
+            margin-bottom: var(--cds-spacing-05);
         }
 
-        /* Tab Navigation */
+        /* Tab Navigation - IBM Carbon Style */
         .tab-navigation {
             display: flex;
-            background: var(--cds-ui-01);
-            border-radius: 8px 8px 0 0;
-            margin-bottom: 0;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            margin-bottom: var(--cds-spacing-05);
         }
 
         .tab-item {
             flex: 1;
-            padding: 1rem 2rem;
+            padding: var(--cds-spacing-04) var(--cds-spacing-05);
             text-align: center;
             cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+            transition: all 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
             background: transparent;
             border: none;
+            border-right: 1px solid var(--cds-ui-03);
             font-family: inherit;
-            font-size: 1rem;
+            font-size: var(--cds-body-short-01);
+            font-weight: 400;
             color: var(--cds-text-02);
+        }
+
+        .tab-item:last-child {
+            border-right: none;
+        }
+
+        .tab-item:hover {
+            background: var(--cds-hover-ui);
+            color: var(--cds-text-01);
         }
 
         .tab-item.active {
             color: var(--cds-interactive-01);
             border-bottom-color: var(--cds-interactive-01);
-            background: var(--cds-ui-01);
+            background: var(--cds-ui-background);
+            font-weight: 600;
         }
 
         .tab-item:hover:not(.active) {
@@ -177,10 +297,10 @@
         /* Tab Content */
         .tab-content {
             display: none;
-            background: var(--cds-ui-01);
-            border-radius: 0 0 8px 8px;
-            padding: 2rem;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            border-top: none;
+            padding: var(--cds-spacing-06);
         }
 
         .tab-content.active {
@@ -191,36 +311,35 @@
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            gap: var(--cds-spacing-05);
+            margin-bottom: var(--cds-spacing-06);
         }
 
         .metric-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
+            background: var(--cds-ui-01);
+            padding: var(--cds-spacing-05);
+            border: 1px solid var(--cds-ui-03);
             text-align: center;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            border-left: 4px solid var(--cds-interactive-01);
         }
 
         .metric-value {
-            font-size: 2.5rem;
-            font-weight: 300;
+            font-size: var(--cds-productive-heading-06);
+            font-weight: 400;
             color: var(--cds-interactive-01);
-            margin-bottom: 0.5rem;
+            margin-bottom: var(--cds-spacing-03);
         }
 
         .metric-label {
             color: var(--cds-text-02);
-            font-size: 0.875rem;
+            font-size: var(--cds-label-01);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.32px;
+            font-weight: 600;
         }
 
         .metric-trend {
-            margin-top: 0.5rem;
-            font-size: 0.75rem;
+            margin-top: var(--cds-spacing-03);
+            font-size: var(--cds-caption-01);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -243,6 +362,14 @@
             margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
             border-bottom: 2px solid #e0e0e0;
+        }
+
+        /* Form Container */
+        .form-container {
+            background: var(--cds-ui-02);
+            border: 1px solid var(--cds-ui-03);
+            padding: var(--cds-spacing-06);
+            margin-bottom: var(--cds-spacing-06);
         }
 
         .form-grid {
@@ -404,28 +531,32 @@
             color: white;
         }
 
-        /* Buttons */
+        /* Buttons - IBM Carbon Style */
         .bx--btn {
+            height: 48px;
+            padding: 0 var(--cds-spacing-05);
+            border: none;
+            font-size: var(--cds-body-short-01);
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+            text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1rem;
-            border: none;
-            border-radius: 4px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            text-decoration: none;
+            gap: var(--cds-spacing-03);
         }
 
         .bx--btn--primary {
             background-color: var(--cds-interactive-01);
-            color: white;
+            color: var(--cds-text-04);
         }
 
         .bx--btn--primary:hover {
-            background-color: #0050e6;
+            background-color: var(--cds-hover-primary);
+        }
+
+        .bx--btn--primary:active {
+            background-color: var(--cds-active-primary);
         }
 
         .bx--btn--secondary {
@@ -435,21 +566,76 @@
         }
 
         .bx--btn--secondary:hover {
-            background-color: #f4f4f4;
+            background-color: var(--cds-hover-ui);
+        }
+
+        .bx--btn--tertiary {
+            background-color: transparent;
+            color: var(--cds-interactive-01);
+            border: 1px solid transparent;
+        }
+
+        .bx--btn--tertiary:hover {
+            background-color: var(--cds-hover-ui);
         }
 
         .bx--btn--danger {
             background-color: var(--cds-support-01);
-            color: white;
+            color: var(--cds-text-04);
         }
 
         .bx--btn--danger:hover {
-            background-color: #ba1b23;
+            background-color: var(--cds-hover-danger);
+        }
+
+        .bx--btn--danger:active {
+            background-color: var(--cds-active-danger);
         }
 
         .bx--btn--sm {
-            padding: 0.5rem 0.75rem;
-            font-size: 0.75rem;
+            height: 32px;
+            padding: 0 var(--cds-spacing-04);
+        }
+
+        /* Quick Action Buttons */
+        .quick-action-btn {
+            height: 48px;
+            padding: 0 var(--cds-spacing-05);
+            border: none;
+            font-size: var(--cds-body-short-01);
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 70ms cubic-bezier(0.2, 0, 0.38, 0.9);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
+            background-color: var(--cds-interactive-01);
+            color: var(--cds-text-04);
+        }
+
+        .quick-action-btn:hover {
+            background-color: var(--cds-hover-primary);
+        }
+
+        /* Info Sections */
+        .info-section {
+            background: var(--cds-ui-02);
+            padding: var(--cds-spacing-06);
+            border: 1px solid var(--cds-ui-03);
+            margin-bottom: var(--cds-spacing-06);
+        }
+
+        .section-title {
+            font-size: var(--cds-productive-heading-03);
+            font-weight: 600;
+            color: var(--cds-text-01);
+            margin-bottom: var(--cds-spacing-05);
+            padding-bottom: var(--cds-spacing-03);
+            border-bottom: 1px solid var(--cds-ui-03);
+            display: flex;
+            align-items: center;
+            gap: var(--cds-spacing-03);
         }
 
         .btn-group {
@@ -813,8 +999,8 @@
         <!-- Dashboard Tab -->
         <div id="dashboard" class="tab-content active">
             <!-- Role-Based Views -->
-            <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);">
-                <h3 style="color: var(--cds-interactive-01); margin-bottom: 1rem; font-size: 1.2rem;">🎯 Vistas por Rol</h3>
+            <div class="info-section">
+                <h3 class="section-title">🎯 Vistas por Rol</h3>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
                     <a href="vista_tester_defectos_ibm.html" style="text-decoration: none;">
                         <div class="role-view-card" style="background: linear-gradient(135deg, #0f62fe, #0530ad); color: white; padding: 1.5rem; border-radius: 8px; text-align: center;">
@@ -841,20 +1027,20 @@
             </div>
 
             <!-- Quick Actions -->
-            <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);">
-                <h3 style="color: var(--cds-interactive-01); margin-bottom: 1rem; font-size: 1.2rem;">⚡ Acciones Rápidas</h3>
+            <div class="info-section">
+                <h3 class="section-title">⚡ Acciones Rápidas</h3>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                    <button class="quick-action-btn" onclick="showTab('defects')" style="background: linear-gradient(135deg, #da1e28, #ba1b23); color: white; border: none; padding: 1rem; border-radius: 8px; cursor: pointer;">
+                    <button class="quick-action-btn" onclick="showTab('defects')">
                         <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🐛</div>
                         <div style="font-weight: 600; margin-bottom: 0.25rem;">Reportar Defecto</div>
                         <div style="font-size: 0.8rem; opacity: 0.9;">Click aquí para reportar un nuevo defecto</div>
                     </button>
-                    <button class="quick-action-btn" onclick="showTab('analytics')" style="background: linear-gradient(135deg, #f1c21b, #d2a106); color: white; border: none; padding: 1rem; border-radius: 8px; cursor: pointer;">
+                    <button class="quick-action-btn" onclick="showTab('analytics')">
                         <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📊</div>
                         <div style="font-weight: 600; margin-bottom: 0.25rem;">Ver Analíticas</div>
                         <div style="font-size: 0.8rem; opacity: 0.9;">Revisar métricas y tendencias</div>
                     </button>
-                    <button class="quick-action-btn" onclick="showTab('reports')" style="background: linear-gradient(135deg, #8a3ffc, #6929c4); color: white; border: none; padding: 1rem; border-radius: 8px; cursor: pointer;">
+                    <button class="quick-action-btn" onclick="showTab('reports')">
                         <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📋</div>
                         <div style="font-weight: 600; margin-bottom: 0.25rem;">Generar Reportes</div>
                         <div style="font-size: 0.8rem; opacity: 0.9;">Crear reportes ejecutivos</div>
@@ -947,7 +1133,7 @@
         <div id="defects" class="tab-content">
             <!-- New Defect Form -->
             <div class="section-title">Reportar Nuevo Defecto</div>
-            <form id="defectForm" style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); margin-bottom: 2rem;">
+            <form id="defectForm" class="form-container">
                 <div class="form-grid">
                     <div class="bx--form-item">
                         <label class="bx--label">ID del Defecto</label>

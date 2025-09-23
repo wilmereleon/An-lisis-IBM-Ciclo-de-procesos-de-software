@@ -6,9 +6,17 @@
     <title>Vista Tester - Gestión de Defectos - IBM Quality Management</title>
     <link rel="icon" type="image/x-icon" href="https://www.ibm.com/favicon.ico">
     
-    <!-- IBM Carbon Design System Icons -->
+    <!-- IBM Carbon Design System CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/carbon-components@10.58.12/css/carbon-components.min.css">
+    
+    <!-- IBM Carbon Icons -->
     <script type="module" src="https://unpkg.com/@carbon/icons@11.8.0/es/index.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@carbon/icons@11.8.0/lib/index.css">
+    
+    <!-- IBM Plex Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -16,17 +24,97 @@
             --cds-interactive-01: #0f62fe;
             --cds-interactive-02: #393939;
             --cds-interactive-03: #0f62fe;
-            --cds-ui-background: #f4f4f4;
-            --cds-ui-01: #ffffff;
-            --cds-ui-02: #f4f4f4;
+            --cds-interactive-04: #0f62fe;
+            --cds-ui-background: #ffffff;
+            --cds-ui-01: #f4f4f4;
+            --cds-ui-02: #ffffff;
+            --cds-ui-03: #e0e0e0;
+            --cds-ui-04: #8d8d8d;
+            --cds-ui-05: #161616;
             --cds-text-01: #161616;
             --cds-text-02: #525252;
             --cds-text-03: #a8a8a8;
+            --cds-text-04: #ffffff;
+            --cds-text-05: #6f6f6f;
+            --cds-icon-01: #161616;
+            --cds-icon-02: #525252;
+            --cds-icon-03: #ffffff;
+            --cds-link-01: #0f62fe;
             --cds-field-01: #f4f4f4;
+            --cds-field-02: #ffffff;
+            --cds-inverse-01: #ffffff;
+            --cds-inverse-02: #393939;
             --cds-support-01: #da1e28;
             --cds-support-02: #24a148;
             --cds-support-03: #f1c21b;
             --cds-support-04: #0043ce;
+            --cds-overlay-01: rgba(22, 22, 22, 0.5);
+            --cds-focus: #0f62fe;
+            --cds-hover-primary: #0353e9;
+            --cds-active-primary: #002d9c;
+            --cds-hover-primary-text: #004ccc;
+            --cds-hover-secondary: #4c4c4c;
+            --cds-active-secondary: #6f6f6f;
+            --cds-hover-tertiary: #0353e9;
+            --cds-active-tertiary: #002d9c;
+            --cds-hover-ui: #e5e5e5;
+            --cds-active-ui: #c6c6c6;
+            --cds-selected-ui: #e0e0e0;
+            --cds-hover-selected-ui: #cacaca;
+            --cds-inverse-hover-ui: #4c4c4c;
+            --cds-hover-danger: #ba1b23;
+            --cds-active-danger: #750e13;
+            --cds-hover-row: #e5e5e5;
+            --cds-visited-link: #8a3ffc;
+            --cds-disabled-01: #f4f4f4;
+            --cds-disabled-02: #c6c6c6;
+            --cds-disabled-03: #8d8d8d;
+            --cds-highlight: #d0e2ff;
+            --cds-skeleton-01: #e5e5e5;
+            --cds-skeleton-02: #c6c6c6;
+            --cds-brand-01: #0f62fe;
+            --cds-brand-02: #393939;
+            --cds-brand-03: #0f62fe;
+            --cds-active-01: #c6c6c6;
+            --cds-hover-field: #e5e5e5;
+            
+            /* IBM Carbon Spacing Scale */
+            --cds-spacing-01: 0.125rem;
+            --cds-spacing-02: 0.25rem;
+            --cds-spacing-03: 0.5rem;
+            --cds-spacing-04: 0.75rem;
+            --cds-spacing-05: 1rem;
+            --cds-spacing-06: 1.5rem;
+            --cds-spacing-07: 2rem;
+            --cds-spacing-08: 2.5rem;
+            --cds-spacing-09: 3rem;
+            --cds-spacing-10: 4rem;
+            --cds-spacing-11: 5rem;
+            --cds-spacing-12: 6rem;
+            --cds-spacing-13: 10rem;
+            
+            /* IBM Carbon Typography Scale */
+            --cds-productive-heading-01: 0.875rem;
+            --cds-productive-heading-02: 1rem;
+            --cds-productive-heading-03: 1.25rem;
+            --cds-productive-heading-04: 1.75rem;
+            --cds-productive-heading-05: 2rem;
+            --cds-productive-heading-06: 2.625rem;
+            --cds-productive-heading-07: 3.375rem;
+            
+            --cds-body-compact-01: 0.875rem;
+            --cds-body-compact-02: 1rem;
+            --cds-body-short-01: 0.875rem;
+            --cds-body-short-02: 1rem;
+            --cds-body-long-01: 0.875rem;
+            --cds-body-long-02: 1rem;
+            
+            --cds-caption-01: 0.75rem;
+            --cds-caption-02: 0.875rem;
+            --cds-label-01: 0.75rem;
+            --cds-label-02: 0.875rem;
+            --cds-helper-text-01: 0.75rem;
+            --cds-helper-text-02: 0.875rem;
         }
 
         * {
@@ -36,23 +124,192 @@
         }
 
         body {
-            font-family: 'IBM Plex Sans', Arial, sans-serif;
+            font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.29;
+            letter-spacing: 0.16px;
             background-color: var(--cds-ui-background);
             color: var(--cds-text-01);
-            line-height: 1.6;
+            min-height: 100vh;
         }
 
-        /* Header */
+        /* IBM Carbon Header/Navbar */
         .bx--header {
-            background-color: var(--cds-interactive-02);
-            border-bottom: 1px solid #393939;
+            background-color: var(--cds-ui-05);
+            border-bottom: 1px solid var(--cds-ui-03);
             height: 48px;
             display: flex;
             align-items: center;
-            padding: 0 1rem;
-            position: sticky;
+            padding: 0 var(--cds-spacing-05);
+            position: fixed;
             top: 0;
-            z-index: 1000;
+            left: 0;
+            right: 0;
+            z-index: 6000;
+        }
+
+        .bx--header__name {
+            color: var(--cds-text-04);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bx--header__menu-trigger {
+            background: none;
+            border: none;
+            color: var(--cds-text-04);
+            cursor: pointer;
+            padding: var(--cds-spacing-03);
+        }
+
+        /* Main content adjustment for fixed header */
+        .main-content {
+            margin-top: 48px;
+            padding: var(--cds-spacing-05);
+        }
+
+        /* IBM Carbon Page Header */
+        .page-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--cds-spacing-07);
+            gap: var(--cds-spacing-05);
+            padding: var(--cds-spacing-07) var(--cds-spacing-05);
+            flex-wrap: wrap;
+            min-height: 120px;
+            background: linear-gradient(135deg, var(--cds-interactive-01) 0%, #0f62fe 100%);
+            border-radius: var(--cds-border-radius);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: skewX(-15deg);
+            transform-origin: top;
+        }
+
+        .role-icon {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            padding: var(--cds-spacing-04);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            flex-shrink: 0;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .role-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .page-title {
+            color: white;
+            margin: 0;
+            font-size: var(--cds-heading-03-font-size, 1.75rem);
+            font-weight: var(--cds-heading-03-font-weight, 400);
+            line-height: var(--cds-heading-03-line-height, 1.4);
+            letter-spacing: var(--cds-heading-03-letter-spacing, 0);
+        }
+
+        .page-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            margin: var(--cds-spacing-02) 0 0 0;
+            font-size: var(--cds-body-short-02-font-size, 1rem);
+            font-weight: var(--cds-body-short-02-font-weight, 400);
+            line-height: var(--cds-body-short-02-line-height, 1.375);
+        }
+
+        /* IBM Carbon Stat Cards */
+        .stat-card {
+            text-align: center;
+            margin-bottom: var(--cds-spacing-05);
+        }
+
+        .stat-number {
+            font-size: var(--cds-display-02-font-size, 2.5rem);
+            font-weight: var(--cds-display-02-font-weight, 300);
+            color: var(--cds-interactive-01);
+            line-height: var(--cds-display-02-line-height, 1.19);
+            letter-spacing: var(--cds-display-02-letter-spacing, 0);
+        }
+
+        .stat-label {
+            font-size: var(--cds-label-01-font-size, 0.75rem);
+            font-weight: var(--cds-label-01-font-weight, 400);
+            color: var(--cds-text-02);
+            margin-top: var(--cds-spacing-02);
+            line-height: var(--cds-label-01-line-height, 1.34);
+            letter-spacing: var(--cds-label-01-letter-spacing, 0.32px);
+        }
+
+        /* IBM Carbon Action Cards */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--cds-spacing-05);
+            margin-bottom: var(--cds-spacing-07);
+        }
+
+        .action-card {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            padding: var(--cds-spacing-05);
+        }
+
+        .action-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-icon {
+            background-color: var(--cds-interactive-01);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--cds-spacing-04) auto;
+            color: white;
+        }
+
+        .action-title {
+            color: var(--cds-text-01);
+            margin: var(--cds-spacing-03) 0;
+            font-size: var(--cds-heading-compact-01-font-size, 0.875rem);
+            font-weight: var(--cds-heading-compact-01-font-weight, 600);
+            line-height: var(--cds-heading-compact-01-line-height, 1.29);
+            letter-spacing: var(--cds-heading-compact-01-letter-spacing, 0.16px);
+        }
+
+        .action-description {
+            color: var(--cds-text-02);
+            margin: 0;
+            font-size: var(--cds-body-compact-01-font-size, 0.875rem);
+            font-weight: var(--cds-body-compact-01-font-weight, 400);
+            line-height: var(--cds-body-compact-01-line-height, 1.29);
+            letter-spacing: var(--cds-body-compact-01-letter-spacing, 0.16px);
         }
 
         .bx--header__name {
@@ -66,9 +323,10 @@
         }
 
         .bx--header__logo {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             fill: white;
+            flex-shrink: 0;
         }
 
         /* Navigation Styles */
@@ -312,6 +570,28 @@
                 padding: 2rem 1rem;
                 flex-direction: column;
                 text-align: center;
+                gap: var(--cds-spacing-04);
+                min-height: auto;
+            }
+
+            .role-icon {
+                width: 40px;
+                height: 40px;
+                padding: var(--cds-spacing-03);
+            }
+
+            .role-icon svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .bx--header__name {
+                font-size: 0.9rem;
+            }
+
+            .bx--header__logo {
+                width: 18px;
+                height: 18px;
             }
 
             .defect-table {
@@ -321,6 +601,26 @@
             .defect-table th,
             .defect-table td {
                 padding: 0.75rem 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header {
+                padding: 1.5rem 0.75rem;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .role-icon {
+                width: 36px;
+                height: 36px;
+            }
+
+            .role-icon svg {
+                width: 18px;
+                height: 18px;
             }
         }
     </style>
@@ -371,81 +671,102 @@
         <div class="role-badge">👨‍💻 Tester</div>
     </header>
 
-    <div class="container">
-        <div class="page-header">
-            <div class="role-icon">
-                <svg viewBox="0 0 32 32" fill="white" width="24" height="24">
-                    <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26ZM8,8H24v2H8Zm0,4H24v2H8Zm0,4H18v2H8Z"/>
-                </svg>
-            </div>
-            <div>
-                <h1 class="page-title">Panel del Tester</h1>
-                <p class="page-subtitle">Gestión de defectos encontrados durante las pruebas</p>
-            </div>
-        </div>
-
-        <!-- Statistics -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number">12</div>
-                <div class="stat-label">Defectos Reportados Hoy</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">45</div>
-                <div class="stat-label">Defectos Activos</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">8</div>
-                <div class="stat-label">Pendientes Verificación</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">23</div>
-                <div class="stat-label">Resueltos Esta Semana</div>
-            </div>
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="quick-actions">
-            <div class="action-card" onclick="reportDefect()">
-                <div class="action-icon">
-                    <svg viewBox="0 0 32 32">
-                        <path d="M17,15V8H15v7H8v2h7v7h2V17h7V15Z"/>
-                    </svg>
+    <div class="main-content bx--content">
+        <div class="bx--grid">
+            <div class="bx--row">
+                <div class="bx--col-lg-16">
+                    <div class="page-header">
+                        <div class="role-icon">
+                            <svg viewBox="0 0 32 32" fill="currentColor" width="24" height="24">
+                                <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26ZM8,8H24v2H8Zm0,4H24v2H8Zm0,4H18v2H8Z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="bx--type-productive-heading-05 page-title">Panel del Tester</h1>
+                            <p class="bx--type-body-long-01 page-subtitle">Gestión de defectos encontrados durante las pruebas</p>
+                        </div>
+                    </div>
                 </div>
-                <h3 class="action-title">Reportar Nuevo Defecto</h3>
-                <p class="action-description">Crear un nuevo reporte de defecto con toda la información necesaria</p>
             </div>
 
-            <div class="action-card" onclick="viewMyDefects()">
-                <div class="action-icon">
-                    <svg viewBox="0 0 32 32">
-                        <path d="M22.45,6h-12L8.78,7.64a2,2,0,0,0-.25,2.8L15.46,18.6a2,2,0,0,0,3.19,0l6.93-8.16a2,2,0,0,0-.25-2.8Z"/>
-                    </svg>
+            <!-- Statistics -->
+            <div class="bx--row">
+                <div class="bx--col-lg-3 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile stat-card">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Defectos Reportados Hoy</div>
+                    </div>
                 </div>
-                <h3 class="action-title">Mis Defectos</h3>
-                <p class="action-description">Ver todos los defectos que he reportado y su estado actual</p>
+                <div class="bx--col-lg-3 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile stat-card">
+                        <div class="stat-number">45</div>
+                        <div class="stat-label">Defectos Activos</div>
+                    </div>
+                </div>
+                <div class="bx--col-lg-3 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile stat-card">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Pendientes Verificación</div>
+                    </div>
+                </div>
+                <div class="bx--col-lg-3 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile stat-card">
+                        <div class="stat-number">23</div>
+                        <div class="stat-label">Resueltos Esta Semana</div>
+                    </div>
+                </div>
             </div>
 
-            <div class="action-card" onclick="verifyFixes()">
-                <div class="action-icon">
-                    <svg viewBox="0 0 32 32">
-                        <path d="M13,24l-9-9,1.414-1.414L13,21.172l15.586-15.586L30,7Z"/>
-                    </svg>
+            <!-- Quick Actions -->
+            <div class="bx--row">
+                <div class="bx--col-lg-3 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile action-card" onclick="reportDefect()">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                                <path d="M17,15V8H15v7H8v2h7v7h2V17h7V15Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="bx--type-productive-heading-03 action-title">Reportar Nuevo Defecto</h3>
+                        <p class="bx--type-body-short-01 action-description">Crear un nuevo reporte de defecto con toda la información necesaria</p>
+                    </div>
                 </div>
-                <h3 class="action-title">Verificar Correcciones</h3>
-                <p class="action-description">Revisar y validar las correcciones implementadas por desarrollo</p>
-            </div>
-
-            <div class="action-card" onclick="generateReport()">
-                <div class="action-icon">
-                    <svg viewBox="0 0 32 32">
-                        <path d="M25,5H22V4a2,2,0,0,0-2-2H12a2,2,0,0,0-2,2V5H7A2,2,0,0,0,5,7V28a2,2,0,0,0,2,2H25a2,2,0,0,0,2-2V7A2,2,0,0,0,25,5ZM12,4h8V8H12ZM25,28H7V7h3v3H22V7h3Z"/>
-                    </svg>
+                
+                <div class="bx--col-lg-3 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile action-card" onclick="viewMyDefects()">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                                <path d="M22.45,6h-12L8.78,7.64a2,2,0,0,0-.25,2.8L15.46,18.6a2,2,0,0,0,3.19,0l6.93-8.16a2,2,0,0,0-.25-2.8Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="bx--type-productive-heading-03 action-title">Mis Defectos</h3>
+                        <p class="bx--type-body-short-01 action-description">Ver todos los defectos que he reportado y su estado actual</p>
+                    </div>
                 </div>
-                <h3 class="action-title">Generar Reporte</h3>
-                <p class="action-description">Crear reportes de actividad y métricas de testing</p>
+                
+                <div class="bx--col-lg-3 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile action-card" onclick="verifyFixes()">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                                <path d="M13,24l-9-9,1.414-1.414L13,21.172l15.586-15.586L30,7Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="bx--type-productive-heading-03 action-title">Verificar Correcciones</h3>
+                        <p class="bx--type-body-short-01 action-description">Revisar y validar las correcciones implementadas por desarrollo</p>
+                    </div>
+                </div>
+                
+                <div class="bx--col-lg-3 bx--col-md-4 bx--col-sm-4">
+                    <div class="bx--tile action-card" onclick="generateReport()">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                                <path d="M25,5H22V4a2,2,0,0,0-2-2H12a2,2,0,0,0-2,2V5H7A2,2,0,0,0,5,7V28a2,2,0,0,0,2,2H25a2,2,0,0,0,2-2V7A2,2,0,0,0,25,5ZM12,4h8V8H12ZM25,28H7V7h3v3H22V7h3Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="bx--type-productive-heading-03 action-title">Generar Reporte</h3>
+                        <p class="bx--type-body-short-01 action-description">Crear reportes de actividad y métricas de testing</p>
+                    </div>
+                </div>
             </div>
-        </div>
 
         <!-- Testing Tools Section -->
         <div style="margin: 2rem 0;">

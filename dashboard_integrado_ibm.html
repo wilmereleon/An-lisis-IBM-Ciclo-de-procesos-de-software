@@ -260,6 +260,12 @@
             border: 1px solid var(--cds-ui-03);
             border-radius: 4px;
             overflow: hidden;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
         }
 
         .card-header {
@@ -297,6 +303,14 @@
             background: var(--cds-ui-01);
             border: 1px solid var(--cds-ui-03);
             border-radius: 4px;
+            transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .metric-item:hover {
+            background: var(--cds-hover-ui);
+            border-color: var(--cds-interactive-01);
+            transform: translateY(-2px);
         }
 
         .metric-value {
@@ -345,6 +359,12 @@
             border-bottom: 1px solid var(--cds-ui-03);
             display: flex;
             gap: var(--cds-spacing-03);
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+        }
+
+        .activity-item:hover {
+            background-color: var(--cds-hover-ui);
         }
 
         .activity-item:last-child {
@@ -408,6 +428,15 @@
 
         .bx--btn--primary:hover {
             background-color: var(--cds-hover-primary);
+            color: var(--cds-text-04);
+        }
+
+        .bx--btn--primary:active,
+        .bx--btn--primary:focus {
+            background-color: var(--cds-active-primary);
+            color: var(--cds-text-04);
+            outline: 2px solid var(--cds-focus);
+            outline-offset: -2px;
         }
 
         .bx--btn--secondary {
@@ -418,6 +447,15 @@
 
         .bx--btn--secondary:hover {
             background-color: var(--cds-hover-ui);
+            color: var(--cds-interactive-01);
+        }
+
+        .bx--btn--secondary:active,
+        .bx--btn--secondary:focus {
+            background-color: var(--cds-interactive-01);
+            color: var(--cds-text-04);
+            outline: 2px solid var(--cds-focus);
+            outline-offset: -2px;
         }
 
         /* Responsive */
@@ -1183,28 +1221,43 @@
             const notification = document.createElement('div');
             notification.style.cssText = `
                 position: fixed;
-                top: 20px;
+                top: 70px;
                 right: 20px;
                 background: var(--cds-interactive-01);
                 color: white;
                 padding: 1rem;
                 border-radius: 4px;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                z-index: 1000;
+                z-index: 7000;
                 max-width: 300px;
                 font-family: 'IBM Plex Sans', sans-serif;
+                transform: translateY(-10px);
+                opacity: 0;
+                transition: all 0.3s ease;
             `;
             notification.innerHTML = `
-                <h4 style="margin: 0 0 0.5rem 0; font-size: 0.875rem;">${title}</h4>
+                <h4 style="margin: 0 0 0.5rem 0; font-size: 0.875rem; font-weight: 600;">${title}</h4>
                 <p style="margin: 0; font-size: 0.75rem; opacity: 0.9;">${message}</p>
             `;
             
             document.body.appendChild(notification);
             
-            // Auto-remover después de 3 segundos
+            // Animación de entrada
             setTimeout(() => {
-                document.body.removeChild(notification);
-            }, 3000);
+                notification.style.transform = 'translateY(0)';
+                notification.style.opacity = '1';
+            }, 10);
+            
+            // Auto-remover después de 4 segundos con animación
+            setTimeout(() => {
+                notification.style.transform = 'translateY(-10px)';
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
         }
 
         // Inicializar actividades de ejemplo
