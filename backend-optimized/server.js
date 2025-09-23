@@ -14,9 +14,10 @@ require('dotenv').config();
 // Importar middlewares personalizados
 const { securityHeaders, securityLogger, apiLimiter } = require('./src/middleware/validationMiddleware');
 const logger = require('./src/utils/logger');
+const database = require('./src/utils/database');
 
 // Importar rutas
-const userRoutes = require('./src/routes/users-v2');
+const userRoutes = require('./src/routes/users-simple');
 const authRoutes = require('./src/routes/auth');
 
 const app = express();
@@ -43,7 +44,11 @@ app.use(compression());
 
 // Configurar CORS
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: [
+    process.env.FRONTEND_URL || 'http://localhost:3000',
+    'http://localhost:8080',
+    'http://127.0.0.1:8080'
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -88,6 +93,55 @@ app.get('/health', (req, res) => {
     version: '1.0.0',
     environment: process.env.NODE_ENV || 'development'
   });
+});
+
+// Health check endpoint para API
+app.get('/api/health', async (req, res) => {
+  try {
+    const dbHealth = await database.healthCheck();
+    
+    res.json({
+      success: true,
+      message: 'IBM Quality Management API is running',
+      timestamp: new Date().toISOString(),
+      version: '1.0.0',
+      environment: process.env.NODE_ENV || 'development',
+      services: {
+        database: dbHealth,
+        userService: 'active',
+        authentication: 'active'
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Health check failed',
+      error: error.message
+    });
+  }
+});
+
+// Database info endpoint
+app.get('/api/database', async (req, res) => {
+  try {
+    const dbInfo = database.getInfo();
+    const dbHealth = await database.healthCheck();
+    
+    res.json({
+      success: true,
+      message: 'Database information',
+      data: {
+        ...dbInfo,
+        health: dbHealth
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error getting database info',
+      error: error.message
+    });
+  }
 });
 
 // API Routes
@@ -175,16 +229,48 @@ process.on('uncaughtException', (error) => {
 });
 
 // Iniciar servidor
-const server = app.listen(PORT, () => {
-  logger.info('IBM Quality Management API Server started', {
-    port: PORT,
-    environment: process.env.NODE_ENV || 'development',
-    timestamp: new Date().toISOString()
-  });
-  
-  console.log(`🚀 IBM Quality Management API running on port ${PORT}`);
-  console.log(`📊 Health check: http://localhost:${PORT}/health`);
-  console.log(`🔗 API info: http://localhost:${PORT}/api`);
+const server = app.listen(PORT, async () => {
+  try {
+    // Inicializar base de datos
+    await database.initialize();
+    
+    logger.info('IBM Quality Management API Server started', {
+      port: PORT,
+      environment: process.env.NODE_ENV || 'development',
+      database: database.getInfo().type,
+      timestamp: new Date().toISOString()
+    });
+    
+    console.log(`🚀 IBM Quality Management API running on port ${PORT}`);
+    console.log(`📊 Health check: http://localhost:${PORT}/health`);
+    console.log(`🔗 API info: http://localhost:${PORT}/api`);
+    console.log(`💾 Database: ${database.getInfo().type}`);
+    
+  } catch (error) {
+    logger.error('Failed to start server', { error: error.message });
+    process.exit(1);
+  }
 });
+
+// Manejo de cierre limpio
+const gracefulShutdown = async (signal) => {
+  logger.info(`${signal} received, shutting down gracefully`);
+  
+  server.close(async () => {
+    try {
+      // Cerrar conexiones de base de datos
+      await database.close();
+      logger.info('Server closed successfully');
+      process.exit(0);
+    } catch (error) {
+      logger.error('Error during shutdown', { error: error.message });
+      process.exit(1);
+    }
+  });
+};
+
+// Capturar señales de terminación
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 
 module.exports = app;

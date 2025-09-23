@@ -1,0 +1,307 @@
+/**
+ * Estilos globales para IBM Quality Management System
+ * Configuración base de Carbon Design System y customizaciones
+ */
+
+// IBM Carbon Design System variables y mixins
+@use '@carbon/react/scss/colors';
+@use '@carbon/react/scss/theme' with (
+  $theme: (
+    'background': #f4f4f4,
+    'background-inverse': #393939,
+    'text-primary': #161616,
+    'text-secondary': #525252,
+    'text-placeholder': #a8a8a8,
+    'text-on-color': #ffffff,
+    'link-primary': #0f62fe,
+    'support-error': #da1e28,
+    'support-success': #24a148,
+    'support-warning': #f1c21b,
+    'support-info': #0043ce
+  )
+);
+@use '@carbon/react/scss/spacing';
+@use '@carbon/react/scss/type';
+
+// Reset y configuración base
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f4f4f4;
+  color: #161616;
+  line-height: 1.5;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+// Estilos de tipografía IBM
+.ibm-type-productive-heading-01 {
+  @include type.type-style('productive-heading-01');
+}
+
+.ibm-type-productive-heading-02 {
+  @include type.type-style('productive-heading-02');
+}
+
+.ibm-type-productive-heading-03 {
+  @include type.type-style('productive-heading-03');
+}
+
+.ibm-type-body-01 {
+  @include type.type-style('body-01');
+}
+
+.ibm-type-body-02 {
+  @include type.type-style('body-02');
+}
+
+.ibm-type-label-01 {
+  @include type.type-style('label-01');
+}
+
+// Layout utilities
+.container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 spacing.$spacing-05;
+}
+
+.full-height {
+  min-height: 100vh;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+// Espaciado
+.mb-2 {
+  margin-bottom: spacing.$spacing-03;
+}
+
+.mb-3 {
+  margin-bottom: spacing.$spacing-05;
+}
+
+.mb-4 {
+  margin-bottom: spacing.$spacing-06;
+}
+
+.mt-2 {
+  margin-top: spacing.$spacing-03;
+}
+
+.mt-3 {
+  margin-top: spacing.$spacing-05;
+}
+
+.mt-4 {
+  margin-top: spacing.$spacing-06;
+}
+
+.p-2 {
+  padding: spacing.$spacing-03;
+}
+
+.p-3 {
+  padding: spacing.$spacing-05;
+}
+
+.p-4 {
+  padding: spacing.$spacing-06;
+}
+
+// Estados de carga
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loading-container {
+  background: white;
+  border-radius: 4px;
+  padding: spacing.$spacing-06;
+  text-align: center;
+  min-width: 300px;
+}
+
+// Animaciones
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .container {
+    padding: 0 spacing.$spacing-03;
+  }
+  
+  .mobile-hidden {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .desktop-hidden {
+    display: none;
+  }
+}
+
+// Mejoras de accesibilidad
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Focus states mejorados
+*:focus {
+  outline: 2px solid #0f62fe;
+  outline-offset: 2px;
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  * {
+    border-color: ButtonText;
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// Dark mode support (preparado para futuras implementaciones)
+@media (prefers-color-scheme: dark) {
+  // Dark theme variables will be added here
+  // Currently using Carbon's g90 theme as base
+}
+
+// Customizaciones específicas de IBM QMS
+.ibm-qms-header {
+  background: linear-gradient(135deg, #0f62fe 0%, #0353e9 100%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ibm-qms-card {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.ibm-qms-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: spacing.$spacing-01 spacing.$spacing-03;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  
+  &--success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+  
+  &--warning {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+  }
+  
+  &--error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+  
+  &--info {
+    background: #cce7ff;
+    color: #004085;
+    border: 1px solid #b3d9ff;
+  }
+}

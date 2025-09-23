@@ -94,7 +94,7 @@ router.get('/',
         query('active').optional().isBoolean().withMessage('El estado activo debe ser un booleano'),
         query('department').optional().isLength({ max: 100 }).withMessage('El departamento no debe exceder 100 caracteres')
     ],
-    userController.getUsers
+    userController.getAllUsers
 );
 
 /**

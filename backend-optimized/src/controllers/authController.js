@@ -27,59 +27,45 @@ class AuthController {
 
       const { email, password } = req.body;
 
-      // Buscar usuario por email
-      const user = await userService.getUserByEmail(email);
-      
-      if (!user) {
-        logger.warn('Login attempt with non-existent email', { email, ip: req.ip });
+      // Usar el método authenticate del UserService que maneja toda la lógica
+      const sessionInfo = {
+        ip: req.ip,
+        userAgent: req.get('User-Agent')
+      };
+
+      const authResult = await userService.authenticate(email, password, sessionInfo);
+
+      if (!authResult.success) {
+        logger.warn('Login attempt failed', { 
+          email, 
+          ip: req.ip, 
+          reason: authResult.message 
+        });
+        
         return res.status(401).json({
           success: false,
-          message: 'Credenciales inválidas',
-          error: 'INVALID_CREDENTIALS'
+          message: authResult.message,
+          error: 'AUTHENTICATION_FAILED'
         });
       }
 
-      // Verificar si el usuario está activo
-      if (!user.active) {
-        logger.warn('Login attempt with inactive user', { email, ip: req.ip });
-        return res.status(401).json({
-          success: false,
-          message: 'Cuenta desactivada. Contacte al administrador.',
-          error: 'ACCOUNT_DISABLED'
-        });
-      }
-
-      // Verificar contraseña
-      const isValidPassword = await userService.verifyPassword(password, user.password);
-      
-      if (!isValidPassword) {
-        logger.warn('Login attempt with invalid password', { email, ip: req.ip });
-        return res.status(401).json({
-          success: false,
-          message: 'Credenciales inválidas',
-          error: 'INVALID_CREDENTIALS'
-        });
-      }
-
-      // Actualizar último login
-      await userService.updateLastLogin(user.id);
-
-      // Generar token JWT
-      const { password: _, ...userWithoutPassword } = user;
-      const token = generateToken(userWithoutPassword);
-
-      logger.info('User logged in successfully', {
-        userId: user.id,
-        email: user.email,
-        role: user.role,
+      // Login exitoso - el UserService ya manejó la sesión y eventos
+      logger.info('User logged in successfully via controller', {
+        userId: authResult.data.user.id,
+        email: authResult.data.user.email,
+        role: authResult.data.user.role,
         ip: req.ip
       });
 
+      // Responder con la estructura esperada por el frontend
       res.json({
         success: true,
-        message: 'Inicio de sesión exitoso',
-        token,
-        user: userWithoutPassword
+        message: authResult.message,
+        data: {
+          user: authResult.data.user,
+          token: authResult.data.token,
+          permissions: authResult.data.permissions
+        }
       });
 
     } catch (error) {
