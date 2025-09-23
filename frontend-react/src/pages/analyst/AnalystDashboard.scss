@@ -1,0 +1,371 @@
+/**
+ * Estilos para Dashboard de Analista
+ * IBM Carbon Design System
+ */
+
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/colors' as *;
+@use '@carbon/react/scss/breakpoint' as *;
+@use '@carbon/react/scss/motion' as *;
+
+.analyst-dashboard {
+  padding: $spacing-06;
+  background: $background;
+  min-height: 100vh;
+
+  @include breakpoint('sm') {
+    padding: $spacing-05;
+  }
+
+  &--loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__header {
+    margin-bottom: $spacing-07;
+    padding-bottom: $spacing-05;
+    border-bottom: 1px solid $border-subtle-01;
+
+    h2 {
+      @include type-style('heading-05');
+      color: $text-primary;
+      display: flex;
+      align-items: center;
+      gap: $spacing-03;
+    }
+
+    p {
+      @include type-style('body-01');
+      color: $text-secondary;
+    }
+  }
+
+  &__header-icon {
+    color: $blue-60;
+  }
+
+  &__content {
+    .cds--grid {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  &__section {
+    margin-bottom: $spacing-06;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__section-header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-03;
+    margin-bottom: $spacing-05;
+
+    svg {
+      color: $blue-60;
+    }
+
+    h3 {
+      @include type-style('heading-04');
+      color: $text-primary;
+      flex: 1;
+    }
+  }
+
+  // Tiles específicos
+  &__metrics-tile,
+  &__reports-tile,
+  &__actions-tile {
+    padding: $spacing-06;
+    background: $layer-01;
+    border: 1px solid $border-subtle-01;
+    border-radius: 8px;
+    
+    &:hover {
+      background: $layer-hover-01;
+      transition: background $duration-fast-02 $standard-easing;
+    }
+  }
+
+  // Quick Stats
+  &__quick-stat {
+    margin-bottom: $spacing-05;
+  }
+
+  &__stat-tile {
+    padding: $spacing-05;
+    text-align: center;
+    height: 100%;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: $blue-60;
+    }
+
+    &--coverage::before {
+      background: linear-gradient(90deg, $green-50, $green-40);
+    }
+
+    &--defects::before {
+      background: linear-gradient(90deg, $yellow-40, $orange-40);
+    }
+
+    &--velocity::before {
+      background: linear-gradient(90deg, $blue-50, $purple-40);
+    }
+
+    &--satisfaction::before {
+      background: linear-gradient(90deg, $teal-50, $cyan-40);
+    }
+  }
+
+  &__stat-value {
+    @include type-style('display-02');
+    color: $text-primary;
+    font-weight: 300;
+    margin-bottom: $spacing-02;
+    
+    // Animación para números
+    background: linear-gradient(45deg, $blue-60, $purple-60);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &__stat-label {
+    @include type-style('label-02');
+    color: $text-secondary;
+    margin-bottom: $spacing-03;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  // Tablas mejoradas
+  .cds--data-table {
+    background: transparent;
+
+    .cds--table-header-label {
+      @include type-style('heading-compact-01');
+      color: $text-primary;
+    }
+
+    .cds--data-table-content {
+      background: transparent;
+    }
+
+    .cds--data-table th,
+    .cds--data-table td {
+      border-bottom: 1px solid $border-subtle-01;
+      
+      &:first-child {
+        padding-left: $spacing-05;
+      }
+    }
+
+    .cds--data-table tr:hover {
+      background: $layer-hover-01;
+    }
+  }
+
+  // Acciones en tablas
+  &__actions {
+    display: flex;
+    gap: $spacing-03;
+    justify-content: flex-end;
+
+    .cds--btn {
+      min-height: auto;
+      padding: $spacing-02 $spacing-04;
+    }
+  }
+
+  // Acciones rápidas
+  &__actions-tile {
+    .cds--stack--horizontal {
+      flex-wrap: wrap;
+      gap: $spacing-04;
+
+      @include breakpoint('sm') {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    .cds--btn {
+      transition: all $duration-moderate-01 $standard-easing;
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+    }
+  }
+
+  // Tags mejorados
+  .cds--tag {
+    &.cds--tag--green {
+      background: $green-20;
+      color: $green-70;
+      border: 1px solid $green-30;
+    }
+
+    &.cds--tag--yellow {
+      background: $yellow-20;
+      color: $yellow-80;
+      border: 1px solid $yellow-30;
+    }
+
+    &.cds--tag--red {
+      background: $red-20;
+      color: $red-70;
+      border: 1px solid $red-30;
+    }
+
+    &.cds--tag--blue {
+      background: $blue-20;
+      color: $blue-70;
+      border: 1px solid $blue-30;
+    }
+  }
+}
+
+// Modo oscuro
+[data-carbon-theme='g100'] .analyst-dashboard {
+  &__stat-tile {
+    background: $layer-02;
+    
+    &:hover {
+      background: $layer-hover-02;
+    }
+  }
+
+  &__metrics-tile,
+  &__reports-tile,
+  &__actions-tile {
+    background: $layer-02;
+    border-color: $border-subtle-02;
+    
+    &:hover {
+      background: $layer-hover-02;
+    }
+  }
+
+  .cds--tag {
+    &.cds--tag--green {
+      background: $green-80;
+      color: $green-20;
+      border-color: $green-70;
+    }
+
+    &.cds--tag--yellow {
+      background: $yellow-80;
+      color: $yellow-20;
+      border-color: $yellow-70;
+    }
+
+    &.cds--tag--red {
+      background: $red-80;
+      color: $red-20;
+      border-color: $red-70;
+    }
+
+    &.cds--tag--blue {
+      background: $blue-80;
+      color: $blue-20;
+      border-color: $blue-70;
+    }
+  }
+}
+
+// Responsive design
+@include breakpoint('md') {
+  .analyst-dashboard {
+    &__content .cds--col-lg-4 {
+      margin-bottom: $spacing-05;
+    }
+  }
+}
+
+@include breakpoint('sm') {
+  .analyst-dashboard {
+    &__header h2 {
+      @include type-style('heading-04');
+      flex-direction: column;
+      text-align: center;
+      gap: $spacing-02;
+    }
+
+    &__stat-value {
+      @include type-style('display-01');
+    }
+
+    &__section-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-02;
+    }
+  }
+}
+
+// Animaciones para carga de datos
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.analyst-dashboard__section {
+  animation: fadeInUp $duration-moderate-02 $standard-easing;
+  
+  &:nth-child(1) { animation-delay: 0ms; }
+  &:nth-child(2) { animation-delay: 100ms; }
+  &:nth-child(3) { animation-delay: 200ms; }
+  &:nth-child(4) { animation-delay: 300ms; }
+}
+
+// Accesibilidad
+@media (prefers-reduced-motion: reduce) {
+  .analyst-dashboard {
+    &__section {
+      animation: none;
+    }
+    
+    .cds--btn:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+}
+
+// Focus mejorado
+.analyst-dashboard {
+  .cds--btn:focus {
+    outline: 2px solid $focus;
+    outline-offset: 2px;
+  }
+  
+  .cds--data-table tr:focus-within {
+    outline: 2px solid $focus;
+    outline-offset: -2px;
+  }
+}

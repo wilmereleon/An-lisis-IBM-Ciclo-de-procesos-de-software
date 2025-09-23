@@ -1,0 +1,360 @@
+/**
+ * Estilos para páginas de error
+ * IBM Carbon Design System
+ */
+
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/colors' as *;
+@use '@carbon/react/scss/breakpoint' as *;
+@use '@carbon/react/scss/motion' as *;
+
+.error-page {
+  min-height: 100vh;
+  background: $background;
+  padding: $spacing-07;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include breakpoint('sm') {
+    padding: $spacing-05;
+  }
+
+  &__content {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  &__icon {
+    color: $support-warning;
+    margin-bottom: $spacing-05;
+    
+    svg {
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+    }
+  }
+
+  &__code {
+    margin-bottom: $spacing-06;
+    
+    h1 {
+      @include type-style('display-03');
+      color: $text-primary;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+    }
+  }
+
+  &__message {
+    margin-bottom: $spacing-06;
+    
+    h2 {
+      @include type-style('heading-04');
+      color: $text-primary;
+      margin-bottom: $spacing-04;
+    }
+    
+    p {
+      @include type-style('body-01');
+      color: $text-secondary;
+      line-height: 1.6;
+    }
+  }
+
+  &__details {
+    margin-bottom: $spacing-06;
+    padding: $spacing-05;
+    background: $layer-01;
+    border-radius: 8px;
+    border-left: 4px solid $support-info;
+    
+    p {
+      @include type-style('body-01');
+      color: $text-secondary;
+      margin-bottom: $spacing-03;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__url {
+    font-family: 'IBM Plex Mono', monospace;
+    background: $field-01;
+    padding: $spacing-03;
+    border-radius: 4px;
+    word-break: break-all;
+    
+    strong {
+      color: $text-primary;
+    }
+  }
+
+  &__search {
+    margin-bottom: $spacing-07;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &__actions {
+    margin-bottom: $spacing-07;
+    
+    .cds--stack--horizontal {
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: $spacing-04;
+      
+      @include breakpoint('sm') {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  }
+
+  &__quick-links {
+    margin-bottom: $spacing-06;
+    text-align: left;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    
+    h4 {
+      @include type-style('heading-03');
+      color: $text-primary;
+      margin-bottom: $spacing-04;
+      text-align: center;
+    }
+    
+    .cds--stack {
+      align-items: stretch;
+    }
+    
+    .cds--btn--ghost {
+      justify-content: flex-start;
+      text-align: left;
+    }
+  }
+
+  &__help {
+    text-align: left;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: $spacing-05;
+    background: $layer-01;
+    border-radius: 8px;
+    
+    h4 {
+      @include type-style('heading-03');
+      color: $text-primary;
+      margin-bottom: $spacing-04;
+    }
+    
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      
+      li {
+        @include type-style('body-01');
+        color: $text-secondary;
+        margin-bottom: $spacing-03;
+        padding-left: $spacing-05;
+        position: relative;
+        
+        &:before {
+          content: '✓';
+          position: absolute;
+          left: 0;
+          color: $support-success;
+          font-weight: bold;
+        }
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  &__sidebar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    @include breakpoint-down('md') {
+      display: none;
+    }
+  }
+
+  &__illustration {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    
+    .illustration-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, $blue-20, $blue-50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      position: relative;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        right: -10px;
+        bottom: -10px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, $blue-10, $blue-30);
+        z-index: -1;
+        opacity: 0.3;
+      }
+      
+      .illustration-content {
+        color: $white;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+      }
+    }
+    
+    .illustration-dots {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      
+      .dot {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: $blue-40;
+        opacity: 0.6;
+        
+        &:nth-child(1) {
+          top: 20%;
+          left: 10%;
+          animation: float 3s ease-in-out infinite;
+        }
+        
+        &:nth-child(2) {
+          top: 60%;
+          right: 15%;
+          animation: float 3s ease-in-out infinite 1s;
+        }
+        
+        &:nth-child(3) {
+          bottom: 25%;
+          left: 20%;
+          animation: float 3s ease-in-out infinite 2s;
+        }
+      }
+    }
+  }
+}
+
+// Animaciones
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+// Estados hover y focus mejorados
+.error-page {
+  .cds--btn {
+    transition: all $duration-moderate-01 $standard-easing;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+// Modo oscuro
+[data-carbon-theme='g100'] .error-page {
+  &__details {
+    background: $layer-02;
+    border-left-color: $blue-40;
+  }
+  
+  &__help {
+    background: $layer-02;
+  }
+  
+  &__url {
+    background: $field-02;
+  }
+}
+
+// Responsive design
+@include breakpoint('sm') {
+  .error-page {
+    &__code h1 {
+      @include type-style('display-02');
+    }
+    
+    &__message h2 {
+      @include type-style('heading-03');
+    }
+    
+    &__details,
+    &__help {
+      padding: $spacing-04;
+    }
+  }
+}
+
+// Accesibilidad mejorada
+@media (prefers-reduced-motion: reduce) {
+  .error-page {
+    .illustration-dots .dot {
+      animation: none;
+    }
+    
+    .cds--btn {
+      transition: none;
+      
+      &:hover {
+        transform: none;
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+// Alto contraste
+@media (prefers-contrast: high) {
+  .error-page {
+    &__icon svg {
+      filter: none;
+    }
+    
+    &__details {
+      border-left-width: 6px;
+    }
+    
+    .illustration-circle {
+      border: 2px solid $text-primary;
+    }
+  }
+}

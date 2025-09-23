@@ -1,0 +1,262 @@
+/**
+ * Estilos para el componente de Login
+ * Utiliza IBM Carbon Design System tokens y variables
+ */
+
+@import '@carbon/styles/scss/colors';
+@import '@carbon/styles/scss/spacing';
+@import '@carbon/styles/scss/type';
+@import '@carbon/styles/scss/breakpoints';
+
+.login-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f62fe 0%, #001d6c 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-05;
+}
+
+.login-grid {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.login-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 600px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.login-tile {
+  padding: $spacing-07;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  background: $white;
+
+  @include breakpoint-down(md) {
+    padding: $spacing-06;
+  }
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: $spacing-07;
+
+  .login-icon {
+    color: $blue-60;
+    margin-bottom: $spacing-04;
+  }
+
+  .login-title {
+    @include type-style('heading-04');
+    color: $text-primary;
+    margin-bottom: $spacing-03;
+    font-weight: 600;
+  }
+
+  .login-subtitle {
+    @include type-style('body-01');
+    color: $text-secondary;
+    margin: 0;
+  }
+}
+
+.login-notification {
+  margin-bottom: $spacing-05;
+}
+
+.login-form {
+  margin-bottom: $spacing-06;
+}
+
+.login-button {
+  width: 100%;
+  justify-content: center;
+  
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.login-footer {
+  text-align: center;
+  padding-top: $spacing-05;
+  border-top: 1px solid $border-subtle;
+
+  .login-help-text {
+    @include type-style('helper-text-01');
+    color: $text-secondary;
+    margin: 0;
+  }
+}
+
+.login-side-column {
+  display: none;
+
+  @include breakpoint(lg) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.login-side-content {
+  padding: $spacing-07;
+  color: $white;
+  max-width: 500px;
+}
+
+.login-side-card {
+  h2 {
+    @include type-style('heading-05');
+    margin-bottom: $spacing-07;
+    font-weight: 600;
+  }
+}
+
+.login-features {
+  display: grid;
+  gap: $spacing-06;
+}
+
+.login-feature {
+  h3 {
+    @include type-style('heading-03');
+    margin-bottom: $spacing-03;
+    font-weight: 500;
+    color: $blue-20;
+  }
+
+  p {
+    @include type-style('body-01');
+    color: $blue-10;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+// Responsive adjustments
+@include breakpoint-down(md) {
+  .login-container {
+    padding: $spacing-04;
+  }
+
+  .login-tile {
+    border-radius: 4px;
+  }
+
+  .login-header {
+    margin-bottom: $spacing-06;
+
+    .login-title {
+      @include type-style('heading-03');
+    }
+  }
+}
+
+@include breakpoint-down(sm) {
+  .login-container {
+    padding: $spacing-03;
+  }
+
+  .login-card {
+    max-width: 100%;
+  }
+
+  .login-tile {
+    padding: $spacing-05;
+  }
+
+  .login-header {
+    margin-bottom: $spacing-05;
+
+    .login-title {
+      @include type-style('heading-02');
+    }
+  }
+}
+
+// Dark theme support
+[data-carbon-theme='g90'] {
+  .login-tile {
+    background: $gray-90;
+    border: 1px solid $border-strong;
+  }
+
+  .login-header {
+    .login-title {
+      color: $text-primary;
+    }
+
+    .login-subtitle {
+      color: $text-secondary;
+    }
+  }
+
+  .login-footer {
+    border-top-color: $border-subtle;
+
+    .login-help-text {
+      color: $text-secondary;
+    }
+  }
+}
+
+// High contrast theme support
+[data-carbon-theme='g100'] {
+  .login-tile {
+    background: $gray-100;
+    border: 1px solid $border-strong;
+  }
+}
+
+// Animation for smooth transitions
+.login-tile {
+  transition: all 0.3s cubic-bezier(0.2, 0, 0.38, 0.9);
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.login-button {
+  transition: all 0.2s cubic-bezier(0.2, 0, 0.38, 0.9);
+}
+
+// Focus management
+.login-form input:focus {
+  outline-offset: 2px;
+}
+
+// Loading state
+.login-button[disabled] {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% { transform: translateY(-50%) rotate(0deg); }
+  100% { transform: translateY(-50%) rotate(360deg); }
+}
