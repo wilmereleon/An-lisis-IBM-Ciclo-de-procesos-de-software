@@ -149,7 +149,7 @@ const TesterDashboard: React.FC = () => {
     switch (status) {
       case 'passed': return 'green';
       case 'failed': return 'red';
-      case 'pending': return 'yellow';
+      case 'pending': return 'warm-gray';
       case 'blocked': return 'gray';
       default: return 'gray';
     }
@@ -158,7 +158,7 @@ const TesterDashboard: React.FC = () => {
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'high': return 'red';
-      case 'medium': return 'yellow';
+      case 'medium': return 'warm-gray';
       case 'low': return 'green';
       default: return 'gray';
     }

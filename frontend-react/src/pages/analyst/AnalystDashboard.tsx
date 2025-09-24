@@ -18,7 +18,6 @@ import {
   TableCell,
   Button,
   Tag,
-  Heading,
   Stack,
   Loading
 } from '@carbon/react';
@@ -153,7 +152,7 @@ const AnalystDashboard: React.FC = () => {
   const getStatusTag = (status: string) => {
     const statusConfig = {
       good: { type: 'green' as const, label: 'Bueno' },
-      warning: { type: 'yellow' as const, label: 'Atención' },
+      warning: { type: 'warm-gray' as const, label: 'Atención' },
       critical: { type: 'red' as const, label: 'Crítico' },
       ready: { type: 'green' as const, label: 'Listo' },
       generating: { type: 'blue' as const, label: 'Generando' },
@@ -176,11 +175,11 @@ const AnalystDashboard: React.FC = () => {
     <div className="analyst-dashboard">
       <div className="analyst-dashboard__header">
         <Stack gap={4}>
-          <Heading size="lg">
+          <h1 className="analyst-dashboard__title">
             <Analytics className="analyst-dashboard__header-icon" />
             Dashboard de Analista
-          </Heading>
-          <p>Bienvenido, {user?.firstName} - Análisis y métricas de calidad</p>
+          </h1>
+          <p>Bienvenido, {user?.name} - Análisis y métricas de calidad</p>
         </Stack>
       </div>
 
@@ -191,7 +190,7 @@ const AnalystDashboard: React.FC = () => {
             <Stack gap={4}>
               <div className="analyst-dashboard__section-header">
                 <ChartLine />
-                <Heading size="md">Métricas Clave</Heading>
+                <h3>Métricas Clave</h3>
               </div>
 
               <DataTable
@@ -212,7 +211,7 @@ const AnalystDashboard: React.FC = () => {
                       <TableHead>
                         <TableRow>
                           {headers.map((header) => (
-                            <TableHeader key={header.key} {...getHeaderProps({ header })}>
+                            <TableHeader {...getHeaderProps({ header })}>
                               {header.header}
                             </TableHeader>
                           ))}
@@ -220,7 +219,7 @@ const AnalystDashboard: React.FC = () => {
                       </TableHead>
                       <TableBody>
                         {rows.map((row) => (
-                          <TableRow key={row.id} {...getRowProps({ row })}>
+                          <TableRow {...getRowProps({ row })}>
                             {row.cells.map((cell) => (
                               <TableCell key={cell.id}>{cell.value}</TableCell>
                             ))}
@@ -251,7 +250,7 @@ const AnalystDashboard: React.FC = () => {
             <Stack gap={2}>
               <div className="analyst-dashboard__stat-value">142</div>
               <div className="analyst-dashboard__stat-label">Defectos Abiertos</div>
-              <Tag type="yellow">-8</Tag>
+              <Tag type="warm-gray">-8</Tag>
             </Stack>
           </Tile>
         </Column>
@@ -282,7 +281,7 @@ const AnalystDashboard: React.FC = () => {
             <Stack gap={4}>
               <div className="analyst-dashboard__section-header">
                 <Report />
-                <Heading size="md">Reportes Disponibles</Heading>
+                <h3>Reportes Disponibles</h3>
                 <Button
                   kind="tertiary"
                   size="sm"
@@ -322,7 +321,7 @@ const AnalystDashboard: React.FC = () => {
                       <TableHead>
                         <TableRow>
                           {headers.map((header) => (
-                            <TableHeader key={header.key} {...getHeaderProps({ header })}>
+                            <TableHeader {...getHeaderProps({ header })}>
                               {header.header}
                             </TableHeader>
                           ))}
@@ -330,7 +329,7 @@ const AnalystDashboard: React.FC = () => {
                       </TableHead>
                       <TableBody>
                         {rows.map((row) => (
-                          <TableRow key={row.id} {...getRowProps({ row })}>
+                          <TableRow {...getRowProps({ row })}>
                             {row.cells.map((cell) => (
                               <TableCell key={cell.id}>{cell.value}</TableCell>
                             ))}
@@ -349,7 +348,7 @@ const AnalystDashboard: React.FC = () => {
         <Column lg={16} className="analyst-dashboard__section">
           <Tile className="analyst-dashboard__actions-tile">
             <Stack gap={4}>
-              <Heading size="md">Acciones Rápidas</Heading>
+              <h3>Acciones Rápidas</h3>
               <Stack gap={3} orientation="horizontal">
                 <Button
                   kind="primary"

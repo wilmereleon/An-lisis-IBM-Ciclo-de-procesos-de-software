@@ -4,7 +4,7 @@
  */
 
 import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
-import authService, { User, LoginCredentials } from '../services/authService';
+import authService, { User, LoginCredentials } from '../services/authService.ts';
 
 interface AuthState {
   user: User | null;

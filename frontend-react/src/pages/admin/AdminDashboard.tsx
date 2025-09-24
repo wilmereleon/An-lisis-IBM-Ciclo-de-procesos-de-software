@@ -108,7 +108,7 @@ const AdminDashboard: React.FC = () => {
     switch (health) {
       case 'excellent': return 'green';
       case 'good': return 'cyan';
-      case 'warning': return 'yellow';
+      case 'warning': return 'warm-gray';
       case 'critical': return 'red';
       default: return 'gray';
     }

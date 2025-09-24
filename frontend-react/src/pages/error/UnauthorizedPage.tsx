@@ -7,7 +7,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Button,
-  Heading,
   Stack,
   Grid,
   Column
@@ -15,8 +14,9 @@ import {
 import {
   WarningFilled,
   ArrowLeft,
-  Home
-} from '@carbon/react/icons';
+  Home,
+  Login
+} from '@carbon/icons-react';
 import './ErrorPages.scss';
 
 const UnauthorizedPage: React.FC = () => {
@@ -46,12 +46,12 @@ const UnauthorizedPage: React.FC = () => {
 
             {/* Error Code */}
             <div className="error-page__code">
-              <Heading size="xl">401</Heading>
+              <h1 className="error-code">401</h1>
             </div>
 
             {/* Error Message */}
             <div className="error-page__message">
-              <Heading size="lg">Acceso No Autorizado</Heading>
+              <h2 className="error-title">Acceso No Autorizado</h2>
               <p>
                 No tienes permisos para acceder a esta página. 
                 Por favor, inicia sesión con una cuenta que tenga los permisos necesarios.
@@ -68,10 +68,10 @@ const UnauthorizedPage: React.FC = () => {
 
             {/* Action Buttons */}
             <div className="error-page__actions">
-              <Stack gap={3} orientation="horizontal">
+              <Stack gap={3} orientation="horizontal" as="div">
                 <Button
                   kind="primary"
-                  renderIcon={Home}
+                  renderIcon={Login}
                   onClick={handleLogin}
                 >
                   Iniciar Sesión
@@ -107,7 +107,7 @@ const UnauthorizedPage: React.FC = () => {
           </Stack>
         </Column>
 
-        <Column lg={8} md={2} sm={0} className="error-page__sidebar">
+        <Column lg={8} md={2} sm={4} className="error-page__sidebar">
           <div className="error-page__illustration">
             {/* IBM Watson-style illustration */}
             <div className="illustration-circle">

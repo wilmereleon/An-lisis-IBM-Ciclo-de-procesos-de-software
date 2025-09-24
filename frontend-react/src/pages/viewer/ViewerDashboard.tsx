@@ -18,7 +18,6 @@ import {
   TableCell,
   Button,
   Tag,
-  Heading,
   Stack,
   Loading,
   ProgressBar,
@@ -153,7 +152,7 @@ const ViewerDashboard: React.FC = () => {
       'En Progreso': { type: 'blue' as const, label: 'En Progreso' },
       'Testing': { type: 'purple' as const, label: 'Testing' },
       'Completado': { type: 'green' as const, label: 'Completado' },
-      'Pausado': { type: 'yellow' as const, label: 'Pausado' },
+      'Pausado': { type: 'warm-gray' as const, label: 'Pausado' },
       'Error': { type: 'red' as const, label: 'Error' }
     };
 
@@ -182,11 +181,11 @@ const ViewerDashboard: React.FC = () => {
     <div className="viewer-dashboard">
       <div className="viewer-dashboard__header">
         <Stack gap={4}>
-          <Heading size="lg">
+          <h1 className="viewer-dashboard__title">
             <View className="viewer-dashboard__header-icon" />
             Panel de Información
-          </Heading>
-          <p>Bienvenido, {user?.firstName} - Vista de solo lectura del sistema</p>
+          </h1>
+          <p>Bienvenido, {user?.name} - Vista de solo lectura del sistema</p>
         </Stack>
       </div>
 
@@ -248,7 +247,7 @@ const ViewerDashboard: React.FC = () => {
             <Stack gap={4}>
               <div className="viewer-dashboard__section-header">
                 <Dashboard />
-                <Heading size="md">Resumen de Proyectos</Heading>
+                <h3>Resumen de Proyectos</h3>
               </div>
 
               <DataTable
@@ -262,7 +261,7 @@ const ViewerDashboard: React.FC = () => {
                         value={project.progress}
                         max={100}
                         label={`${project.progress}%`}
-                        size="sm"
+                        size="small"
                       />
                     </div>
                   ),
@@ -287,7 +286,7 @@ const ViewerDashboard: React.FC = () => {
                       <TableHead>
                         <TableRow>
                           {headers.map((header) => (
-                            <TableHeader key={header.key} {...getHeaderProps({ header })}>
+                            <TableHeader {...getHeaderProps({ header })}>
                               {header.header}
                             </TableHeader>
                           ))}
@@ -295,7 +294,7 @@ const ViewerDashboard: React.FC = () => {
                       </TableHead>
                       <TableBody>
                         {rows.map((row) => (
-                          <TableRow key={row.id} {...getRowProps({ row })}>
+                          <TableRow {...getRowProps({ row })}>
                             {row.cells.map((cell) => (
                               <TableCell key={cell.id}>{cell.value}</TableCell>
                             ))}
@@ -316,7 +315,7 @@ const ViewerDashboard: React.FC = () => {
             <Stack gap={4}>
               <div className="viewer-dashboard__section-header">
                 <Information />
-                <Heading size="md">Actividad Reciente</Heading>
+                <h3>Actividad Reciente</h3>
               </div>
 
               <div className="viewer-dashboard__activity-list">
@@ -351,32 +350,32 @@ const ViewerDashboard: React.FC = () => {
             <Stack gap={4}>
               <div className="viewer-dashboard__section-header">
                 <ChartLine />
-                <Heading size="md">Métricas de Calidad</Heading>
+                <h3>Métricas de Calidad</h3>
               </div>
 
               <div className="viewer-dashboard__metrics-grid">
                 <div className="viewer-dashboard__metric">
                   <div className="viewer-dashboard__metric-label">Cobertura</div>
                   <div className="viewer-dashboard__metric-value">87%</div>
-                  <ProgressBar value={87} max={100} size="sm" />
+                  <ProgressBar value={87} max={100} size="small" label="87%" />
                 </div>
 
                 <div className="viewer-dashboard__metric">
                   <div className="viewer-dashboard__metric-label">Satisfacción</div>
                   <div className="viewer-dashboard__metric-value">94%</div>
-                  <ProgressBar value={94} max={100} size="sm" />
+                  <ProgressBar value={94} max={100} size="small" label="94%" />
                 </div>
 
                 <div className="viewer-dashboard__metric">
                   <div className="viewer-dashboard__metric-label">Efectividad</div>
                   <div className="viewer-dashboard__metric-value">91%</div>
-                  <ProgressBar value={91} max={100} size="sm" />
+                  <ProgressBar value={91} max={100} size="small" label="91%" />
                 </div>
 
                 <div className="viewer-dashboard__metric">
                   <div className="viewer-dashboard__metric-label">Disponibilidad</div>
                   <div className="viewer-dashboard__metric-value">99%</div>
-                  <ProgressBar value={99} max={100} size="sm" />
+                  <ProgressBar value={99} max={100} size="small" label="99%" />
                 </div>
               </div>
             </Stack>
@@ -387,7 +386,7 @@ const ViewerDashboard: React.FC = () => {
         <Column lg={16} className="viewer-dashboard__section">
           <Tile className="viewer-dashboard__actions-tile">
             <Stack gap={4}>
-              <Heading size="md">Acciones Disponibles</Heading>
+              <h3>Acciones Disponibles</h3>
               <p className="viewer-dashboard__actions-description">
                 Como usuario con rol de visualización, tienes acceso limitado a estas funciones:
               </p>

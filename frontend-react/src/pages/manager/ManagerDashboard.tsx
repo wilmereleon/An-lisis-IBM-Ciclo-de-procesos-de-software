@@ -20,11 +20,10 @@ import {
   Tag,
   ProgressBar,
   ClickableTile,
-  DonutChart,
   Loading,
 } from '@carbon/react';
 import {
-  Project,
+  FolderOpen,
   Group,
   Analytics,
   Report,
@@ -145,7 +144,7 @@ const ManagerDashboard: React.FC = () => {
       case 'completed': return 'green';
       case 'in-progress': return 'blue';
       case 'testing': return 'cyan';
-      case 'planning': return 'yellow';
+      case 'planning': return 'warm-gray';
       case 'delayed': return 'red';
       default: return 'gray';
     }
@@ -154,7 +153,7 @@ const ManagerDashboard: React.FC = () => {
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'high': return 'red';
-      case 'medium': return 'yellow';
+      case 'medium': return 'warm-gray';
       case 'low': return 'green';
       default: return 'gray';
     }
@@ -179,7 +178,7 @@ const ManagerDashboard: React.FC = () => {
     ),
     progress: (
       <div className="progress-cell">
-        <ProgressBar value={project.progress} size="sm" />
+        <ProgressBar value={project.progress} size="small" label={`${project.progress}%`} />
         <span>{project.progress}%</span>
       </div>
     ),
@@ -208,7 +207,7 @@ const ManagerDashboard: React.FC = () => {
         <Column sm={4} md={4} lg={3} xlg={3}>
           <Tile className="stat-tile stat-tile--total">
             <div className="stat-tile__content">
-              <Project size={32} className="stat-tile__icon" />
+              <FolderOpen size={32} className="stat-tile__icon" />
               <div className="stat-tile__info">
                 <h3>{projectStats.totalProjects}</h3>
                 <p>Proyectos Totales</p>

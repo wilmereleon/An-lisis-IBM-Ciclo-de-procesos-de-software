@@ -7,7 +7,6 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Button,
-  Heading,
   Stack,
   Grid,
   Column,
@@ -50,12 +49,12 @@ const NotFoundPage: React.FC = () => {
 
             {/* Error Code */}
             <div className="error-page__code">
-              <Heading size="xl">404</Heading>
+              <h1 className="error-page__code-text">404</h1>
             </div>
 
             {/* Error Message */}
             <div className="error-page__message">
-              <Heading size="lg">Página No Encontrada</Heading>
+              <h2 className="error-page__title">Página No Encontrada</h2>
               <p>
                 La página que estás buscando no existe o ha sido movida.
               </p>

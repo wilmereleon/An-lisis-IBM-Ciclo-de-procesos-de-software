@@ -6,17 +6,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Theme } from '@carbon/react';
-import { AuthProvider, useAuth } from './context/AuthContext';
-import ProtectedRoute from './components/ProtectedRoute';
-import Login from './components/Login';
-import AdminDashboard from './pages/admin/AdminDashboard';
-import TesterDashboard from './pages/tester/TesterDashboard';
-import ManagerDashboard from './pages/manager/ManagerDashboard';
-import AnalystDashboard from './pages/analyst/AnalystDashboard';
-import ViewerDashboard from './pages/viewer/ViewerDashboard';
-import UnauthorizedPage from './pages/error/UnauthorizedPage';
-import NotFoundPage from './pages/error/NotFoundPage';
-import '@carbon/styles/css/styles.css';
+import { AuthProvider, useAuth } from './context/AuthContext.tsx';
+import ProtectedRoute from './components/ProtectedRoute.tsx';
+import Login from './components/Login.tsx';
+import AdminDashboard from './pages/admin/AdminDashboard.tsx';
+import TesterDashboard from './pages/tester/TesterDashboard.tsx';
+import ManagerDashboard from './pages/manager/ManagerDashboard.tsx';
+import AnalystDashboard from './pages/analyst/AnalystDashboard.tsx';
+import ViewerDashboard from './pages/viewer/ViewerDashboard.tsx';
+import UnauthorizedPage from './pages/error/UnauthorizedPage.tsx';
+import NotFoundPage from './pages/error/NotFoundPage.tsx';
 import './App.scss';
 
 // Componente de redirección basado en roles
