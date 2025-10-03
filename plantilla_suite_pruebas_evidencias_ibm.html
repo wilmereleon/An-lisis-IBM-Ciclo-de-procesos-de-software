@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plantilla de Suite de Pruebas y Evidencias - IBM QMS</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>">
+    <link href="https://unpkg.com/carbon-components@10.58.12/css/carbon-components.min.css" rel="stylesheet">
+    <script src="ibm-navigation.js"></script>
+    <style>
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #8a3ffc 0%, #6929c4 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(138, 63, 252, 0.3);
+        }
+
+        .header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            color: #161616;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #8a3ffc;
+        }
+
+        .info-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-field label {
+            font-weight: 600;
+            color: #525252;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-field input, .info-field select, .info-field textarea {
+            padding: 0.75rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            transition: border-color 0.2s;
+        }
+
+        .info-field input:focus, .info-field select:focus, .info-field textarea:focus {
+            outline: none;
+            border-color: #8a3ffc;
+            box-shadow: 0 0 0 2px rgba(138, 63, 252, 0.1);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        table thead {
+            background: linear-gradient(135deg, #8a3ffc 0%, #6929c4 100%);
+            color: white;
+        }
+
+        table th {
+            padding: 1rem 0.75rem;
+            text-align: left;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        table tbody tr:hover {
+            background: #f4f4f4;
+        }
+
+        table input, table select, table textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+
+        table textarea {
+            min-height: 60px;
+            resize: vertical;
+        }
+
+        .status-select {
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            border: 1px solid #e0e0e0;
+        }
+
+        .status-pass {
+            background: #defbe6;
+            color: #24a148;
+        }
+
+        .status-fail {
+            background: #fff1f1;
+            color: #da1e28;
+        }
+
+        .status-blocked {
+            background: #fef3e0;
+            color: #f1c21b;
+        }
+
+        .status-notrun {
+            background: #e5f6ff;
+            color: #0f62fe;
+        }
+
+        .priority-alta {
+            color: #da1e28;
+            font-weight: 700;
+        }
+
+        .priority-media {
+            color: #f1c21b;
+            font-weight: 600;
+        }
+
+        .priority-baja {
+            color: #0f62fe;
+            font-weight: 500;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: #8a3ffc;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #6929c4;
+            box-shadow: 0 4px 8px rgba(138, 63, 252, 0.3);
+        }
+
+        .btn-success {
+            background: #24a148;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #198038;
+        }
+
+        .btn-secondary {
+            background: #393939;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #262626;
+        }
+
+        .btn-danger {
+            background: #da1e28;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #ba1b23;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        .standard-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f4f4f4 0%, #e8e8e8 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-card .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #8a3ffc;
+            margin: 0.5rem 0;
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.875rem;
+            color: #525252;
+            font-weight: 600;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .action-buttons {
+                display: none;
+            }
+            .card {
+                box-shadow: none;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Plantilla de Suite de Pruebas y Evidencias</h1>
+            <p>Registro completo de casos de prueba, ejecución y evidencias - Conforme a IEEE 829</p>
+            <div style="margin-top: 1rem;">
+                <span class="standard-badge">IEEE 829</span>
+                <span class="standard-badge">TMMi Level 3</span>
+                <span class="standard-badge">CMMI Level 3</span>
+            </div>
+        </div>
+
+        <!-- Información General -->
+        <div class="card">
+            <h2>📝 Información General de la Suite</h2>
+            <div class="info-section">
+                <div class="info-field">
+                    <label for="proyecto">Proyecto:</label>
+                    <input type="text" id="proyecto" placeholder="Nombre del proyecto">
+                </div>
+                <div class="info-field">
+                    <label for="historia">Historia de Usuario:</label>
+                    <input type="text" id="historia" placeholder="US-XXX">
+                </div>
+                <div class="info-field">
+                    <label for="area">Área Funcional:</label>
+                    <input type="text" id="area" placeholder="Módulo o área">
+                </div>
+                <div class="info-field">
+                    <label for="tester">Tester Asignado:</label>
+                    <input type="text" id="tester" placeholder="Nombre del tester">
+                </div>
+                <div class="info-field">
+                    <label for="fechaInicio">Fecha Inicio:</label>
+                    <input type="date" id="fechaInicio">
+                </div>
+                <div class="info-field">
+                    <label for="fechaFin">Fecha Fin:</label>
+                    <input type="date" id="fechaFin">
+                </div>
+            </div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="card">
+            <h2>📊 Estadísticas de Ejecución</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Total Casos</div>
+                    <div class="stat-value" id="totalCasos">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Pass</div>
+                    <div class="stat-value" style="color: #24a148;" id="totalPass">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Fail</div>
+                    <div class="stat-value" style="color: #da1e28;" id="totalFail">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Bloqueados</div>
+                    <div class="stat-value" style="color: #f1c21b;" id="totalBlocked">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">No Ejecutados</div>
+                    <div class="stat-value" style="color: #0f62fe;" id="totalNotRun">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">% Éxito</div>
+                    <div class="stat-value" id="porcentajeExito">0%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de Casos de Prueba -->
+        <div class="card">
+            <h2>🧪 Suite de Casos de Prueba</h2>
+            <div class="table-container">
+                <table id="tablaCasos">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">Nro</th>
+                            <th style="width: 200px;">Caso de Prueba</th>
+                            <th style="width: 80px;">Prioridad</th>
+                            <th style="width: 180px;">Precondiciones</th>
+                            <th style="width: 150px;">Datos de Entrada</th>
+                            <th style="width: 200px;">Pasos de Ejecución</th>
+                            <th style="width: 180px;">Resultado Esperado</th>
+                            <th style="width: 180px;">Resultado Obtenido</th>
+                            <th style="width: 100px;">Estado</th>
+                            <th style="width: 150px;">Evidencias</th>
+                            <th style="width: 80px;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaCasosBody">
+                        <!-- Filas dinámicas -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-success btn-small" onclick="agregarCasoPrueba()">
+                    <span>➕</span> Agregar Caso de Prueba
+                </button>
+            </div>
+        </div>
+
+        <!-- Acciones Principales -->
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="guardarSuite()">
+                <span>💾</span> Guardar Suite
+            </button>
+            <button class="btn btn-success" onclick="exportarPDF()">
+                <span>📄</span> Exportar PDF
+            </button>
+            <button class="btn btn-secondary" onclick="exportarExcel()">
+                <span>📊</span> Exportar Excel
+            </button>
+            <button class="btn btn-danger" onclick="limpiarSuite()">
+                <span>🔄</span> Limpiar Todo
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let contadorCasos = 0;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            cargarDatosGuardados();
+            document.getElementById('fechaInicio').value = new Date().toISOString().split('T')[0];
+        });
+
+        function agregarCasoPrueba() {
+            contadorCasos++;
+            const tbody = document.getElementById('tablaCasosBody');
+            const fila = document.createElement('tr');
+            fila.id = `caso_${contadorCasos}`;
+            
+            fila.innerHTML = `
+                <td>${contadorCasos}</td>
+                <td><input type="text" placeholder="TC-XXX-001" onchange="actualizarEstadisticas()"></td>
+                <td>
+                    <select onchange="actualizarEstadisticas()">
+                        <option value="alta" class="priority-alta">Alta</option>
+                        <option value="media" class="priority-media">Media</option>
+                        <option value="baja" class="priority-baja">Baja</option>
+                    </select>
+                </td>
+                <td><textarea placeholder="Precondiciones necesarias"></textarea></td>
+                <td><textarea placeholder="Datos de entrada"></textarea></td>
+                <td><textarea placeholder="1. Paso 1
+2. Paso 2
+3. Paso 3"></textarea></td>
+                <td><textarea placeholder="Resultado esperado"></textarea></td>
+                <td><textarea placeholder="Resultado obtenido"></textarea></td>
+                <td>
+                    <select class="status-select" onchange="cambiarEstado(this); actualizarEstadisticas()">
+                        <option value="notrun" class="status-notrun">No Ejecutado</option>
+                        <option value="pass" class="status-pass">Pass</option>
+                        <option value="fail" class="status-fail">Fail</option>
+                        <option value="blocked" class="status-blocked">Bloqueado</option>
+                    </select>
+                </td>
+                <td><input type="text" placeholder="URL o archivo"></td>
+                <td>
+                    <button class="btn btn-danger btn-small" onclick="eliminarCaso('caso_${contadorCasos}')">
+                        ❌
+                    </button>
+                </td>
+            `;
+            
+            tbody.appendChild(fila);
+            actualizarEstadisticas();
+        }
+
+        function cambiarEstado(select) {
+            const valor = select.value;
+            select.className = 'status-select status-' + valor;
+        }
+
+        function eliminarCaso(id) {
+            if (confirm('¿Eliminar este caso de prueba?')) {
+                document.getElementById(id).remove();
+                actualizarEstadisticas();
+            }
+        }
+
+        function actualizarEstadisticas() {
+            const selects = document.querySelectorAll('.status-select');
+            let pass = 0, fail = 0, blocked = 0, notrun = 0;
+
+            selects.forEach(select => {
+                const valor = select.value;
+                if (valor === 'pass') pass++;
+                else if (valor === 'fail') fail++;
+                else if (valor === 'blocked') blocked++;
+                else if (valor === 'notrun') notrun++;
+            });
+
+            const total = selects.length;
+            const porcentaje = total > 0 ? Math.round((pass / total) * 100) : 0;
+
+            document.getElementById('totalCasos').textContent = total;
+            document.getElementById('totalPass').textContent = pass;
+            document.getElementById('totalFail').textContent = fail;
+            document.getElementById('totalBlocked').textContent = blocked;
+            document.getElementById('totalNotRun').textContent = notrun;
+            document.getElementById('porcentajeExito').textContent = porcentaje + '%';
+
+            // Cambiar color del porcentaje
+            const porcentajeElement = document.getElementById('porcentajeExito');
+            if (porcentaje >= 95) {
+                porcentajeElement.style.color = '#24a148';
+            } else if (porcentaje >= 80) {
+                porcentajeElement.style.color = '#0f62fe';
+            } else if (porcentaje >= 50) {
+                porcentajeElement.style.color = '#f1c21b';
+            } else {
+                porcentajeElement.style.color = '#da1e28';
+            }
+        }
+
+        function guardarSuite() {
+            const datos = {
+                proyecto: document.getElementById('proyecto').value,
+                historia: document.getElementById('historia').value,
+                area: document.getElementById('area').value,
+                tester: document.getElementById('tester').value,
+                fechaInicio: document.getElementById('fechaInicio').value,
+                fechaFin: document.getElementById('fechaFin').value,
+                casos: []
+            };
+
+            const filas = document.querySelectorAll('#tablaCasosBody tr');
+            filas.forEach(fila => {
+                const inputs = fila.querySelectorAll('input, select, textarea');
+                datos.casos.push({
+                    nombre: inputs[0].value,
+                    prioridad: inputs[1].value,
+                    precondiciones: inputs[2].value,
+                    datos: inputs[3].value,
+                    pasos: inputs[4].value,
+                    esperado: inputs[5].value,
+                    obtenido: inputs[6].value,
+                    estado: inputs[7].value,
+                    evidencias: inputs[8].value
+                });
+            });
+
+            localStorage.setItem('ibm_suite_pruebas', JSON.stringify(datos));
+            alert('✅ Suite de pruebas guardada exitosamente');
+        }
+
+        function cargarDatosGuardados() {
+            const datosGuardados = localStorage.getItem('ibm_suite_pruebas');
+            if (datosGuardados) {
+                const datos = JSON.parse(datosGuardados);
+                
+                document.getElementById('proyecto').value = datos.proyecto || '';
+                document.getElementById('historia').value = datos.historia || '';
+                document.getElementById('area').value = datos.area || '';
+                document.getElementById('tester').value = datos.tester || '';
+                document.getElementById('fechaInicio').value = datos.fechaInicio || '';
+                document.getElementById('fechaFin').value = datos.fechaFin || '';
+
+                if (datos.casos && datos.casos.length > 0) {
+                    datos.casos.forEach(() => {
+                        agregarCasoPrueba();
+                    });
+
+                    // Llenar datos
+                    const filas = document.querySelectorAll('#tablaCasosBody tr');
+                    filas.forEach((fila, index) => {
+                        if (datos.casos[index]) {
+                            const inputs = fila.querySelectorAll('input, select, textarea');
+                            inputs[0].value = datos.casos[index].nombre || '';
+                            inputs[1].value = datos.casos[index].prioridad || 'media';
+                            inputs[2].value = datos.casos[index].precondiciones || '';
+                            inputs[3].value = datos.casos[index].datos || '';
+                            inputs[4].value = datos.casos[index].pasos || '';
+                            inputs[5].value = datos.casos[index].esperado || '';
+                            inputs[6].value = datos.casos[index].obtenido || '';
+                            inputs[7].value = datos.casos[index].estado || 'notrun';
+                            inputs[8].value = datos.casos[index].evidencias || '';
+                            cambiarEstado(inputs[7]);
+                        }
+                    });
+
+                    actualizarEstadisticas();
+                }
+            }
+        }
+
+        function exportarPDF() {
+            window.print();
+        }
+
+        function exportarExcel() {
+            const datos = [['Nro', 'Caso', 'Prioridad', 'Precondiciones', 'Datos', 'Pasos', 'Esperado', 'Obtenido', 'Estado', 'Evidencias']];
+            
+            const filas = document.querySelectorAll('#tablaCasosBody tr');
+            filas.forEach((fila, index) => {
+                const inputs = fila.querySelectorAll('input, select, textarea');
+                datos.push([
+                    index + 1,
+                    inputs[0].value,
+                    inputs[1].value,
+                    inputs[2].value,
+                    inputs[3].value,
+                    inputs[4].value,
+                    inputs[5].value,
+                    inputs[6].value,
+                    inputs[7].value,
+                    inputs[8].value
+                ]);
+            });
+
+            let csv = datos.map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'suite_pruebas_' + new Date().getTime() + '.csv';
+            link.click();
+        }
+
+        function limpiarSuite() {
+            if (confirm('¿Está seguro de que desea limpiar toda la suite? Esta acción no se puede deshacer.')) {
+                document.getElementById('proyecto').value = '';
+                document.getElementById('historia').value = '';
+                document.getElementById('area').value = '';
+                document.getElementById('tester').value = '';
+                document.getElementById('fechaInicio').value = new Date().toISOString().split('T')[0];
+                document.getElementById('fechaFin').value = '';
+                document.getElementById('tablaCasosBody').innerHTML = '';
+                contadorCasos = 0;
+                actualizarEstadisticas();
+                localStorage.removeItem('ibm_suite_pruebas');
+                alert('✅ Suite limpiada exitosamente');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -59,6 +59,11 @@ const IBM_QMS_NAVIGATION = {
                     category: '📐 Gestión',
                     links: [
                         { name: 'Hoja de Control Proyecto', url: 'hoja_control_proyecto_ibm.html', icon: '📋' },
+                        { name: 'Lista Criterios de Salida', url: 'lista_verificacion_criterios_salida_ibm.html', icon: '✅' },
+                        { name: 'Lista Preparación Pruebas', url: 'lista_verificacion_preparacion_pruebas_ibm.html', icon: '🚀' },
+                        { name: 'Suite Pruebas y Evidencias', url: 'plantilla_suite_pruebas_evidencias_ibm.html', icon: '🧪' },
+                        { name: 'Chequeo Calidad Casos', url: 'lista_chequeo_calidad_casos_prueba_ibm.html', icon: '⭐' },
+                        { name: 'Matriz de Trazabilidad', url: 'plantilla_trazabilidad_pruebas_ibm.html', icon: '🔗' },
                         { name: 'Matriz RACI', url: 'matriz_raci_ibm.html', icon: '📊' },
                         { name: 'Gestión de Ambientes', url: 'gestion_ambientes_ibm.html', icon: '🌍' },
                         { name: 'Sistema de Trazabilidad', url: 'sistema_trazabilidad_ibm.html', icon: '🔗' },
@@ -83,6 +88,11 @@ const IBM_QMS_NAVIGATION = {
                     category: '📐 Gestión',
                     links: [
                         { name: 'Hoja de Control Proyecto', url: 'hoja_control_proyecto_ibm.html', icon: '📋' },
+                        { name: 'Lista Criterios de Salida', url: 'lista_verificacion_criterios_salida_ibm.html', icon: '✅' },
+                        { name: 'Lista Preparación Pruebas', url: 'lista_verificacion_preparacion_pruebas_ibm.html', icon: '🚀' },
+                        { name: 'Suite Pruebas y Evidencias', url: 'plantilla_suite_pruebas_evidencias_ibm.html', icon: '🧪' },
+                        { name: 'Chequeo Calidad Casos', url: 'lista_chequeo_calidad_casos_prueba_ibm.html', icon: '⭐' },
+                        { name: 'Matriz de Trazabilidad', url: 'plantilla_trazabilidad_pruebas_ibm.html', icon: '🔗' },
                         { name: 'Matriz RACI', url: 'matriz_raci_ibm.html', icon: '📊' },
                         { name: 'Sistema de Trazabilidad', url: 'sistema_trazabilidad_ibm.html', icon: '🔗' },
                         { name: 'Gestión de Ambientes', url: 'gestion_ambientes_ibm.html', icon: '🌍' },
@@ -115,6 +125,10 @@ const IBM_QMS_NAVIGATION = {
                     category: '🔧 Análisis',
                     links: [
                         { name: 'Hoja de Control Proyecto', url: 'hoja_control_proyecto_ibm.html', icon: '📋' },
+                        { name: 'Lista Criterios de Salida', url: 'lista_verificacion_criterios_salida_ibm.html', icon: '✅' },
+                        { name: 'Suite Pruebas y Evidencias', url: 'plantilla_suite_pruebas_evidencias_ibm.html', icon: '🧪' },
+                        { name: 'Chequeo Calidad Casos', url: 'lista_chequeo_calidad_casos_prueba_ibm.html', icon: '⭐' },
+                        { name: 'Matriz de Trazabilidad', url: 'plantilla_trazabilidad_pruebas_ibm.html', icon: '🔗' },
                         { name: 'Calculadora Métricas', url: 'calculadora_metricas_calidad_ibm.html', icon: '🔢' },
                         { name: 'Analizador Cobertura', url: 'analizador_cobertura_ibm.html', icon: '📊' },
                         { name: 'Análisis de Riesgos', url: 'analisis_riesgos_calidad_ibm.html', icon: '⚠️' },
@@ -137,6 +151,10 @@ const IBM_QMS_NAVIGATION = {
                     category: '🧪 Testing',
                     links: [
                         { name: 'Vista Tester', url: 'vista_tester_defectos_ibm.html', icon: '👨‍💻' },
+                        { name: 'Lista Preparación Pruebas', url: 'lista_verificacion_preparacion_pruebas_ibm.html', icon: '🚀' },
+                        { name: 'Suite Pruebas y Evidencias', url: 'plantilla_suite_pruebas_evidencias_ibm.html', icon: '🧪' },
+                        { name: 'Chequeo Calidad Casos', url: 'lista_chequeo_calidad_casos_prueba_ibm.html', icon: '⭐' },
+                        { name: 'Matriz de Trazabilidad', url: 'plantilla_trazabilidad_pruebas_ibm.html', icon: '🔗' },
                         { name: 'Generador Casos de Prueba', url: 'generador_casos_prueba_ibm.html', icon: '📝' },
                         { name: 'Generador Caja Negra/Blanca', url: 'generador_casos_caja_negra_blanca_ibm.html', icon: '⚫' },
                         { name: 'Formulario Casos de Prueba', url: 'formulario_casos_prueba_ibm.html', icon: '📋' }

@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matriz de Trazabilidad de Pruebas - IBM QMS</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔗</text></svg>">
+    <link href="https://unpkg.com/carbon-components@10.58.12/css/carbon-components.min.css" rel="stylesheet">
+    <script src="ibm-navigation.js"></script>
+    <style>
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f62fe 0%, #0353e9 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(15, 98, 254, 0.3);
+        }
+
+        .header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            color: #161616;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #0f62fe;
+        }
+
+        .info-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-field label {
+            font-weight: 600;
+            color: #525252;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-field input, .info-field select {
+            padding: 0.75rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            transition: border-color 0.2s;
+        }
+
+        .info-field input:focus, .info-field select:focus {
+            outline: none;
+            border-color: #0f62fe;
+            box-shadow: 0 0 0 2px rgba(15, 98, 254, 0.1);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #f4f4f4 0%, #e8e8e8 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .metric-card .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0f62fe;
+            margin: 0.5rem 0;
+        }
+
+        .metric-card .metric-label {
+            font-size: 0.875rem;
+            color: #525252;
+            font-weight: 600;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+            background: white;
+        }
+
+        table thead {
+            background: linear-gradient(135deg, #0f62fe 0%, #0353e9 100%);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        table th {
+            padding: 1rem 0.75rem;
+            text-align: left;
+            font-weight: 600;
+            white-space: nowrap;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        table th:last-child {
+            border-right: none;
+        }
+
+        table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e0e0e0;
+            border-right: 1px solid #e0e0e0;
+        }
+
+        table td:last-child {
+            border-right: none;
+        }
+
+        table tbody tr:hover {
+            background: #f4f4f4;
+        }
+
+        table input, table select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+
+        .coverage-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .coverage-completa {
+            background: #defbe6;
+            color: #24a148;
+        }
+
+        .coverage-parcial {
+            background: #fff1f1;
+            color: #f1c21b;
+        }
+
+        .coverage-no {
+            background: #fff1f1;
+            color: #da1e28;
+        }
+
+        .estado-pass {
+            background: #defbe6;
+            color: #24a148;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        .estado-fail {
+            background: #fff1f1;
+            color: #da1e28;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        .estado-pendiente {
+            background: #e5f6ff;
+            color: #0f62fe;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: #0f62fe;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0353e9;
+            box-shadow: 0 4px 8px rgba(15, 98, 254, 0.3);
+        }
+
+        .btn-success {
+            background: #24a148;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #198038;
+        }
+
+        .btn-secondary {
+            background: #393939;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #262626;
+        }
+
+        .btn-danger {
+            background: #da1e28;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #ba1b23;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        .standard-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .filter-section {
+            background: #f4f4f4;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-section label {
+            font-weight: 600;
+            color: #393939;
+            font-size: 0.9rem;
+        }
+
+        .filter-section select {
+            padding: 0.5rem 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .action-buttons, .filter-section {
+                display: none;
+            }
+            .card {
+                box-shadow: none;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔗 Matriz de Trazabilidad de Pruebas</h1>
+            <p>Trazabilidad Requirements ↔ Test Cases - Conforme a IEEE 829 y TMMi Level 3</p>
+            <div style="margin-top: 1rem;">
+                <span class="standard-badge">IEEE 829</span>
+                <span class="standard-badge">TMMi Level 3</span>
+                <span class="standard-badge">CMMI Level 3</span>
+            </div>
+        </div>
+
+        <!-- Información General -->
+        <div class="card">
+            <h2>📝 Información del Proyecto</h2>
+            <div class="info-section">
+                <div class="info-field">
+                    <label for="proyecto">Proyecto:</label>
+                    <input type="text" id="proyecto" placeholder="Nombre del proyecto">
+                </div>
+                <div class="info-field">
+                    <label for="modulo">Módulo / Área:</label>
+                    <input type="text" id="modulo" placeholder="Módulo funcional">
+                </div>
+                <div class="info-field">
+                    <label for="responsable">Responsable:</label>
+                    <input type="text" id="responsable" placeholder="Nombre del responsable">
+                </div>
+                <div class="info-field">
+                    <label for="fechaActualizacion">Fecha Actualización:</label>
+                    <input type="date" id="fechaActualizacion">
+                </div>
+            </div>
+        </div>
+
+        <!-- Métricas de Cobertura -->
+        <div class="card">
+            <h2>📊 Métricas de Cobertura</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Total Requisitos</div>
+                    <div class="metric-value" id="totalRequisitos">0</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Requisitos Cubiertos</div>
+                    <div class="metric-value" style="color: #24a148;" id="requisitosCubiertos">0</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Sin Cobertura</div>
+                    <div class="metric-value" style="color: #da1e28;" id="requisitosSinCobertura">0</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">% Cobertura</div>
+                    <div class="metric-value" id="porcentajeCobertura">0%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Total Casos</div>
+                    <div class="metric-value" style="color: #8a3ffc;" id="totalCasos">0</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Casos Pass</div>
+                    <div class="metric-value" style="color: #24a148;" id="casosPass">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="card">
+            <div class="filter-section">
+                <label for="filtroCobertura">Filtrar por Cobertura:</label>
+                <select id="filtroCobertura" onchange="aplicarFiltros()">
+                    <option value="todos">Todos</option>
+                    <option value="completa">Cobertura Completa</option>
+                    <option value="parcial">Cobertura Parcial</option>
+                    <option value="no">Sin Cobertura</option>
+                </select>
+
+                <label for="filtroEstado">Filtrar por Estado:</label>
+                <select id="filtroEstado" onchange="aplicarFiltros()">
+                    <option value="todos">Todos</option>
+                    <option value="pass">Pass</option>
+                    <option value="fail">Fail</option>
+                    <option value="pendiente">Pendiente</option>
+                </select>
+
+                <button class="btn btn-secondary btn-small" onclick="limpiarFiltros()">
+                    🔄 Limpiar Filtros
+                </button>
+            </div>
+        </div>
+
+        <!-- Matriz de Trazabilidad -->
+        <div class="card">
+            <h2>🔗 Matriz de Trazabilidad Requirements ↔ Test Cases</h2>
+            <div class="table-container">
+                <table id="tablaMatriz">
+                    <thead>
+                        <tr>
+                            <th style="width: 100px;">ID Requisito</th>
+                            <th style="width: 300px;">Descripción Requisito</th>
+                            <th style="width: 80px;">Prioridad</th>
+                            <th style="width: 150px;">ID Caso(s) Prueba</th>
+                            <th style="width: 250px;">Descripción Caso</th>
+                            <th style="width: 100px;">Estado Ejecución</th>
+                            <th style="width: 120px;">Cobertura</th>
+                            <th style="width: 150px;">Observaciones</th>
+                            <th style="width: 80px;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaMatrizBody">
+                        <!-- Filas dinámicas -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-success btn-small" onclick="agregarFila()">
+                    <span>➕</span> Agregar Requisito
+                </button>
+            </div>
+        </div>
+
+        <!-- Acciones Principales -->
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="guardarMatriz()">
+                <span>💾</span> Guardar Matriz
+            </button>
+            <button class="btn btn-success" onclick="exportarPDF()">
+                <span>📄</span> Exportar PDF
+            </button>
+            <button class="btn btn-secondary" onclick="exportarExcel()">
+                <span>📊</span> Exportar Excel
+            </button>
+            <button class="btn btn-danger" onclick="limpiarMatriz()">
+                <span>🔄</span> Limpiar Todo
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let contadorFilas = 0;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            cargarDatosGuardados();
+            document.getElementById('fechaActualizacion').value = new Date().toISOString().split('T')[0];
+        });
+
+        function agregarFila() {
+            contadorFilas++;
+            const tbody = document.getElementById('tablaMatrizBody');
+            const fila = document.createElement('tr');
+            fila.id = `fila_${contadorFilas}`;
+            
+            fila.innerHTML = `
+                <td><input type="text" placeholder="REQ-001" onchange="actualizarMetricas()"></td>
+                <td><input type="text" placeholder="Descripción del requisito" onchange="actualizarMetricas()"></td>
+                <td>
+                    <select onchange="actualizarMetricas()">
+                        <option value="alta">Alta</option>
+                        <option value="media">Media</option>
+                        <option value="baja">Baja</option>
+                    </select>
+                </td>
+                <td><input type="text" placeholder="TC-001, TC-002" onchange="actualizarMetricas()"></td>
+                <td><input type="text" placeholder="Descripción del caso de prueba" onchange="actualizarMetricas()"></td>
+                <td>
+                    <select class="select-estado" onchange="cambiarEstado(this); actualizarMetricas()">
+                        <option value="pendiente">Pendiente</option>
+                        <option value="pass">Pass</option>
+                        <option value="fail">Fail</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="select-cobertura" onchange="cambiarCobertura(this); actualizarMetricas()">
+                        <option value="no">Sin Cobertura</option>
+                        <option value="parcial">Parcial</option>
+                        <option value="completa">Completa</option>
+                    </select>
+                </td>
+                <td><input type="text" placeholder="Observaciones"></td>
+                <td>
+                    <button class="btn btn-danger btn-small" onclick="eliminarFila('fila_${contadorFilas}')">
+                        ❌
+                    </button>
+                </td>
+            `;
+            
+            tbody.appendChild(fila);
+            actualizarMetricas();
+        }
+
+        function cambiarEstado(select) {
+            const valor = select.value;
+            const td = select.parentElement;
+            td.innerHTML = `<span class="estado-${valor}">${valor.charAt(0).toUpperCase() + valor.slice(1)}</span>`;
+            
+            // Guardar el valor en el dataset para recuperarlo después
+            td.dataset.estado = valor;
+        }
+
+        function cambiarCobertura(select) {
+            const valor = select.value;
+            const td = select.parentElement;
+            let texto = '';
+            switch(valor) {
+                case 'completa':
+                    texto = 'Completa';
+                    break;
+                case 'parcial':
+                    texto = 'Parcial';
+                    break;
+                case 'no':
+                    texto = 'Sin Cobertura';
+                    break;
+            }
+            td.innerHTML = `<span class="coverage-badge coverage-${valor}">${texto}</span>`;
+            td.dataset.cobertura = valor;
+        }
+
+        function eliminarFila(id) {
+            if (confirm('¿Eliminar este requisito de la matriz?')) {
+                document.getElementById(id).remove();
+                actualizarMetricas();
+            }
+        }
+
+        function actualizarMetricas() {
+            const filas = document.querySelectorAll('#tablaMatrizBody tr');
+            let totalReqs = filas.length;
+            let cubiertos = 0;
+            let sinCobertura = 0;
+            let totalCasos = 0;
+            let casosPass = 0;
+
+            filas.forEach(fila => {
+                const celdas = fila.querySelectorAll('td');
+                
+                // Contar casos de prueba
+                const idCasos = celdas[3].querySelector('input')?.value || '';
+                if (idCasos.trim()) {
+                    const numCasos = idCasos.split(',').filter(c => c.trim()).length;
+                    totalCasos += numCasos;
+                }
+
+                // Cobertura
+                const coberturaTd = celdas[6];
+                const cobertura = coberturaTd.dataset?.cobertura || 
+                                 coberturaTd.querySelector('select')?.value || 'no';
+                
+                if (cobertura === 'completa' || cobertura === 'parcial') {
+                    cubiertos++;
+                } else {
+                    sinCobertura++;
+                }
+
+                // Estado
+                const estadoTd = celdas[5];
+                const estado = estadoTd.dataset?.estado || 
+                              estadoTd.querySelector('select')?.value || 'pendiente';
+                
+                if (estado === 'pass') {
+                    casosPass++;
+                }
+            });
+
+            const porcentaje = totalReqs > 0 ? Math.round((cubiertos / totalReqs) * 100) : 0;
+
+            document.getElementById('totalRequisitos').textContent = totalReqs;
+            document.getElementById('requisitosCubiertos').textContent = cubiertos;
+            document.getElementById('requisitosSinCobertura').textContent = sinCobertura;
+            document.getElementById('porcentajeCobertura').textContent = porcentaje + '%';
+            document.getElementById('totalCasos').textContent = totalCasos;
+            document.getElementById('casosPass').textContent = casosPass;
+
+            // Cambiar color del porcentaje
+            const porcentajeElement = document.getElementById('porcentajeCobertura');
+            if (porcentaje >= 90) {
+                porcentajeElement.style.color = '#24a148';
+            } else if (porcentaje >= 70) {
+                porcentajeElement.style.color = '#0f62fe';
+            } else if (porcentaje >= 50) {
+                porcentajeElement.style.color = '#f1c21b';
+            } else {
+                porcentajeElement.style.color = '#da1e28';
+            }
+        }
+
+        function aplicarFiltros() {
+            const filtroCobertura = document.getElementById('filtroCobertura').value;
+            const filtroEstado = document.getElementById('filtroEstado').value;
+            const filas = document.querySelectorAll('#tablaMatrizBody tr');
+
+            filas.forEach(fila => {
+                let mostrar = true;
+                const celdas = fila.querySelectorAll('td');
+
+                // Filtrar por cobertura
+                if (filtroCobertura !== 'todos') {
+                    const coberturaTd = celdas[6];
+                    const cobertura = coberturaTd.dataset?.cobertura || 
+                                     coberturaTd.querySelector('select')?.value || 'no';
+                    if (cobertura !== filtroCobertura) {
+                        mostrar = false;
+                    }
+                }
+
+                // Filtrar por estado
+                if (filtroEstado !== 'todos') {
+                    const estadoTd = celdas[5];
+                    const estado = estadoTd.dataset?.estado || 
+                                  estadoTd.querySelector('select')?.value || 'pendiente';
+                    if (estado !== filtroEstado) {
+                        mostrar = false;
+                    }
+                }
+
+                fila.style.display = mostrar ? '' : 'none';
+            });
+        }
+
+        function limpiarFiltros() {
+            document.getElementById('filtroCobertura').value = 'todos';
+            document.getElementById('filtroEstado').value = 'todos';
+            aplicarFiltros();
+        }
+
+        function guardarMatriz() {
+            const datos = {
+                proyecto: document.getElementById('proyecto').value,
+                modulo: document.getElementById('modulo').value,
+                responsable: document.getElementById('responsable').value,
+                fechaActualizacion: document.getElementById('fechaActualizacion').value,
+                requisitos: []
+            };
+
+            const filas = document.querySelectorAll('#tablaMatrizBody tr');
+            filas.forEach(fila => {
+                const celdas = fila.querySelectorAll('td');
+                const coberturaTd = celdas[6];
+                const estadoTd = celdas[5];
+                
+                datos.requisitos.push({
+                    idRequisito: celdas[0].querySelector('input')?.value || '',
+                    descripcionReq: celdas[1].querySelector('input')?.value || '',
+                    prioridad: celdas[2].querySelector('select')?.value || 'media',
+                    idCasos: celdas[3].querySelector('input')?.value || '',
+                    descripcionCaso: celdas[4].querySelector('input')?.value || '',
+                    estado: estadoTd.dataset?.estado || estadoTd.querySelector('select')?.value || 'pendiente',
+                    cobertura: coberturaTd.dataset?.cobertura || coberturaTd.querySelector('select')?.value || 'no',
+                    observaciones: celdas[7].querySelector('input')?.value || ''
+                });
+            });
+
+            localStorage.setItem('ibm_matriz_trazabilidad', JSON.stringify(datos));
+            alert('✅ Matriz guardada exitosamente');
+        }
+
+        function cargarDatosGuardados() {
+            const datosGuardados = localStorage.getItem('ibm_matriz_trazabilidad');
+            if (datosGuardados) {
+                const datos = JSON.parse(datosGuardados);
+                
+                document.getElementById('proyecto').value = datos.proyecto || '';
+                document.getElementById('modulo').value = datos.modulo || '';
+                document.getElementById('responsable').value = datos.responsable || '';
+                document.getElementById('fechaActualizacion').value = datos.fechaActualizacion || '';
+
+                if (datos.requisitos && datos.requisitos.length > 0) {
+                    datos.requisitos.forEach(() => {
+                        agregarFila();
+                    });
+
+                    // Llenar datos
+                    const filas = document.querySelectorAll('#tablaMatrizBody tr');
+                    filas.forEach((fila, index) => {
+                        if (datos.requisitos[index]) {
+                            const req = datos.requisitos[index];
+                            const celdas = fila.querySelectorAll('td');
+                            
+                            celdas[0].querySelector('input').value = req.idRequisito;
+                            celdas[1].querySelector('input').value = req.descripcionReq;
+                            celdas[2].querySelector('select').value = req.prioridad;
+                            celdas[3].querySelector('input').value = req.idCasos;
+                            celdas[4].querySelector('input').value = req.descripcionCaso;
+                            
+                            const selectEstado = celdas[5].querySelector('select');
+                            selectEstado.value = req.estado;
+                            cambiarEstado(selectEstado);
+                            
+                            const selectCobertura = celdas[6].querySelector('select');
+                            selectCobertura.value = req.cobertura;
+                            cambiarCobertura(selectCobertura);
+                            
+                            celdas[7].querySelector('input').value = req.observaciones;
+                        }
+                    });
+
+                    actualizarMetricas();
+                }
+            }
+        }
+
+        function exportarPDF() {
+            window.print();
+        }
+
+        function exportarExcel() {
+            const datos = [['ID Req', 'Descripción Req', 'Prioridad', 'ID Casos', 'Descripción Caso', 'Estado', 'Cobertura', 'Observaciones']];
+            
+            const filas = document.querySelectorAll('#tablaMatrizBody tr');
+            filas.forEach(fila => {
+                const celdas = fila.querySelectorAll('td');
+                const estadoTd = celdas[5];
+                const coberturaTd = celdas[6];
+                
+                datos.push([
+                    celdas[0].querySelector('input')?.value || '',
+                    celdas[1].querySelector('input')?.value || '',
+                    celdas[2].querySelector('select')?.value || '',
+                    celdas[3].querySelector('input')?.value || '',
+                    celdas[4].querySelector('input')?.value || '',
+                    estadoTd.dataset?.estado || estadoTd.querySelector('select')?.value || '',
+                    coberturaTd.dataset?.cobertura || coberturaTd.querySelector('select')?.value || '',
+                    celdas[7].querySelector('input')?.value || ''
+                ]);
+            });
+
+            let csv = datos.map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'matriz_trazabilidad_' + new Date().getTime() + '.csv';
+            link.click();
+        }
+
+        function limpiarMatriz() {
+            if (confirm('¿Está seguro de que desea limpiar toda la matriz? Esta acción no se puede deshacer.')) {
+                document.getElementById('proyecto').value = '';
+                document.getElementById('modulo').value = '';
+                document.getElementById('responsable').value = '';
+                document.getElementById('fechaActualizacion').value = new Date().toISOString().split('T')[0];
+                document.getElementById('tablaMatrizBody').innerHTML = '';
+                contadorFilas = 0;
+                actualizarMetricas();
+                limpiarFiltros();
+                localStorage.removeItem('ibm_matriz_trazabilidad');
+                alert('✅ Matriz limpiada exitosamente');
+            }
+        }
+    </script>
+</body>
+</html>

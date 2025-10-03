@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Verificación de Criterios de Salida - IBM QMS</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✅</text></svg>">
+    <link href="https://unpkg.com/carbon-components@10.58.12/css/carbon-components.min.css" rel="stylesheet">
+    <script src="ibm-navigation.js"></script>
+    <style>
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f62fe 0%, #0353e9 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(15, 98, 254, 0.3);
+        }
+
+        .header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            color: #161616;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #0f62fe;
+        }
+
+        .info-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-field label {
+            font-weight: 600;
+            color: #525252;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-field input, .info-field select {
+            padding: 0.75rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            transition: border-color 0.2s;
+        }
+
+        .info-field input:focus, .info-field select:focus {
+            outline: none;
+            border-color: #0f62fe;
+            box-shadow: 0 0 0 2px rgba(15, 98, 254, 0.1);
+        }
+
+        .checklist-section {
+            margin-top: 2rem;
+        }
+
+        .checklist-category {
+            margin-bottom: 2rem;
+        }
+
+        .checklist-category h3 {
+            color: #0f62fe;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checklist-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: #f4f4f4;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .checklist-item:hover {
+            background: #e8e8e8;
+            transform: translateX(4px);
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 1rem;
+            cursor: pointer;
+            accent-color: #0f62fe;
+        }
+
+        .checklist-item label {
+            flex: 1;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: #393939;
+        }
+
+        .checklist-item .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 1rem;
+        }
+
+        .status-badge.cumple {
+            background: #24a148;
+            color: white;
+        }
+
+        .status-badge.no-cumple {
+            background: #da1e28;
+            color: white;
+        }
+
+        .status-badge.pendiente {
+            background: #f1c21b;
+            color: #161616;
+        }
+
+        .metrics-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #f4f4f4 0%, #e8e8e8 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .metric-card .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0f62fe;
+            margin: 0.5rem 0;
+        }
+
+        .metric-card .metric-label {
+            font-size: 0.875rem;
+            color: #525252;
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: #0f62fe;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0353e9;
+            box-shadow: 0 4px 8px rgba(15, 98, 254, 0.3);
+        }
+
+        .btn-secondary {
+            background: #393939;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #262626;
+        }
+
+        .btn-danger {
+            background: #da1e28;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #ba1b23;
+        }
+
+        .btn-success {
+            background: #24a148;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #198038;
+        }
+
+        .notes-section {
+            margin-top: 2rem;
+        }
+
+        .notes-section textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.875rem;
+            resize: vertical;
+        }
+
+        .notes-section textarea:focus {
+            outline: none;
+            border-color: #0f62fe;
+            box-shadow: 0 0 0 2px rgba(15, 98, 254, 0.1);
+        }
+
+        .standard-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #e0e0e0;
+            color: #161616;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .action-buttons {
+                display: none;
+            }
+            .card {
+                box-shadow: none;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Lista de Verificación de Criterios de Salida</h1>
+            <p>Control de cumplimiento de criterios de salida por fase del proyecto</p>
+            <div style="margin-top: 1rem;">
+                <span class="standard-badge">TMMi Level 3</span>
+                <span class="standard-badge">CMMI Level 3</span>
+                <span class="standard-badge">IEEE 829</span>
+            </div>
+        </div>
+
+        <!-- Información General -->
+        <div class="card">
+            <h2>📝 Información General</h2>
+            <div class="info-section">
+                <div class="info-field">
+                    <label for="proyecto">Proyecto:</label>
+                    <input type="text" id="proyecto" placeholder="Nombre del proyecto">
+                </div>
+                <div class="info-field">
+                    <label for="fase">Fase del Proyecto:</label>
+                    <select id="fase">
+                        <option value="">Seleccionar fase...</option>
+                        <option value="analisis">Análisis de Requisitos</option>
+                        <option value="diseno">Diseño</option>
+                        <option value="desarrollo">Desarrollo</option>
+                        <option value="pruebas">Pruebas</option>
+                        <option value="integracion">Integración</option>
+                        <option value="despliegue">Despliegue</option>
+                    </select>
+                </div>
+                <div class="info-field">
+                    <label for="responsable">Responsable:</label>
+                    <input type="text" id="responsable" placeholder="Nombre del responsable">
+                </div>
+                <div class="info-field">
+                    <label for="fecha">Fecha de Verificación:</label>
+                    <input type="date" id="fecha">
+                </div>
+            </div>
+        </div>
+
+        <!-- Criterios de Salida - Ejecución de Pruebas -->
+        <div class="card">
+            <h2>🧪 Criterios de Salida - Ejecución de Pruebas</h2>
+            
+            <div class="checklist-category">
+                <h3>📊 Cobertura y Ejecución</h3>
+                <div class="checklist-items">
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c1" onchange="actualizarMetricas()">
+                        <label for="c1">100% de los scripts de prueba ejecutados</label>
+                        <span class="status-badge pendiente" id="s1">Pendiente</span>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c2" onchange="actualizarMetricas()">
+                        <label for="c2">Tasa de aprobación ≥ 95%</label>
+                        <span class="status-badge pendiente" id="s2">Pendiente</span>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c3" onchange="actualizarMetricas()">
+                        <label for="c3">Cobertura de código ≥ 80%</label>
+                        <span class="status-badge pendiente" id="s3">Pendiente</span>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c4" onchange="actualizarMetricas()">
+                        <label for="c4">Todos los casos de prueba críticos ejecutados exitosamente</label>
+                        <span class="status-badge pendiente" id="s4">Pendiente</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-category">
+                <h3>🐛 Defectos y Calidad</h3>
+                <div class="checklist-items">
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c5" onchange="actualizarMetricas()">
+                        <label for="c5">No hay defectos críticos abiertos</label>
+                        <span class="status-badge pendiente" id="s5">Pendiente</span>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c6" onchange="actualizarMetricas()">
+                        <label for="c6">Defectos de severidad alta cerrados al 100%</label>
+                        <span class="status-badge pendiente" id="s6">Pendiente</span>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c7" onchange="actualizarMetricas()">
+                        <label for="c7">≥ 80% de defectos medios cerrados</label>
+                        <span class="status-badge pendiente" id="s7">Pendiente</span>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c8" onchange="actualizarMetricas()">
+                        <label for="c8">Todos los defectos documentados en HP-ALM o sistema de gestión</label>
+                        <span class="status-badge pendiente" id="s8">Pendiente</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-category">
+                <h3>📄 Documentación y Evidencias</h3>
+                <div class="checklist-items">
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c9" onchange="actualizarMetricas()">
+                        <label for="c9">Capturas de pantalla documentadas para casos críticos</label>
+                        <span class="status-badge pendiente" id="s9">Pendiente</span>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c10" onchange="actualizarMetricas()">
+                        <label for="c10">Resultados de pruebas registrados por test script</label>
+                        <span class="status-badge pendiente" id="s10">Pendiente</span>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c11" onchange="actualizarMetricas()">
+                        <label for="c11">Reporte de ejecución de pruebas completado</label>
+                        <span class="status-badge pendiente" id="s11">Pendiente</span>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c12" onchange="actualizarMetricas()">
+                        <label for="c12">Matriz de trazabilidad actualizada (requisitos vs pruebas)</label>
+                        <span class="status-badge pendiente" id="s12">Pendiente</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-category">
+                <h3>✅ Aprobación y Cierre</h3>
+                <div class="checklist-items">
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c13" onchange="actualizarMetricas()">
+                        <label for="c13">Acta de cierre de fase firmada por stakeholders</label>
+                        <span class="status-badge pendiente" id="s13">Pendiente</span>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c14" onchange="actualizarMetricas()">
+                        <label for="c14">Aprobación del Project Manager documentada</label>
+                        <span class="status-badge pendiente" id="s14">Pendiente</span>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c15" onchange="actualizarMetricas()">
+                        <label for="c15">Lecciones aprendidas documentadas</label>
+                        <span class="status-badge pendiente" id="s15">Pendiente</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Métricas -->
+        <div class="card">
+            <h2>📊 Métricas de Cumplimiento</h2>
+            <div class="metrics-section">
+                <div class="metric-card">
+                    <div class="metric-label">Total de Criterios</div>
+                    <div class="metric-value" id="totalCriterios">15</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Criterios Cumplidos</div>
+                    <div class="metric-value" id="cumplidos">0</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Criterios Pendientes</div>
+                    <div class="metric-value" id="pendientes">15</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">% Cumplimiento</div>
+                    <div class="metric-value" id="porcentaje">0%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notas y Observaciones -->
+        <div class="card">
+            <h2>📝 Notas y Observaciones</h2>
+            <div class="notes-section">
+                <textarea id="notas" placeholder="Ingrese notas, observaciones o comentarios adicionales sobre el cumplimiento de criterios de salida..."></textarea>
+            </div>
+        </div>
+
+        <!-- Acciones -->
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="guardarLista()">
+                <span>💾</span> Guardar Lista
+            </button>
+            <button class="btn btn-success" onclick="exportarPDF()">
+                <span>📄</span> Exportar PDF
+            </button>
+            <button class="btn btn-secondary" onclick="exportarExcel()">
+                <span>📊</span> Exportar Excel
+            </button>
+            <button class="btn btn-danger" onclick="limpiarLista()">
+                <span>🔄</span> Limpiar
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Cargar datos guardados al iniciar
+        window.addEventListener('DOMContentLoaded', () => {
+            cargarDatosGuardados();
+            actualizarMetricas();
+            
+            // Establecer fecha actual
+            const hoy = new Date().toISOString().split('T')[0];
+            document.getElementById('fecha').value = hoy;
+        });
+
+        function actualizarMetricas() {
+            const total = 15;
+            let cumplidos = 0;
+
+            // Contar checkboxes marcados
+            for (let i = 1; i <= total; i++) {
+                const checkbox = document.getElementById(`c${i}`);
+                const statusBadge = document.getElementById(`s${i}`);
+                
+                if (checkbox.checked) {
+                    cumplidos++;
+                    statusBadge.textContent = 'Cumple';
+                    statusBadge.className = 'status-badge cumple';
+                } else {
+                    statusBadge.textContent = 'Pendiente';
+                    statusBadge.className = 'status-badge pendiente';
+                }
+            }
+
+            const pendientes = total - cumplidos;
+            const porcentaje = Math.round((cumplidos / total) * 100);
+
+            // Actualizar métricas
+            document.getElementById('cumplidos').textContent = cumplidos;
+            document.getElementById('pendientes').textContent = pendientes;
+            document.getElementById('porcentaje').textContent = porcentaje + '%';
+
+            // Cambiar color del porcentaje según el valor
+            const porcentajeElement = document.getElementById('porcentaje');
+            if (porcentaje >= 100) {
+                porcentajeElement.style.color = '#24a148';
+            } else if (porcentaje >= 80) {
+                porcentajeElement.style.color = '#0f62fe';
+            } else if (porcentaje >= 50) {
+                porcentajeElement.style.color = '#f1c21b';
+            } else {
+                porcentajeElement.style.color = '#da1e28';
+            }
+        }
+
+        function guardarLista() {
+            const datos = {
+                proyecto: document.getElementById('proyecto').value,
+                fase: document.getElementById('fase').value,
+                responsable: document.getElementById('responsable').value,
+                fecha: document.getElementById('fecha').value,
+                notas: document.getElementById('notas').value,
+                criterios: {}
+            };
+
+            // Guardar estado de checkboxes
+            for (let i = 1; i <= 15; i++) {
+                datos.criterios[`c${i}`] = document.getElementById(`c${i}`).checked;
+            }
+
+            localStorage.setItem('ibm_lista_criterios_salida', JSON.stringify(datos));
+            alert('✅ Lista de verificación guardada exitosamente');
+        }
+
+        function cargarDatosGuardados() {
+            const datosGuardados = localStorage.getItem('ibm_lista_criterios_salida');
+            if (datosGuardados) {
+                const datos = JSON.parse(datosGuardados);
+                
+                document.getElementById('proyecto').value = datos.proyecto || '';
+                document.getElementById('fase').value = datos.fase || '';
+                document.getElementById('responsable').value = datos.responsable || '';
+                document.getElementById('fecha').value = datos.fecha || '';
+                document.getElementById('notas').value = datos.notas || '';
+
+                // Restaurar checkboxes
+                if (datos.criterios) {
+                    for (let i = 1; i <= 15; i++) {
+                        if (datos.criterios[`c${i}`]) {
+                            document.getElementById(`c${i}`).checked = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        function exportarPDF() {
+            window.print();
+        }
+
+        function exportarExcel() {
+            const datos = [];
+            datos.push(['Criterio', 'Estado']);
+            
+            const labels = [
+                '100% de los scripts de prueba ejecutados',
+                'Tasa de aprobación ≥ 95%',
+                'Cobertura de código ≥ 80%',
+                'Todos los casos de prueba críticos ejecutados exitosamente',
+                'No hay defectos críticos abiertos',
+                'Defectos de severidad alta cerrados al 100%',
+                '≥ 80% de defectos medios cerrados',
+                'Todos los defectos documentados en HP-ALM',
+                'Capturas de pantalla documentadas',
+                'Resultados registrados por test script',
+                'Reporte de ejecución completado',
+                'Matriz de trazabilidad actualizada',
+                'Acta de cierre firmada',
+                'Aprobación del PM documentada',
+                'Lecciones aprendidas documentadas'
+            ];
+
+            for (let i = 1; i <= 15; i++) {
+                const checked = document.getElementById(`c${i}`).checked;
+                datos.push([labels[i-1], checked ? 'Cumple' : 'Pendiente']);
+            }
+
+            let csv = datos.map(row => row.join(',')).join('\n');
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'criterios_salida_' + new Date().getTime() + '.csv';
+            link.click();
+        }
+
+        function limpiarLista() {
+            if (confirm('¿Está seguro de que desea limpiar toda la lista? Esta acción no se puede deshacer.')) {
+                document.getElementById('proyecto').value = '';
+                document.getElementById('fase').value = '';
+                document.getElementById('responsable').value = '';
+                document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
+                document.getElementById('notas').value = '';
+
+                for (let i = 1; i <= 15; i++) {
+                    document.getElementById(`c${i}`).checked = false;
+                }
+
+                actualizarMetricas();
+                localStorage.removeItem('ibm_lista_criterios_salida');
+                alert('✅ Lista limpiada exitosamente');
+            }
+        }
+    </script>
+</body>
+</html>
