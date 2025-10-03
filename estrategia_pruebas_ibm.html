@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estrategia de Pruebas - IBM QMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: linear-gradient(135deg, #0f62fe 0%, #0353e9 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #161616 0%, #262626 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #161616;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #0f62fe;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card {
+            background: #f4f4f4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #0f62fe;
+        }
+
+        .card h3 {
+            color: #0f62fe;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .card p {
+            color: #393939;
+            line-height: 1.6;
+        }
+
+        .card ul {
+            margin-top: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .card ul li {
+            color: #393939;
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .matrix-item {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .matrix-item:hover {
+            border-color: #0f62fe;
+            box-shadow: 0 4px 12px rgba(15, 98, 254, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .matrix-item h4 {
+            color: #161616;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .matrix-item p {
+            color: #525252;
+            font-size: 0.9rem;
+        }
+
+        .test-type {
+            background: white;
+            border-left: 4px solid #0f62fe;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+
+        .test-type h4 {
+            color: #0f62fe;
+            margin-bottom: 0.5rem;
+        }
+
+        .test-type .description {
+            color: #393939;
+            margin-bottom: 0.5rem;
+        }
+
+        .test-type .coverage {
+            color: #525252;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #d0e2ff 0%, #a6c8ff 100%);
+            border-left: 4px solid #0f62fe;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box h4 {
+            color: #161616;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-box p {
+            color: #393939;
+            margin: 0;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        table th,
+        table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        table th {
+            background: #f4f4f4;
+            font-weight: 600;
+            color: #161616;
+        }
+
+        table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .metric-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0f62fe;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            color: #525252;
+            font-size: 0.9rem;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            padding: 2rem 0;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #0f62fe;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0353e9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(15, 98, 254, 0.3);
+        }
+
+        .btn-secondary {
+            background: #393939;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #262626;
+        }
+
+        .icon {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .phase-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+        }
+
+        .phase-planning {
+            background: #d0e2ff;
+            color: #0f62fe;
+        }
+
+        .phase-design {
+            background: #d0f0e3;
+            color: #24a148;
+        }
+
+        .phase-execution {
+            background: #fff4d5;
+            color: #f1c21b;
+        }
+
+        .phase-closure {
+            background: #e5f6ff;
+            color: #0072c3;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .nav-buttons {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Navigation Module -->
+    <script src="ibm-navigation.js"></script>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Documento de Estrategia de Pruebas</h1>
+            <p>IBM Quality Management System - Test Strategy Document</p>
+            <p style="font-size: 0.9rem; margin-top: 0.5rem;">Conforme a IEEE 829, ISO/IEC 25010, TMMi Level 3, CMMi Level 3</p>
+        </div>
+
+        <div class="content">
+            <!-- Resumen Ejecutivo -->
+            <div class="section">
+                <div class="highlight-box">
+                    <h4>📋 Resumen Ejecutivo</h4>
+                    <p>Este documento define la estrategia integral de pruebas para el IBM Quality Management System, estableciendo objetivos, alcance, enfoque, recursos y métricas de calidad alineados con los estándares internacionales de testing y calidad de software.</p>
+                </div>
+            </div>
+
+            <!-- Objetivos -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">🎯</span>Objetivos de Pruebas</h2>
+                
+                <div class="card">
+                    <h3>Objetivo General</h3>
+                    <p>Garantizar la calidad, confiabilidad y rendimiento del IBM Quality Management System mediante un proceso de pruebas sistemático, automatizado y alineado con los estándares TMMi Level 3 y CMMi Level 3.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Objetivos Específicos</h3>
+                    <ul>
+                        <li><strong>Calidad Funcional:</strong> Verificar que todas las funcionalidades cumplan con los requisitos especificados y expectativas de usuario</li>
+                        <li><strong>Rendimiento:</strong> Validar tiempos de respuesta < 2s para el 95% de las transacciones bajo carga normal (100 usuarios concurrentes)</li>
+                        <li><strong>Seguridad:</strong> Identificar y mitigar vulnerabilidades de seguridad siguiendo el OWASP Top 10</li>
+                        <li><strong>Compatibilidad:</strong> Asegurar funcionamiento correcto en múltiples navegadores (Chrome, Firefox, Safari, Edge) y dispositivos</li>
+                        <li><strong>Cobertura:</strong> Alcanzar mínimo 80% de cobertura de código con pruebas automatizadas</li>
+                        <li><strong>Regresión:</strong> Garantizar que nuevos cambios no introduzcan defectos en funcionalidades existentes</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Alcance -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">📊</span>Alcance de Pruebas</h2>
+                
+                <div class="matrix-grid">
+                    <div class="matrix-item">
+                        <h4>✅ En Alcance</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>✓ Autenticación y autorización</li>
+                            <li>✓ Dashboard de métricas</li>
+                            <li>✓ Generación de reportes</li>
+                            <li>✓ Gestión de casos de prueba</li>
+                            <li>✓ Integración CI/CD</li>
+                            <li>✓ APIs REST</li>
+                            <li>✓ Base de datos PostgreSQL</li>
+                        </ul>
+                    </div>
+
+                    <div class="matrix-item">
+                        <h4>❌ Fuera de Alcance</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>✗ Pruebas de hardware</li>
+                            <li>✗ Testing en producción</li>
+                            <li>✗ Pruebas de terceros</li>
+                            <li>✗ Integraciones externas no controladas</li>
+                        </ul>
+                    </div>
+
+                    <div class="matrix-item">
+                        <h4>🔄 Módulos Críticos</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>🔴 Sistema de autenticación</li>
+                            <li>🔴 Cálculo de métricas</li>
+                            <li>🔴 Generación de reportes</li>
+                            <li>🟡 Gestión de usuarios</li>
+                            <li>🟡 Dashboard visualización</li>
+                        </ul>
+                    </div>
+
+                    <div class="matrix-item">
+                        <h4>🌍 Ambientes</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>• Development (DEV)</li>
+                            <li>• Testing/QA (QA)</li>
+                            <li>• Staging (STG)</li>
+                            <li>• Production (PROD)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tipos de Pruebas -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">🧪</span>Tipos de Pruebas</h2>
+                
+                <div class="card">
+                    <h3>Pruebas Funcionales</h3>
+                    
+                    <div class="test-type">
+                        <h4>Unit Testing</h4>
+                        <p class="description">Validación de componentes individuales (funciones, métodos, clases)</p>
+                        <p class="coverage"><strong>Herramientas:</strong> Jest (frontend), Mocha/Chai (backend) | <strong>Cobertura Objetivo:</strong> >85%</p>
+                    </div>
+
+                    <div class="test-type">
+                        <h4>Integration Testing</h4>
+                        <p class="description">Validación de interacciones entre módulos y componentes</p>
+                        <p class="coverage"><strong>Herramientas:</strong> Jest, Supertest | <strong>Cobertura Objetivo:</strong> >75%</p>
+                    </div>
+
+                    <div class="test-type">
+                        <h4>End-to-End Testing</h4>
+                        <p class="description">Validación de flujos completos de usuario en entorno real</p>
+                        <p class="coverage"><strong>Herramientas:</strong> Cypress, Selenium | <strong>Cobertura Objetivo:</strong> Flujos críticos 100%</p>
+                    </div>
+
+                    <div class="test-type">
+                        <h4>API Testing</h4>
+                        <p class="description">Validación de endpoints REST, contratos, códigos de respuesta</p>
+                        <p class="coverage"><strong>Herramientas:</strong> Postman/Newman, SoapUI | <strong>Cobertura Objetivo:</strong> Todos los endpoints</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Pruebas No Funcionales</h3>
+                    
+                    <div class="test-type">
+                        <h4>Performance Testing</h4>
+                        <p class="description">Validación de tiempos de respuesta, throughput y uso de recursos</p>
+                        <p class="coverage"><strong>Herramientas:</strong> JMeter, LoadRunner | <strong>Objetivo:</strong> <2s para 95% transacciones</p>
+                    </div>
+
+                    <div class="test-type">
+                        <h4>Load Testing</h4>
+                        <p class="description">Validación de comportamiento bajo carga esperada y picos</p>
+                        <p class="coverage"><strong>Escenarios:</strong> 100 usuarios (normal), 500 usuarios (pico), 1000 usuarios (stress)</p>
+                    </div>
+
+                    <div class="test-type">
+                        <h4>Security Testing</h4>
+                        <p class="description">Identificación de vulnerabilidades (OWASP Top 10)</p>
+                        <p class="coverage"><strong>Herramientas:</strong> OWASP ZAP, SonarQube | <strong>Objetivo:</strong> 0 vulnerabilidades críticas</p>
+                    </div>
+
+                    <div class="test-type">
+                        <h4>Usability Testing</h4>
+                        <p class="description">Validación de experiencia de usuario, accesibilidad (WCAG 2.1)</p>
+                        <p class="coverage"><strong>Herramientas:</strong> Lighthouse, axe DevTools | <strong>Objetivo:</strong> Score >90</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cobertura de Pruebas -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">📈</span>Matriz de Cobertura</h2>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Módulo</th>
+                                <th>Unit Tests</th>
+                                <th>Integration Tests</th>
+                                <th>E2E Tests</th>
+                                <th>API Tests</th>
+                                <th>Prioridad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Autenticación</strong></td>
+                                <td>✅ 90%</td>
+                                <td>✅ 85%</td>
+                                <td>✅ 100%</td>
+                                <td>✅ 100%</td>
+                                <td><span class="phase-badge phase-planning">CRÍTICA</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dashboard Métricas</strong></td>
+                                <td>✅ 85%</td>
+                                <td>✅ 80%</td>
+                                <td>✅ 100%</td>
+                                <td>✅ 95%</td>
+                                <td><span class="phase-badge phase-planning">CRÍTICA</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Generación Reportes</strong></td>
+                                <td>✅ 88%</td>
+                                <td>✅ 75%</td>
+                                <td>✅ 90%</td>
+                                <td>✅ 100%</td>
+                                <td><span class="phase-badge phase-planning">CRÍTICA</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Gestión Casos Prueba</strong></td>
+                                <td>✅ 82%</td>
+                                <td>✅ 70%</td>
+                                <td>✅ 85%</td>
+                                <td>✅ 90%</td>
+                                <td><span class="phase-badge phase-design">ALTA</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Gestión Usuarios</strong></td>
+                                <td>✅ 80%</td>
+                                <td>✅ 75%</td>
+                                <td>✅ 80%</td>
+                                <td>✅ 85%</td>
+                                <td><span class="phase-badge phase-design">ALTA</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Análisis Cobertura</strong></td>
+                                <td>✅ 78%</td>
+                                <td>✅ 70%</td>
+                                <td>🟡 75%</td>
+                                <td>✅ 80%</td>
+                                <td><span class="phase-badge phase-execution">MEDIA</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Matriz RACI</strong></td>
+                                <td>✅ 75%</td>
+                                <td>🟡 65%</td>
+                                <td>🟡 70%</td>
+                                <td>✅ 75%</td>
+                                <td><span class="phase-badge phase-execution">MEDIA</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="matrix-grid" style="margin-top: 2rem;">
+                    <div class="metric-card">
+                        <div class="metric-value">83%</div>
+                        <div class="metric-label">Cobertura Global</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">95%</div>
+                        <div class="metric-label">Módulos Críticos</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">100%</div>
+                        <div class="metric-label">APIs Críticas</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">92%</div>
+                        <div class="metric-label">Flujos E2E</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ambientes -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">🌍</span>Ambientes de Pruebas</h2>
+                
+                <div class="matrix-grid">
+                    <div class="card">
+                        <h3>Development (DEV)</h3>
+                        <p><strong>URL:</strong> http://localhost:3000</p>
+                        <p><strong>Base de Datos:</strong> PostgreSQL (local)</p>
+                        <p><strong>Uso:</strong> Desarrollo activo, pruebas unitarias y de integración</p>
+                        <p><strong>Refresh:</strong> Continuo (cambios en tiempo real)</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Testing/QA (QA)</h3>
+                        <p><strong>URL:</strong> https://qa.ibm-qms.com</p>
+                        <p><strong>Base de Datos:</strong> PostgreSQL (QA)</p>
+                        <p><strong>Uso:</strong> Pruebas funcionales, E2E, performance, seguridad</p>
+                        <p><strong>Refresh:</strong> Daily (builds automáticos CI/CD)</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Staging (STG)</h3>
+                        <p><strong>URL:</strong> https://stg.ibm-qms.com</p>
+                        <p><strong>Base de Datos:</strong> PostgreSQL (mirror PROD)</p>
+                        <p><strong>Uso:</strong> Validación final, UAT, pruebas de smoke</p>
+                        <p><strong>Refresh:</strong> Pre-release (candidatos a producción)</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Production (PROD)</h3>
+                        <p><strong>URL:</strong> https://ibm-qms.com</p>
+                        <p><strong>Base de Datos:</strong> PostgreSQL (PROD)</p>
+                        <p><strong>Uso:</strong> Monitoreo, smoke tests post-deployment</p>
+                        <p><strong>Refresh:</strong> Controlled releases (versioned)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Criterios -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">✓</span>Criterios de Entrada/Salida</h2>
+                
+                <div class="card">
+                    <h3>Criterios de Entrada (Entry Criteria)</h3>
+                    <ul>
+                        <li>✅ Código fuente disponible en repositorio Git con branch actualizada</li>
+                        <li>✅ Ambiente de pruebas configurado y operacional</li>
+                        <li>✅ Requisitos de usuario y especificaciones técnicas aprobadas</li>
+                        <li>✅ Casos de prueba diseñados, revisados y aprobados</li>
+                        <li>✅ Datos de prueba preparados y cargados</li>
+                        <li>✅ Herramientas de testing configuradas (Cypress, JMeter, Postman)</li>
+                        <li>✅ Build exitoso en CI/CD sin errores de compilación</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Criterios de Salida (Exit Criteria)</h3>
+                    <ul>
+                        <li>✅ Ejecución del 100% de los casos de prueba planificados</li>
+                        <li>✅ Cobertura de código ≥80% (unit tests)</li>
+                        <li>✅ 0 defectos críticos abiertos (severity 1)</li>
+                        <li>✅ ≤5 defectos mayores abiertos (severity 2), con workarounds documentados</li>
+                        <li>✅ Tasa de éxito de pruebas ≥95%</li>
+                        <li>✅ Performance dentro de SLAs establecidos (response time <2s)</li>
+                        <li>✅ 0 vulnerabilidades de seguridad críticas o altas</li>
+                        <li>✅ Aprobación formal de stakeholders (sign-off document)</li>
+                        <li>✅ Documentación completa (test reports, defect logs, metrics)</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Criterios de Suspensión (Suspension Criteria)</h3>
+                    <ul>
+                        <li>🛑 >20% de casos de prueba fallando repetidamente</li>
+                        <li>🛑 Defectos críticos que bloquean funcionalidades core</li>
+                        <li>🛑 Ambiente de pruebas inestable o no disponible >4 horas</li>
+                        <li>🛑 Cambios mayores en requisitos no aprobados formalmente</li>
+                        <li>🛑 Recursos críticos (personal, herramientas) no disponibles</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Criterios de Reanudación (Resumption Criteria)</h3>
+                    <ul>
+                        <li>🔄 Defectos bloqueantes corregidos y verificados</li>
+                        <li>🔄 Ambiente estabilizado y validado</li>
+                        <li>🔄 Nueva versión del software disponible con fixes</li>
+                        <li>🔄 Aprobación formal del Test Manager para reanudar</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Gestión de Defectos -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">🐛</span>Gestión de Defectos</h2>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Severidad</th>
+                                <th>Descripción</th>
+                                <th>SLA Resolución</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="phase-badge" style="background: #ffcccc; color: #cc0000;">CRÍTICA (S1)</span></td>
+                                <td>Sistema completamente inoperable, pérdida de datos, seguridad comprometida</td>
+                                <td>24 horas</td>
+                                <td>Sistema de login no funciona, pérdida de base de datos</td>
+                            </tr>
+                            <tr>
+                                <td><span class="phase-badge" style="background: #ffe6cc; color: #ff8c00;">ALTA (S2)</span></td>
+                                <td>Funcionalidad crítica afectada, workaround complejo o inexistente</td>
+                                <td>72 horas</td>
+                                <td>Reportes no se generan, métricas incorrectas</td>
+                            </tr>
+                            <tr>
+                                <td><span class="phase-badge phase-execution">MEDIA (S3)</span></td>
+                                <td>Funcionalidad afectada, workaround disponible</td>
+                                <td>1 semana</td>
+                                <td>Filtro de dashboard no funciona correctamente</td>
+                            </tr>
+                            <tr>
+                                <td><span class="phase-badge phase-closure">BAJA (S4)</span></td>
+                                <td>Problema cosmético, impacto mínimo en funcionalidad</td>
+                                <td>2 semanas</td>
+                                <td>Alineación de texto incorrecta, typo en label</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="highlight-box" style="background: linear-gradient(135deg, #fff4d5 0%, #ffe99e 100%); border-left-color: #f1c21b; margin-top: 1.5rem;">
+                    <h4>📊 Proceso de Gestión de Defectos</h4>
+                    <p><strong>1. Detección →</strong> 2. Registro (Jira) → 3. Triage (asignación severity/priority) → 4. Asignación (Dev Team) → 5. Corrección → 6. Verificación (QA) → 7. Cierre → 8. Lecciones Aprendidas</p>
+                </div>
+            </div>
+
+            <!-- Métricas -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">📊</span>Métricas de Calidad</h2>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Métrica</th>
+                                <th>Fórmula</th>
+                                <th>Objetivo</th>
+                                <th>Frecuencia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Test Pass Rate</strong></td>
+                                <td>(Tests Passed / Total Tests) × 100</td>
+                                <td>≥95%</td>
+                                <td>Diaria (CI/CD)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Code Coverage</strong></td>
+                                <td>(Lines Covered / Total Lines) × 100</td>
+                                <td>≥80%</td>
+                                <td>Por commit</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Defect Density</strong></td>
+                                <td>Defects / KLOC (1000 lines of code)</td>
+                                <td><5 defects/KLOC</td>
+                                <td>Por release</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Defect Removal Efficiency</strong></td>
+                                <td>(Defects Pre-Release / Total Defects) × 100</td>
+                                <td>≥90%</td>
+                                <td>Por release</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mean Time To Repair (MTTR)</strong></td>
+                                <td>Σ(Time to Fix) / Number of Defects</td>
+                                <td><48h (críticos)</td>
+                                <td>Semanal</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Test Automation Rate</strong></td>
+                                <td>(Automated Tests / Total Tests) × 100</td>
+                                <td>≥70%</td>
+                                <td>Por sprint</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Requirement Coverage</strong></td>
+                                <td>(Requirements Tested / Total Requirements) × 100</td>
+                                <td>100%</td>
+                                <td>Por sprint</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Escaped Defects</strong></td>
+                                <td>Defects found in PROD</td>
+                                <td>0 (críticos)</td>
+                                <td>Por release</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Roles y Responsabilidades -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">👥</span>Roles y Responsabilidades</h2>
+                
+                <div class="matrix-grid">
+                    <div class="card">
+                        <h3>Test Manager</h3>
+                        <ul>
+                            <li>Planificación estratégica de pruebas</li>
+                            <li>Asignación de recursos</li>
+                            <li>Gestión de riesgos</li>
+                            <li>Reporting a stakeholders</li>
+                            <li>Aprobación de criterios de salida</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>Test Lead</h3>
+                        <ul>
+                            <li>Diseño de casos de prueba</li>
+                            <li>Revisión técnica de scripts</li>
+                            <li>Coordinación de ejecución</li>
+                            <li>Análisis de resultados</li>
+                            <li>Mentoría del equipo QA</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>QA Engineer / Tester</h3>
+                        <ul>
+                            <li>Ejecución de casos de prueba</li>
+                            <li>Registro de defectos</li>
+                            <li>Automatización de pruebas</li>
+                            <li>Verificación de fixes</li>
+                            <li>Reporte de incidencias</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>Automation Engineer</h3>
+                        <ul>
+                            <li>Desarrollo de frameworks</li>
+                            <li>Scripting de pruebas automatizadas</li>
+                            <li>Integración CI/CD</li>
+                            <li>Mantenimiento de suites</li>
+                            <li>Optimización de ejecución</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navegación -->
+            <div class="nav-buttons">
+                <a href="http://localhost:8080/informe_herramientas_ibm.html" class="btn btn-secondary">← Herramientas</a>
+                <a href="http://localhost:8080/dashboard_integrado_ibm.html" class="btn btn-secondary">Dashboard Principal</a>
+                <a href="http://localhost:8080/checklist_configuracion_ibm.html" class="btn btn-primary">Checklist Configuración →</a>
+                <button onclick="window.print()" class="btn btn-primary">🖨️ Imprimir/PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animaciones al scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card, .matrix-item, .test-type').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        console.log('🎯 Documento de Estrategia de Pruebas - IBM QMS');
+        console.log('Estándares: IEEE 829, ISO/IEC 25010, TMMi Level 3, CMMi Level 3');
+    </script>
+</body>
+</html>

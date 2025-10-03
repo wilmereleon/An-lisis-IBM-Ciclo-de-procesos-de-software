@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe de Herramientas - IBM QMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: linear-gradient(135deg, #0f62fe 0%, #0353e9 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #161616 0%, #262626 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #161616;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #0f62fe;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-category {
+            background: #f4f4f4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-category h3 {
+            color: #0f62fe;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .tool-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            border-color: #0f62fe;
+            box-shadow: 0 4px 12px rgba(15, 98, 254, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .tool-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #161616;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-purpose {
+            color: #525252;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .tool-features {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .tool-features li {
+            padding: 0.25rem 0;
+            color: #393939;
+            font-size: 0.9rem;
+        }
+
+        .tool-features li:before {
+            content: "✓ ";
+            color: #24a148;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .tool-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-implemented {
+            background: #d0f0e3;
+            color: #24a148;
+        }
+
+        .status-planned {
+            background: #fff4d5;
+            color: #f1c21b;
+        }
+
+        .status-recommended {
+            background: #d0e2ff;
+            color: #0f62fe;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .comparison-table th {
+            background: #f4f4f4;
+            font-weight: 600;
+            color: #161616;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .icon {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            padding: 2rem 0;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #0f62fe;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0353e9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(15, 98, 254, 0.3);
+        }
+
+        .btn-secondary {
+            background: #393939;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #262626;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #d0e2ff 0%, #a6c8ff 100%);
+            border-left: 4px solid #0f62fe;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box h4 {
+            color: #161616;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-box p {
+            color: #393939;
+            margin: 0;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .nav-buttons {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Navigation Module -->
+    <script src="ibm-navigation.js"></script>
+    
+    <div class="container">
+        <div class="header">
+            <h1>📊 Informe de Herramientas de Pruebas</h1>
+            <p>IBM Quality Management System - Herramientas Susceptibles de Implementación</p>
+            <p style="font-size: 0.9rem; margin-top: 0.5rem;">Estándares: ISO/IEC 25010, TMMi Level 3, CMMi Level 3, IEEE 829</p>
+        </div>
+
+        <div class="content">
+            <!-- Introducción -->
+            <div class="section">
+                <div class="highlight-box">
+                    <h4>🎯 Objetivo del Informe</h4>
+                    <p>Este documento presenta un análisis exhaustivo de las herramientas de pruebas susceptibles de implementación en el IBM Quality Management System, alineadas con los estándares de calidad ISO/IEC 25010, TMMi, CMMi e IEEE 829.</p>
+                </div>
+            </div>
+
+            <!-- Herramientas Funcionales -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">🔧</span>Herramientas Funcionales</h2>
+                
+                <div class="tool-category">
+                    <h3>Automatización End-to-End</h3>
+                    <div class="tool-grid">
+                        <div class="tool-card">
+                            <div class="tool-name">Selenium</div>
+                            <span class="tool-status status-recommended">Recomendado</span>
+                            <p class="tool-purpose">Framework de automatización web multiplataforma para pruebas E2E</p>
+                            <ul class="tool-features">
+                                <li>Soporte para múltiples lenguajes (Java, Python, JS)</li>
+                                <li>Compatible con todos los navegadores</li>
+                                <li>Selenium Grid para ejecución paralela</li>
+                                <li>Integración con frameworks de testing</li>
+                            </ul>
+                            <strong>Caso de Uso IBM QMS:</strong>
+                            <p style="font-size: 0.85rem; color: #525252; margin-top: 0.5rem;">
+                                Pruebas de flujos de usuario (login, navegación, reportes), validación de dashboards y compatibilidad cross-browser
+                            </p>
+                        </div>
+
+                        <div class="tool-card">
+                            <div class="tool-name">Cypress</div>
+                            <span class="tool-status status-implemented">Implementado</span>
+                            <p class="tool-purpose">Framework moderno de testing E2E con debugging en tiempo real</p>
+                            <ul class="tool-features">
+                                <li>Ejecución rápida y confiable</li>
+                                <li>Time-travel debugging</li>
+                                <li>Screenshots y videos automáticos</li>
+                                <li>Excelente para aplicaciones React</li>
+                            </ul>
+                            <strong>Caso de Uso IBM QMS:</strong>
+                            <p style="font-size: 0.85rem; color: #525252; margin-top: 0.5rem;">
+                                Pruebas de integración frontend-backend, validación de formularios React y flujos críticos de calidad
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Herramientas de Carga y Rendimiento -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">⚡</span>Herramientas de Carga y Rendimiento</h2>
+                
+                <div class="tool-category">
+                    <h3>Performance Testing</h3>
+                    <div class="tool-grid">
+                        <div class="tool-card">
+                            <div class="tool-name">JMeter</div>
+                            <span class="tool-status status-recommended">Recomendado</span>
+                            <p class="tool-purpose">Herramienta open-source para pruebas de carga y estrés</p>
+                            <ul class="tool-features">
+                                <li>Configuración visual de escenarios</li>
+                                <li>Soporte para múltiples protocolos</li>
+                                <li>Reportes detallados de métricas</li>
+                                <li>Ejecución distribuida</li>
+                            </ul>
+                            <strong>Configuración Recomendada:</strong>
+                            <ul style="font-size: 0.85rem; color: #525252; margin-top: 0.5rem; list-style: none;">
+                                <li>• Usuarios concurrentes: 100-500</li>
+                                <li>• Ramp-up period: 60s</li>
+                                <li>• Duration: 300s</li>
+                            </ul>
+                        </div>
+
+                        <div class="tool-card">
+                            <div class="tool-name">LoadRunner</div>
+                            <span class="tool-status status-planned">Planificado</span>
+                            <p class="tool-purpose">Solución empresarial de Micro Focus para pruebas de carga</p>
+                            <ul class="tool-features">
+                                <li>Simulación realista de usuarios</li>
+                                <li>Análisis profundo de performance</li>
+                                <li>Correlación automática de parámetros</li>
+                                <li>Monitoreo de infraestructura</li>
+                            </ul>
+                            <strong>Escenarios IBM QMS:</strong>
+                            <p style="font-size: 0.85rem; color: #525252; margin-top: 0.5rem;">
+                                Carga en endpoints de métricas, stress testing de generación de reportes, pruebas de concurrencia
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Herramientas API -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">🔌</span>Herramientas de Pruebas API</h2>
+                
+                <div class="tool-category">
+                    <h3>API Testing</h3>
+                    <div class="tool-grid">
+                        <div class="tool-card">
+                            <div class="tool-name">Postman</div>
+                            <span class="tool-status status-implemented">Implementado</span>
+                            <p class="tool-purpose">Plataforma completa para desarrollo y testing de APIs</p>
+                            <ul class="tool-features">
+                                <li>Interfaz gráfica intuitiva</li>
+                                <li>Colecciones y variables</li>
+                                <li>Automatización con Newman</li>
+                                <li>Integración con CI/CD</li>
+                            </ul>
+                            <strong>Colecciones IBM QMS:</strong>
+                            <ul style="font-size: 0.85rem; color: #525252; margin-top: 0.5rem; list-style: none;">
+                                <li>• Auth API (login, logout, tokens)</li>
+                                <li>• Metrics API (CRUD operaciones)</li>
+                                <li>• Reports API (generación/descarga)</li>
+                                <li>• Users API (gestión usuarios)</li>
+                            </ul>
+                        </div>
+
+                        <div class="tool-card">
+                            <div class="tool-name">SoapUI</div>
+                            <span class="tool-status status-recommended">Recomendado</span>
+                            <p class="tool-purpose">Herramienta especializada para pruebas de servicios SOAP/REST</p>
+                            <ul class="tool-features">
+                                <li>Validación de contratos WSDL</li>
+                                <li>Pruebas de seguridad WS-Security</li>
+                                <li>Mockservices para desarrollo</li>
+                                <li>Load testing integrado</li>
+                            </ul>
+                            <strong>Casos de Uso:</strong>
+                            <p style="font-size: 0.85rem; color: #525252; margin-top: 0.5rem;">
+                                Validación de contratos API, pruebas de seguridad, performance testing de endpoints
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Herramientas de Gestión -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">📋</span>Herramientas de Gestión de Pruebas</h2>
+                
+                <div class="tool-category">
+                    <h3>Test Management</h3>
+                    <div class="tool-grid">
+                        <div class="tool-card">
+                            <div class="tool-name">TestRail</div>
+                            <span class="tool-status status-recommended">Recomendado</span>
+                            <p class="tool-purpose">Plataforma centralizada de gestión de casos de prueba</p>
+                            <ul class="tool-features">
+                                <li>Organización por test suites</li>
+                                <li>Trazabilidad completa</li>
+                                <li>Reporting avanzado</li>
+                                <li>Integración con Jira/Jenkins</li>
+                            </ul>
+                            <strong>Estructura IBM QMS:</strong>
+                            <ul style="font-size: 0.85rem; color: #525252; margin-top: 0.5rem; list-style: none;">
+                                <li>• Test Suites por módulo</li>
+                                <li>• Test Runs por sprint/release</li>
+                                <li>• Milestones alineados a releases</li>
+                            </ul>
+                        </div>
+
+                        <div class="tool-card">
+                            <div class="tool-name">Zephyr</div>
+                            <span class="tool-status status-recommended">Recomendado</span>
+                            <p class="tool-purpose">Integración nativa con Jira para gestión de pruebas</p>
+                            <ul class="tool-features">
+                                <li>Trazabilidad User Story → Test</li>
+                                <li>Dashboards integrados en Jira</li>
+                                <li>Cobertura en tiempo real</li>
+                                <li>Reporting JQL avanzado</li>
+                            </ul>
+                            <strong>Beneficios:</strong>
+                            <p style="font-size: 0.85rem; color: #525252; margin-top: 0.5rem;">
+                                Workflow unificado con desarrollo, visibilidad completa del ciclo de vida de pruebas
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CI/CD -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">🔄</span>Herramientas CI/CD</h2>
+                
+                <div class="tool-category">
+                    <h3>Continuous Integration & Deployment</h3>
+                    <div class="tool-grid">
+                        <div class="tool-card">
+                            <div class="tool-name">Jenkins</div>
+                            <span class="tool-status status-implemented">Implementado</span>
+                            <p class="tool-purpose">Servidor de automatización open-source líder del mercado</p>
+                            <ul class="tool-features">
+                                <li>Pipeline as Code (Jenkinsfile)</li>
+                                <li>1800+ plugins disponibles</li>
+                                <li>Ejecución distribuida</li>
+                                <li>Blue Ocean UI moderna</li>
+                            </ul>
+                            <strong>Pipeline IBM QMS:</strong>
+                            <p style="font-size: 0.85rem; color: #525252; margin-top: 0.5rem;">
+                                Build → Unit Tests → Integration Tests → E2E Tests → Security Scan → Deploy
+                            </p>
+                        </div>
+
+                        <div class="tool-card">
+                            <div class="tool-name">GitLab CI</div>
+                            <span class="tool-status status-recommended">Recomendado</span>
+                            <p class="tool-purpose">CI/CD integrado nativamente con repositorio Git</p>
+                            <ul class="tool-features">
+                                <li>Configuración YAML simple</li>
+                                <li>Auto DevOps capabilities</li>
+                                <li>Container Registry integrado</li>
+                                <li>Security scanning nativo</li>
+                            </ul>
+                            <strong>Ventajas:</strong>
+                            <p style="font-size: 0.85rem; color: #525252; margin-top: 0.5rem;">
+                                Todo en una plataforma, configuración simplificada, costos reducidos
+                            </p>
+                        </div>
+
+                        <div class="tool-card">
+                            <div class="tool-name">Azure DevOps</div>
+                            <span class="tool-status status-recommended">Recomendado</span>
+                            <p class="tool-purpose">Suite completa DevOps de Microsoft</p>
+                            <ul class="tool-features">
+                                <li>Azure Pipelines (CI/CD)</li>
+                                <li>Azure Boards (Planning)</li>
+                                <li>Azure Test Plans (Testing)</li>
+                                <li>Integración nativa con Azure</li>
+                            </ul>
+                            <strong>Ideal para:</strong>
+                            <p style="font-size: 0.85rem; color: #525252; margin-top: 0.5rem;">
+                                Organizaciones Microsoft, integración con Azure Cloud, entornos enterprise
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Observabilidad -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">📈</span>Herramientas de Observabilidad</h2>
+                
+                <div class="tool-category">
+                    <h3>Monitoring & Observability</h3>
+                    <div class="tool-grid">
+                        <div class="tool-card">
+                            <div class="tool-name">Grafana</div>
+                            <span class="tool-status status-implemented">Implementado</span>
+                            <p class="tool-purpose">Plataforma de visualización de métricas en tiempo real</p>
+                            <ul class="tool-features">
+                                <li>Dashboards personalizables</li>
+                                <li>Múltiples fuentes de datos</li>
+                                <li>Alerting avanzado</li>
+                                <li>Plugins y extensiones</li>
+                            </ul>
+                            <strong>Métricas IBM QMS:</strong>
+                            <ul style="font-size: 0.85rem; color: #525252; margin-top: 0.5rem; list-style: none;">
+                                <li>• Test execution metrics</li>
+                                <li>• Code coverage trends</li>
+                                <li>• Defect density</li>
+                                <li>• Build success rate</li>
+                            </ul>
+                        </div>
+
+                        <div class="tool-card">
+                            <div class="tool-name">Prometheus</div>
+                            <span class="tool-status status-implemented">Implementado</span>
+                            <p class="tool-purpose">Sistema de monitoreo y alerting time-series</p>
+                            <ul class="tool-features">
+                                <li>Modelo de datos dimensional</li>
+                                <li>Lenguaje de consultas PromQL</li>
+                                <li>Alertmanager integrado</li>
+                                <li>Service discovery automático</li>
+                            </ul>
+                            <strong>Alertas Configuradas:</strong>
+                            <ul style="font-size: 0.85rem; color: #525252; margin-top: 0.5rem; list-style: none;">
+                                <li>• Test failure rate > 10%</li>
+                                <li>• Build duration > 15min</li>
+                                <li>• API response time > 2s</li>
+                            </ul>
+                        </div>
+
+                        <div class="tool-card">
+                            <div class="tool-name">ELK Stack</div>
+                            <span class="tool-status status-recommended">Recomendado</span>
+                            <p class="tool-purpose">Elasticsearch, Logstash, Kibana para análisis de logs</p>
+                            <ul class="tool-features">
+                                <li>Indexación de logs en tiempo real</li>
+                                <li>Búsquedas full-text potentes</li>
+                                <li>Visualizaciones en Kibana</li>
+                                <li>Alertas basadas en logs</li>
+                            </ul>
+                            <strong>Logs Indexados:</strong>
+                            <p style="font-size: 0.85rem; color: #525252; margin-top: 0.5rem;">
+                                Test execution logs, application logs, CI/CD pipeline logs, audit trails
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seguridad -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">🔒</span>Herramientas de Seguridad</h2>
+                
+                <div class="tool-category">
+                    <h3>Security Testing</h3>
+                    <div class="tool-grid">
+                        <div class="tool-card">
+                            <div class="tool-name">OWASP ZAP</div>
+                            <span class="tool-status status-implemented">Implementado</span>
+                            <p class="tool-purpose">Herramienta open-source de security testing automatizado</p>
+                            <ul class="tool-features">
+                                <li>Escaneo activo y pasivo</li>
+                                <li>Spider y Ajax Spider</li>
+                                <li>API RESTful completa</li>
+                                <li>Integración con CI/CD</li>
+                            </ul>
+                            <strong>Pruebas Configuradas:</strong>
+                            <ul style="font-size: 0.85rem; color: #525252; margin-top: 0.5rem; list-style: none;">
+                                <li>• SQL Injection</li>
+                                <li>• XSS (Cross-Site Scripting)</li>
+                                <li>• CSRF (Cross-Site Request Forgery)</li>
+                                <li>• Security Headers</li>
+                            </ul>
+                        </div>
+
+                        <div class="tool-card">
+                            <div class="tool-name">SonarQube</div>
+                            <span class="tool-status status-implemented">Implementado</span>
+                            <p class="tool-purpose">Plataforma de análisis estático de código</p>
+                            <ul class="tool-features">
+                                <li>Análisis continuo de calidad</li>
+                                <li>Detección de vulnerabilidades</li>
+                                <li>Code smells y bugs</li>
+                                <li>Quality Gates personalizados</li>
+                            </ul>
+                            <strong>Quality Gates IBM QMS:</strong>
+                            <ul style="font-size: 0.85rem; color: #525252; margin-top: 0.5rem; list-style: none;">
+                                <li>• Coverage > 80%</li>
+                                <li>• Duplications < 3%</li>
+                                <li>• Maintainability A</li>
+                                <li>• Security Rating A</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla Comparativa -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">📊</span>Tabla Comparativa de Herramientas</h2>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Herramienta</th>
+                            <th>Categoría</th>
+                            <th>Licencia</th>
+                            <th>Curva de Aprendizaje</th>
+                            <th>Integración CI/CD</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Selenium</strong></td>
+                            <td>E2E Testing</td>
+                            <td>Open Source</td>
+                            <td>Media</td>
+                            <td>Excelente</td>
+                            <td><span class="tool-status status-recommended">Recomendado</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cypress</strong></td>
+                            <td>E2E Testing</td>
+                            <td>Open Source / Comercial</td>
+                            <td>Baja</td>
+                            <td>Excelente</td>
+                            <td><span class="tool-status status-implemented">Implementado</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>JMeter</strong></td>
+                            <td>Performance</td>
+                            <td>Open Source</td>
+                            <td>Media</td>
+                            <td>Buena</td>
+                            <td><span class="tool-status status-recommended">Recomendado</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>LoadRunner</strong></td>
+                            <td>Performance</td>
+                            <td>Comercial</td>
+                            <td>Alta</td>
+                            <td>Buena</td>
+                            <td><span class="tool-status status-planned">Planificado</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Postman</strong></td>
+                            <td>API Testing</td>
+                            <td>Freemium</td>
+                            <td>Baja</td>
+                            <td>Excelente</td>
+                            <td><span class="tool-status status-implemented">Implementado</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>SoapUI</strong></td>
+                            <td>API Testing</td>
+                            <td>Open Source / Comercial</td>
+                            <td>Media</td>
+                            <td>Buena</td>
+                            <td><span class="tool-status status-recommended">Recomendado</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>TestRail</strong></td>
+                            <td>Test Management</td>
+                            <td>Comercial</td>
+                            <td>Baja</td>
+                            <td>Excelente</td>
+                            <td><span class="tool-status status-recommended">Recomendado</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Zephyr</strong></td>
+                            <td>Test Management</td>
+                            <td>Comercial</td>
+                            <td>Baja</td>
+                            <td>Excelente</td>
+                            <td><span class="tool-status status-recommended">Recomendado</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Jenkins</strong></td>
+                            <td>CI/CD</td>
+                            <td>Open Source</td>
+                            <td>Media</td>
+                            <td>Nativa</td>
+                            <td><span class="tool-status status-implemented">Implementado</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>GitLab CI</strong></td>
+                            <td>CI/CD</td>
+                            <td>Open Source / Comercial</td>
+                            <td>Baja</td>
+                            <td>Nativa</td>
+                            <td><span class="tool-status status-recommended">Recomendado</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Azure DevOps</strong></td>
+                            <td>CI/CD</td>
+                            <td>Freemium</td>
+                            <td>Media</td>
+                            <td>Nativa</td>
+                            <td><span class="tool-status status-recommended">Recomendado</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grafana</strong></td>
+                            <td>Observability</td>
+                            <td>Open Source / Comercial</td>
+                            <td>Media</td>
+                            <td>Excelente</td>
+                            <td><span class="tool-status status-implemented">Implementado</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Prometheus</strong></td>
+                            <td>Monitoring</td>
+                            <td>Open Source</td>
+                            <td>Media</td>
+                            <td>Excelente</td>
+                            <td><span class="tool-status status-implemented">Implementado</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>ELK Stack</strong></td>
+                            <td>Log Analysis</td>
+                            <td>Open Source / Comercial</td>
+                            <td>Alta</td>
+                            <td>Buena</td>
+                            <td><span class="tool-status status-recommended">Recomendado</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>OWASP ZAP</strong></td>
+                            <td>Security</td>
+                            <td>Open Source</td>
+                            <td>Media</td>
+                            <td>Excelente</td>
+                            <td><span class="tool-status status-implemented">Implementado</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>SonarQube</strong></td>
+                            <td>Code Quality</td>
+                            <td>Open Source / Comercial</td>
+                            <td>Baja</td>
+                            <td>Excelente</td>
+                            <td><span class="tool-status status-implemented">Implementado</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Recomendaciones -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">💡</span>Recomendaciones de Implementación</h2>
+                
+                <div class="highlight-box" style="background: linear-gradient(135deg, #d0f0e3 0%, #a7e8d4 100%); border-left-color: #24a148;">
+                    <h4>🎯 Prioridad Alta</h4>
+                    <p><strong>Cypress, Postman, Jenkins, Grafana, Prometheus, OWASP ZAP, SonarQube</strong></p>
+                    <p style="margin-top: 0.5rem;">Estas herramientas ya están implementadas y son fundamentales para la operación diaria del QMS.</p>
+                </div>
+
+                <div class="highlight-box" style="background: linear-gradient(135deg, #fff4d5 0%, #ffe99e 100%); border-left-color: #f1c21b;">
+                    <h4>⚡ Prioridad Media</h4>
+                    <p><strong>JMeter, TestRail/Zephyr, GitLab CI/Azure DevOps</strong></p>
+                    <p style="margin-top: 0.5rem;">Herramientas recomendadas para mejorar capacidades de performance testing, gestión de pruebas y CI/CD.</p>
+                </div>
+
+                <div class="highlight-box" style="background: linear-gradient(135deg, #e5f6ff 0%, #bae6ff 100%); border-left-color: #0f62fe;">
+                    <h4>📋 Prioridad Baja</h4>
+                    <p><strong>Selenium, LoadRunner, SoapUI, ELK Stack</strong></p>
+                    <p style="margin-top: 0.5rem;">Herramientas recomendadas para completar el ecosistema de testing y aumentar capacidades avanzadas.</p>
+                </div>
+            </div>
+
+            <!-- Navegación -->
+            <div class="nav-buttons">
+                <a href="http://localhost:8080/dashboard_integrado_ibm.html" class="btn btn-secondary">← Volver al Dashboard</a>
+                <a href="http://localhost:8080/estrategia_pruebas_ibm.html" class="btn btn-primary">Estrategia de Pruebas →</a>
+                <button onclick="window.print()" class="btn btn-primary">🖨️ Imprimir/PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Añadir animaciones al scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.tool-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+
+        // Añadir funcionalidad de búsqueda/filtro (opcional)
+        console.log('📊 Informe de Herramientas de Pruebas - IBM QMS');
+        console.log('Estándares: ISO/IEC 25010, TMMi Level 3, CMMi Level 3, IEEE 829');
+    </script>
+</body>
+</html>

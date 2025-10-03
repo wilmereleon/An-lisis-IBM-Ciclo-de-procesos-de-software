@@ -140,18 +140,50 @@
         }
         
         .test-users h4 {
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
             color: #161616;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
-        .test-users p {
-            font-size: 0.8rem;
+        .user-button {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .user-button:hover {
+            border-color: #0f62fe;
+            background: #f4f4f4;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(15, 98, 254, 0.2);
+        }
+        
+        .user-button strong {
+            color: #0f62fe;
+            font-size: 0.9rem;
+        }
+        
+        .user-button span {
+            font-size: 0.75rem;
             color: #525252;
-            margin-bottom: 0.25rem;
         }
     </style>
 </head>
 <body>
+    <!-- IBM Navigation Module -->
+    <script src="ibm-navigation.js"></script>
+    
     <div class="container">
         <div class="header">
             <div class="logo">IBM QMS</div>
@@ -176,12 +208,28 @@
         <div id="userInfo"></div>
         
         <div class="test-users">
-            <h4>👥 Usuarios de Prueba:</h4>
-            <p><strong>Admin:</strong> admin@ibm.com / Admin123!</p>
-            <p><strong>Manager:</strong> manager@ibm.com / Manager123!</p>
-            <p><strong>Analyst:</strong> analyst@ibm.com / Analyst123!</p>
-            <p><strong>Tester:</strong> tester@ibm.com / Tester123!</p>
-            <p><strong>Viewer:</strong> viewer@ibm.com / Viewer123!</p>
+            <h4>👥 Usuarios de Prueba</h4>
+            <p style="font-size: 0.75rem; color: #525252; margin-bottom: 1rem;">Haga clic para usar estas credenciales:</p>
+            <button class="user-button" onclick="fillCredentials('admin@ibm.com', 'Admin123!')">
+                <span><strong>👨‍💼 Admin:</strong> admin@ibm.com</span>
+                <span>→</span>
+            </button>
+            <button class="user-button" onclick="fillCredentials('manager@ibm.com', 'Manager123!')">
+                <span><strong>👔 Manager:</strong> manager@ibm.com</span>
+                <span>→</span>
+            </button>
+            <button class="user-button" onclick="fillCredentials('analyst@ibm.com', 'Analyst123!')">
+                <span><strong>📊 Analyst:</strong> analyst@ibm.com</span>
+                <span>→</span>
+            </button>
+            <button class="user-button" onclick="fillCredentials('tester@ibm.com', 'Tester123!')">
+                <span><strong>🧪 Tester:</strong> tester@ibm.com</span>
+                <span>→</span>
+            </button>
+            <button class="user-button" onclick="fillCredentials('viewer@ibm.com', 'Viewer123!')">
+                <span><strong>👀 Viewer:</strong> viewer@ibm.com</span>
+                <span>→</span>
+            </button>
         </div>
     </div>
 
@@ -245,11 +293,11 @@
                     console.log('✅ Login exitoso, usuario:', data.data.user);
                     console.log('🔄 Iniciando redirección automática en 1 segundo...');
                     
-                    // Redirección automática basada en el rol después de 1 segundo
+                    // Redirección automática basada en el rol después de 2 segundos
                     setTimeout(() => {
                         console.log('⏰ Ejecutando redirección...');
                         redirectToRoleDashboard(data.data.user.role);
-                    }, 1000);
+                    }, 2000);
                     
                 } else {
                     // Error en login
@@ -261,10 +309,12 @@
                 }
                 
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Error de conexión:', error);
                 messageDiv.innerHTML = `
                     <div class="message error">
-                        ❌ Error de conexión: ${error.message}
+                        ❌ Error de conexión con el servidor
+                        <br><small>Verifique que el backend esté corriendo en http://localhost:3001</small>
+                        <br><small>Error: ${error.message}</small>
                     </div>
                 `;
             } finally {
@@ -355,20 +405,19 @@
             testAPI();
         });
         
-        // Auto-fill de usuarios de prueba
-        document.querySelectorAll('.test-users p').forEach(p => {
-            p.style.cursor = 'pointer';
-            p.addEventListener('click', () => {
-                const text = p.textContent;
-                const emailMatch = text.match(/([^:]+@[^\/\s]+)/);
-                const passwordMatch = text.match(/\/\s*([^\s!]+!)/);
-                
-                if (emailMatch && passwordMatch) {
-                    document.getElementById('email').value = emailMatch[1].trim();
-                    document.getElementById('password').value = passwordMatch[1];
-                }
-            });
-        });
+        // Función para llenar credenciales
+        function fillCredentials(email, password) {
+            document.getElementById('email').value = email;
+            document.getElementById('password').value = password;
+            
+            // Agregar feedback visual
+            const messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = `
+                <div class="message" style="background: #e8f4fd; color: #0353e9; border: 1px solid #0f62fe;">
+                    ℹ️ Credenciales cargadas. Haga clic en "Iniciar Sesión" para continuar.
+                </div>
+            `;
+        }
     </script>
 </body>
 </html>

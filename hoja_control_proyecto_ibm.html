@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoja de Control del Proyecto - IBM QMS</title>
+    
+    <!-- IBM Carbon Design System -->
+    <link href="https://unpkg.com/carbon-components@10.58.12/css/carbon-components.min.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f4f4f4;
+            padding-top: 60px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f62fe 0%, #0353e9 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 0;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .content {
+            background: white;
+            padding: 2rem;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #161616;
+            border-bottom: 3px solid #0f62fe;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .control-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        }
+
+        .control-table th,
+        .control-table td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid #e0e0e0;
+        }
+
+        .control-table th {
+            background: #f4f4f4;
+            font-weight: 600;
+            color: #161616;
+        }
+
+        .control-table td {
+            background: white;
+        }
+
+        .control-table tr:hover td {
+            background: #f9f9f9;
+        }
+
+        .label-field {
+            font-weight: 600;
+            color: #525252;
+            min-width: 150px;
+        }
+
+        .input-field {
+            padding: 0.5rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            width: 100%;
+            font-family: inherit;
+        }
+
+        .input-field:focus {
+            outline: 2px solid #0f62fe;
+            border-color: #0f62fe;
+        }
+
+        .version-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .version-table th {
+            background: #0f62fe;
+            color: white;
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .version-table td {
+            padding: 0.75rem;
+            border: 1px solid #e0e0e0;
+        }
+
+        .version-table tbody tr:nth-child(even) {
+            background: #f4f4f4;
+        }
+
+        .version-table tbody tr:hover {
+            background: #e8f4fd;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            background: #0f62fe;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background 0.2s;
+            margin-right: 1rem;
+        }
+
+        .btn:hover {
+            background: #0353e9;
+        }
+
+        .btn-secondary {
+            background: #393939;
+        }
+
+        .btn-secondary:hover {
+            background: #161616;
+        }
+
+        .btn-success {
+            background: #24a148;
+        }
+
+        .btn-success:hover {
+            background: #1e8b3c;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .distribution-list {
+            background: #f4f4f4;
+            padding: 1.5rem;
+            border-radius: 4px;
+            border-left: 4px solid #0f62fe;
+        }
+
+        .distribution-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .distribution-item:last-child {
+            border-bottom: none;
+        }
+
+        .distribution-icon {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .control-table {
+                font-size: 0.9rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        @media print {
+            body {
+                padding-top: 0;
+            }
+
+            .action-buttons {
+                display: none;
+            }
+
+            #ibm-navigation-container {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Navigation Module -->
+    <script src="ibm-navigation.js"></script>
+
+    <div class="container">
+        <div class="header">
+            <h1>📋 HOJA DE CONTROL DEL PROYECTO</h1>
+            <p>Sistema de Gestión de Calidad IBM - Document Control Sheet</p>
+        </div>
+
+        <div class="content">
+            <!-- INFORMACIÓN GENERAL DEL PROYECTO -->
+            <div class="section">
+                <h2 class="section-title">📝 Información General</h2>
+                
+                <table class="control-table">
+                    <tr>
+                        <td class="label-field">Organismo</td>
+                        <td><input type="text" class="input-field" id="organismo" placeholder="Nombre de la Consejería u Organismo Autónomo"></td>
+                    </tr>
+                    <tr>
+                        <td class="label-field">Proyecto</td>
+                        <td><input type="text" class="input-field" id="proyecto" placeholder="Nombre del Proyecto"></td>
+                    </tr>
+                    <tr>
+                        <td class="label-field">Entregable</td>
+                        <td><input type="text" class="input-field" id="entregable" placeholder="Nombre del Entregable"></td>
+                    </tr>
+                    <tr>
+                        <td class="label-field">Autor</td>
+                        <td><input type="text" class="input-field" id="autor" placeholder="Nombre de la Empresa"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- CONTROL DE VERSIONES -->
+            <div class="section">
+                <h2 class="section-title">🔄 Control de Versiones</h2>
+                
+                <table class="control-table">
+                    <tr>
+                        <td class="label-field">Versión / Edición</td>
+                        <td><input type="text" class="input-field" id="version" value="01.00" placeholder="XX.YY"></td>
+                        <td class="label-field">Fecha Versión</td>
+                        <td><input type="date" class="input-field" id="fechaVersion"></td>
+                    </tr>
+                    <tr>
+                        <td class="label-field">Aprobado por</td>
+                        <td><input type="text" class="input-field" id="aprobadoPor" placeholder="Nombre Apellido1 Apellido2"></td>
+                        <td class="label-field">Fecha Aprobación</td>
+                        <td><input type="date" class="input-field" id="fechaAprobacion"></td>
+                    </tr>
+                    <tr>
+                        <td class="label-field" colspan="2">Nº Total de Páginas</td>
+                        <td colspan="2"><input type="number" class="input-field" id="totalPaginas" value="1" min="1"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- REGISTRO DE CAMBIOS -->
+            <div class="section">
+                <h2 class="section-title">📜 Registro de Cambios</h2>
+                
+                <table class="version-table" id="cambiosTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 100px;">Versión</th>
+                            <th style="width: 200px;">Causa del Cambio</th>
+                            <th style="width: 200px;">Responsable del Cambio</th>
+                            <th style="width: 150px;">Fecha del Cambio</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cambiosBody">
+                        <tr>
+                            <td>01.00</td>
+                            <td>Versión inicial</td>
+                            <td><input type="text" class="input-field" placeholder="Nombre Apellido1 Apellido2"></td>
+                            <td><input type="date" class="input-field"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <button class="btn" onclick="agregarCambio()">➕ Agregar Cambio</button>
+            </div>
+
+            <!-- CONTROL DE DISTRIBUCIÓN -->
+            <div class="section">
+                <h2 class="section-title">📤 Control de Distribución</h2>
+                
+                <table class="version-table" id="distribucionTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 250px;">Nombre y Apellidos</th>
+                            <th>Rol en el Proyecto</th>
+                        </tr>
+                    </thead>
+                    <tbody id="distribucionBody">
+                        <tr>
+                            <td><input type="text" class="input-field" placeholder="Nombre Apellido1 Apellido2"></td>
+                            <td><input type="text" class="input-field" placeholder="Project Manager / QA Lead / Tester / etc."></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <button class="btn" onclick="agregarDistribucion()">➕ Agregar Destinatario</button>
+            </div>
+
+            <!-- BOTONES DE ACCIÓN -->
+            <div class="action-buttons">
+                <button class="btn btn-success" onclick="guardarHoja()">💾 Guardar</button>
+                <button class="btn" onclick="exportarPDF()">📄 Exportar PDF</button>
+                <button class="btn btn-secondary" onclick="limpiarFormulario()">🔄 Limpiar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Autocompletar fecha actual
+        document.addEventListener('DOMContentLoaded', () => {
+            const hoy = new Date().toISOString().split('T')[0];
+            const fechaVersionInput = document.getElementById('fechaVersion');
+            const fechaAprobacionInput = document.getElementById('fechaAprobacion');
+            
+            if (!fechaVersionInput.value) fechaVersionInput.value = hoy;
+            if (!fechaAprobacionInput.value) fechaAprobacionInput.value = hoy;
+            
+            // Cargar datos guardados
+            cargarDatosGuardados();
+        });
+
+        function agregarCambio() {
+            const tbody = document.getElementById('cambiosBody');
+            const lastVersion = tbody.rows.length;
+            const newVersion = `01.${String(lastVersion).padStart(2, '0')}`;
+            
+            const row = tbody.insertRow();
+            row.innerHTML = `
+                <td>${newVersion}</td>
+                <td><input type="text" class="input-field" placeholder="Descripción del cambio"></td>
+                <td><input type="text" class="input-field" placeholder="Nombre Apellido1 Apellido2"></td>
+                <td><input type="date" class="input-field" value="${new Date().toISOString().split('T')[0]}"></td>
+            `;
+        }
+
+        function agregarDistribucion() {
+            const tbody = document.getElementById('distribucionBody');
+            const row = tbody.insertRow();
+            row.innerHTML = `
+                <td><input type="text" class="input-field" placeholder="Nombre Apellido1 Apellido2"></td>
+                <td><input type="text" class="input-field" placeholder="Rol en el proyecto"></td>
+            `;
+        }
+
+        function guardarHoja() {
+            const datos = {
+                organismo: document.getElementById('organismo').value,
+                proyecto: document.getElementById('proyecto').value,
+                entregable: document.getElementById('entregable').value,
+                autor: document.getElementById('autor').value,
+                version: document.getElementById('version').value,
+                fechaVersion: document.getElementById('fechaVersion').value,
+                aprobadoPor: document.getElementById('aprobadoPor').value,
+                fechaAprobacion: document.getElementById('fechaAprobacion').value,
+                totalPaginas: document.getElementById('totalPaginas').value,
+                cambios: obtenerCambios(),
+                distribucion: obtenerDistribucion(),
+                timestamp: new Date().toISOString()
+            };
+
+            localStorage.setItem('ibm_hoja_control', JSON.stringify(datos));
+            alert('✅ Hoja de Control guardada exitosamente');
+        }
+
+        function obtenerCambios() {
+            const tbody = document.getElementById('cambiosBody');
+            const cambios = [];
+            
+            for (let row of tbody.rows) {
+                cambios.push({
+                    version: row.cells[0].textContent,
+                    causa: row.cells[1].querySelector('input').value,
+                    responsable: row.cells[2].querySelector('input').value,
+                    fecha: row.cells[3].querySelector('input').value
+                });
+            }
+            
+            return cambios;
+        }
+
+        function obtenerDistribucion() {
+            const tbody = document.getElementById('distribucionBody');
+            const distribucion = [];
+            
+            for (let row of tbody.rows) {
+                distribucion.push({
+                    nombre: row.cells[0].querySelector('input').value,
+                    rol: row.cells[1].querySelector('input').value
+                });
+            }
+            
+            return distribucion;
+        }
+
+        function cargarDatosGuardados() {
+            const datos = localStorage.getItem('ibm_hoja_control');
+            if (!datos) return;
+
+            try {
+                const parsed = JSON.parse(datos);
+                
+                document.getElementById('organismo').value = parsed.organismo || '';
+                document.getElementById('proyecto').value = parsed.proyecto || '';
+                document.getElementById('entregable').value = parsed.entregable || '';
+                document.getElementById('autor').value = parsed.autor || '';
+                document.getElementById('version').value = parsed.version || '01.00';
+                document.getElementById('fechaVersion').value = parsed.fechaVersion || '';
+                document.getElementById('aprobadoPor').value = parsed.aprobadoPor || '';
+                document.getElementById('fechaAprobacion').value = parsed.fechaAprobacion || '';
+                document.getElementById('totalPaginas').value = parsed.totalPaginas || '1';
+
+                // Cargar cambios
+                if (parsed.cambios && parsed.cambios.length > 1) {
+                    const tbody = document.getElementById('cambiosBody');
+                    tbody.innerHTML = '';
+                    
+                    parsed.cambios.forEach(cambio => {
+                        const row = tbody.insertRow();
+                        row.innerHTML = `
+                            <td>${cambio.version}</td>
+                            <td><input type="text" class="input-field" value="${cambio.causa}"></td>
+                            <td><input type="text" class="input-field" value="${cambio.responsable}"></td>
+                            <td><input type="date" class="input-field" value="${cambio.fecha}"></td>
+                        `;
+                    });
+                }
+
+                // Cargar distribución
+                if (parsed.distribucion && parsed.distribucion.length > 0) {
+                    const tbody = document.getElementById('distribucionBody');
+                    tbody.innerHTML = '';
+                    
+                    parsed.distribucion.forEach(dist => {
+                        const row = tbody.insertRow();
+                        row.innerHTML = `
+                            <td><input type="text" class="input-field" value="${dist.nombre}"></td>
+                            <td><input type="text" class="input-field" value="${dist.rol}"></td>
+                        `;
+                    });
+                }
+            } catch (error) {
+                console.error('Error cargando datos:', error);
+            }
+        }
+
+        function exportarPDF() {
+            window.print();
+        }
+
+        function limpiarFormulario() {
+            if (confirm('¿Está seguro de que desea limpiar el formulario? Esta acción no se puede deshacer.')) {
+                localStorage.removeItem('ibm_hoja_control');
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>

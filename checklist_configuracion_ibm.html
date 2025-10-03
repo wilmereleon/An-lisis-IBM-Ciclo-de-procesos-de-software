@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist de Configuración - IBM QMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: linear-gradient(135deg, #0f62fe 0%, #0353e9 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #161616 0%, #262626 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .progress-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            padding: 2rem;
+            background: #f4f4f4;
+        }
+
+        .progress-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #e0e0e0;
+        }
+
+        .progress-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0f62fe;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-label {
+            color: #525252;
+            font-size: 0.9rem;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .phase-section {
+            margin-bottom: 3rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .phase-header {
+            background: linear-gradient(135deg, #0f62fe 0%, #0353e9 100%);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .phase-header:hover {
+            background: linear-gradient(135deg, #0353e9 0%, #002d9c 100%);
+        }
+
+        .phase-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .phase-progress {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .phase-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .phase-content.active {
+            max-height: 5000px;
+            padding: 2rem;
+        }
+
+        .checklist-item {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .checklist-item:hover {
+            border-color: #0f62fe;
+            box-shadow: 0 4px 12px rgba(15, 98, 254, 0.1);
+        }
+
+        .checklist-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-custom {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            border: 2px solid #0f62fe;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .checkbox-custom:hover {
+            background: #d0e2ff;
+        }
+
+        .checkbox-custom.checked {
+            background: #0f62fe;
+            color: white;
+        }
+
+        .checkbox-custom.checked::after {
+            content: "✓";
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .item-content {
+            flex: 1;
+        }
+
+        .item-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #161616;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-description {
+            color: #393939;
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+
+        .item-details {
+            background: #f4f4f4;
+            padding: 1rem;
+            border-radius: 4px;
+            border-left: 3px solid #0f62fe;
+        }
+
+        .item-details strong {
+            color: #0f62fe;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-details ul {
+            margin: 0.5rem 0 0 1.5rem;
+        }
+
+        .item-details ul li {
+            color: #393939;
+            margin-bottom: 0.25rem;
+        }
+
+        .priority-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+        }
+
+        .priority-critical {
+            background: #ffcccc;
+            color: #cc0000;
+        }
+
+        .priority-high {
+            background: #ffe6cc;
+            color: #ff8c00;
+        }
+
+        .priority-medium {
+            background: #fff4d5;
+            color: #f1c21b;
+        }
+
+        .priority-low {
+            background: #d0f0e3;
+            color: #24a148;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            padding: 2rem 0;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #0f62fe;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0353e9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(15, 98, 254, 0.3);
+        }
+
+        .btn-secondary {
+            background: #393939;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #262626;
+        }
+
+        .btn-success {
+            background: #24a148;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #198038;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .nav-buttons, .checkbox-custom {
+                display: none;
+            }
+
+            .phase-content {
+                max-height: none;
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Navigation Module -->
+    <script src="ibm-navigation.js"></script>
+    
+    <div class="container">
+        <div class="header">
+            <h1>✅ Checklist de Configuración de Entorno</h1>
+            <p>IBM Quality Management System - Environment Setup Checklist</p>
+            <p style="font-size: 0.9rem; margin-top: 0.5rem;">Conforme a TMMi Level 3, CMMi Level 3, IEEE 829</p>
+        </div>
+
+        <div class="progress-summary">
+            <div class="progress-card">
+                <div class="progress-value" id="total-progress">0%</div>
+                <div class="progress-label">Progreso Total</div>
+            </div>
+            <div class="progress-card">
+                <div class="progress-value" id="completed-items">0</div>
+                <div class="progress-label">Items Completados</div>
+            </div>
+            <div class="progress-card">
+                <div class="progress-value" id="pending-items">0</div>
+                <div class="progress-label">Items Pendientes</div>
+            </div>
+            <div class="progress-card">
+                <div class="progress-value" id="critical-items">0</div>
+                <div class="progress-label">Items Críticos</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Fase 1: Planificación -->
+            <div class="phase-section">
+                <div class="phase-header" onclick="togglePhase('phase1')">
+                    <div class="phase-title">
+                        <span>📋</span>
+                        <span>Fase 1: Planificación y Preparación</span>
+                    </div>
+                    <div class="phase-progress" id="phase1-progress">0/0</div>
+                </div>
+                <div class="phase-content active" id="phase1-content">
+                    
+                    <div class="checklist-item" data-phase="phase1">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-critical">CRÍTICO</span>
+                                    Definir Requisitos de Infraestructura
+                                </div>
+                                <p class="item-description">Especificar hardware, software, red y recursos necesarios para cada ambiente de pruebas.</p>
+                                <div class="item-details">
+                                    <strong>Entregables:</strong>
+                                    <ul>
+                                        <li>Documento de arquitectura de infraestructura</li>
+                                        <li>Especificaciones de servidores (CPU, RAM, Storage)</li>
+                                        <li>Topología de red y seguridad</li>
+                                        <li>Lista de software y licencias requeridas</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> Infrastructure Architect + Test Manager
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item" data-phase="phase1">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-critical">CRÍTICO</span>
+                                    Aprobar Presupuesto y Recursos
+                                </div>
+                                <p class="item-description">Obtener aprobación formal del presupuesto para infraestructura, herramientas y personal.</p>
+                                <div class="item-details">
+                                    <strong>Presupuesto Estimado:</strong>
+                                    <ul>
+                                        <li>Infraestructura Cloud (AWS/Azure): $5,000/mes</li>
+                                        <li>Herramientas (TestRail, LoadRunner): $3,000/mes</li>
+                                        <li>Personal (3 QA Engineers): $15,000/mes</li>
+                                        <li>Capacitación: $2,000 one-time</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> Test Manager + Finance
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item" data-phase="phase1">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-high">ALTA</span>
+                                    Seleccionar Herramientas de Testing
+                                </div>
+                                <p class="item-description">Evaluar y seleccionar herramientas de testing funcional, performance, seguridad y gestión.</p>
+                                <div class="item-details">
+                                    <strong>Herramientas Recomendadas:</strong>
+                                    <ul>
+                                        <li>Funcional: Cypress, Selenium</li>
+                                        <li>Performance: JMeter, LoadRunner</li>
+                                        <li>API: Postman, SoapUI</li>
+                                        <li>Gestión: TestRail/Zephyr</li>
+                                        <li>CI/CD: Jenkins, GitLab CI</li>
+                                        <li>Seguridad: OWASP ZAP, SonarQube</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> Test Lead + Automation Engineer
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item" data-phase="phase1">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-high">ALTA</span>
+                                    Definir Estrategia de Datos de Prueba
+                                </div>
+                                <p class="item-description">Planificar creación, almacenamiento, anonimización y gestión de datos de prueba.</p>
+                                <div class="item-details">
+                                    <strong>Consideraciones:</strong>
+                                    <ul>
+                                        <li>Datos sintéticos vs datos de producción anonimizados</li>
+                                        <li>Scripts de generación de datos</li>
+                                        <li>Repositorio centralizado de datos</li>
+                                        <li>Compliance GDPR/CCPA</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> Test Lead + DBA
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item" data-phase="phase1">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-medium">MEDIA</span>
+                                    Crear Plan de Naming Conventions
+                                </div>
+                                <p class="item-description">Establecer estándares de nombrado para ambientes, servidores, bases de datos y artefactos.</p>
+                                <div class="item-details">
+                                    <strong>Ejemplos:</strong>
+                                    <ul>
+                                        <li>Servidores: ibm-qms-{env}-{type}-{number} (ibm-qms-qa-app-01)</li>
+                                        <li>Bases de Datos: ibm_qms_{env}_db (ibm_qms_qa_db)</li>
+                                        <li>Test Cases: TC_{module}_{scenario}_{id} (TC_AUTH_LOGIN_001)</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> Test Manager
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Fase 2: Diseño -->
+            <div class="phase-section">
+                <div class="phase-header" onclick="togglePhase('phase2')">
+                    <div class="phase-title">
+                        <span>🎨</span>
+                        <span>Fase 2: Diseño y Configuración</span>
+                    </div>
+                    <div class="phase-progress" id="phase2-progress">0/0</div>
+                </div>
+                <div class="phase-content" id="phase2-content">
+                    
+                    <div class="checklist-item" data-phase="phase2">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-critical">CRÍTICO</span>
+                                    Provisionar Servidores y Ambientes
+                                </div>
+                                <p class="item-description">Crear y configurar servidores para DEV, QA, STG y PROD en cloud (AWS/Azure).</p>
+                                <div class="item-details">
+                                    <strong>Configuración por Ambiente:</strong>
+                                    <ul>
+                                        <li>DEV: t3.medium (2 vCPU, 4GB RAM) - Local/Cloud</li>
+                                        <li>QA: t3.large (2 vCPU, 8GB RAM) - Cloud</li>
+                                        <li>STG: t3.xlarge (4 vCPU, 16GB RAM) - Cloud (mirror PROD)</li>
+                                        <li>PROD: t3.2xlarge (8 vCPU, 32GB RAM) - Cloud (HA)</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> DevOps Engineer + Infrastructure Team
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item" data-phase="phase2">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-critical">CRÍTICO</span>
+                                    Instalar y Configurar Base de Datos PostgreSQL
+                                </div>
+                                <p class="item-description">Configurar instancias PostgreSQL con replicación, backup y monitoreo.</p>
+                                <div class="item-details">
+                                    <strong>Tareas:</strong>
+                                    <ul>
+                                        <li>Instalar PostgreSQL 14+ en cada ambiente</li>
+                                        <li>Configurar usuarios y permisos (postgres, app_user, readonly)</li>
+                                        <li>Habilitar replicación (STG/PROD)</li>
+                                        <li>Configurar backups automáticos (daily full, hourly incremental)</li>
+                                        <li>Instalar extensiones necesarias (pgcrypto, uuid-ossp)</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> DBA + DevOps
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item" data-phase="phase2">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-high">ALTA</span>
+                                    Configurar CI/CD Pipeline (Jenkins/GitLab CI)
+                                </div>
+                                <p class="item-description">Implementar pipeline automatizado de build, test y deployment.</p>
+                                <div class="item-details">
+                                    <strong>Stages del Pipeline:</strong>
+                                    <ul>
+                                        <li>Stage 1: Build (npm install, compile TypeScript)</li>
+                                        <li>Stage 2: Unit Tests (Jest)</li>
+                                        <li>Stage 3: Integration Tests (Supertest)</li>
+                                        <li>Stage 4: E2E Tests (Cypress)</li>
+                                        <li>Stage 5: Security Scan (OWASP ZAP, SonarQube)</li>
+                                        <li>Stage 6: Deploy to QA/STG</li>
+                                        <li>Stage 7: Smoke Tests</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> DevOps Engineer + Automation Engineer
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item" data-phase="phase2">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-high">ALTA</span>
+                                    Instalar Herramientas de Testing
+                                </div>
+                                <p class="item-description">Instalar y configurar todas las herramientas seleccionadas en la fase de planificación.</p>
+                                <div class="item-details">
+                                    <strong>Instalaciones Requeridas:</strong>
+                                    <ul>
+                                        <li>Cypress: npm install cypress --save-dev</li>
+                                        <li>JMeter: Descargar y configurar en servidor dedicado</li>
+                                        <li>Postman/Newman: npm install -g newman</li>
+                                        <li>TestRail: Configurar instancia cloud/on-premise</li>
+                                        <li>Jenkins: Docker container con plugins necesarios</li>
+                                        <li>OWASP ZAP: Docker image para scans automatizados</li>
+                                        <li>SonarQube: Instancia cloud/on-premise con quality gates</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> Automation Engineer
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item" data-phase="phase2">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-high">ALTA</span>
+                                    Configurar Repositorio de Código (Git)
+                                </div>
+                                <p class="item-description">Configurar repositorio con branching strategy, protecciones y webhooks.</p>
+                                <div class="item-details">
+                                    <strong>Configuración:</strong>
+                                    <ul>
+                                        <li>Branching: main, develop, feature/*, bugfix/*, hotfix/*</li>
+                                        <li>Protección main/develop: require PR approval, status checks</li>
+                                        <li>Webhooks: Trigger CI/CD en push/PR</li>
+                                        <li>Git Hooks: pre-commit (linting), pre-push (tests)</li>
+                                        <li>.gitignore: node_modules, .env, coverage, logs</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> Dev Lead + DevOps
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item" data-phase="phase2">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-medium">MEDIA</span>
+                                    Configurar Monitoreo y Alerting (Grafana/Prometheus)
+                                </div>
+                                <p class="item-description">Implementar dashboards de monitoreo y alertas para métricas clave.</p>
+                                <div class="item-details">
+                                    <strong>Métricas a Monitorear:</strong>
+                                    <ul>
+                                        <li>Test execution metrics (pass rate, duration)</li>
+                                        <li>API performance (response time, throughput)</li>
+                                        <li>System resources (CPU, memory, disk)</li>
+                                        <li>Database metrics (connections, query performance)</li>
+                                        <li>Build metrics (success rate, duration)</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> DevOps Engineer
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Fase 3: Ejecución -->
+            <div class="phase-section">
+                <div class="phase-header" onclick="togglePhase('phase3')">
+                    <div class="phase-title">
+                        <span>🚀</span>
+                        <span>Fase 3: Ejecución y Validación</span>
+                    </div>
+                    <div class="phase-progress" id="phase3-progress">0/0</div>
+                </div>
+                <div class="phase-content" id="phase3-content">
+                    
+                    <div class="checklist-item" data-phase="phase3">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-critical">CRÍTICO</span>
+                                    Cargar Datos de Prueba Iniciales
+                                </div>
+                                <p class="item-description">Poblar bases de datos con datos de prueba para todos los ambientes.</p>
+                                <div class="item-details">
+                                    <strong>Scripts de Datos:</strong>
+                                    <ul>
+                                        <li>01_schema.sql: Crear tablas, índices, constraints</li>
+                                        <li>02_users.sql: Usuarios de prueba (5 default users)</li>
+                                        <li>03_metrics.sql: Métricas históricas de ejemplo</li>
+                                        <li>04_test_cases.sql: Casos de prueba de referencia</li>
+                                        <li>05_reports.sql: Reportes de ejemplo</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> DBA + Test Lead
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item" data-phase="phase3">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-critical">CRÍTICO</span>
+                                    Ejecutar Smoke Tests en Todos los Ambientes
+                                </div>
+                                <p class="item-description">Validar funcionalidades básicas en DEV, QA, STG.</p>
+                                <div class="item-details">
+                                    <strong>Smoke Test Suite:</strong>
+                                    <ul>
+                                        <li>✓ Sistema accesible (health endpoint responde 200)</li>
+                                        <li>✓ Login funcional (credenciales válidas)</li>
+                                        <li>✓ Dashboard carga sin errores</li>
+                                        <li>✓ API endpoints responden correctamente</li>
+                                        <li>✓ Base de datos conectada y operativa</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> QA Engineer
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item" data-phase="phase3">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-high">ALTA</span>
+                                    Ejecutar Suite de Pruebas Funcionales
+                                </div>
+                                <p class="item-description">Ejecutar suite completa de unit, integration y E2E tests.</p>
+                                <div class="item-details">
+                                    <strong>Ejecución:</strong>
+                                    <ul>
+                                        <li>npm run test:unit (Jest - unit tests)</li>
+                                        <li>npm run test:integration (Supertest - API tests)</li>
+                                        <li>npm run test:e2e (Cypress - E2E tests)</li>
+                                        <li>Validar cobertura ≥80%</li>
+                                        <li>Generar reporte HTML</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> QA Engineer + Automation Engineer
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item" data-phase="phase3">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-high">ALTA</span>
+                                    Ejecutar Pruebas de Performance (JMeter)
+                                </div>
+                                <p class="item-description">Validar tiempos de respuesta y throughput bajo carga.</p>
+                                <div class="item-details">
+                                    <strong>Escenarios de Carga:</strong>
+                                    <ul>
+                                        <li>Normal Load: 100 usuarios concurrentes, 300s duration</li>
+                                        <li>Peak Load: 500 usuarios concurrentes, 180s duration</li>
+                                        <li>Stress Test: 1000 usuarios, incremento gradual</li>
+                                        <li>Validar response time <2s para 95% de transacciones</li>
+                                        <li>Validar throughput ≥100 req/s</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> Performance Engineer
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item" data-phase="phase3">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-high">ALTA</span>
+                                    Ejecutar Security Scan (OWASP ZAP)
+                                </div>
+                                <p class="item-description">Identificar vulnerabilidades de seguridad (OWASP Top 10).</p>
+                                <div class="item-details">
+                                    <strong>Pruebas de Seguridad:</strong>
+                                    <ul>
+                                        <li>Active Scan completo de la aplicación</li>
+                                        <li>Validar protección contra SQL Injection</li>
+                                        <li>Validar protección contra XSS</li>
+                                        <li>Validar CSRF tokens</li>
+                                        <li>Validar Security Headers (CSP, HSTS, X-Frame-Options)</li>
+                                        <li>Objetivo: 0 vulnerabilidades críticas/altas</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> Security Engineer + QA Lead
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item" data-phase="phase3">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-medium">MEDIA</span>
+                                    Ejecutar Code Quality Scan (SonarQube)
+                                </div>
+                                <p class="item-description">Analizar calidad de código, code smells, duplicaciones, vulnerabilidades.</p>
+                                <div class="item-details">
+                                    <strong>Quality Gates:</strong>
+                                    <ul>
+                                        <li>Coverage ≥80%</li>
+                                        <li>Duplications <3%</li>
+                                        <li>Maintainability Rating ≥A</li>
+                                        <li>Reliability Rating ≥A</li>
+                                        <li>Security Rating ≥A</li>
+                                        <li>0 Blocker/Critical issues</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> Dev Lead + QA Lead
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Fase 4: Cierre -->
+            <div class="phase-section">
+                <div class="phase-header" onclick="togglePhase('phase4')">
+                    <div class="phase-title">
+                        <span>📝</span>
+                        <span>Fase 4: Documentación y Cierre</span>
+                    </div>
+                    <div class="phase-progress" id="phase4-progress">0/0</div>
+                </div>
+                <div class="phase-content" id="phase4-content">
+                    
+                    <div class="checklist-item" data-phase="phase4">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-critical">CRÍTICO</span>
+                                    Generar Reporte de Configuración de Entorno
+                                </div>
+                                <p class="item-description">Documentar todas las configuraciones, credenciales y procedimientos.</p>
+                                <div class="item-details">
+                                    <strong>Contenido del Reporte:</strong>
+                                    <ul>
+                                        <li>Arquitectura de infraestructura (diagramas)</li>
+                                        <li>URLs y credenciales de todos los ambientes</li>
+                                        <li>Configuraciones de servidores y bases de datos</li>
+                                        <li>Herramientas instaladas y versiones</li>
+                                        <li>Procedimientos de deployment</li>
+                                        <li>Contactos y escalamiento</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> Test Manager + DevOps Lead
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item" data-phase="phase4">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-high">ALTA</span>
+                                    Crear Guías de Uso para Equipo QA
+                                </div>
+                                <p class="item-description">Documentar procedimientos de testing, troubleshooting y best practices.</p>
+                                <div class="item-details">
+                                    <strong>Guías Requeridas:</strong>
+                                    <ul>
+                                        <li>Guía de ejecución de pruebas automatizadas</li>
+                                        <li>Guía de acceso a ambientes y herramientas</li>
+                                        <li>Guía de troubleshooting común</li>
+                                        <li>Guía de registro de defectos en Jira</li>
+                                        <li>Guía de generación de reportes</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> Test Lead
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item" data-phase="phase4">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-high">ALTA</span>
+                                    Realizar Sesión de Training con Equipo
+                                </div>
+                                <p class="item-description">Capacitar al equipo QA en herramientas, procedimientos y ambiente.</p>
+                                <div class="item-details">
+                                    <strong>Agenda de Training:</strong>
+                                    <ul>
+                                        <li>Sesión 1: Arquitectura de infraestructura (2h)</li>
+                                        <li>Sesión 2: Herramientas de testing (Cypress, JMeter, Postman) (4h)</li>
+                                        <li>Sesión 3: CI/CD pipeline y integración (2h)</li>
+                                        <li>Sesión 4: Procedimientos y best practices (2h)</li>
+                                        <li>Sesión 5: Hands-on lab y Q&A (4h)</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> Test Manager + Test Lead
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item" data-phase="phase4">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-medium">MEDIA</span>
+                                    Obtener Sign-Off de Stakeholders
+                                </div>
+                                <p class="item-description">Presentar configuración y resultados a stakeholders para aprobación formal.</p>
+                                <div class="item-details">
+                                    <strong>Presentación Incluye:</strong>
+                                    <ul>
+                                        <li>Demostración de ambientes configurados</li>
+                                        <li>Resultados de smoke tests y validaciones</li>
+                                        <li>Métricas de cobertura y calidad</li>
+                                        <li>Roadmap de mejora continua</li>
+                                        <li>Q&A y feedback</li>
+                                    </ul>
+                                    <strong>Stakeholders:</strong> PMO, Dev Lead, QA Manager, Security Lead
+                                    <br><strong>Responsable:</strong> Test Manager
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-item" data-phase="phase4">
+                        <div class="checklist-header">
+                            <div class="checkbox-custom" onclick="toggleCheck(this)"></div>
+                            <div class="item-content">
+                                <div class="item-title">
+                                    <span class="priority-badge priority-low">BAJA</span>
+                                    Archivar Documentación en Repositorio Central
+                                </div>
+                                <p class="item-description">Almacenar toda la documentación en SharePoint/Confluence para referencia futura.</p>
+                                <div class="item-details">
+                                    <strong>Documentos a Archivar:</strong>
+                                    <ul>
+                                        <li>Reporte de configuración de entorno</li>
+                                        <li>Guías de uso y procedimientos</li>
+                                        <li>Presentaciones de training</li>
+                                        <li>Reportes de validación</li>
+                                        <li>Sign-off documents</li>
+                                    </ul>
+                                    <strong>Responsable:</strong> Test Manager
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Botones de Navegación -->
+            <div class="nav-buttons">
+                <a href="http://localhost:8080/estrategia_pruebas_ibm.html" class="btn btn-secondary">← Estrategia de Pruebas</a>
+                <a href="http://localhost:8080/dashboard_integrado_ibm.html" class="btn btn-secondary">Dashboard Principal</a>
+                <button onclick="exportProgress()" class="btn btn-success">💾 Exportar Progreso</button>
+                <button onclick="window.print()" class="btn btn-primary">🖨️ Imprimir/PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Estado del checklist guardado en localStorage
+        const STORAGE_KEY = 'ibm_qms_checklist_progress';
+
+        // Cargar estado al iniciar
+        window.addEventListener('DOMContentLoaded', () => {
+            loadProgress();
+            updateAllProgress();
+            // Expandir primera fase por defecto
+            document.getElementById('phase1-content').classList.add('active');
+        });
+
+        // Toggle fase (expandir/colapsar)
+        function togglePhase(phaseId) {
+            const content = document.getElementById(`${phaseId}-content`);
+            content.classList.toggle('active');
+        }
+
+        // Toggle checkbox individual
+        function toggleCheck(checkbox) {
+            checkbox.classList.toggle('checked');
+            saveProgress();
+            updateAllProgress();
+        }
+
+        // Guardar progreso en localStorage
+        function saveProgress() {
+            const checkboxes = document.querySelectorAll('.checkbox-custom');
+            const progress = [];
+            
+            checkboxes.forEach((cb, index) => {
+                progress.push({
+                    index: index,
+                    checked: cb.classList.contains('checked')
+                });
+            });
+            
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+        }
+
+        // Cargar progreso desde localStorage
+        function loadProgress() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (!saved) return;
+            
+            const progress = JSON.parse(saved);
+            const checkboxes = document.querySelectorAll('.checkbox-custom');
+            
+            progress.forEach(item => {
+                if (checkboxes[item.index] && item.checked) {
+                    checkboxes[item.index].classList.add('checked');
+                }
+            });
+        }
+
+        // Actualizar todos los contadores de progreso
+        function updateAllProgress() {
+            const allCheckboxes = document.querySelectorAll('.checkbox-custom');
+            const allChecked = document.querySelectorAll('.checkbox-custom.checked');
+            
+            // Progreso total
+            const totalProgress = allCheckboxes.length > 0 
+                ? Math.round((allChecked.length / allCheckboxes.length) * 100) 
+                : 0;
+            document.getElementById('total-progress').textContent = `${totalProgress}%`;
+            document.getElementById('completed-items').textContent = allChecked.length;
+            document.getElementById('pending-items').textContent = allCheckboxes.length - allChecked.length;
+            
+            // Contar items críticos pendientes
+            const criticalItems = document.querySelectorAll('.priority-critical');
+            let criticalPending = 0;
+            criticalItems.forEach(badge => {
+                const item = badge.closest('.checklist-item');
+                const checkbox = item.querySelector('.checkbox-custom');
+                if (!checkbox.classList.contains('checked')) {
+                    criticalPending++;
+                }
+            });
+            document.getElementById('critical-items').textContent = criticalPending;
+            
+            // Progreso por fase
+            ['phase1', 'phase2', 'phase3', 'phase4'].forEach(phaseId => {
+                const phaseItems = document.querySelectorAll(`[data-phase="${phaseId}"]`);
+                const phaseChecked = Array.from(phaseItems).filter(item => 
+                    item.querySelector('.checkbox-custom').classList.contains('checked')
+                );
+                
+                document.getElementById(`${phaseId}-progress`).textContent = 
+                    `${phaseChecked.length}/${phaseItems.length}`;
+            });
+        }
+
+        // Exportar progreso como JSON
+        function exportProgress() {
+            const checkboxes = document.querySelectorAll('.checkbox-custom');
+            const report = {
+                timestamp: new Date().toISOString(),
+                totalItems: checkboxes.length,
+                completedItems: document.querySelectorAll('.checkbox-custom.checked').length,
+                progressPercentage: document.getElementById('total-progress').textContent,
+                phases: {}
+            };
+            
+            ['phase1', 'phase2', 'phase3', 'phase4'].forEach(phaseId => {
+                const phaseItems = document.querySelectorAll(`[data-phase="${phaseId}"]`);
+                const phaseChecked = Array.from(phaseItems).filter(item => 
+                    item.querySelector('.checkbox-custom').classList.contains('checked')
+                );
+                
+                report.phases[phaseId] = {
+                    total: phaseItems.length,
+                    completed: phaseChecked.length,
+                    percentage: Math.round((phaseChecked.length / phaseItems.length) * 100)
+                };
+            });
+            
+            // Descargar como archivo JSON
+            const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ibm-qms-checklist-progress-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            alert('✅ Progreso exportado exitosamente!');
+        }
+
+        console.log('✅ Checklist de Configuración de Entorno - IBM QMS');
+        console.log('Estándares: TMMi Level 3, CMMi Level 3, IEEE 829');
+    </script>
+</body>
+</html>
