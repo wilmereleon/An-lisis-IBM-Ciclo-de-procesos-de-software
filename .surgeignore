@@ -14,4 +14,8 @@ package-lock.json
 backend-simple.js
 frontend-server.js
 demo-server.js
+html-server-*.js
+test-login.html
+test-login.html.backup
+frontend-react
 *.sql

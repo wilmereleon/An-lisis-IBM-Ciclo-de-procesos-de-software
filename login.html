@@ -328,31 +328,31 @@
                 password: 'ibmadmin123',
                 role: 'Admin',
                 name: 'IBM Administrator',
-                dashboard: 'dashboard_ejecutivo_ibm.html'
+                dashboard: 'dashboard_integrado_ibm.html'
             },
             'manager@ibm.com': {
                 password: 'ibmmanager123',
                 role: 'Manager',
                 name: 'Quality Manager',
-                dashboard: 'dashboard_ejecutivo_ibm.html'
+                dashboard: 'dashboard_integrado_ibm.html'
             },
             'analyst@ibm.com': {
                 password: 'ibmanalyst123',
                 role: 'Analyst',
                 name: 'Quality Analyst',
-                dashboard: 'dashboard_calidad_ibm.html'
+                dashboard: 'dashboard_integrado_ibm.html'
             },
             'tester@ibm.com': {
                 password: 'ibmtester123',
                 role: 'Tester',
                 name: 'QA Tester',
-                dashboard: 'dashboard_testing_metrics_ibm.html'
+                dashboard: 'dashboard_integrado_ibm.html'
             },
             'viewer@ibm.com': {
                 password: 'ibmviewer123',
                 role: 'Viewer',
                 name: 'IBM Viewer',
-                dashboard: 'dashboard_calidad_ibm.html'
+                dashboard: 'dashboard_integrado_ibm.html'
             }
         };
 
@@ -482,7 +482,7 @@
                     showSuccess(`✓ Sesión activa detectada. Redirigiendo a dashboard...`);
                     
                     setTimeout(() => {
-                        window.location.href = sessionData.dashboard || 'dashboard_ejecutivo_ibm.html';
+                        window.location.href = sessionData.dashboard || 'dashboard_integrado_ibm.html';
                     }, 1000);
                 } catch (error) {
                     // Si hay error al parsear la sesión, limpiarla
