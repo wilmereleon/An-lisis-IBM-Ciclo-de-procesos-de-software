@@ -104,10 +104,26 @@
     </div>
 
     <script>
-        // Redirección automática inmediata
+        // Limpiar cualquier sesión antigua o caché problemático
+        try {
+            // Limpiar localStorage de test-login antiguo
+            localStorage.removeItem('test_login_session');
+            localStorage.removeItem('backend_user');
+        } catch(e) {
+            console.log('No hay datos antiguos para limpiar');
+        }
+
+        // Redirección automática con timestamp para evitar caché
         setTimeout(() => {
-            window.location.href = 'login.html';
+            const timestamp = new Date().getTime();
+            window.location.href = 'login.html?v=' + timestamp;
         }, 500);
+
+        // Prevenir navegación hacia atrás a páginas con backend
+        window.history.pushState(null, null, window.location.href);
+        window.onpopstate = function() {
+            window.history.pushState(null, null, window.location.href);
+        };
     </script>
 </body>
 </html>

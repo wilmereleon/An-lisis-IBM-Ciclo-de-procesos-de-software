@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirigiendo...</title>
+    <meta http-equiv="refresh" content="0;url=login.html">
+</head>
+<body style="margin:0;font-family:Arial;background:#0f62fe;color:white;display:flex;align-items:center;justify-content:center;min-height:100vh;">
+    <div style="text-align:center;padding:2rem;">
+        <h1> Redirigiendo al nuevo login...</h1>
+        <p>Por favor espere...</p>
+        <a href="login.html" style="color:white;text-decoration:underline;">Haga clic aquí si no se redirige automáticamente</a>
+    </div>
+    <script>
+        localStorage.clear();
+        setTimeout(function(){ window.location.href='login.html'; }, 100);
+    </script>
+</body>
+</html>

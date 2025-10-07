@@ -465,9 +465,15 @@ class IBMNavigation {
      * Cerrar sesión
      */
     logout() {
+        // Limpiar TODAS las claves de sesión (antiguas y nuevas)
         localStorage.removeItem('ibm_qms_token');
         localStorage.removeItem('ibm_qms_user');
-        window.location.href = 'test-login.html';
+        localStorage.removeItem('ibm_qms_session');  // ← NUEVA CLAVE DEL SISTEMA
+        localStorage.removeItem('test_login_session');  // Limpiar sesión antigua
+        localStorage.removeItem('backend_user');  // Limpiar dato antiguo
+        
+        // Redirigir al login correcto (SIN backend)
+        window.location.href = 'login.html';
     }
 
     /**
