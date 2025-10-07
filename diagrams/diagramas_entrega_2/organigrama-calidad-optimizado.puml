@@ -1,16 +1,26 @@
 @startwbs
-!theme aws-orange
 
-title **ESTRUCTURA ORGANIZACIONAL DE CALIDAD IBM**\n180 FTEs | 5 Niveles Jerárquicos | 15 Países
+' --- Configuración de estilo ---
+skinparam dpi 200
+skinparam backgroundColor      white
+skinparam WbsBackgroundColor   white
+skinparam WbsElementBackgroundColor white
+skinparam WbsElementBorderColor   #333333
+skinparam WbsElementFontColor     black
+skinparam WbsLineColor            #666666
+skinparam WbsTitleFontSize        24
+skinparam WbsFontSize             18
 
-* **ORGANIZACIÓN CALIDAD IBM**
-** **NIVEL EJECUTIVO (C-Level)**
+title ESTRUCTURA ORGANIZACIONAL DE CALIDAD IBM\n180 FTEs | 5 Niveles Jerárquicos | 15 Países
+
+* ORGANIZACIÓN CALIDAD IBM
+** NIVEL EJECUTIVO (C-Level)
 *** Chief Quality Officer (CQO)
 **** Strategy & Governance
 **** Budget: $3M annually
 **** Scope: Global (15 países)
 
-** **NIVEL DIRECTIVO (Directors)**
+** NIVEL DIRECTIVO (Directors)
 *** Director Test Engineering
 **** Technical Leadership
 **** Team: 65 FTEs
@@ -24,8 +34,8 @@ title **ESTRUCTURA ORGANIZACIONAL DE CALIDAD IBM**\n180 FTEs | 5 Niveles Jerárq
 **** Team: 70 FTEs
 **** Budget: $1M
 
-** **NIVEL MANAGER (Managers)**
-*** **Test Engineering Managers**
+** NIVEL MANAGER (Managers)
+*** Test Engineering Managers
 **** Test Automation Manager
 ***** Automation Strategy
 ***** ROI: 340%
@@ -34,7 +44,7 @@ title **ESTRUCTURA ORGANIZACIONAL DE CALIDAD IBM**\n180 FTEs | 5 Niveles Jerárq
 ***** Load & Stress Testing
 ***** SLA: 99.2%
 ***** Max Load: 5000 TPS
-*** **Process & Quality Managers**
+*** Process & Quality Managers
 **** Process Improvement Manager
 ***** CMMI Implementation
 ***** Process Optimization
@@ -48,42 +58,42 @@ title **ESTRUCTURA ORGANIZACIONAL DE CALIDAD IBM**\n180 FTEs | 5 Niveles Jerárq
 ***** Audit & Compliance
 ***** Risk Management
 
-** **NIVEL TEAM LEAD (Team Leaders)**
-*** **Technical Leads**
+** NIVEL TEAM LEAD (Team Leaders)
+*** Technical Leads
 **** UI/UX Test Lead
 **** API Test Lead
 **** Performance Test Lead
 **** Security Test Lead
 **** Functional Test Lead
-*** **Process Leads**
+*** Process Leads
 **** CMMI Process Lead
 **** TMMi Process Lead
 **** Metrics Analyst Lead
-*** **Compliance Leads**
+*** Compliance Leads
 **** Compliance Test Lead
 
-** **NIVEL SPECIALIST (Specialists)**
-*** **Automation Specialists**
+** NIVEL SPECIALIST (Specialists)
+*** Automation Specialists
 **** Selenium Specialists (8)
 **** Cypress Specialists (6)
 **** JMeter Specialists (5)
-*** **Security Specialists**
+*** Security Specialists
 **** OWASP Specialists (4)
-*** **Analysis Specialists**
+*** Analysis Specialists
 **** Process Analysts (12)
 **** Data Analysts (8)
 **** Test Analysts (35)
-*** **Quality Engineers**
+*** Quality Engineers
 **** QA Engineers (45)
 **** Compliance Analysts (6)
 
-** **EQUIPOS DE SOPORTE**
-*** **Technical Support**
+** EQUIPOS DE SOPORTE
+*** Technical Support
 **** DevOps Support (8)
 **** Tool Administrators (6)
-*** **Training & Development**
+*** Training & Development
 **** Training Team (4)
-*** **External Resources**
+*** External Resources
 **** External Consultants (12)
 **** Vendor Management (3)
 

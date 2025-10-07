@@ -787,6 +787,13 @@
                     Aplicar Filtros
                 </button>
 
+                <button class="bx--btn bx--btn--tertiary" onclick="resetFilters()" style="margin-left: 8px;">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M18,28A12,12,0,1,0,6,16v6.2L2.4,18.6,1,20l6,6,6-6-1.4-1.4L8,22.2V16A10,10,0,1,1,18,26Z"/>
+                    </svg>
+                    Reiniciar Filtros
+                </button>
+
                 <button class="bx--btn bx--btn--secondary" onclick="exportReport()">
                     <svg width="16" height="16" fill="currentColor" viewBox="0 0 32 32">
                         <path d="M24,28H8V18l2-2h5V14h2v2h5l2,2V28ZM10,26H22V19H10V26Z"/>
@@ -1252,7 +1259,7 @@
             // Execution Time Chart
             const timeCtx = document.getElementById('executionTimeChart').getContext('2d');
             new Chart(timeCtx, {
-                type: 'horizontalBar',
+                type: 'bar',
                 data: {
                     labels: ['Funcionales', 'Integración', 'Rendimiento', 'Seguridad', 'Regresión'],
                     datasets: [{
@@ -1274,6 +1281,30 @@
                     plugins: {
                         legend: {
                             position: 'bottom'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Tiempo de Ejecución por Suite',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.parsed.x} minutos`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Tiempo (minutos)'
+                            }
                         }
                     }
                 }
@@ -1335,14 +1366,213 @@
             
             console.log('Aplicando filtros:', { suiteFilter, statusFilter, priorityFilter });
             
-            // Here you would implement actual filtering logic
-            // For now, just log the filters
-            alert('Filtros aplicados correctamente');
+            // Filter test results
+            const filteredResults = testResults.filter(result => {
+                const matchesSuite = !suiteFilter || suiteFilter === 'all' || result.suite === suiteFilter;
+                const matchesStatus = !statusFilter || statusFilter === 'all' || result.status === statusFilter;
+                const matchesPriority = !priorityFilter || priorityFilter === 'all' || result.priority === priorityFilter;
+                
+                return matchesSuite && matchesStatus && matchesPriority;
+            });
+            
+            // Update metrics based on filtered results
+            updateMetrics(filteredResults);
+            
+            // Update table with filtered results
+            populateFilteredTable(filteredResults);
+            
+            alert(`✅ Filtros aplicados. Mostrando ${filteredResults.length} de ${testResults.length} resultados.`);
         }
 
-        function exportReport() {
-            console.log('Exportando reporte...');
-            alert('Funcionalidad de exportación en desarrollo');
+        function updateMetrics(filteredResults) {
+            // Calculate metrics
+            const passed = filteredResults.filter(r => r.status === 'passed').length;
+            const failed = filteredResults.filter(r => r.status === 'failed').length;
+            const blocked = filteredResults.filter(r => r.status === 'blocked').length;
+            const skipped = filteredResults.filter(r => r.status === 'skipped').length;
+            const total = filteredResults.length;
+            
+            const passedPercentage = total > 0 ? ((passed / total) * 100).toFixed(1) : 0;
+            const failedPercentage = total > 0 ? ((failed / total) * 100).toFixed(1) : 0;
+            const blockedPercentage = total > 0 ? ((blocked / total) * 100).toFixed(1) : 0;
+            const skippedPercentage = total > 0 ? ((skipped / total) * 100).toFixed(1) : 0;
+            
+            // Update DOM elements
+            const successCard = document.querySelector('.metric-card:nth-child(1)');
+            if (successCard) {
+                successCard.querySelector('.metric-value').textContent = passed;
+                successCard.querySelector('.metric-subtitle').textContent = `${passedPercentage}% del total`;
+            }
+            
+            const failedCard = document.querySelector('.metric-card:nth-child(2)');
+            if (failedCard) {
+                failedCard.querySelector('.metric-value').textContent = failed;
+                failedCard.querySelector('.metric-subtitle').textContent = `${failedPercentage}% del total`;
+            }
+            
+            const blockedCard = document.querySelector('.metric-card:nth-child(3)');
+            if (blockedCard) {
+                blockedCard.querySelector('.metric-value').textContent = blocked;
+                blockedCard.querySelector('.metric-subtitle').textContent = `${blockedPercentage}% del total`;
+            }
+            
+            const skippedCard = document.querySelector('.metric-card:nth-child(4)');
+            if (skippedCard) {
+                skippedCard.querySelector('.metric-value').textContent = skipped;
+                skippedCard.querySelector('.metric-subtitle').textContent = `${skippedPercentage}% del total`;
+            }
+        }
+
+        function populateFilteredTable(filteredResults) {
+            const tbody = document.getElementById('resultsTableBody');
+            tbody.innerHTML = '';
+
+            filteredResults.forEach(result => {
+                const row = document.createElement('tr');
+                
+                const statusClass = `status-${result.status}`;
+                const priorityClass = `priority-${result.priority}`;
+                
+                row.innerHTML = `
+                    <td>${result.id}</td>
+                    <td>${result.name}</td>
+                    <td>${result.suite}</td>
+                    <td><span class="status-badge ${statusClass}">${getStatusText(result.status)}</span></td>
+                    <td><span class="${priorityClass}">${getPriorityText(result.priority)}</span></td>
+                    <td>${result.executor}</td>
+                    <td>${result.time}s</td>
+                    <td>${result.date}</td>
+                    <td><button class="btn-small" onclick="viewDetails('${result.id}')">Ver</button></td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+            
+            // If no results, show message
+            if (filteredResults.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="9" style="text-align: center; padding: 40px; color: #525252;">No se encontraron resultados con los filtros aplicados</td>';
+                tbody.appendChild(row);
+            }
+        }
+
+        function resetFilters() {
+            // Reset all selects to default
+            document.getElementById('testSuiteFilter').value = 'all';
+            document.getElementById('statusFilter').value = 'all';
+            document.getElementById('priorityFilter').value = 'all';
+            
+            // Repopulate table with all results
+            populateResultsTable();
+            
+            // Reset metrics to original values
+            updateMetrics(testResults);
+            
+            alert('✅ Filtros reiniciados. Mostrando todos los resultados.');
+        }
+
+        async function exportReport() {
+            try {
+                // Show loading indicator
+                const button = event.target;
+                const originalText = button.innerHTML;
+                button.innerHTML = '<span style="margin-right: 8px;">⏳</span>Generando PDF...';
+                button.disabled = true;
+
+                // Import jsPDF and html2canvas dynamically
+                if (typeof jspdf === 'undefined') {
+                    const script1 = document.createElement('script');
+                    script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+                    document.head.appendChild(script1);
+                    
+                    const script2 = document.createElement('script');
+                    script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+                    document.head.appendChild(script2);
+                    
+                    // Wait for scripts to load
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                }
+
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                
+                // Get elements to export
+                const summary = document.querySelector('.summary-section');
+                const charts = document.querySelector('.charts-section');
+                const table = document.querySelector('.results-table');
+                
+                let yPosition = 10;
+                
+                // Add title
+                pdf.setFontSize(18);
+                pdf.setTextColor(15, 98, 254); // IBM Blue
+                pdf.text('Reporte de Ejecución de Pruebas - IBM', 105, yPosition, { align: 'center' });
+                yPosition += 10;
+                
+                pdf.setFontSize(10);
+                pdf.setTextColor(0, 0, 0);
+                pdf.text(`Generado: ${new Date().toLocaleString('es-CO')}`, 105, yPosition, { align: 'center' });
+                yPosition += 15;
+
+                // Capture summary section
+                const summaryCanvas = await html2canvas(summary, { scale: 2 });
+                const summaryImg = summaryCanvas.toDataURL('image/png');
+                const summaryWidth = 190;
+                const summaryHeight = (summaryCanvas.height * summaryWidth) / summaryCanvas.width;
+                pdf.addImage(summaryImg, 'PNG', 10, yPosition, summaryWidth, summaryHeight);
+                yPosition += summaryHeight + 10;
+                
+                // Add new page if needed
+                if (yPosition > 250) {
+                    pdf.addPage();
+                    yPosition = 10;
+                }
+
+                // Capture charts section
+                const chartsCanvas = await html2canvas(charts, { scale: 2 });
+                const chartsImg = chartsCanvas.toDataURL('image/png');
+                const chartsWidth = 190;
+                const chartsHeight = (chartsCanvas.height * chartsWidth) / chartsCanvas.width;
+                
+                if (yPosition + chartsHeight > 280) {
+                    pdf.addPage();
+                    yPosition = 10;
+                }
+                
+                pdf.addImage(chartsImg, 'PNG', 10, yPosition, chartsWidth, chartsHeight);
+                yPosition += chartsHeight + 10;
+
+                // Add new page for table
+                pdf.addPage();
+                yPosition = 10;
+
+                // Capture results table
+                const tableCanvas = await html2canvas(table, { scale: 2 });
+                const tableImg = tableCanvas.toDataURL('image/png');
+                const tableWidth = 190;
+                const tableHeight = (tableCanvas.height * tableWidth) / tableCanvas.width;
+                
+                pdf.addImage(tableImg, 'PNG', 10, yPosition, tableWidth, tableHeight);
+
+                // Save PDF
+                const fileName = `Reporte_Ejecucion_Pruebas_${new Date().toISOString().split('T')[0]}.pdf`;
+                pdf.save(fileName);
+
+                // Restore button
+                button.innerHTML = originalText;
+                button.disabled = false;
+                
+                alert('✅ Reporte PDF generado exitosamente');
+                
+            } catch (error) {
+                console.error('Error al exportar reporte:', error);
+                alert('❌ Error al generar el PDF. Por favor, intente nuevamente.');
+                
+                // Restore button
+                const button = event.target;
+                button.innerHTML = '<span style="margin-right: 8px;">📄</span>Exportar PDF';
+                button.disabled = false;
+            }
         }
 
         function toggleDetails() {

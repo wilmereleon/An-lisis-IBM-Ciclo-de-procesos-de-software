@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plantilla de Reporte de Defectos - IBM QMS</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐛</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: linear-gradient(135deg, #0f62fe 0%, #0353e9 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #161616 0%, #262626 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .form-section {
+            padding: 2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #161616;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0f62fe;
+            box-shadow: 0 0 0 3px rgba(15, 98, 254, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .section-title {
+            background: #f4f4f4;
+            padding: 1rem 1.5rem;
+            border-left: 4px solid #0f62fe;
+            margin: 2rem 0 1rem 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #161616;
+        }
+
+        .severity-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .severity-option {
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .severity-option:hover {
+            border-color: #0f62fe;
+            transform: translateY(-2px);
+        }
+
+        .severity-option.selected {
+            border-width: 3px;
+        }
+
+        .severity-critical {
+            border-color: #da1e28;
+            background: #fff1f1;
+        }
+
+        .severity-critical.selected {
+            background: #da1e28;
+            color: white;
+        }
+
+        .severity-high {
+            border-color: #ff8c00;
+            background: #fff4e6;
+        }
+
+        .severity-high.selected {
+            background: #ff8c00;
+            color: white;
+        }
+
+        .severity-medium {
+            border-color: #f1c21b;
+            background: #fff4d5;
+        }
+
+        .severity-medium.selected {
+            background: #f1c21b;
+            color: white;
+        }
+
+        .severity-low {
+            border-color: #24a148;
+            background: #d0f0e3;
+        }
+
+        .severity-low.selected {
+            background: #24a148;
+            color: white;
+        }
+
+        .severity-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .severity-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .attachments-area {
+            border: 2px dashed #c6c6c6;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            background: #f4f4f4;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .attachments-area:hover {
+            border-color: #0f62fe;
+            background: #d0e2ff;
+        }
+
+        .attachments-area input[type="file"] {
+            display: none;
+        }
+
+        .attachment-list {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .attachment-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .attachment-item:last-child {
+            border-bottom: none;
+        }
+
+        .attachment-remove {
+            background: #da1e28;
+            color: white;
+            border: none;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 2rem;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #0f62fe;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0353e9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(15, 98, 254, 0.3);
+        }
+
+        .btn-success {
+            background: #24a148;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #198038;
+        }
+
+        .btn-secondary {
+            background: #393939;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #262626;
+        }
+
+        .btn-danger {
+            background: #da1e28;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #ba1b23;
+        }
+
+        .required {
+            color: #da1e28;
+        }
+
+        .help-text {
+            font-size: 0.85rem;
+            color: #525252;
+            margin-top: 0.25rem;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .nav-buttons, .btn {
+                display: none;
+            }
+
+            .attachments-area {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Navigation Module -->
+    <script src="ibm-navigation.js"></script>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🐛 Reporte Detallado de Defectos</h1>
+            <p>IBM Quality Management System - Defect Report Template</p>
+            <p style="font-size: 0.9rem; margin-top: 0.5rem;">Conforme a IEEE 829, TMMi Level 3, ISO/IEC 25010</p>
+        </div>
+
+        <div class="form-section">
+            <form id="defectForm">
+                <!-- IDENTIFICACIÓN DEL DEFECTO -->
+                <div class="section-title">📌 Identificación del Defecto</div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="fecha">Fecha <span class="required">*</span></label>
+                        <input type="date" id="fecha" name="fecha" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="consecutivo">Consecutivo <span class="required">*</span></label>
+                        <input type="text" id="consecutivo" name="consecutivo" placeholder="Ej: DEF-2024-001" required>
+                        <span class="help-text">Formato: DEF-YYYY-NNN</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="codigo">Código <span class="required">*</span></label>
+                        <input type="text" id="codigo" name="codigo" placeholder="Ej: BUG-AUTH-001" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nombre-corto">Nombre Corto <span class="required">*</span></label>
+                        <input type="text" id="nombre-corto" name="nombre-corto" placeholder="Ej: Error login con usuario especial" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tipo">Tipo de Defecto <span class="required">*</span></label>
+                        <select id="tipo" name="tipo" required>
+                            <option value="">Seleccione...</option>
+                            <option value="funcional">Funcional</option>
+                            <option value="ui">Interfaz de Usuario (UI/UX)</option>
+                            <option value="performance">Performance</option>
+                            <option value="seguridad">Seguridad</option>
+                            <option value="datos">Datos/Integridad</option>
+                            <option value="integracion">Integración</option>
+                            <option value="documentacion">Documentación</option>
+                            <option value="configuracion">Configuración</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="version">Versión <span class="required">*</span></label>
+                        <input type="text" id="version" name="version" placeholder="Ej: 2.3.1" required>
+                        <span class="help-text">Versión del sistema donde se encontró</span>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="elemento">Elemento <span class="required">*</span></label>
+                        <input type="text" id="elemento" name="elemento" placeholder="Ej: Módulo de Autenticación" required>
+                        <span class="help-text">Módulo/Componente afectado</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modulo">Módulo</label>
+                        <input type="text" id="modulo" name="modulo" placeholder="Ej: Login Service">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="programa">Programa/Archivo</label>
+                        <input type="text" id="programa" name="programa" placeholder="Ej: authController.js">
+                    </div>
+                </div>
+
+                <!-- SEVERIDAD -->
+                <div class="section-title">⚠️ Severidad del Defecto</div>
+                
+                <div class="form-group full-width">
+                    <div class="severity-selector">
+                        <div class="severity-option severity-critical" data-severity="critical" onclick="selectSeverity(this)">
+                            <div class="severity-icon">🔴</div>
+                            <div class="severity-label">CRÍTICO</div>
+                            <div class="help-text">Sistema inoperativo</div>
+                        </div>
+                        <div class="severity-option severity-high" data-severity="high" onclick="selectSeverity(this)">
+                            <div class="severity-icon">🟠</div>
+                            <div class="severity-label">ALTO</div>
+                            <div class="help-text">Funcionalidad clave afectada</div>
+                        </div>
+                        <div class="severity-option severity-medium" data-severity="medium" onclick="selectSeverity(this)">
+                            <div class="severity-icon">🟡</div>
+                            <div class="severity-label">MEDIO</div>
+                            <div class="help-text">Funcionalidad menor afectada</div>
+                        </div>
+                        <div class="severity-option severity-low" data-severity="low" onclick="selectSeverity(this)">
+                            <div class="severity-icon">🟢</div>
+                            <div class="severity-label">BAJO</div>
+                            <div class="help-text">Cosmético o sugerencia</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="severidad" name="severidad" required>
+                </div>
+
+                <!-- DESCRIPCIÓN DEL DEFECTO -->
+                <div class="section-title">📝 Descripción del Defecto</div>
+
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="funcionalidad">Funcionalidad Afectada <span class="required">*</span></label>
+                        <textarea id="funcionalidad" name="funcionalidad" placeholder="Describa la funcionalidad que no está operando correctamente..." required></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="ambiente">Ambiente de Ejecución <span class="required">*</span></label>
+                        <textarea id="ambiente" name="ambiente" placeholder="Describa el ambiente: SO, navegador, versión, configuración, red, etc..." required></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="componentes">Componentes Usados</label>
+                        <textarea id="componentes" name="componentes" placeholder="Librerías, APIs, servicios externos utilizados..."></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="descripcion">Descripción Completa del Error <span class="required">*</span></label>
+                        <textarea id="descripcion" name="descripcion" placeholder="Describa detalladamente el comportamiento incorrecto, mensajes de error, logs relevantes..." required style="min-height: 150px;"></textarea>
+                    </div>
+                </div>
+
+                <!-- PASOS PARA REPRODUCIR -->
+                <div class="section-title">🔄 Reproducción del Defecto</div>
+
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="datos-prueba">Datos de Prueba Usados <span class="required">*</span></label>
+                        <textarea id="datos-prueba" name="datos-prueba" placeholder="Indique el # de caso de prueba, datos de entrada específicos, cuentas de usuario, etc..." required></textarea>
+                        <span class="help-text">Incluya todos los datos necesarios para reproducir el defecto</span>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="secuencia">Secuencia de Operaciones <span class="required">*</span></label>
+                        <textarea id="secuencia" name="secuencia" placeholder="Indique el # de guión de prueba y los pasos específicos para reproducir el error:&#10;1. Navegar a...&#10;2. Ingresar datos...&#10;3. Hacer clic en...&#10;4. Observar error..." required style="min-height: 150px;"></textarea>
+                        <span class="help-text">Sea lo más específico posible en cada paso</span>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="resultado-esperado">Resultado Esperado <span class="required">*</span></label>
+                        <textarea id="resultado-esperado" name="resultado-esperado" placeholder="Describa qué debería ocurrir según la especificación. Incluya # de caso de prueba..." required></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="resultado-actual">Resultado Actual</label>
+                        <textarea id="resultado-actual" name="resultado-actual" placeholder="Describa qué ocurrió realmente, comportamiento observado..."></textarea>
+                    </div>
+                </div>
+
+                <!-- INFORMACIÓN ADICIONAL -->
+                <div class="section-title">📊 Información Adicional</div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="frecuencia">Frecuencia de Ocurrencia</label>
+                        <select id="frecuencia" name="frecuencia">
+                            <option value="">Seleccione...</option>
+                            <option value="siempre">Siempre (100%)</option>
+                            <option value="frecuente">Frecuente (>75%)</option>
+                            <option value="intermitente">Intermitente (25-75%)</option>
+                            <option value="raro">Raro (<25%)</option>
+                            <option value="unica">Única vez</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="impacto-usuario">Impacto al Usuario</label>
+                        <select id="impacto-usuario" name="impacto-usuario">
+                            <option value="">Seleccione...</option>
+                            <option value="bloqueante">Bloqueante - No puede continuar</option>
+                            <option value="alto">Alto - Impacto significativo</option>
+                            <option value="medio">Medio - Workaround disponible</option>
+                            <option value="bajo">Bajo - Impacto mínimo</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="programador">Programador o Grupo de Desarrollo</label>
+                        <input type="text" id="programador" name="programador" placeholder="Ej: Juan Pérez / Team Backend">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="estado">Estado del Defecto</label>
+                        <select id="estado" name="estado">
+                            <option value="nuevo">Nuevo</option>
+                            <option value="asignado">Asignado</option>
+                            <option value="en-progreso">En Progreso</option>
+                            <option value="resuelto">Resuelto</option>
+                            <option value="verificado">Verificado</option>
+                            <option value="cerrado">Cerrado</option>
+                            <option value="reabierto">Reabierto</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="workaround">Workaround/Solución Temporal</label>
+                        <textarea id="workaround" name="workaround" placeholder="Si existe una forma alternativa de completar la tarea, descríbala..."></textarea>
+                    </div>
+                </div>
+
+                <!-- ADJUNTOS -->
+                <div class="section-title">📎 Evidencias y Adjuntos</div>
+
+                <div class="form-group full-width">
+                    <label onclick="document.getElementById('file-input').click()" class="attachments-area">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📁</div>
+                        <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Adjuntar Evidencias</div>
+                        <div style="color: #525252;">Screenshots, logs, videos, archivos relacionados</div>
+                        <input type="file" id="file-input" multiple accept=".png,.jpg,.jpeg,.gif,.pdf,.txt,.log,.mp4,.zip">
+                    </label>
+                    <div id="attachment-list" class="attachment-list" style="display: none;"></div>
+                </div>
+
+                <!-- RESPONSABLES -->
+                <div class="section-title">👥 Responsables</div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="nombre-probador">Nombre del Probador/QA <span class="required">*</span></label>
+                        <input type="text" id="nombre-probador" name="nombre-probador" placeholder="Ej: María García" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email-probador">Email del Probador</label>
+                        <input type="email" id="email-probador" name="email-probador" placeholder="maria.garcia@ibm.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nombre-usuario">Nombre del Usuario/Reportador</label>
+                        <input type="text" id="nombre-usuario" name="nombre-usuario" placeholder="Ej: Carlos Rodríguez">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email-usuario">Email del Usuario</label>
+                        <input type="email" id="email-usuario" name="email-usuario" placeholder="carlos.rodriguez@ibm.com">
+                    </div>
+                </div>
+
+                <!-- Botones de Acción -->
+                <div class="nav-buttons">
+                    <button type="button" onclick="window.location.href='debug_defectos.html'" class="btn btn-secondary">← Gestión de Defectos</button>
+                    <button type="button" onclick="clearForm()" class="btn btn-danger">🗑️ Limpiar</button>
+                    <button type="button" onclick="saveDefect()" class="btn btn-success">💾 Guardar</button>
+                    <button type="button" onclick="exportDefect()" class="btn btn-primary">📤 Exportar PDF</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'ibm_qms_defect_reports';
+        let attachedFiles = [];
+
+        // Auto-rellenar fecha actual
+        document.getElementById('fecha').valueAsDate = new Date();
+
+        // Generar consecutivo automático
+        function generateConsecutive() {
+            const year = new Date().getFullYear();
+            const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            const count = stored.filter(d => d.consecutivo.includes(year)).length + 1;
+            return `DEF-${year}-${String(count).padStart(3, '0')}`;
+        }
+
+        document.getElementById('consecutivo').value = generateConsecutive();
+
+        function selectSeverity(element) {
+            // Desmarcar todos
+            document.querySelectorAll('.severity-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Marcar seleccionado
+            element.classList.add('selected');
+            document.getElementById('severidad').value = element.dataset.severity;
+        }
+
+        // Manejo de archivos adjuntos
+        document.getElementById('file-input').addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            attachedFiles = [...attachedFiles, ...files];
+            updateAttachmentList();
+        });
+
+        function updateAttachmentList() {
+            const list = document.getElementById('attachment-list');
+            
+            if (attachedFiles.length === 0) {
+                list.style.display = 'none';
+                return;
+            }
+            
+            list.style.display = 'block';
+            list.innerHTML = '<strong>Archivos adjuntos:</strong>';
+            
+            attachedFiles.forEach((file, index) => {
+                const item = document.createElement('div');
+                item.className = 'attachment-item';
+                item.innerHTML = `
+                    <span>📎 ${file.name} (${(file.size / 1024).toFixed(2)} KB)</span>
+                    <button type="button" class="attachment-remove" onclick="removeAttachment(${index})">✗ Remover</button>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function removeAttachment(index) {
+            attachedFiles.splice(index, 1);
+            updateAttachmentList();
+        }
+
+        function saveDefect() {
+            const form = document.getElementById('defectForm');
+            
+            if (!form.checkValidity()) {
+                alert('⚠️ Por favor complete todos los campos obligatorios (marcados con *)');
+                form.reportValidity();
+                return;
+            }
+            
+            if (!document.getElementById('severidad').value) {
+                alert('⚠️ Por favor seleccione la severidad del defecto');
+                return;
+            }
+            
+            const defectData = {
+                id: Date.now(),
+                fecha: document.getElementById('fecha').value,
+                consecutivo: document.getElementById('consecutivo').value,
+                codigo: document.getElementById('codigo').value,
+                nombreCorto: document.getElementById('nombre-corto').value,
+                tipo: document.getElementById('tipo').value,
+                version: document.getElementById('version').value,
+                elemento: document.getElementById('elemento').value,
+                modulo: document.getElementById('modulo').value,
+                programa: document.getElementById('programa').value,
+                severidad: document.getElementById('severidad').value,
+                funcionalidad: document.getElementById('funcionalidad').value,
+                ambiente: document.getElementById('ambiente').value,
+                componentes: document.getElementById('componentes').value,
+                descripcion: document.getElementById('descripcion').value,
+                datosPrueba: document.getElementById('datos-prueba').value,
+                secuencia: document.getElementById('secuencia').value,
+                resultadoEsperado: document.getElementById('resultado-esperado').value,
+                resultadoActual: document.getElementById('resultado-actual').value,
+                frecuencia: document.getElementById('frecuencia').value,
+                impactoUsuario: document.getElementById('impacto-usuario').value,
+                programador: document.getElementById('programador').value,
+                estado: document.getElementById('estado').value,
+                workaround: document.getElementById('workaround').value,
+                nombreProbador: document.getElementById('nombre-probador').value,
+                emailProbador: document.getElementById('email-probador').value,
+                nombreUsuario: document.getElementById('nombre-usuario').value,
+                emailUsuario: document.getElementById('email-usuario').value,
+                attachments: attachedFiles.map(f => f.name),
+                timestamp: new Date().toISOString()
+            };
+            
+            // Guardar en localStorage
+            const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            stored.push(defectData);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
+            
+            alert(`✅ Defecto ${defectData.consecutivo} guardado exitosamente`);
+            
+            // Limpiar y generar nuevo consecutivo
+            clearForm();
+            document.getElementById('consecutivo').value = generateConsecutive();
+        }
+
+        function exportDefect() {
+            const form = document.getElementById('defectForm');
+            
+            if (!form.checkValidity()) {
+                alert('⚠️ Por favor complete todos los campos obligatorios antes de exportar');
+                return;
+            }
+            
+            // Preparar datos para exportar
+            const defectReport = {
+                consecutivo: document.getElementById('consecutivo').value,
+                fecha: document.getElementById('fecha').value,
+                codigo: document.getElementById('codigo').value,
+                nombreCorto: document.getElementById('nombre-corto').value,
+                tipo: document.getElementById('tipo').value,
+                severidad: document.getElementById('severidad').value,
+                descripcion: document.getElementById('descripcion').value,
+                pasos: document.getElementById('secuencia').value,
+                resultadoEsperado: document.getElementById('resultado-esperado').value,
+                probador: document.getElementById('nombre-probador').value
+            };
+            
+            // Exportar como JSON
+            const blob = new Blob([JSON.stringify(defectReport, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${defectReport.consecutivo}_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            alert('📤 Reporte exportado exitosamente');
+        }
+
+        function clearForm() {
+            if (confirm('¿Está seguro de que desea limpiar el formulario?')) {
+                document.getElementById('defectForm').reset();
+                document.querySelectorAll('.severity-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                attachedFiles = [];
+                updateAttachmentList();
+                document.getElementById('fecha').valueAsDate = new Date();
+            }
+        }
+
+        console.log('🐛 Plantilla de Reporte de Defectos - IBM QMS');
+        console.log('Conforme a IEEE 829, TMMi Level 3, ISO/IEC 25010');
+    </script>
+</body>
+</html>

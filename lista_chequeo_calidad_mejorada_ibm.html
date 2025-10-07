@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Chequeo de Calidad - IBM QMS</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✓</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: linear-gradient(135deg, #0f62fe 0%, #0353e9 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #161616 0%, #262626 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .instructions {
+            background: #f0f7ff;
+            border-left: 4px solid #0f62fe;
+            padding: 1.5rem;
+            margin: 2rem;
+            border-radius: 8px;
+        }
+
+        .instructions h3 {
+            color: #0f62fe;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .instructions ul {
+            margin-left: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .instructions li {
+            margin-bottom: 0.5rem;
+            color: #393939;
+        }
+
+        .scale-legend {
+            background: #fff4e6;
+            border-left: 4px solid #ff8c00;
+            padding: 1.5rem;
+            margin: 0 2rem 2rem 2rem;
+            border-radius: 8px;
+        }
+
+        .scale-legend h3 {
+            color: #ff8c00;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .scale-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .scale-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .scale-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0f62fe;
+            margin-bottom: 0.5rem;
+        }
+
+        .scale-label {
+            font-size: 0.9rem;
+            color: #525252;
+        }
+
+        .metrics-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            padding: 2rem;
+            background: #f4f4f4;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #e0e0e0;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0f62fe;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            color: #525252;
+            font-size: 0.9rem;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .category-section {
+            margin-bottom: 3rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, #0f62fe 0%, #0353e9 100%);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .category-header:hover {
+            background: linear-gradient(135deg, #0353e9 0%, #002d9c 100%);
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .category-score {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .category-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .category-content.active {
+            max-height: 10000px;
+            padding: 2rem;
+        }
+
+        .checklist-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .checklist-table thead {
+            background: #161616;
+            color: white;
+        }
+
+        .checklist-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-bottom: 2px solid #0f62fe;
+        }
+
+        .checklist-table tbody tr {
+            border-bottom: 1px solid #e0e0e0;
+            transition: background 0.2s;
+        }
+
+        .checklist-table tbody tr:hover {
+            background: #f4f4f4;
+        }
+
+        .checklist-table td {
+            padding: 1.25rem 1rem;
+            vertical-align: top;
+        }
+
+        .attribute-cell {
+            font-weight: 500;
+            color: #161616;
+            min-width: 250px;
+        }
+
+        .attribute-description {
+            font-size: 0.85rem;
+            color: #525252;
+            margin-top: 0.25rem;
+        }
+
+        .scale-cell {
+            min-width: 400px;
+        }
+
+        .scale-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .scale-option {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+            background: white;
+        }
+
+        .scale-option:hover {
+            border-color: #0f62fe;
+            background: #d0e2ff;
+        }
+
+        .scale-option.selected {
+            background: #0f62fe;
+            color: white;
+            border-color: #0f62fe;
+        }
+
+        .observation-cell {
+            min-width: 200px;
+        }
+
+        .observation-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-family: 'IBM Plex Sans', sans-serif;
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .observation-input:focus {
+            outline: 2px solid #0f62fe;
+            border-color: #0f62fe;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            padding: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #0f62fe;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0353e9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(15, 98, 254, 0.3);
+        }
+
+        .btn-success {
+            background: #24a148;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #198038;
+        }
+
+        .btn-secondary {
+            background: #393939;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #262626;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            /* Ocultar elementos de navegación y botones */
+            #ibm-top-navbar,
+            .nav-buttons,
+            button:not(.scale-option) {
+                display: none !important;
+            }
+
+            /* Mantener scale-options visibles con valores seleccionados */
+            .scale-option {
+                display: inline-block !important;
+                padding: 4px 8px;
+                font-size: 10px;
+                border: 1px solid #c6c6c6 !important;
+                background: white !important;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+
+            .scale-option.selected {
+                background: #0f62fe !important;
+                color: white !important;
+                border-color: #0f62fe !important;
+                font-weight: 600;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+
+            /* Expandir todo el contenido */
+            .category-content {
+                max-height: none !important;
+                padding: 1rem;
+                page-break-inside: avoid;
+            }
+
+            /* Tablas y filas de atributos */
+            .attribute-row {
+                page-break-inside: avoid;
+                border: 1px solid #e0e0e0;
+                padding: 8px;
+                margin-bottom: 8px;
+            }
+
+            /* Labels de atributos */
+            .attribute-label {
+                font-weight: 600;
+                font-size: 11px;
+                margin-bottom: 4px;
+            }
+
+            .attribute-description {
+                font-size: 9px;
+                color: #525252;
+                margin-bottom: 8px;
+            }
+
+            /* Observaciones */
+            .observation-input {
+                border: 1px solid #c6c6c6 !important;
+                border-radius: 0;
+                padding: 6px;
+                font-size: 9px;
+                min-height: 40px;
+                page-break-inside: avoid;
+            }
+
+            /* Headers de categorías */
+            .category-header {
+                background: #f4f4f4 !important;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+                page-break-after: avoid;
+                border: 2px solid #0f62fe !important;
+            }
+
+            /* Dashboard de métricas */
+            .dashboard {
+                page-break-before: avoid;
+                page-break-after: avoid;
+                border: 2px solid #0f62fe;
+                padding: 12px;
+            }
+
+            .metric-card {
+                break-inside: avoid;
+                border: 1px solid #e0e0e0;
+                padding: 8px;
+            }
+
+            /* Instrucciones */
+            .instructions,
+            .scale-legend {
+                page-break-inside: avoid;
+                font-size: 10px;
+            }
+
+            /* Header principal */
+            .header {
+                page-break-after: avoid;
+                margin-bottom: 16px;
+            }
+
+            /* Ajustar márgenes de página */
+            @page {
+                margin: 1.5cm;
+                size: A4;
+            }
+
+            /* Asegurar que scale-options no se corten */
+            .scale-options {
+                page-break-inside: avoid;
+                display: flex !important;
+                flex-wrap: wrap !important;
+                gap: 4px !important;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .scale-options {
+                flex-direction: column;
+            }
+
+            .scale-option {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- IBM Navigation Module -->
+    <script src="ibm-navigation.js"></script>
+    
+    <div class="container">
+        <div class="header">
+            <h1>📋 Lista de Chequeo de Calidad de Software</h1>
+            <p>IBM Quality Management System - Evaluación Integral por Categorías</p>
+            <p style="font-size: 0.9rem; margin-top: 0.5rem;">Conforme a CMMI Level 3, TMMi Level 3, IEEE 829, ISO/IEC 25010</p>
+        </div>
+
+        <div class="instructions">
+            <h3>📖 Instrucciones de Uso</h3>
+            <ul>
+                <li><strong>Propósito:</strong> Evaluar la calidad de cada fase del ciclo de desarrollo mediante atributos específicos agrupados por categorías</li>
+                <li><strong>Evaluación:</strong> Para cada atributo, seleccione el valor de la escala que mejor describe el estado actual</li>
+                <li><strong>Escalas:</strong> Cada atributo tiene una escala específica (1-5, Sí/No, Porcentaje, o Cantidad) según el contexto</li>
+                <li><strong>Observaciones:</strong> Documente hallazgos específicos, defectos identificados o acciones correctivas necesarias</li>
+                <li><strong>Interpretación:</strong> Los puntajes se agregan por categoría para obtener métricas de calidad globales</li>
+                <li><strong>Uso de datos:</strong> Los datos recolectados sirven para estimar esfuerzos de corrección, medir avance y establecer tendencias</li>
+            </ul>
+        </div>
+
+        <div class="scale-legend">
+            <h3>📊 Escalas de Evaluación Unificadas</h3>
+            <div class="scale-grid">
+                <div class="scale-item">
+                    <div class="scale-value">1-5</div>
+                    <div class="scale-label">Escala Cualitativa<br>1=Muy Deficiente, 5=Excelente</div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-value">Sí/No</div>
+                    <div class="scale-label">Cumplimiento Binario<br>Para atributos absolutos</div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-value">0-100%</div>
+                    <div class="scale-label">Porcentaje de Cumplimiento<br>Para mediciones proporcionales</div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-value">Cantidad</div>
+                    <div class="scale-label">Conteo Numérico<br>Para defectos o elementos</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="metrics-summary">
+            <div class="metric-card">
+                <div class="metric-value" id="total-score">0%</div>
+                <div class="metric-label">Calidad Global</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="completed-attrs">0</div>
+                <div class="metric-label">Atributos Evaluados</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="defects-count">0</div>
+                <div class="metric-label">Defectos Identificados</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="avg-score">0</div>
+                <div class="metric-label">Puntaje Promedio</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- CATEGORÍA 1: REQUERIMIENTOS -->
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory('requirements')">
+                    <div class="category-title">
+                        <span>📝</span>
+                        <span>Categoría 1: Calidad de Requerimientos</span>
+                    </div>
+                    <div class="category-score" id="requirements-score">0%</div>
+                </div>
+                <div class="category-content active" id="requirements-content">
+                    <table class="checklist-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">Atributo a Evaluar</th>
+                                <th style="width: 45%;">Escala de Medición</th>
+                                <th style="width: 30%;">Observaciones/Hallazgos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-category="requirements">
+                                <td class="attribute-cell">
+                                    <strong>¿Son los requerimientos compatibles?</strong>
+                                    <div class="attribute-description">Los requerimientos no deben entrar en conflicto entre sí ni con restricciones del sistema</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <div class="scale-options">
+                                        <div class="scale-option" data-value="1" onclick="selectOption(this)">1 - Totalmente incompatibles</div>
+                                        <div class="scale-option" data-value="2" onclick="selectOption(this)">2 - La mayoría incompatibles</div>
+                                        <div class="scale-option" data-value="3" onclick="selectOption(this)">3 - Mitad incompatibles</div>
+                                        <div class="scale-option" data-value="4" onclick="selectOption(this)">4 - Pocos incompatibles</div>
+                                        <div class="scale-option" data-value="5" onclick="selectOption(this)">5 - Todos compatibles</div>
+                                    </div>
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: Requerimiento REQ-015 conflicta con REQ-023 en lógica de negocio..."></textarea>
+                                </td>
+                            </tr>
+                            <tr data-category="requirements">
+                                <td class="attribute-cell">
+                                    <strong>¿Son los requerimientos completos?</strong>
+                                    <div class="attribute-description">Todos los casos de uso, flujos alternativos y excepciones están documentados</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <div class="scale-options">
+                                        <div class="scale-option" data-value="0" onclick="selectOption(this)">0-25% - Muy incompleto</div>
+                                        <div class="scale-option" data-value="1" onclick="selectOption(this)">26-50% - Incompleto</div>
+                                        <div class="scale-option" data-value="2" onclick="selectOption(this)">51-75% - Parcialmente completo</div>
+                                        <div class="scale-option" data-value="3" onclick="selectOption(this)">76-90% - Mayormente completo</div>
+                                        <div class="scale-option" data-value="4" onclick="selectOption(this)">91-100% - Completamente completo</div>
+                                    </div>
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: Faltan especificar flujos de error en módulo de pagos..."></textarea>
+                                </td>
+                            </tr>
+                            <tr data-category="requirements">
+                                <td class="attribute-cell">
+                                    <strong>¿Son los requerimientos claros?</strong>
+                                    <div class="attribute-description">Redacción sin ambigüedades, comprensible para stakeholders técnicos y de negocio</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <div class="scale-options">
+                                        <div class="scale-option" data-value="1" onclick="selectOption(this)">1 - Muy ambiguos</div>
+                                        <div class="scale-option" data-value="2" onclick="selectOption(this)">2 - Ambiguos</div>
+                                        <div class="scale-option" data-value="3" onclick="selectOption(this)">3 - Moderadamente claros</div>
+                                        <div class="scale-option" data-value="4" onclick="selectOption(this)">4 - Claros</div>
+                                        <div class="scale-option" data-value="5" onclick="selectOption(this)">5 - Muy claros</div>
+                                    </div>
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: Términos técnicos no definidos en glosario..."></textarea>
+                                </td>
+                            </tr>
+                            <tr data-category="requirements">
+                                <td class="attribute-cell">
+                                    <strong>¿Son los requerimientos medibles?</strong>
+                                    <div class="attribute-description">Existen criterios cuantificables para verificar el cumplimiento</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <div class="scale-options">
+                                        <div class="scale-option" data-value="yes" onclick="selectOption(this)">✓ Sí - Todos medibles</div>
+                                        <div class="scale-option" data-value="partial" onclick="selectOption(this)">~ Parcial - Algunos medibles</div>
+                                        <div class="scale-option" data-value="no" onclick="selectOption(this)">✗ No - No medibles</div>
+                                    </div>
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: Falta definir SLA de tiempo de respuesta..."></textarea>
+                                </td>
+                            </tr>
+                            <tr data-category="requirements">
+                                <td class="attribute-cell">
+                                    <strong>¿Son los requerimientos alcanzables?</strong>
+                                    <div class="attribute-description">Factibles técnica y económicamente con recursos y tiempo disponible</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <div class="scale-options">
+                                        <div class="scale-option" data-value="1" onclick="selectOption(this)">1 - Inalcanzables</div>
+                                        <div class="scale-option" data-value="2" onclick="selectOption(this)">2 - Difícilmente alcanzables</div>
+                                        <div class="scale-option" data-value="3" onclick="selectOption(this)">3 - Alcanzables con riesgo</div>
+                                        <div class="scale-option" data-value="4" onclick="selectOption(this)">4 - Alcanzables</div>
+                                        <div class="scale-option" data-value="5" onclick="selectOption(this)">5 - Fácilmente alcanzables</div>
+                                    </div>
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: Requiere tecnología no disponible actualmente..."></textarea>
+                                </td>
+                            </tr>
+                            <tr data-category="requirements">
+                                <td class="attribute-cell">
+                                    <strong>Cantidad de requerimientos con defectos</strong>
+                                    <div class="attribute-description">Contar requerimientos que requieren corrección para estimación de esfuerzo</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <input type="number" class="observation-input" placeholder="Ingrese cantidad numérica" style="width: 150px; min-height: 40px;" onchange="updateMetrics()">
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: IDs: REQ-012, REQ-034, REQ-078..."></textarea>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CATEGORÍA 2: DISEÑO -->
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory('design')">
+                    <div class="category-title">
+                        <span>🎨</span>
+                        <span>Categoría 2: Calidad de Diseño</span>
+                    </div>
+                    <div class="category-score" id="design-score">0%</div>
+                </div>
+                <div class="category-content" id="design-content">
+                    <table class="checklist-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">Atributo a Evaluar</th>
+                                <th style="width: 45%;">Escala de Medición</th>
+                                <th style="width: 30%;">Observaciones/Hallazgos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-category="design">
+                                <td class="attribute-cell">
+                                    <strong>¿El diseño es modular?</strong>
+                                    <div class="attribute-description">Componentes con alta cohesión y bajo acoplamiento</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <div class="scale-options">
+                                        <div class="scale-option" data-value="1" onclick="selectOption(this)">1 - Monolítico</div>
+                                        <div class="scale-option" data-value="2" onclick="selectOption(this)">2 - Poco modular</div>
+                                        <div class="scale-option" data-value="3" onclick="selectOption(this)">3 - Moderadamente modular</div>
+                                        <div class="scale-option" data-value="4" onclick="selectOption(this)">4 - Modular</div>
+                                        <div class="scale-option" data-value="5" onclick="selectOption(this)">5 - Altamente modular</div>
+                                    </div>
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: Módulo de autenticación acoplado con módulo de pagos..."></textarea>
+                                </td>
+                            </tr>
+                            <tr data-category="design">
+                                <td class="attribute-cell">
+                                    <strong>¿El diseño sigue patrones establecidos?</strong>
+                                    <div class="attribute-description">Uso de design patterns reconocidos (MVC, Repository, Factory, etc.)</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <div class="scale-options">
+                                        <div class="scale-option" data-value="yes" onclick="selectOption(this)">✓ Sí - Sigue patrones</div>
+                                        <div class="scale-option" data-value="partial" onclick="selectOption(this)">~ Parcial - Algunos patrones</div>
+                                        <div class="scale-option" data-value="no" onclick="selectOption(this)">✗ No - Sin patrones</div>
+                                    </div>
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: Implementa MVC pero falta Repository pattern..."></textarea>
+                                </td>
+                            </tr>
+                            <tr data-category="design">
+                                <td class="attribute-cell">
+                                    <strong>¿La documentación del diseño está completa?</strong>
+                                    <div class="attribute-description">Diagramas UML, arquitectura, flujos de datos documentados</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <div class="scale-options">
+                                        <div class="scale-option" data-value="0" onclick="selectOption(this)">0% - Sin documentación</div>
+                                        <div class="scale-option" data-value="1" onclick="selectOption(this)">25% - Muy incompleta</div>
+                                        <div class="scale-option" data-value="2" onclick="selectOption(this)">50% - Parcialmente completa</div>
+                                        <div class="scale-option" data-value="3" onclick="selectOption(this)">75% - Mayormente completa</div>
+                                        <div class="scale-option" data-value="4" onclick="selectOption(this)">100% - Completamente documentada</div>
+                                    </div>
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: Faltan diagramas de secuencia para casos críticos..."></textarea>
+                                </td>
+                            </tr>
+                            <tr data-category="design">
+                                <td class="attribute-cell">
+                                    <strong>¿El diseño es escalable?</strong>
+                                    <div class="attribute-description">Capacidad de crecer en usuarios, datos y transacciones sin degradación</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <div class="scale-options">
+                                        <div class="scale-option" data-value="1" onclick="selectOption(this)">1 - No escalable</div>
+                                        <div class="scale-option" data-value="2" onclick="selectOption(this)">2 - Poco escalable</div>
+                                        <div class="scale-option" data-value="3" onclick="selectOption(this)">3 - Moderadamente escalable</div>
+                                        <div class="scale-option" data-value="4" onclick="selectOption(this)">4 - Escalable</div>
+                                        <div class="scale-option" data-value="5" onclick="selectOption(this)">5 - Altamente escalable</div>
+                                    </div>
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: Arquitectura preparada para escalamiento horizontal..."></textarea>
+                                </td>
+                            </tr>
+                            <tr data-category="design">
+                                <td class="attribute-cell">
+                                    <strong>Cantidad de componentes sin documentar</strong>
+                                    <div class="attribute-description">Contar componentes/módulos que requieren documentación adicional</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <input type="number" class="observation-input" placeholder="Ingrese cantidad numérica" style="width: 150px; min-height: 40px;" onchange="updateMetrics()">
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: AuthService, PaymentGateway, NotificationEngine..."></textarea>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CATEGORÍA 3: CÓDIGO -->
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory('code')">
+                    <div class="category-title">
+                        <span>💻</span>
+                        <span>Categoría 3: Calidad de Código</span>
+                    </div>
+                    <div class="category-score" id="code-score">0%</div>
+                </div>
+                <div class="category-content" id="code-content">
+                    <table class="checklist-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">Atributo a Evaluar</th>
+                                <th style="width: 45%;">Escala de Medición</th>
+                                <th style="width: 30%;">Observaciones/Hallazgos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-category="code">
+                                <td class="attribute-cell">
+                                    <strong>¿El código sigue estándares de codificación?</strong>
+                                    <div class="attribute-description">Convenciones de nombrado, indentación, comentarios según guía del proyecto</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <div class="scale-options">
+                                        <div class="scale-option" data-value="1" onclick="selectOption(this)">1 - No sigue estándares</div>
+                                        <div class="scale-option" data-value="2" onclick="selectOption(this)">2 - Pocos estándares</div>
+                                        <div class="scale-option" data-value="3" onclick="selectOption(this)">3 - Cumplimiento parcial</div>
+                                        <div class="scale-option" data-value="4" onclick="selectOption(this)">4 - Mayormente cumple</div>
+                                        <div class="scale-option" data-value="5" onclick="selectOption(this)">5 - Cumple totalmente</div>
+                                    </div>
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: Variables no siguen camelCase en módulo X..."></textarea>
+                                </td>
+                            </tr>
+                            <tr data-category="code">
+                                <td class="attribute-cell">
+                                    <strong>Cobertura de pruebas unitarias</strong>
+                                    <div class="attribute-description">Porcentaje de líneas de código cubiertas por tests</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <div class="scale-options">
+                                        <div class="scale-option" data-value="0" onclick="selectOption(this)">< 40% - Insuficiente</div>
+                                        <div class="scale-option" data-value="1" onclick="selectOption(this)">40-59% - Deficiente</div>
+                                        <div class="scale-option" data-value="2" onclick="selectOption(this)">60-74% - Aceptable</div>
+                                        <div class="scale-option" data-value="3" onclick="selectOption(this)">75-84% - Bueno</div>
+                                        <div class="scale-option" data-value="4" onclick="selectOption(this)">≥ 85% - Excelente</div>
+                                    </div>
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: Cobertura actual: 73% según SonarQube..."></textarea>
+                                </td>
+                            </tr>
+                            <tr data-category="code">
+                                <td class="attribute-cell">
+                                    <strong>¿El código tiene comentarios adecuados?</strong>
+                                    <div class="attribute-description">Documentación inline clara, JSDoc/Javadoc presente donde necesario</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <div class="scale-options">
+                                        <div class="scale-option" data-value="yes" onclick="selectOption(this)">✓ Sí - Bien comentado</div>
+                                        <div class="scale-option" data-value="partial" onclick="selectOption(this)">~ Parcial - Algunos comentarios</div>
+                                        <div class="scale-option" data-value="no" onclick="selectOption(this)">✗ No - Sin comentarios</div>
+                                    </div>
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: Funciones complejas sin explicación de lógica..."></textarea>
+                                </td>
+                            </tr>
+                            <tr data-category="code">
+                                <td class="attribute-cell">
+                                    <strong>Complejidad ciclomática</strong>
+                                    <div class="attribute-description">Evaluación de la complejidad de métodos/funciones según McCabe</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <div class="scale-options">
+                                        <div class="scale-option" data-value="4" onclick="selectOption(this)">1-10 - Baja (Excelente)</div>
+                                        <div class="scale-option" data-value="3" onclick="selectOption(this)">11-20 - Moderada (Buena)</div>
+                                        <div class="scale-option" data-value="2" onclick="selectOption(this)">21-50 - Alta (Refactorizar)</div>
+                                        <div class="scale-option" data-value="1" onclick="selectOption(this)">51+ - Muy alta (Crítico)</div>
+                                    </div>
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: Método processPayment() tiene CC de 35..."></textarea>
+                                </td>
+                            </tr>
+                            <tr data-category="code">
+                                <td class="attribute-cell">
+                                    <strong>Cantidad de code smells detectados</strong>
+                                    <div class="attribute-description">Contar problemas de mantenibilidad según análisis estático (SonarQube)</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <input type="number" class="observation-input" placeholder="Ingrese cantidad numérica" style="width: 150px; min-height: 40px;" onchange="updateMetrics()">
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: 23 code smells: duplicación de código, métodos muy largos..."></textarea>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CATEGORÍA 4: PRUEBAS -->
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory('testing')">
+                    <div class="category-title">
+                        <span>🧪</span>
+                        <span>Categoría 4: Calidad de Pruebas</span>
+                    </div>
+                    <div class="category-score" id="testing-score">0%</div>
+                </div>
+                <div class="category-content" id="testing-content">
+                    <table class="checklist-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">Atributo a Evaluar</th>
+                                <th style="width: 45%;">Escala de Medición</th>
+                                <th style="width: 30%;">Observaciones/Hallazgos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-category="testing">
+                                <td class="attribute-cell">
+                                    <strong>¿Los casos de prueba están completos?</strong>
+                                    <div class="attribute-description">Cubren todos los requerimientos funcionales y no funcionales</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <div class="scale-options">
+                                        <div class="scale-option" data-value="0" onclick="selectOption(this)">0-25% - Muy incompleto</div>
+                                        <div class="scale-option" data-value="1" onclick="selectOption(this)">26-50% - Incompleto</div>
+                                        <div class="scale-option" data-value="2" onclick="selectOption(this)">51-75% - Parcialmente completo</div>
+                                        <div class="scale-option" data-value="3" onclick="selectOption(this)">76-90% - Mayormente completo</div>
+                                        <div class="scale-option" data-value="4" onclick="selectOption(this)">91-100% - Completamente completo</div>
+                                    </div>
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: Falta cobertura de casos de error en API REST..."></textarea>
+                                </td>
+                            </tr>
+                            <tr data-category="testing">
+                                <td class="attribute-cell">
+                                    <strong>¿Los casos de prueba son ejecutables?</strong>
+                                    <div class="attribute-description">Tienen datos de prueba, pre-condiciones y pasos claros</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <div class="scale-options">
+                                        <div class="scale-option" data-value="yes" onclick="selectOption(this)">✓ Sí - Todos ejecutables</div>
+                                        <div class="scale-option" data-value="partial" onclick="selectOption(this)">~ Parcial - Algunos ejecutables</div>
+                                        <div class="scale-option" data-value="no" onclick="selectOption(this)">✗ No - No ejecutables</div>
+                                    </div>
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: Casos TC-045 a TC-067 sin datos de prueba..."></textarea>
+                                </td>
+                            </tr>
+                            <tr data-category="testing">
+                                <td class="attribute-cell">
+                                    <strong>Porcentaje de casos de prueba automatizados</strong>
+                                    <div class="attribute-description">Nivel de automatización de la suite de pruebas</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <div class="scale-options">
+                                        <div class="scale-option" data-value="0" onclick="selectOption(this)">0% - Sin automatización</div>
+                                        <div class="scale-option" data-value="1" onclick="selectOption(this)">1-25% - Baja automatización</div>
+                                        <div class="scale-option" data-value="2" onclick="selectOption(this)">26-50% - Media automatización</div>
+                                        <div class="scale-option" data-value="3" onclick="selectOption(this)">51-75% - Alta automatización</div>
+                                        <div class="scale-option" data-value="4" onclick="selectOption(this)">76-100% - Muy alta automatización</div>
+                                    </div>
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: 45% automatizado con Cypress y Jest..."></textarea>
+                                </td>
+                            </tr>
+                            <tr data-category="testing">
+                                <td class="attribute-cell">
+                                    <strong>Tasa de detección de defectos</strong>
+                                    <div class="attribute-description">Efectividad de las pruebas en encontrar defectos reales</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <div class="scale-options">
+                                        <div class="scale-option" data-value="1" onclick="selectOption(this)">< 40% - Baja efectividad</div>
+                                        <div class="scale-option" data-value="2" onclick="selectOption(this)">40-59% - Media efectividad</div>
+                                        <div class="scale-option" data-value="3" onclick="selectOption(this)">60-79% - Buena efectividad</div>
+                                        <div class="scale-option" data-value="4" onclick="selectOption(this)">≥ 80% - Excelente efectividad</div>
+                                    </div>
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: 67% de defectos encontrados en testing vs producción..."></textarea>
+                                </td>
+                            </tr>
+                            <tr data-category="testing">
+                                <td class="attribute-cell">
+                                    <strong>Cantidad de defectos bloqueantes encontrados</strong>
+                                    <div class="attribute-description">Contar defectos críticos que impiden continuar las pruebas</div>
+                                </td>
+                                <td class="scale-cell">
+                                    <input type="number" class="observation-input" placeholder="Ingrese cantidad numérica" style="width: 150px; min-height: 40px;" onchange="updateMetrics()">
+                                </td>
+                                <td class="observation-cell">
+                                    <textarea class="observation-input" placeholder="Ej: 3 defectos bloqueantes: DEF-012, DEF-034, DEF-089..."></textarea>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Botones de Navegación -->
+            <div class="nav-buttons">
+                <button onclick="window.location.href='dashboard_calidad_ibm.html'" class="btn btn-secondary">← Dashboard Calidad</button>
+                <button onclick="saveChecklist()" class="btn btn-success">💾 Guardar Evaluación</button>
+                <button onclick="exportChecklist()" class="btn btn-primary">📊 Exportar JSON</button>
+                <button onclick="exportChecklistTXT()" class="btn btn-primary">📄 Exportar TXT</button>
+                <button onclick="window.print()" class="btn btn-primary">🖨️ Imprimir/PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'ibm_qms_quality_checklist';
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadChecklist();
+            updateMetrics();
+        });
+
+        function toggleCategory(categoryId) {
+            const content = document.getElementById(`${categoryId}-content`);
+            content.classList.toggle('active');
+        }
+
+        function selectOption(element) {
+            // Desmarcar hermanos
+            const siblings = element.parentElement.querySelectorAll('.scale-option');
+            siblings.forEach(s => s.classList.remove('selected'));
+            
+            // Marcar seleccionado
+            element.classList.add('selected');
+            
+            // Actualizar métricas
+            updateMetrics();
+            
+            // Auto-save
+            saveChecklist();
+        }
+
+        function updateMetrics() {
+            // Contar selecciones
+            const totalRows = document.querySelectorAll('tbody tr').length;
+            const selectedRows = document.querySelectorAll('.scale-option.selected').length;
+            const numberInputs = document.querySelectorAll('input[type="number"]');
+            
+            // Calcular defectos
+            let totalDefects = 0;
+            numberInputs.forEach(input => {
+                totalDefects += parseInt(input.value) || 0;
+            });
+            
+            // Calcular puntaje promedio
+            let totalScore = 0;
+            let scoreCount = 0;
+            document.querySelectorAll('.scale-option.selected').forEach(opt => {
+                const value = parseInt(opt.dataset.value);
+                if (!isNaN(value)) {
+                    totalScore += value;
+                    scoreCount++;
+                }
+            });
+            const avgScore = scoreCount > 0 ? (totalScore / scoreCount).toFixed(1) : 0;
+            
+            // Calcular calidad global (basado en promedio normalizado a 100%)
+            const globalQuality = scoreCount > 0 ? Math.round((totalScore / (scoreCount * 5)) * 100) : 0;
+            
+            // Actualizar UI
+            document.getElementById('total-score').textContent = `${globalQuality}%`;
+            document.getElementById('completed-attrs').textContent = selectedRows;
+            document.getElementById('defects-count').textContent = totalDefects;
+            document.getElementById('avg-score').textContent = avgScore;
+            
+            // Actualizar por categoría
+            ['requirements', 'design', 'code', 'testing'].forEach(cat => {
+                const catRows = document.querySelectorAll(`tr[data-category="${cat}"]`);
+                let catScore = 0;
+                let catCount = 0;
+                
+                catRows.forEach(row => {
+                    const selected = row.querySelector('.scale-option.selected');
+                    if (selected) {
+                        const value = parseInt(selected.dataset.value);
+                        if (!isNaN(value)) {
+                            catScore += value;
+                            catCount++;
+                        }
+                    }
+                });
+                
+                const catPercentage = catCount > 0 ? Math.round((catScore / (catCount * 5)) * 100) : 0;
+                document.getElementById(`${cat}-score`).textContent = `${catPercentage}%`;
+            });
+        }
+
+        function saveChecklist() {
+            const data = {
+                timestamp: new Date().toISOString(),
+                selections: [],
+                observations: [],
+                numberInputs: []
+            };
+            
+            // Guardar selecciones
+            document.querySelectorAll('.scale-option.selected').forEach(opt => {
+                const row = opt.closest('tr');
+                const attr = row.querySelector('.attribute-cell strong').textContent;
+                data.selections.push({
+                    attribute: attr,
+                    value: opt.dataset.value,
+                    text: opt.textContent.trim()
+                });
+            });
+            
+            // Guardar observaciones
+            document.querySelectorAll('.observation-input').forEach((input, idx) => {
+                if (input.value.trim()) {
+                    data.observations.push({
+                        index: idx,
+                        value: input.value
+                    });
+                }
+            });
+            
+            // Guardar números
+            document.querySelectorAll('input[type="number"]').forEach((input, idx) => {
+                if (input.value) {
+                    data.numberInputs.push({
+                        index: idx,
+                        value: input.value
+                    });
+                }
+            });
+            
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            alert('✅ Evaluación guardada exitosamente');
+        }
+
+        function loadChecklist() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (!saved) return;
+            
+            const data = JSON.parse(saved);
+            
+            // Restaurar selecciones
+            data.selections?.forEach(sel => {
+                const rows = document.querySelectorAll('tbody tr');
+                rows.forEach(row => {
+                    const attr = row.querySelector('.attribute-cell strong')?.textContent;
+                    if (attr === sel.attribute) {
+                        const option = Array.from(row.querySelectorAll('.scale-option'))
+                            .find(opt => opt.dataset.value === sel.value);
+                        if (option) {
+                            option.classList.add('selected');
+                        }
+                    }
+                });
+            });
+            
+            // Restaurar observaciones
+            const observations = document.querySelectorAll('.observation-input');
+            data.observations?.forEach(obs => {
+                if (observations[obs.index]) {
+                    observations[obs.index].value = obs.value;
+                }
+            });
+            
+            // Restaurar números
+            const numberInputs = document.querySelectorAll('input[type="number"]');
+            data.numberInputs?.forEach(num => {
+                if (numberInputs[num.index]) {
+                    numberInputs[num.index].value = num.value;
+                }
+            });
+            
+            updateMetrics();
+        }
+
+        function exportChecklist() {
+            const report = {
+                fecha: new Date().toLocaleString('es-CO'),
+                metricas: {
+                    calidadGlobal: document.getElementById('total-score').textContent,
+                    atributosEvaluados: document.getElementById('completed-attrs').textContent,
+                    defectosIdentificados: document.getElementById('defects-count').textContent,
+                    puntajePromedio: document.getElementById('avg-score').textContent
+                },
+                categorias: {
+                    requerimientos: document.getElementById('requirements-score').textContent,
+                    diseño: document.getElementById('design-score').textContent,
+                    código: document.getElementById('code-score').textContent,
+                    pruebas: document.getElementById('testing-score').textContent
+                },
+                evaluaciones: []
+            };
+            
+            // Recolectar evaluaciones
+            document.querySelectorAll('.scale-option.selected').forEach(opt => {
+                const row = opt.closest('tr');
+                const attr = row.querySelector('.attribute-cell strong').textContent;
+                const obs = row.querySelector('.observation-input').value;
+                
+                report.evaluaciones.push({
+                    atributo: attr,
+                    evaluacion: opt.textContent.trim(),
+                    observaciones: obs
+                });
+            });
+            
+            // Descargar JSON
+            const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `reporte-calidad-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            alert('📊 Reporte JSON exportado exitosamente');
+        }
+
+        function exportChecklistTXT() {
+            // Recolectar datos
+            const fecha = new Date().toLocaleString('es-CO');
+            const calidadGlobal = document.getElementById('total-score').textContent;
+            const atributosEvaluados = document.getElementById('completed-attrs').textContent;
+            const defectosIdentificados = document.getElementById('defects-count').textContent;
+            const puntajePromedio = document.getElementById('avg-score').textContent;
+            
+            // Puntajes por categoría
+            const requirements = document.getElementById('requirements-score').textContent;
+            const design = document.getElementById('design-score').textContent;
+            const code = document.getElementById('code-score').textContent;
+            const testing = document.getElementById('testing-score').textContent;
+            
+            // Construir texto
+            let txtContent = '';
+            txtContent += '═══════════════════════════════════════════════════════════════════════\n';
+            txtContent += '                 REPORTE DE LISTA DE CHEQUEO DE CALIDAD                \n';
+            txtContent += '                     IBM Quality Management System                      \n';
+            txtContent += '═══════════════════════════════════════════════════════════════════════\n\n';
+            
+            txtContent += `Fecha de Generación: ${fecha}\n`;
+            txtContent += `Conforme a: CMMI Level 3, TMMi Level 3, IEEE 829, ISO/IEC 25010\n\n`;
+            
+            txtContent += '───────────────────────────────────────────────────────────────────────\n';
+            txtContent += '                         MÉTRICAS GLOBALES                              \n';
+            txtContent += '───────────────────────────────────────────────────────────────────────\n\n';
+            
+            txtContent += `  📊 Calidad Global:              ${calidadGlobal}\n`;
+            txtContent += `  ✓  Atributos Evaluados:         ${atributosEvaluados}\n`;
+            txtContent += `  🐛 Defectos Identificados:      ${defectosIdentificados}\n`;
+            txtContent += `  📈 Puntaje Promedio:            ${puntajePromedio}\n\n`;
+            
+            txtContent += '───────────────────────────────────────────────────────────────────────\n';
+            txtContent += '                      PUNTAJES POR CATEGORÍA                            \n';
+            txtContent += '───────────────────────────────────────────────────────────────────────\n\n';
+            
+            txtContent += `  📋 Requerimientos:              ${requirements}\n`;
+            txtContent += `  🎨 Diseño:                      ${design}\n`;
+            txtContent += `  💻 Código:                      ${code}\n`;
+            txtContent += `  🧪 Pruebas:                     ${testing}\n\n`;
+            
+            txtContent += '═══════════════════════════════════════════════════════════════════════\n';
+            txtContent += '                        EVALUACIONES DETALLADAS                         \n';
+            txtContent += '═══════════════════════════════════════════════════════════════════════\n\n';
+            
+            // Recolectar evaluaciones por categoría
+            const categories = [
+                { id: 'requirements', title: '📋 CATEGORÍA: REQUERIMIENTOS' },
+                { id: 'design', title: '🎨 CATEGORÍA: DISEÑO' },
+                { id: 'code', title: '💻 CATEGORÍA: CÓDIGO' },
+                { id: 'testing', title: '🧪 CATEGORÍA: PRUEBAS' }
+            ];
+            
+            categories.forEach(category => {
+                txtContent += `\n${category.title}\n`;
+                txtContent += '─'.repeat(75) + '\n\n';
+                
+                const categorySection = document.getElementById(`${category.id}-content`);
+                const rows = categorySection.querySelectorAll('tbody tr');
+                
+                let evalCount = 1;
+                rows.forEach(row => {
+                    const attrLabel = row.querySelector('.attribute-cell strong');
+                    const attrDesc = row.querySelector('.attribute-cell').textContent.split('\n')[1]?.trim();
+                    const selectedOption = row.querySelector('.scale-option.selected');
+                    const observation = row.querySelector('.observation-input');
+                    const numberInput = row.querySelector('input[type="number"]');
+                    
+                    if (attrLabel) {
+                        txtContent += `${evalCount}. ${attrLabel.textContent}\n`;
+                        
+                        if (attrDesc) {
+                            txtContent += `   Descripción: ${attrDesc}\n`;
+                        }
+                        
+                        if (selectedOption) {
+                            txtContent += `   ✓ Evaluación: ${selectedOption.textContent.trim()}\n`;
+                        } else if (numberInput && numberInput.value) {
+                            txtContent += `   ✓ Cantidad: ${numberInput.value}\n`;
+                        } else {
+                            txtContent += `   ⚠ Evaluación: NO EVALUADO\n`;
+                        }
+                        
+                        if (observation && observation.value.trim()) {
+                            txtContent += `   📝 Observaciones: ${observation.value.trim()}\n`;
+                        }
+                        
+                        txtContent += '\n';
+                        evalCount++;
+                    }
+                });
+            });
+            
+            txtContent += '\n═══════════════════════════════════════════════════════════════════════\n';
+            txtContent += '                           FIN DEL REPORTE                              \n';
+            txtContent += '═══════════════════════════════════════════════════════════════════════\n';
+            
+            // Descargar TXT
+            const blob = new Blob([txtContent], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Reporte_Lista_Chequeo_Calidad_${new Date().toISOString().split('T')[0]}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            alert('📄 Reporte TXT exportado exitosamente');
+        }
+
+        // ==========================================
+        // SINCRONIZACIÓN EN TIEMPO REAL
+        // ==========================================
+        
+        // Escuchar cambios de localStorage desde otras pestañas/ventanas
+        window.addEventListener('storage', function(e) {
+            if (e.key === STORAGE_KEY && e.newValue) {
+                console.log('🔄 Detectado cambio desde otra sesión. Recargando datos...');
+                
+                // Mostrar notificación
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 80px;
+                    right: 20px;
+                    background: #0f62fe;
+                    color: white;
+                    padding: 16px 24px;
+                    border-radius: 4px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                    z-index: 10000;
+                    font-family: 'IBM Plex Sans', sans-serif;
+                    font-size: 14px;
+                    animation: slideIn 0.3s ease-out;
+                `;
+                notification.innerHTML = '🔄 Lista actualizada por otro usuario';
+                document.body.appendChild(notification);
+                
+                // Recargar datos
+                loadChecklist();
+                updateMetrics();
+                
+                // Remover notificación
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease-in';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+        });
+
+        // Agregar estilos para animación de notificación
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Auto-sync cada 30 segundos
+        setInterval(() => {
+            const lastModified = localStorage.getItem(STORAGE_KEY + '_timestamp');
+            if (lastModified) {
+                const timeDiff = Date.now() - parseInt(lastModified);
+                
+                // Si han pasado menos de 5 segundos desde la última modificación
+                // y no fue en esta ventana, recargar
+                if (timeDiff < 5000 && !window.justSaved) {
+                    console.log('🔄 Auto-sync: Recargando datos recientes...');
+                    loadChecklist();
+                    updateMetrics();
+                }
+            }
+            
+            window.justSaved = false;
+        }, 30000); // Cada 30 segundos
+
+        // Modificar saveChecklist para agregar timestamp
+        const originalSaveChecklist = saveChecklist;
+        saveChecklist = function() {
+            window.justSaved = true;
+            localStorage.setItem(STORAGE_KEY + '_timestamp', Date.now().toString());
+            originalSaveChecklist();
+        };
+
+        console.log('✅ Lista de Chequeo de Calidad - IBM QMS');
+        console.log('✅ Sincronización en tiempo real habilitada');
+        console.log('Conforme a CMMI Level 3, TMMi Level 3, IEEE 829, ISO/IEC 25010');
+    </script>
+</body>
+</html>

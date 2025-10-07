@@ -1,0 +1,78 @@
+@startwbs
+
+' --- Configuración de estilo ---
+skinparam dpi 200
+skinparam backgroundColor      white
+skinparam WbsBackgroundColor   white
+skinparam WbsElementBackgroundColor white
+skinparam WbsElementBorderColor   #0f62fe
+skinparam WbsElementFontColor     black
+skinparam WbsLineColor            #0f62fe
+skinparam WbsTitleFontSize        22
+skinparam WbsFontSize             14
+
+title ESTRUCTURA ORGANIZACIONAL DE CALIDAD IBM - VISTA SINTETIZADA\n180 FTEs | 5 Niveles Jerárquicos
+
+* **CALIDAD IBM**
+** **C-LEVEL**
+*** CQO
+**** Global Strategy
+**** $3M Budget
+
+** **DIRECTORS (3)**
+*** Dir. Test Engineering
+**** 65 FTEs | $1.2M
+*** Dir. Quality Processes
+**** 45 FTEs | $800K
+*** Dir. Quality Assurance
+**** 70 FTEs | $1M
+
+** **MANAGERS (7)**
+*** Test Automation
+**** ROI: 340%
+**** Coverage: 87%
+*** Performance Testing
+**** SLA: 99.2%
+*** Process Improvement
+**** CMMI/TMMi
+*** Quality Metrics
+**** KPI Dashboards
+*** Product Quality
+**** Quality Gates
+*** Compliance
+**** Audit & Risk
+
+** **TEAM LEADS (10)**
+*** Technical Leads (5)
+**** UI/UX, API, Performance
+**** Security, Functional
+*** Process Leads (3)
+**** CMMI, TMMi, Metrics
+*** Compliance Leads (2)
+**** Testing & Audit
+
+** **SPECIALISTS (129)**
+*** Automation (19)
+**** Selenium (8)
+**** Cypress (6)
+**** JMeter (5)
+*** Security (4)
+**** OWASP
+*** Analysis (55)
+**** Process (12)
+**** Data (8)
+**** Testing (35)
+*** QA Engineers (51)
+**** QA (45)
+**** Compliance (6)
+
+** **SOPORTE (21)**
+*** Technical (14)
+**** DevOps (8)
+**** Tools Admin (6)
+*** Training (4)
+*** External (15)
+**** Consultants (12)
+**** Vendor Mgmt (3)
+
+@endwbs

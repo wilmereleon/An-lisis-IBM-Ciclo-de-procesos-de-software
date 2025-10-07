@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - IBM QMS</title>
+    
+    <!-- IBM Carbon Design System CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/carbon-components@10.58.0/css/carbon-components.min.css">
+    
+    <!-- IBM Plex Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', Arial, sans-serif;
+            background: linear-gradient(135deg, #0f62fe 0%, #0353e9 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 420px;
+            padding: 48px 40px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .logo-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 600;
+            color: #161616;
+            margin-bottom: 8px;
+        }
+
+        .logo-subtitle {
+            font-size: 14px;
+            color: #525252;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #161616;
+            margin-bottom: 8px;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-family: 'IBM Plex Sans', Arial, sans-serif;
+            border: 1px solid #c6c6c6;
+            border-radius: 0;
+            background: white;
+            color: #161616;
+            transition: border-color 0.2s;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #0f62fe;
+            box-shadow: 0 0 0 1px #0f62fe;
+        }
+
+        input[type="email"]:disabled,
+        input[type="password"]:disabled {
+            background: #f4f4f4;
+            cursor: not-allowed;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'IBM Plex Sans', Arial, sans-serif;
+            color: white;
+            background: #0f62fe;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-login:hover:not(:disabled) {
+            background: #0353e9;
+        }
+
+        .btn-login:disabled {
+            background: #c6c6c6;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            background: #fff1f1;
+            border-left: 3px solid #da1e28;
+            padding: 12px 16px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: #da1e28;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .success-message {
+            background: #defbe6;
+            border-left: 3px solid #24a148;
+            padding: 12px 16px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: #24a148;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .test-users {
+            margin-top: 32px;
+            padding: 20px;
+            background: #f4f4f4;
+            border-radius: 4px;
+        }
+
+        .test-users-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #161616;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .test-users-subtitle {
+            font-size: 12px;
+            color: #525252;
+            margin-bottom: 16px;
+        }
+
+        .user-button {
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-family: 'IBM Plex Sans', Arial, sans-serif;
+            text-align: left;
+            background: white;
+            border: 1px solid #c6c6c6;
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-button:hover {
+            border-color: #0f62fe;
+            background: #edf5ff;
+        }
+
+        .user-icon {
+            font-size: 20px;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-role {
+            font-weight: 600;
+            color: #161616;
+        }
+
+        .user-email {
+            font-size: 11px;
+            color: #525252;
+        }
+
+        .arrow {
+            color: #0f62fe;
+            font-size: 18px;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 32px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <div class="logo-icon">🔐</div>
+            <div class="logo-text">IBM QMS</div>
+            <div class="logo-subtitle">Quality Management System v2.0</div>
+        </div>
+
+        <form id="loginForm">
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+
+            <div class="form-group">
+                <label for="email">Correo Electrónico:</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    placeholder="usuario@ibm.com"
+                    required
+                    autocomplete="email"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    placeholder="••••••••"
+                    required
+                    autocomplete="current-password"
+                >
+            </div>
+
+            <button type="submit" class="btn-login" id="loginBtn">
+                Iniciar Sesión
+            </button>
+        </form>
+
+        <div class="test-users">
+            <div class="test-users-title">
+                👥 Usuarios de Prueba
+            </div>
+            <div class="test-users-subtitle">
+                Haga clic para usar estas credenciales:
+            </div>
+
+            <button type="button" class="user-button" data-email="admin@ibm.com" data-password="ibmadmin123" data-role="Admin">
+                <span class="user-icon">👨‍💼</span>
+                <div class="user-info">
+                    <div class="user-role">Admin</div>
+                    <div class="user-email">admin@ibm.com</div>
+                </div>
+                <span class="arrow">→</span>
+            </button>
+
+            <button type="button" class="user-button" data-email="manager@ibm.com" data-password="ibmmanager123" data-role="Manager">
+                <span class="user-icon">📊</span>
+                <div class="user-info">
+                    <div class="user-role">Manager</div>
+                    <div class="user-email">manager@ibm.com</div>
+                </div>
+                <span class="arrow">→</span>
+            </button>
+
+            <button type="button" class="user-button" data-email="analyst@ibm.com" data-password="ibmanalyst123" data-role="Analyst">
+                <span class="user-icon">📈</span>
+                <div class="user-info">
+                    <div class="user-role">Analyst</div>
+                    <div class="user-email">analyst@ibm.com</div>
+                </div>
+                <span class="arrow">→</span>
+            </button>
+
+            <button type="button" class="user-button" data-email="tester@ibm.com" data-password="ibmtester123" data-role="Tester">
+                <span class="user-icon">🧪</span>
+                <div class="user-info">
+                    <div class="user-role">Tester</div>
+                    <div class="user-email">tester@ibm.com</div>
+                </div>
+                <span class="arrow">→</span>
+            </button>
+
+            <button type="button" class="user-button" data-email="viewer@ibm.com" data-password="ibmviewer123" data-role="Viewer">
+                <span class="user-icon">👁️</span>
+                <div class="user-info">
+                    <div class="user-role">Viewer</div>
+                    <div class="user-email">viewer@ibm.com</div>
+                </div>
+                <span class="arrow">→</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Usuarios válidos del sistema (sin backend)
+        const VALID_USERS = {
+            'admin@ibm.com': {
+                password: 'ibmadmin123',
+                role: 'Admin',
+                name: 'IBM Administrator',
+                dashboard: 'dashboard_ejecutivo_ibm.html'
+            },
+            'manager@ibm.com': {
+                password: 'ibmmanager123',
+                role: 'Manager',
+                name: 'Quality Manager',
+                dashboard: 'dashboard_ejecutivo_ibm.html'
+            },
+            'analyst@ibm.com': {
+                password: 'ibmanalyst123',
+                role: 'Analyst',
+                name: 'Quality Analyst',
+                dashboard: 'dashboard_calidad_ibm.html'
+            },
+            'tester@ibm.com': {
+                password: 'ibmtester123',
+                role: 'Tester',
+                name: 'QA Tester',
+                dashboard: 'dashboard_testing_metrics_ibm.html'
+            },
+            'viewer@ibm.com': {
+                password: 'ibmviewer123',
+                role: 'Viewer',
+                name: 'IBM Viewer',
+                dashboard: 'dashboard_calidad_ibm.html'
+            }
+        };
+
+        // Elementos del DOM
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const loginBtn = document.getElementById('loginBtn');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const userButtons = document.querySelectorAll('.user-button');
+
+        // Botones de usuarios de prueba
+        userButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const email = this.getAttribute('data-email');
+                const password = this.getAttribute('data-password');
+                
+                emailInput.value = email;
+                passwordInput.value = password;
+                
+                // Auto-submit después de un momento
+                showSuccess('✓ Credenciales cargadas. Iniciando sesión...');
+                setTimeout(() => {
+                    loginForm.dispatchEvent(new Event('submit'));
+                }, 800);
+            });
+        });
+
+        // Manejo del formulario de login
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = emailInput.value.trim().toLowerCase();
+            const password = passwordInput.value;
+
+            // Deshabilitar formulario durante procesamiento
+            setFormState(false);
+            hideMessages();
+
+            // Simular delay de autenticación
+            setTimeout(() => {
+                authenticateUser(email, password);
+            }, 500);
+        });
+
+        function authenticateUser(email, password) {
+            // Verificar si el usuario existe
+            const user = VALID_USERS[email];
+
+            if (!user) {
+                showError('❌ Error de autenticación: Usuario no encontrado');
+                setFormState(true);
+                return;
+            }
+
+            // Verificar contraseña
+            if (user.password !== password) {
+                showError('❌ Error de autenticación: Contraseña incorrecta');
+                setFormState(true);
+                return;
+            }
+
+            // Autenticación exitosa
+            showSuccess(`✓ Autenticación exitosa. Bienvenido, ${user.name}!`);
+
+            // Guardar sesión en localStorage
+            const sessionData = {
+                email: email,
+                role: user.role,
+                name: user.name,
+                loginTime: new Date().toISOString(),
+                dashboard: user.dashboard
+            };
+
+            localStorage.setItem('ibm_qms_session', JSON.stringify(sessionData));
+            localStorage.setItem('ibm_qms_user', JSON.stringify({
+                email: email,
+                role: user.role,
+                name: user.name
+            }));
+
+            // Redireccionar al dashboard
+            setTimeout(() => {
+                window.location.href = user.dashboard;
+            }, 1000);
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('show');
+            successMessage.classList.remove('show');
+        }
+
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.classList.add('show');
+            errorMessage.classList.remove('show');
+        }
+
+        function hideMessages() {
+            errorMessage.classList.remove('show');
+            successMessage.classList.remove('show');
+        }
+
+        function setFormState(enabled) {
+            emailInput.disabled = !enabled;
+            passwordInput.disabled = !enabled;
+            loginBtn.disabled = !enabled;
+            
+            if (enabled) {
+                loginBtn.textContent = 'Iniciar Sesión';
+            } else {
+                loginBtn.textContent = '⏳ Autenticando...';
+            }
+        }
+
+        // Verificar si ya hay sesión activa
+        window.addEventListener('DOMContentLoaded', function() {
+            const session = localStorage.getItem('ibm_qms_session');
+            
+            if (session) {
+                try {
+                    const sessionData = JSON.parse(session);
+                    
+                    // Si hay sesión activa, redirigir
+                    showSuccess(`✓ Sesión activa detectada. Redirigiendo a dashboard...`);
+                    
+                    setTimeout(() => {
+                        window.location.href = sessionData.dashboard || 'dashboard_ejecutivo_ibm.html';
+                    }, 1000);
+                } catch (error) {
+                    // Si hay error al parsear la sesión, limpiarla
+                    localStorage.removeItem('ibm_qms_session');
+                    localStorage.removeItem('ibm_qms_user');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

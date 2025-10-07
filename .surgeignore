@@ -1,0 +1,17 @@
+node_modules
+*.md
+*.txt
+*.bat
+*.sh
+*.py
+diagrams
+docs
+.git
+.github
+*.jar
+package.json
+package-lock.json
+backend-simple.js
+frontend-server.js
+demo-server.js
+*.sql
