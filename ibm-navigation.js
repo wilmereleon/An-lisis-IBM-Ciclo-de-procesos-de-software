@@ -184,7 +184,7 @@ const IBM_QMS_NAVIGATION = {
             ]
         },
         Viewer: {
-            label: 'Visualizador',
+            label: 'Viewer',
             items: [
                 {
                     category: '📊 Dashboards',
@@ -199,6 +199,33 @@ const IBM_QMS_NAVIGATION = {
                         { name: 'Informe de Herramientas', url: 'informe_herramientas_ibm.html', icon: '📊' },
                         { name: 'Estrategia de Pruebas', url: 'estrategia_pruebas_ibm.html', icon: '🎯' },
                         { name: 'Reporte Ejecución', url: 'reporte_ejecucion_pruebas_ibm.html', icon: '📊' }
+                    ]
+                }
+            ]
+        },
+        Developer: {
+            label: 'Developer',
+            items: [
+                {
+                    category: '🐛 Gestión de Defectos',
+                    links: [
+                        { name: 'Vista Desarrollador', url: 'vista_desarrollador_defectos_ibm.html', icon: '💻' },
+                        { name: 'Sistema Gestión Defectos', url: 'sistema_gestion_defectos_ibm.html', icon: '🐛' },
+                        { name: 'Debug de Defectos', url: 'debug_defectos.html', icon: '🔍' }
+                    ]
+                },
+                {
+                    category: '🧪 Testing',
+                    links: [
+                        { name: 'Formulario Casos de Prueba', url: 'formulario_casos_prueba_ibm.html', icon: '📋' },
+                        { name: 'Reporte Ejecución Pruebas', url: 'reporte_ejecucion_pruebas_ibm.html', icon: '📊' }
+                    ]
+                },
+                {
+                    category: '📊 Dashboards',
+                    links: [
+                        { name: 'Dashboard Calidad', url: 'dashboard_calidad_ibm.html', icon: '✓' },
+                        { name: 'Dashboard Testing Metrics', url: 'dashboard_testing_metrics_ibm.html', icon: '🧪' }
                     ]
                 }
             ]
